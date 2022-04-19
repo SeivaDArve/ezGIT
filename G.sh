@@ -28,7 +28,15 @@ G () {
 
 	case $1 in
 		F) echo "Favorits menu" ;;
-		0) # Option: git status && git remote show origin
+		-R) # Check recursively all dirs and see their git status 
+			;;
+		0) # Option: git status
+			tput setaf 3
+			echo -e "git status\n"
+			tput sgr0
+			git status
+		;;
+		0+) # Option: git status && git remote show origin
 			tput setaf 3
 			echo -e "git status\n"
 			tput sgr0
@@ -66,12 +74,12 @@ G () {
 			tput sgr0
 			git add --all
 		;;
-		5) # Option: git commit -m "..."
+		5) # Option: git commit -m '...'
 			echo "In order to commit to git, what is your commit message?"
 			read _ans
-			git commit -m "$_ans"
+			git commit -m '$_ans'
 		;;
-		6) # Option: git add . && git commit -m "..."
+		6) # Option: git add . && git commit -m '...'
 			tput setaf 3
 			echo "git add ."
 			tput sgr0
@@ -79,9 +87,9 @@ G () {
 
 			echo "In order to commit to git, what is your commit message?"
 			read _ans
-			git commit -m "$_ans"
+			git commit -m '$_ans'
 		;;
-		7) # Option: git add --all && git commit -m "..." && git status
+		7) # Option: git add --all && git commit -m '...' && git status
 			tput setaf 3
 			echo "git add --all"
 			tput sgr0
@@ -89,7 +97,7 @@ G () {
 
 			echo "In order to commit to git, what is your commit message?"
 			read _ans
-			git commit -m "$_ans"
+			git commit -m '$_ans'
 
 			tput setaf 3
 			echo -e "\n\ngit status\n\n"
@@ -137,6 +145,9 @@ G () {
 
 			cat << heredoc
 ------------ git menu - page 1 ------------
+
+RECOGNIZE REPOSITORY: OFF
+
 F) Favourites
 0) git status
 1) git pull
@@ -145,8 +156,8 @@ F) Favourites
 4) git add --all
 5) git commit "..."
 
-6) git add .      &&  git commit -m "..."
-7) git add --all  &&  git commit -m "..."
+6) git add .      &&  git commit -m '...'
+7) git add --all  &&  git commit -m '...'
 
 8) git log
 9) cat stroken && git push
