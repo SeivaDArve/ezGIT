@@ -2,13 +2,13 @@
 # Title: ezGIT to replace long git commands for one simple and short command
 G () {
 
-	# In order to use easyGIT, one way is to navigate to it's dir and from there
-	# You could type "source easyGIT". This method only works for that terminal
+	# In order to use ezGIT, one way is to navigate to it's dir and from there
+	# You could type "source ezGIT". This method only works for that terminal
 	# instance and will be unavailable after you close the terminal. So, you
-	# could also add "source <relative path/easyGIT>" to your .bashrc 
+	# could also add "source <relative path/ezGIT>" to your .bashrc 
 	
 	# stroken location at your Butler's Pocket (jarve-pocket in my case)
-	_stroken="/data/data/com.termux/files/home/home.home/repositories/jarve/stroken"
+	_stroken="/data/data/com.termux/files/home/home.home/Repositories/jarve/stroken"
 
 	# Text Colors
 	_RED=$(echo -en '\001\033[00;31m\002')
@@ -111,9 +111,9 @@ G () {
 			git log
 		;;
 		9) # Option: cat stroken && git push
-			# If you try to cat this file and it does not exist, it should mean DRYa is not installed and it should display a message TO INSTALL DRYa, so yes, easyGIT can should be able to call DRYa into de business; BTW, drya is meant to be holistic first and only then it should fit you. So in the end, easyGIT calls DRYa in order for it to call your PERSONAL credentials, it means it should read from your 'Butler-Pocket'. In my case (username: Dv) my butler is jarve, so drya would get information from my jarve-Pocket to fit me, Dv
+			# If you try to cat this file and it does not exist, it should mean DRYa is not installed and it should display a message TO INSTALL DRYa, so yes, ezGIT can should be able to call DRYa into de business; BTW, drya is meant to be holistic first and only then it should fit you. So in the end, ezGIT calls DRYa in order for it to call your PERSONAL credentials, it means it should read from your 'Butler-Pocket'. In my case (username: Dv) my butler is jarve, so drya would get information from my jarve-Pocket to fit me, Dv
 			cat ${_stroken}
-			echo "Inside the easyGIT app I found this: ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+			echo "Inside the ezGIT app I found this: ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
 			git push
 
 		;;
