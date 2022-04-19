@@ -150,11 +150,12 @@ RECOGNIZE REPOSITORY: OFF
 
 F) Favourites
 0) git status
+0+) git status && git show origin
 1) git pull
 2) git push
 3) git add .
 4) git add --all
-5) git commit "..."
+5) git commit -m '...'
 
 6) git add .      &&  git commit -m '...'
 7) git add --all  &&  git commit -m '...'
