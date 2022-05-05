@@ -79,6 +79,9 @@ G () {
 			read _ans
 			git commit -m '$_ans'
 		;;
+		+) # Alias to "git add ..."
+			git add $2
+		;;
 		6) # Option: git add . && git commit -m '...'
 			tput setaf 3
 			echo "git add ."
@@ -156,6 +159,8 @@ F) Favourites
 3) git add .
 4) git add --all
 5) git commit -m '...'
+
++) (Alias to "git add ..." and adds one file)
 
 6) git add .      &&  git commit -m '...'
 7) git add --all  &&  git commit -m '...'
