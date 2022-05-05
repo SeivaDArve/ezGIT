@@ -144,7 +144,7 @@ G () {
 		*) # If you type an incorrect option OR if you type nothing, the menu is displayed (this is not a bug)
 
 			clear
-			tput setaf 3; echo "ezGIT       (type "G" to display this menu)"; tput sgr0
+			tput setaf 3; echo "ezGIT       (type \"G\" to display this menu)"; tput sgr0
 
 			cat << heredoc
 ------------ git menu - page 1 ------------
@@ -175,7 +175,14 @@ m2) goto menu 2
 
 heredoc
 			echo -e "S) Stop and Clear the screen from this menu\n"
-			echo ${_RED}To do something, specify an argument like \"G 2\"${_RESTORE}
+
+			# Text formating before discovering tput:
+			#echo ${_RED}To do something, specify an argument like \"G 2\"${_RESTORE}
+
+			tput setaf 3
+				echo "Example:"
+				echo "To do something, specify an argument like \"G 2\""
+			tput sgr0
 		;;
 
 	esac
