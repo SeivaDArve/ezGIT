@@ -1,5 +1,9 @@
 #!/bin/bash
 # Title: ezGIT to replace long git commands for one simple and short command
+
+# How to use:
+# One way to use this app without installing it at "/bin" is to navigate to this directory where G.sh is located and execute "source G.sh". This way all functions inside itself is loaded into do $PATH variable
+
 G () {
 
 	# In order to use ezGIT, one way is to navigate to it's dir and from there
