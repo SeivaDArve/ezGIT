@@ -4,5 +4,5 @@
 # Other existing branches so far: None
 
 # List of what is lacking at this version to transcend to the next version:
-
+	1. bashrc-presence-check (see if this app is being loaded on "~.bashrc" if not, prompt the user if he want to add it.
 
