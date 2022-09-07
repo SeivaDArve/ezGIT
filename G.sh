@@ -81,7 +81,7 @@ G () {
 		5) # Option: git commit -m '...'
 			echo "In order to commit to git, what is your commit message?"
 			read _ans
-			git commit -m '$_ans'
+			git commit -m "$_ans"
 		;;
 		+) # Alias to "git add ..."
 			git add $2
@@ -94,7 +94,7 @@ G () {
 
 			echo "In order to commit to git, what is your commit message?"
 			read _ans
-			git commit -m '$_ans'
+			git commit -m "$_ans"
 		;;
 		7) # Option: git add --all && git commit -m '...' && git status
 			tput setaf 3
@@ -104,7 +104,7 @@ G () {
 
 			echo "In order to commit to git, what is your commit message?"
 			read _ans
-			git commit -m '$_ans'
+			git commit -m "$_ans"
 
 			tput setaf 3
 			echo -e "\n\ngit status\n\n"
