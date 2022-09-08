@@ -29,4 +29,4 @@
 		gfc="git fetch"
 		gbr="git branch"
 		glg="git log"
-
+	4. echo out setaf colored text for every action
