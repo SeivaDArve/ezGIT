@@ -102,8 +102,16 @@ G () {
 			tput sgr0
 			git add --all
 
-			echo "In order to commit to git, what is your commit message?"
+			echo -en "\nIn order to commit to git, what is your commit message?\n > "
 			read _ans
+
+			tput setaf 3
+			echo -en "git commit -m "
+			tput setaf 4
+			echo -en "\"${_ans}\" "
+			tput setaf 3
+			echo -e "\""
+			tput sgr0
 			git commit -m "$_ans"
 
 			tput setaf 3
