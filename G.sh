@@ -106,9 +106,9 @@ G () {
 			read _ans
 
 			tput setaf 3
-			echo -en "git commit -m "
+			echo -en "git commit -m \""
 			tput setaf 4
-			echo -en "\"${_ans}\" "
+			echo -en "${_ans}"
 			tput setaf 3
 			echo -e "\""
 			tput sgr0
