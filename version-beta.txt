@@ -30,3 +30,4 @@
 		gbr="git branch"
 		glg="git log"
 	4. echo out setaf colored text for every action
+	5. add an option to unstage files (with git reset)
