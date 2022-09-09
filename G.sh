@@ -31,9 +31,14 @@ G () {
 	}
 
 	case $1 in
-		F) echo "Favorits menu" ;;
+		F) # List git commands
+			clear
+			echo -e "Favorits menu\n" 
+			echo -e "git status \ngit reset  #To unstage files \ngit rebase -i HEAD~2 && reword  #To change old commit messages"
+
+		;;
 		-R) # Check recursively all dirs and see their git status 
-			;;
+		;;
 		0) # Option: git status
 			tput setaf 3
 			echo -e "git status\n"
@@ -79,20 +84,23 @@ G () {
 			git add --all
 		;;
 		5) # Option: git commit -m '...'
-			echo "In order to commit to git, what is your commit message?"
+			# Dev: lacks colored text
+			echo -en "\nIn order to commit to git, what is your commit message?\n > "
 			read _ans
 			git commit -m "$_ans"
 		;;
 		+) # Alias to "git add ..."
+			# Dev: lacks colored text
 			git add $2
 		;;
 		6) # Option: git add . && git commit -m '...'
+			# Dev: lacks colored text
 			tput setaf 3
 			echo "git add ."
 			tput sgr0
 			git add . 
 
-			echo "In order to commit to git, what is your commit message?"
+			echo -en "\nIn order to commit to git, what is your commit message?\n > "
 			read _ans
 			git commit -m "$_ans"
 		;;
@@ -127,8 +135,12 @@ G () {
 		;;
 		9) # Option: cat stroken && git push
 			# If you try to cat this file and it does not exist, it should mean DRYa is not installed and it should display a message TO INSTALL DRYa, so yes, ezGIT can should be able to call DRYa into de business; BTW, drya is meant to be holistic first and only then it should fit you. So in the end, ezGIT calls DRYa in order for it to call your PERSONAL credentials, it means it should read from your 'Butler-Pocket'. In my case (username: Dv) my butler is jarve, so drya would get information from my jarve-Pocket to fit me, Dv
+			# Dev: lacks colored text
 			cat ${_stroken}
-			echo "Inside the ezGIT app I found this: ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+			echo -n "Inside the ezGIT app I found this: "
+         tput setaf 3
+         echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+			tput sgr0
 			git push
 
 		;;
