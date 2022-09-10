@@ -41,31 +41,32 @@ G () {
 		;;
 		0) # Option: git status
 			tput setaf 3
-			echo -e "git status\n"
+			echo -e "git status:\n"
 			tput sgr0
 			git status
 		;;
 		0+) # Option: git status && git remote show origin
 			tput setaf 3
-			echo -e "git status\n"
+			echo -e "git status:\n"
 			tput sgr0
 			git status
 
 			tput setaf 3
-			echo -e "\ngit remote show origin"
+			echo -e "\ngit remote show origin:"
 			tput sgr0
 			git remote show origin
 
 		;;
 		1) # Option: git pull
 			tput setaf 3
-			echo "git pull"; tput sgr0
+			echo "git pull:"
+         tput sgr0
 			git pull 
 		;;
 		2) # Option: git push
 
 			tput setaf 3
-			echo "git push"
+			echo "git push:"
 			tput sgr0
 			git push
 
@@ -183,30 +184,30 @@ G () {
 
 RECOGNIZE REPOSITORY: OFF
 
-F) Favourites
-0) git status
-0+) git status && git show origin
-1) git pull
-2) git push
-3) git add .
-4) git add --all
-5) git commit -m '...'
+G F) Favourites
+G 0) git status
+G 0+) git status && git show origin
+G 1) git pull
+G 2) git push
+G 3) git add .
+G 4) git add --all
+G 5) git commit -m '...'
 
-+) (Alias to "git add ..." and adds one file)
+G +) (Alias to "git add ..." and adds one file)
 
-6) git add .      &&  git commit -m '...'
-7) git add --all  &&  git commit -m '...'
+G 6) git add .      &&  git commit -m '...'
+G 7) git add --all  &&  git commit -m '...'
 
-8) git log
-9) cat stroken && git push
+G 8) git log
+G 9) cat stroken && git push
 
-A) menu to set global configurations for the user
+G A) menu to set global configurations for the user
 -------------------------------------------
-m1) goto menu 1
-m2) goto menu 2
+G m1) goto menu 1
+G m2) goto menu 2
 
 heredoc
-			echo -e "S) Stop and Clear the screen from this menu\n"
+			echo -e "G S) Stop and Clear the screen from this menu\n"
 
 			# Text formating before discovering tput:
 			#echo ${_RED}To do something, specify an argument like \"G 2\"${_RESTORE}
