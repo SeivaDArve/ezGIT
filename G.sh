@@ -184,27 +184,28 @@ G () {
 
 RECOGNIZE REPOSITORY: OFF
 
-G F) Favourites
-G 0) git status
-G 0+) git status && git show origin
-G 1) git pull
-G 2) git push
-G 3) git add .
-G 4) git add --all
-G 5) git commit -m '...'
+G    | Displays this menu
+G F  | Favourites
+G 0  | git status
+G 0+ | git status && git show origin
+G 1  | git pull
+G 2  | git push
+G 3  | git add .
+G 4  | git add --all
+G 5  | git commit -m '...'
 
-G +) (Alias to "git add ..." and adds one file)
+G +) | Alias to "git add ..." and adds one file)
 
-G 6) git add .      &&  git commit -m '...'
-G 7) git add --all  &&  git commit -m '...'
+G 6  | git add .      &&  git commit -m '...'
+G 7  | git add --all  &&  git commit -m '...'
 
-G 8) git log
-G 9) cat stroken && git push
+G 8  | git log
+G 9  | cat stroken && git push
 
-G A) menu to set global configurations for the user
+G A  | menu to set global configurations for the user
 -------------------------------------------
-G m1) goto menu 1
-G m2) goto menu 2
+G m1 | goto menu 1
+G m2 | goto menu 2
 
 heredoc
 			echo -e "G S) Stop and Clear the screen from this menu\n"
