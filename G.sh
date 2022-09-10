@@ -140,9 +140,9 @@ G () {
 			cat ${_stroken}
 
          # Display text based cresential while app is in beta
-			echo "Inside the ezGIT app I found this: "
+			echo -e "\nInside the ezGIT app I found this: "
          tput setaf 3
-         echo -n "seivadarve"; tput sgr0; echo "and this:"; tput setaf 3;
+         echo -n "seivadarve"; tput sgr0; echo " and this:"; tput setaf 3;
          echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
 			tput sgr0
 
