@@ -70,6 +70,9 @@ G () {
 			git push
 
 		;;
+
+      # uDev: "git add " as an alias gad="git add "
+
 		3) # Option: git add .
 			tput sgr0
 			tput setaf 3

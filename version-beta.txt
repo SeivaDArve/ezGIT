@@ -10,7 +10,7 @@
 	3. Alias:
 		g="git"
 		gst="git status"
-		gad="git add"
+		gad="git add "
 		gcm="git commit"
 		gcm-m="git commit -m"
 		gcm="git commit"
