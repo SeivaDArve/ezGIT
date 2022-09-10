@@ -72,7 +72,6 @@ G () {
 
 		;;
 
-      # uDev: "git add " as an alias gad="git add "
 
 		3) # Option: git add .
 			tput sgr0
@@ -93,9 +92,15 @@ G () {
 			read _ans
 			git commit -m "$_ans"
 		;;
-		+) # Alias to "git add ..."
-			# Dev: lacks colored text
+		+) # Stages a file
+         # Alias to "git add ..."
+			# uDev: lacks colored text
+         # uDev: "git add " as an alias gad="git add " ## uDev: Put this into menu 2
 			git add $2
+		;;
+		-) # unStages a file
+			# uDev: lacks colored text
+			git reset $2
 		;;
 		6) # Option: git add . && git commit -m '...'
 			# Dev: lacks colored text
@@ -194,7 +199,8 @@ G 3  | git add .
 G 4  | git add --all
 G 5  | git commit -m '...'
 
-G +) | Alias to "git add ..." and adds one file)
+G +  | gad | "git add ..."    (stages a file)
+G -  |       "git reset ..."  (unStages a file)
 
 G 6  | git add .      &&  git commit -m '...'
 G 7  | git add --all  &&  git commit -m '...'
