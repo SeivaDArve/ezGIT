@@ -179,6 +179,10 @@ G () {
 		A) # Option: "menu to set global configuration for the user"
 			setGlobalConfig_menu
 		;;
+		C) # Configure git manually with vim
+         # If your email is not configured properly, your commits won't show in your github.com's graph
+			vim ~/.gitconfig
+		;;
 		m1) # Option: Menu 1
 
 			# Inform that this menu is under construction:
@@ -227,6 +231,7 @@ G 8  | git log
 G 9  | cat stroken && git push
 
 G A  | menu to set global configurations for the user
+G C  | Configure git manually with vim (under construction) 
 -------------------------------------------
 G m1 | goto menu 1
 G m2 | goto menu 2
