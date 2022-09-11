@@ -180,7 +180,10 @@ G () {
 			setGlobalConfig_menu
 		;;
 		C) # Configure git manually with vim
-         # If your email is not configured properly, your commits won't show in your github.com's graph
+         tput setaf 3
+         echo -e "\nIf your email is not configured properly, your commits won't show in your github.com's contribution graph\n"
+			tput sgr0
+         read
 			vim ~/.gitconfig
 		;;
 		m1) # Option: Menu 1
