@@ -90,6 +90,15 @@ G () {
 			# Dev: lacks colored text
 			echo -en "\nIn order to commit to git, what is your commit message?\n > "
 			read _ans
+
+			tput setaf 3
+			echo -en "git commit -m \""
+			tput setaf 4
+			echo -en "${_ans}"
+			tput setaf 3
+			echo -e "\""
+			tput sgr0
+
 			git commit -m "$_ans"
 		;;
 		+) # Stages a file
@@ -100,6 +109,15 @@ G () {
 		;;
 		-) # unStages a file
 			# uDev: lacks colored text
+
+			tput setaf 3
+			echo -en "git reset "
+			tput setaf 4
+			echo -e "$2"
+			tput setaf 3
+			#echo -e "\""
+			tput sgr0
+
 			git reset $2
 		;;
 		6) # Option: git add . && git commit -m '...'
