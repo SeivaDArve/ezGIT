@@ -161,7 +161,9 @@ G () {
 			git log
 			;;
 		9) # Option: cat stroken && git push
-			# Dev: lacks colored text
+			# uDev: lacks colored text
+			echo "ezGIT: continue with: \"cat stroken && git push\" ?"
+			echo "   yes = [ENTER] || no = [Ctrl+C]"; read  ##uDev: add a message like these for each one. Make it a function
 
 			# If you try to cat this file and it does not exist, it should mean DRYa is not installed and it should display a message TO INSTALL DRYa, so yes, ezGIT can should be able to call DRYa into de business; BTW, drya is meant to be holistic first and only then it should fit you. So in the end, ezGIT calls DRYa in order for it to call your PERSONAL credentials, it means it should read from your 'Butler-Pocket'. In my case (username: Dv) my butler is jarve, so drya would get information from my jarve-Pocket to fit me, Dv
 			cat ${_stroken}
