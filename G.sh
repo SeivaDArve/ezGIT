@@ -160,7 +160,7 @@ G () {
 			tput sgr0
 			git log
 			;;
-		9) # Option: cat stroken && git push
+		9) # Option: cat stroken && git push && git status
 			# uDev: lacks colored text
 			echo "ezGIT: continue with: \"cat stroken && git push\" ?"
 			echo "   yes = [ENTER] || no = [Ctrl+C]"; read  ##uDev: add a message like these for each one. Make it a function
@@ -176,6 +176,12 @@ G () {
 	 tput sgr0
 
 	 git push
+
+	 echo ""
+	 tput setaf 3
+	 echo "git status:"
+	 tput sgr0
+	 git status
 
 	 ;;
  A) # Option: "menu to set global configuration for the user"
@@ -263,7 +269,7 @@ G 6  | git add .      &&  git commit -m '...'
 G 7  | git add --all  &&  git commit -m '...'
 
 G 8  | git log
-G 9  | cat stroken && git push
+G 9  | cat stroken && git push && git status
 
 G A  | menu to set global configurations for the user
 G C  | Configure git manually with vim (under construction) 
