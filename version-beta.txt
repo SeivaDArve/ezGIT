@@ -30,5 +30,5 @@
 		gbr="git branch"
 		glg="git log"
 	4. echo out setaf colored text for every action
-	5. add an option to unstage files (with git reset)
    6. Has to have an option to configure and display email
+7. must have an option to stash and unStash files
