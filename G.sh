@@ -81,14 +81,26 @@ G () {
 			git add .
 			;;
 		4) # Option: git add --all
+			echo -n "git add --all"
+			tput setaf 4
+			echo -n "?"
+			tput sgr0
+			read
+			tput setaf 4
+			echo -n "git add --all"
+			tput sgr0
+			echo ":"
+			git add --all
 			tput setaf 3
 			echo "git add --all"
 			tput sgr0
-			git add --all
 			;;
 		5) # Option: git commit -m '...'
-			# Dev: lacks colored text
-			echo -en "\nIn order to commit to git, what is your commit message?\n > "
+			tput setaf 3
+			echo -en "git commit -m \"...\""
+			tput sgr0
+			echo ":"
+			echo -en "In order to commit to git, what is your commit message?\n > "
 			read _ans
 
 			tput setaf 3
