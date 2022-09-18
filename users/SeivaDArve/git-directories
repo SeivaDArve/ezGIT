@@ -1,0 +1,9 @@
+# Title: List of directories for ezGIT to search and check the current status
+# Use: List in this file what other repositories you want ezGIT to track
+
+# List:
+~/Repositories/DRYa
+~/Repositories/dWiki
+~/Repositories/ezGIT
+~/Repositories/jarve
+
