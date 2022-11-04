@@ -8,22 +8,26 @@
 
 
 
+if [ -z $@ ]; then
+   # Do something else if there are no arguments
+      echo "no args"
 
-if [[ $1 == "K" ]]; then
-   echo "you don\'t need to source G.sh at the file \"source-all-drya-files\""
-   echo "Start using if conditions instead"
+elif [ $1 == "K" ]
+   # Do something if arg 1 is equal to "K":
+   then
+      echo "you don\'t need to source G.sh at the file \"source-all-drya-files\""
+      echo "Start using if conditions instead"
+else
+   # If the arguments you input are neither empty nor listed, then run:
+      echo "doing something if option does not exist"
 fi
+
 
 #uDev: You may start deleting "case" and "esac" and adding 'if [ $1 == "K" ]; then' because it is better to create menus
 
 
 
 
-
-
-
-# Do something else if there are no arguments
-if [ -z $@ ]; then echo "no args"; fi
 
 
 
