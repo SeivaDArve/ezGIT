@@ -19,6 +19,18 @@ fi
 
 
 
+
+
+
+# Do something else if there are no arguments
+if [ -z $@ ]; then echo "no args"; fi
+
+
+
+
+
+
+
 # ---------------------------------------------
 
 
