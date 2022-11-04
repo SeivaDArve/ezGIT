@@ -1,6 +1,31 @@
 #!/bin/bash
 # Title: ezGIT to replace long git commands for one simple and short command
 
+
+
+
+# ---------------------------------------------
+
+
+
+
+if [[ $1 == "K" ]]; then
+   echo "you don\'t need to source G.sh at the file \"source-all-drya-files\""
+   echo "Start using if conditions instead"
+fi
+
+#uDev: You may start deleting "case" and "esac" and adding 'if [ $1 == "K" ]; then' because it is better to create menus
+
+
+
+
+# ---------------------------------------------
+
+
+
+
+
+
 # How to use:
 # One way to use this app without installing it at "/bin" is to navigate to this directory where G.sh is located and execute "source G.sh". This way all functions inside itself is loaded into do $PATH variable
 
@@ -304,4 +329,3 @@ echo -e "G S) Stop and Clear the screen from this menu\n"
 		esac
 
 	}
-	G
