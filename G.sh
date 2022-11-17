@@ -2,7 +2,23 @@
 # Title: ezGIT to replace long git commands for one simple and short command
 
 
+# ---------------------------------------------
 
+function f_cor1 {
+	tput setaf 5
+}
+
+function f_cor2 {
+	tput setaf 6
+}
+
+function f_cor3 {
+	tput setaf 8
+}
+
+function f_resetCor {
+	tput sgr0
+}
 
 # ---------------------------------------------
 
@@ -10,7 +26,11 @@
 
 if [ -z $@ ]; then
    # Do something else if there are no arguments
-      echo "no args"
+      echo " > No arguments where given"
+      sleep 1
+      echo " > Here is a list of arguments you may use:"
+      f_cor1; echo -n "   $ G "; f_cor2; echo -n "1"; f_resetCor; echo "  (It means \"git pull\")"
+
 
 elif [ $1 == "K" ]
    # Do something if arg 1 is equal to "K":
