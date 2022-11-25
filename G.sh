@@ -113,6 +113,7 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
 
 			echo -en "In order to commit to git, what is your commit message?\n > "
 			read _ans
+         echo
 
 			tput setaf 3
 			echo -en "git commit -m \""
