@@ -142,6 +142,7 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
          case $v_ans in
             P)
                 # Display text based cresential while app is in beta
+                   echo
                    echo -e "\nInside the ezGIT app I found this: "
                    tput setaf 3
                    echo -n "seivadarve"; tput sgr0; echo " and this:"; tput setaf 3;
