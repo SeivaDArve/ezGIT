@@ -130,6 +130,26 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
 			tput sgr0
 			git status
 
+      # Asking for 3 seconds if the user wants to push the code to github.com
+			tput setaf 3
+			echo -e "\nDo you want to push to Guthub.com?"
+			read -s -N 1 -p " > Do you want to push to Guthub.com?" v_ans
+			tput sgr0
+         
+         case $v_ans in
+            P)
+                # Display text based cresential while app is in beta
+                   echo -e "\nInside the ezGIT app I found this: "
+                   tput setaf 3
+                   echo -n "seivadarve"; tput sgr0; echo " and this:"; tput setaf 3;
+                   echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+                   tput sgr0
+
+                   git push
+
+            ;;
+         esac
+
 elif [ $1 == "+++" ] || [ $1 == "g-ad-cm-m-pu" ]; then
 	# 'git add --all' + 'git commim -m "" ' + 'git push'
 		clear
