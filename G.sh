@@ -17,6 +17,10 @@ function f_resetCor {
    tput sgr0 
 }
 
+function f_greet {
+   figlet "ezGIT" 2>/dev/null || echo -n
+}
+
 function f_colors-without-tput {
 	# Text Colors before discovering '$ tput setaf'
 	   _RED=$(echo -en '\001\033[00;31m\002')
@@ -93,6 +97,7 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
    # Almost Equivalent to 'G 7'
 
       clear
+      f_greet
 
       # Git add --all
 			tput setaf 3
