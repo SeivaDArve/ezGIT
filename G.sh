@@ -125,7 +125,7 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
 
       # Git status
 			tput setaf 3
-			echo -e "\n\ngit status\n\n"
+			echo -e "\ngit status:"
 			tput sgr0
 			git status
 
