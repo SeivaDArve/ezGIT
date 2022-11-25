@@ -91,6 +91,15 @@ elif [ $1 == "f" ] || [ $1 == "gfv" ]; then
 		echo -e "Favorits menu\n" 
 		echo -e "git status \ngit reset  #To unstage files \ngit rebase -i HEAD~2 && reword  #To change old commit messages"
 
+elif [ $1 == "." ] || [ $1 == "gst" ]; then
+   # Git status
+
+   clear; f_greet 
+
+      tput setaf 3
+      echo -e "\ngit status:"
+      tput sgr0
+      git status
 
 elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
 	# 'git add --all' + 'git status' + 'git commim -m "" '
