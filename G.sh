@@ -133,7 +133,10 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
       # Asking for 3 seconds if the user wants to push the code to github.com
 			tput setaf 3
 			echo -e "\nDo you want to push to Guthub.com?"
-			read -s -N 1 -t 5 -p " > If so, press: P " v_ans
+			tput sgr0
+         echo -n " > If so, press: "
+			tput setaf 3
+			read -s -N 1 -t 5 -p "P " v_ans
 			tput sgr0
          
          case $v_ans in
