@@ -4,20 +4,26 @@
 
 # ---------------------------------------------
 
-function f_cor1 {
-	tput setaf 5
+function f_cor1 {	
+   tput setaf 5 
+}
+function f_cor2 { 
+   tput setaf 6 
+}
+function f_cor3 { 
+   tput setaf 8 
+}
+function f_resetCor { 
+   tput sgr0 
 }
 
-function f_cor2 {
-	tput setaf 6
-}
+function f_colors-without-tput {
+	# Text Colors before discovering '$ tput setaf'
+	   _RED=$(echo -en '\001\033[00;31m\002')
+	   _RESTORE=$(echo -en '\001\033[0m\002')
 
-function f_cor3 {
-	tput setaf 8
-}
-
-function f_resetCor {
-	tput sgr0
+	# Text formating before discovering '$ tput'
+	   #echo ${_RED}To do something, specify an argument like \"G 2\"${_RESTORE}
 }
 
 # ---------------------------------------------
@@ -30,13 +36,118 @@ if [ -z $@ ]; then
       sleep 1
       echo " > Here is a list of arguments you may use:"
       f_cor1; echo -n "   $ G "; f_cor2; echo -n "1"; f_resetCor; echo "  (It means \"git pull\")"
+less << heredooc
+
+ezGIT------------ git menu --------- page 1
+
+RECOGNIZE REPOSITORY: OFF
+
+G    | Displays this menu
+G F  | Favourites
+G 0  | git status
+G 0+ | git status && git show origin
+G 1  | git pull
+G 2  | git push
+G 3  | git add .
+G 4  | git add --all
+G 5  | git commit -m '...'
+
+G +  | gad | "git add ..."    (stages a file)
+G -  |       "git reset ..."  (unStages a file)
+
+G 6  | git add .      &&  git commit -m '...'
+G 7  | git add --all  &&  git commit -m '...'
+
+G 8  | git log
+G 9  | cat stroken && git push && git status
+
+G A  | menu to set global configurations for the user
+G C  | Configure git manually with vim (under construction) 
+G S  | Stop and Clear the screen from this menu
+-------------------------------------------
+G m1 | goto menu 1
+G m2 | goto menu 2
+
+Example: To do something, specify an argument like "G 2"
+heredooc
 
 
-elif [ $1 == "K" ]
-   # Do something if arg 1 is equal to "K":
-   then
+elif [ $1 == "eg" ]; then
+   # Do something if arg 1 is equal to "eg":
       echo "you don\'t need to source G.sh at the file \"source-all-drya-files\""
       echo "Start using if conditions instead"
+
+elif [ $1 == "k" ] || [ $1 == "gkp" ]; then
+   # Create a file .gitkeep
+      touch .gitkeep
+
+elif [ $1 == "f" ] || [ $1 == "gfv" ]; then
+	# List favorite git commands
+		clear
+		echo -e "Favorits menu\n" 
+		echo -e "git status \ngit reset  #To unstage files \ngit rebase -i HEAD~2 && reword  #To change old commit messages"
+
+
+elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
+	# 'git add --all' + 'git status' + 'git commim -m "" '
+   # Almost Equivalent to 'G 7'
+
+      clear
+
+      # Git add --all
+			tput setaf 3
+			echo "git add --all"
+			tput sgr0
+			git add --all
+
+      # Git status
+			tput setaf 3
+			echo -e "git status:\n"
+			tput sgr0
+         git status
+
+      # Git commit -m ""
+			tput setaf 3
+			echo -e "git commit -m \" \":"
+			tput sgr0
+
+			echo -en "In order to commit to git, what is your commit message?\n > "
+			read _ans
+
+			tput setaf 3
+			echo -en "git commit -m \""
+			tput setaf 4
+			echo -en "${_ans}"
+			tput setaf 3
+			echo -e "\""
+			tput sgr0
+			git commit -m "$_ans"
+
+      # Git status
+			tput setaf 3
+			echo -e "\n\ngit status\n\n"
+			tput sgr0
+			git status
+
+elif [ $1 == "+++" ] || [ $1 == "g-ad-cm-m-pu" ]; then
+	# 'git add --all' + 'git commim -m "" ' + 'git push'
+		clear
+		echo "git add --all"
+      echo "git commit -m"
+      echo "git push"
+      echo "#uDev: not ready yet"
+
+
+
+
+
+
+
+
+
+
+
+
 else
    # If the arguments you input are neither empty nor listed, then run:
       echo "doing something if option does not exist"
@@ -44,8 +155,7 @@ fi
 
 
 #uDev: You may start deleting "case" and "esac" and adding 'if [ $1 == "K" ]; then' because it is better to create menus
-
-
+#uDev: add an option for: "mkdir" + "touch .gitkeep"
 
 
 
@@ -59,13 +169,24 @@ fi
 
 
 
+function setGlobalConfig_menu {
+
+		#This will be a menu soon that can list, edit, remove... to set as global configs. For example the configurations for SeivaDArve"
+
+		# Inform that this menu is under construction:
+		echo -e "$(tput setaf 3)\n  menu under construction;)\n${RESTORE}"; read; G
+
+		# Entry to adjust Seiva D'Arve:
+		#git config --global user.email "flowreshe.seiva.d.arve@gmail.com"
+		#git config --global user.name "SeivaDArve"	
+}
 
 
 
 # How to use:
 # One way to use this app without installing it at "/bin" is to navigate to this directory where G.sh is located and execute "source G.sh". This way all functions inside itself is loaded into do $PATH variable
 
-G () {
+#G () {
 
 	# In order to use ezGIT, one way is to navigate to it's dir and from there
 	# You could type "source ezGIT". This method only works for that terminal
@@ -75,38 +196,20 @@ G () {
 	# stroken location at your Butler's Pocket (jarve-pocket in my case)
 	_stroken="/data/data/com.termux/files/home/home.home/Repositories/jarve/stroken"
 
-	# Text Colors
-	_RED=$(echo -en '\001\033[00;31m\002')
-	_RESTORE=$(echo -en '\001\033[0m\002')
 
-	function setGlobalConfig_menu {
-
-		#This will be a menu soon that can list, edit, remove... to set as global configs. For example the configurations for SeivaDArve"
-
-		# Inform that this menu is under construction:
-		echo -e "$(tput setaf 3)\n  menu under construction;)\n${RESTORE}"; read; G
-
-		# Entry to adjust Seiva D'Arve:
-		#git config --global user.email "flowreshe.seiva.d.arve@gmail.com"
-		#git config --global user.name "SeivaDArve"
-	}
 
 	case $1 in
-		F) # List git commands
-			clear
-			echo -e "Favorits menu\n" 
-			echo -e "git status \ngit reset  #To unstage files \ngit rebase -i HEAD~2 && reword  #To change old commit messages"
-
-			;;
 		-R) # Check recursively all dirs and see their git status 
 			;;
 		0) # Option: git status
+         #gst
 			tput setaf 3
 			echo -e "git status:\n"
 			tput sgr0
 			git status
 			;;
 		0+) # Option: git status && git remote show origin
+         #gst+
 			tput setaf 3
 			echo -e "git status:\n"
 			tput sgr0
@@ -119,13 +222,14 @@ G () {
 
 			;;
 		1) # Option: git pull
+         #gpl
 			tput setaf 3
 			echo "git pull:"
 			tput sgr0
 			git pull 
 			;;
 		2) # Option: git push
-
+         #gpu
 			tput setaf 3
 			echo "git push:"
 			tput sgr0
@@ -135,6 +239,7 @@ G () {
 
 
 		3) # Option: git add .
+         #gad.
 			tput sgr0
 			tput setaf 3
 			echo "git add ."
@@ -142,6 +247,7 @@ G () {
 			git add .
 			;;
 		4) # Option: git add --all
+         #gad*
 			echo -n "git add --all"
 			tput setaf 4
 			echo -n "?"
@@ -179,6 +285,22 @@ G () {
 			# uDev: lacks colored text
 			# uDev: "git add " as an alias gad="git add " ## uDev: Put this into menu 2
 			git add $2
+
+
+         #uDev: case $2 in
+         #        \*)
+         #
+         #           # Command:
+         #           # '$ G + *'
+         #
+         #           # Same as:
+         #           git add *
+         #
+         #           # Same as:
+         #           "git add --all"
+         #
+         #         ;;
+         #           
 			;;
 		-) # unStages a file
 			# uDev: lacks colored text
@@ -316,52 +438,7 @@ G () {
 			tput sgr0
 			;;
 		*) # If you type an incorrect option OR if you type nothing, the menu is displayed (this is not a bug)
+      ;;
+	esac
 
-			clear
-			tput setaf 3; echo "ezGIT       (type \"G\" to display this menu)"; tput sgr0
-
-			cat << heredoc
------------- git menu - page 1 ------------
-
-RECOGNIZE REPOSITORY: OFF
-
-G    | Displays this menu
-G F  | Favourites
-G 0  | git status
-G 0+ | git status && git show origin
-G 1  | git pull
-G 2  | git push
-G 3  | git add .
-G 4  | git add --all
-G 5  | git commit -m '...'
-
-G +  | gad | "git add ..."    (stages a file)
-G -  |       "git reset ..."  (unStages a file)
-
-G 6  | git add .      &&  git commit -m '...'
-G 7  | git add --all  &&  git commit -m '...'
-
-G 8  | git log
-G 9  | cat stroken && git push && git status
-
-G A  | menu to set global configurations for the user
-G C  | Configure git manually with vim (under construction) 
--------------------------------------------
-G m1 | goto menu 1
-G m2 | goto menu 2
-
-heredoc
-echo -e "G S) Stop and Clear the screen from this menu\n"
-
-			# Text formating before discovering tput:
-			#echo ${_RED}To do something, specify an argument like \"G 2\"${_RESTORE}
-
-			tput setaf 3
-			echo "Example:"
-			echo "To do something, specify an argument like \"G 2\""
-			tput sgr0
-			;;
-
-		esac
-
-	}
+#}
