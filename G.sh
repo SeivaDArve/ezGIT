@@ -150,6 +150,13 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
                    tput sgr0
 
                    git push
+
+                # Git status one last time
+                  tput setaf 3
+                  echo -e "\ngit status:"
+                  tput sgr0
+                  git status
+
             ;;
             *)
                echo
