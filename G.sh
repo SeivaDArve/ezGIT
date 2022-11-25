@@ -150,7 +150,9 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
                    tput sgr0
 
                    git push
-
+            ;;
+            *)
+               echo
             ;;
          esac
 
