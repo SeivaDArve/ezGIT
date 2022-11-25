@@ -108,7 +108,7 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
 
       # Git commit -m ""
 			tput setaf 3
-			echo -e "git commit -m \" \":"
+			echo -e "Creating a message i to git commit -m \"i\":"
 			tput sgr0
 
 			echo -en "In order to commit to git, what is your commit message?\n > "
