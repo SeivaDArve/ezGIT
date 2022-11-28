@@ -13,12 +13,17 @@ function f_cor2 {
 function f_cor3 { 
    tput setaf 8 
 }
+function f_cor4 { 
+   tput setaf 4
+}
 function f_resetCor { 
-   tput sgr0 
+   tput sgr0
 }
 
 function f_greet {
+   f_cor4
    figlet "ezGIT" 2>/dev/null || echo -n
+   f_resetCor 
 }
 
 function f_colors-without-tput {
@@ -96,10 +101,70 @@ elif [ $1 == "." ] || [ $1 == "gst" ]; then
 
    clear; f_greet 
 
-      tput setaf 3
+      f_cor4
       echo -e "\ngit status:"
-      tput sgr0
+      f_resetCor
       git status
+
+elif [ $1 == "ad" ]; then
+   # Git add ...
+
+   clear; f_greet 
+
+      git status
+      f_cor4
+      echo -ne "\ngit add "
+      f_resetCor
+      echo "<your option here>"
+      git add $2
+      git status
+
+elif [ $1 == "cm" ]; then
+   # Git commit ...
+
+   clear; f_greet 
+
+      git status
+      f_cor4
+      echo -ne "\ngit commit "
+      f_resetCor
+      echo "<your option here>"
+      read v_ans
+      git commit -m "$v_ans"
+      git status
+
+
+
+
+
+elif [ $1 == "multi" ]; then
+   # Git commit multiple messages
+
+   clear; f_greet 
+
+      git status
+      f_cor4
+      echo -e "\ngit commit multiple messages"
+      f_resetCor
+      echo 
+      declare -a messages
+      declare n=1
+      while true; do
+         read -p "Insert commit n.$n: " v_ans
+
+         if [[ $v_ans == "done" ]]; then
+            break
+         fi
+         messages+=$v_ans
+
+         for i in ${messages[@]}; do
+            echo -e "$i\n"
+         done
+         ((n=n+1))
+      done
+
+
+
 
 elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
 	# 'git add --all' + 'git status' + 'git commim -m "" '
@@ -109,66 +174,66 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
       f_greet
 
       # Git add --all
-			tput setaf 3
+			f_cor4
 			echo "git add --all"
-			tput sgr0
+			f_resetCor
 			git add --all
 
       # Git status
-			tput setaf 3
+			f_cor4
 			echo -e "git status:\n"
-			tput sgr0
+			f_resetCor
          git status
 
       # Git commit -m ""
-			tput setaf 3
+			f_cor4
 			echo -e "Creating a message i to git commit -m \"i\":"
-			tput sgr0
+			f_resetCor
 
 			echo -en "In order to commit to git, what is your commit message?\n > "
 			read _ans
          echo
 
-			tput setaf 3
+			f_cor4
 			echo -en "git commit -m \""
 			tput setaf 4
 			echo -en "${_ans}"
-			tput setaf 3
+			f_cor4
 			echo -e "\""
-			tput sgr0
+			f_resetCor
 			git commit -m "$_ans"
 
       # Git status
-			tput setaf 3
+			f_cor4
 			echo -e "\ngit status:"
-			tput sgr0
+			f_resetCor
 			git status
 
       # Asking for 3 seconds if the user wants to push the code to github.com
-			tput setaf 3
+			f_cor4
 			echo -e "\nDo you want to push to Guthub.com?"
-			tput sgr0
+			f_resetCor
          echo -n " > If so, press: "
-			tput setaf 3
+			f_cor4
 			read -s -N 1 -t 5 -p "P " v_ans
-			tput sgr0
+			f_resetCor
          
          case $v_ans in
             P)
                 # Display text based cresential while app is in beta
                    echo
                    echo -e "\nInside the ezGIT app I found this: "
-                   tput setaf 3
-                   echo -n "seivadarve"; tput sgr0; echo " and this:"; tput setaf 3;
+                   f_cor4
+                   echo -n "seivadarve"; f_resetCor; echo " and this:"; f_cor4;
                    echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
-                   tput sgr0
+                   f_resetCor
 
                    git push
 
                 # Git status one last time
-                  tput setaf 3
+                  f_cor4
                   echo -e "\ngit status:"
-                  tput sgr0
+                  f_resetCor
                   git status
 
             ;;
@@ -196,6 +261,8 @@ elif [ $1 == "+++" ] || [ $1 == "g-ad-cm-m-pu" ]; then
 
 
 
+
+
 else
    # If the arguments you input are neither empty nor listed, then run:
       echo "doing something if option does not exist"
@@ -204,7 +271,7 @@ fi
 
 #uDev: You may start deleting "case" and "esac" and adding 'if [ $1 == "K" ]; then' because it is better to create menus
 #uDev: add an option for: "mkdir" + "touch .gitkeep"
-
+#uDev: add: "alias "G (*)"="git stash"' and 'alias "G )*("="git unstash"'
 
 
 
@@ -222,7 +289,7 @@ function setGlobalConfig_menu {
 		#This will be a menu soon that can list, edit, remove... to set as global configs. For example the configurations for SeivaDArve"
 
 		# Inform that this menu is under construction:
-		echo -e "$(tput setaf 3)\n  menu under construction;)\n${RESTORE}"; read; G
+		echo -e "$(f_cor4)\n  menu under construction;)\n${RESTORE}"; read; G
 
 		# Entry to adjust Seiva D'Arve:
 		#git config --global user.email "flowreshe.seiva.d.arve@gmail.com"
@@ -251,36 +318,36 @@ function setGlobalConfig_menu {
 			;;
 		0) # Option: git status
          #gst
-			tput setaf 3
+			f_cor4
 			echo -e "git status:\n"
-			tput sgr0
+			f_resetCor
 			git status
 			;;
 		0+) # Option: git status && git remote show origin
          #gst+
-			tput setaf 3
+			f_cor4
 			echo -e "git status:\n"
-			tput sgr0
+			f_resetCor
 			git status
 
-			tput setaf 3
+			f_cor4
 			echo -e "\ngit remote show origin:"
-			tput sgr0
+			f_resetCor
 			git remote show origin
 
 			;;
 		1) # Option: git pull
          #gpl
-			tput setaf 3
+			f_cor4
 			echo "git pull:"
-			tput sgr0
+			f_resetCor
 			git pull 
 			;;
 		2) # Option: git push
          #gpu
-			tput setaf 3
+			f_cor4
 			echo "git push:"
-			tput sgr0
+			f_resetCor
 			git push
 
 			;;
@@ -288,10 +355,10 @@ function setGlobalConfig_menu {
 
 		3) # Option: git add .
          #gad.
-			tput sgr0
-			tput setaf 3
+			f_resetCor
+			f_cor4
 			echo "git add ."
-			tput sgr0
+			f_resetCor
 			git add .
 			;;
 		4) # Option: git add --all
@@ -299,32 +366,32 @@ function setGlobalConfig_menu {
 			echo -n "git add --all"
 			tput setaf 4
 			echo -n "?"
-			tput sgr0
+			f_resetCor
 			read
 			tput setaf 4
 			echo -n "git add --all"
-			tput sgr0
+			f_resetCor
 			echo ":"
 			git add --all
-			tput setaf 3
+			f_cor4
 			echo "git add --all"
-			tput sgr0
+			f_resetCor
 			;;
 		5) # Option: git commit -m '...'
-			tput setaf 3
+			f_cor4
 			echo -en "git commit -m \"...\""
-			tput sgr0
+			f_resetCor
 			echo ":"
 			echo -en "In order to commit to git, what is your commit message?\n > "
 			read _ans
 
-			tput setaf 3
+			f_cor4
 			echo -en "git commit -m \""
 			tput setaf 4
 			echo -en "${_ans}"
-			tput setaf 3
+			f_cor4
 			echo -e "\""
-			tput sgr0
+			f_resetCor
 
 			git commit -m "$_ans"
 			;;
@@ -353,21 +420,21 @@ function setGlobalConfig_menu {
 		-) # unStages a file
 			# uDev: lacks colored text
 
-			tput setaf 3
+			f_cor4
 			echo -en "git reset "
 			tput setaf 4
 			echo -e "$2"
-			tput setaf 3
+			f_cor4
 			#echo -e "\""
-			tput sgr0
+			f_resetCor
 
 			git reset $2
 			;;
 		6) # Option: git add . && git commit -m '...'
 			# Dev: lacks colored text
-			tput setaf 3
+			f_cor4
 			echo "git add ."
-			tput sgr0
+			f_resetCor
 			git add . 
 
 			echo -en "\nIn order to commit to git, what is your commit message?\n > "
@@ -375,32 +442,32 @@ function setGlobalConfig_menu {
 			git commit -m "$_ans"
 			;;
 		7) # Option: git add --all && git commit -m '...' && git status
-			tput setaf 3
+			f_cor4
 			echo "git add --all"
-			tput sgr0
+			f_resetCor
 			git add --all
 
 			echo -en "\nIn order to commit to git, what is your commit message?\n > "
 			read _ans
 
-			tput setaf 3
+			f_cor4
 			echo -en "git commit -m \""
 			tput setaf 4
 			echo -en "${_ans}"
-			tput setaf 3
+			f_cor4
 			echo -e "\""
-			tput sgr0
+			f_resetCor
 			git commit -m "$_ans"
 
-			tput setaf 3
+			f_cor4
 			echo -e "\n\ngit status\n\n"
-			tput sgr0
+			f_resetCor
 			git status
 			;;
 		8) # Option: git log
-			tput setaf 3
+			f_cor4
 			echo "git log"
-			tput sgr0
+			f_resetCor
 			git log
 			;;
 		9) # Option: cat stroken && git push && git status
@@ -413,17 +480,17 @@ function setGlobalConfig_menu {
 
 	 # Display text based cresential while app is in beta
 	 echo -e "\nInside the ezGIT app I found this: "
-	 tput setaf 3
-	 echo -n "seivadarve"; tput sgr0; echo " and this:"; tput setaf 3;
+	 f_cor4
+	 echo -n "seivadarve"; f_resetCor; echo " and this:"; f_cor4;
 	 echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
-	 tput sgr0
+	 f_resetCor
 
 	 git push
 
 	 echo ""
-	 tput setaf 3
+	 f_cor4
 	 echo "git status:"
-	 tput sgr0
+	 f_resetCor
 	 git status
 
 	 ;;
@@ -431,21 +498,21 @@ function setGlobalConfig_menu {
 	 setGlobalConfig_menu
 	 ;;
  C) # Configure git manually with vim
-	 tput setaf 3
+	 f_cor4
 	 echo -e "\nIf your email is not configured properly, your commits won't show in your github.com's contribution graph"
 	 echo " > Type any key to continue... "
-	 tput sgr0
+	 f_resetCor
 	 read
 
 	 if [ -f ./users/set-SeivaDArve.sh ]
 	 	then
-	 		tput setaf 3
+	 		f_cor4
 	 		echo -e "there is a file set-seivadarve.sh"
 	 		echo -e "To configure this profile, type \"seiva\""
 	 		echo -e "To configure ~/.gitconfig manually type \"manl\""
 			echo ""
 			echo -e "To display ~/.gitconfig type \"list\""
-	 		tput sgr0
+	 		f_resetCor
 	 		read _ans
 
 				if [ $_ans == "seiva" ]
@@ -470,20 +537,20 @@ function setGlobalConfig_menu {
  m1) # Option: Menu 1
 
 			# Inform that this menu is under construction:
-			echo -e "$(tput setaf 3)\n  menu under construction;)\n${RESTORE}"; read; G
+			echo -e "$(f_cor4)\n  menu under construction;)\n${RESTORE}"; read; G
 
 			;;
 		m2) # Option: Menu 2
 
 			# Inform that this menu is under construction:
-			echo -e "$(tput setaf 3)\n  menu under construction;)\n${RESTORE}"; read; G
+			echo -e "$(f_cor4)\n  menu under construction;)\n${RESTORE}"; read; G
 			;;
 		S) # Option: Stop and Clear the screen from this menu
 
 			clear
-			tput setaf 3
+			f_cor4
 			echo "clear"
-			tput sgr0
+			f_resetCor
 			;;
 		*) # If you type an incorrect option OR if you type nothing, the menu is displayed (this is not a bug)
       ;;
