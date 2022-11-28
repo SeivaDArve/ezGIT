@@ -242,6 +242,68 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
             ;;
          esac
 
+
+
+
+
+
+
+
+
+
+
+elif [ $1 == "+" ] || [ $1 == "g-ad-cm-m" ]; then
+	# 'git add --all' + 'git status' + 'git commim -m "" '
+   # Almost Equivalent to 'G 7'
+
+      clear
+      f_greet
+
+      # Git add <file>
+			f_cor4
+			echo "git add <insert file>"
+			f_resetCor
+			git add $2
+
+      # Git status
+			f_cor4
+			echo -e "git status:\n"
+			f_resetCor
+         git status
+
+      # Git commit -m ""
+			f_cor4
+			echo -e "Creating a message i to git commit -m \"i\":"
+			f_resetCor
+
+			echo -en "In order to commit to git, what is your commit message?\n > "
+			read _ans
+         echo
+
+			f_cor4
+			echo -en "git commit -m \""
+			tput setaf 4
+			echo -en "${_ans}"
+			f_cor4
+			echo -e "\""
+			f_resetCor
+			git commit -m "$_ans"
+
+      # Git status
+			f_cor4
+			echo -e "\ngit status:"
+			f_resetCor
+			git status
+
+
+
+
+
+
+
+
+
+
 elif [ $1 == "+++" ] || [ $1 == "g-ad-cm-m-pu" ]; then
 	# 'git add --all' + 'git commim -m "" ' + 'git push'
 		clear
