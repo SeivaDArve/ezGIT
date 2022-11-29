@@ -133,10 +133,6 @@ elif [ $1 == "cm" ]; then
       git commit -m "$v_ans"
       git status
 
-
-
-
-
 elif [ $1 == "multi" ]; then
    # Git commit multiple messages
 
@@ -163,6 +159,109 @@ elif [ $1 == "multi" ]; then
          ((n=n+1))
       done
 
+
+elif [ $1 == "+" ]; then
+	# 1. Test if $2 was specified
+   # 2. git add $2
+   # 3. git status
+   # 4. git commim -m "i" 
+
+      clear
+      f_greet
+
+
+      function f_1 {
+         echo "insert 1 file first"
+         exit 1
+      }
+      # If var $2 is empty, ask for one
+         [ -z $2 ] && f_1
+
+      
+      # Git add <file>
+         f_cor3
+         echo -n "'"
+			f_cor4
+			echo -n "git add <insert file>"
+         f_cor3
+         echo "'"
+			git add $2
+
+			f_cor4
+         echo -n "git add "
+         f_cor3
+         echo $2
+			f_resetCor
+         echo
+
+
+
+      # Asking for 3 seconds if the user wants 'git diff'
+			f_cor4
+         echo -e "\nDo you want to see the differences between the 2 files? (the last version and the current version) "
+			f_resetCor
+         echo -n " > If so, press: "
+			f_cor4
+         echo "D"
+			f_resetCor
+         echo -n " > If no, press: "
+			f_cor4
+			read -s -N 1 -t 5 -p "N " v_ans
+			f_resetCor
+         
+         case $v_ans in
+            d | D)
+                # Display text based cresential while app is in beta
+                   echo
+                   f_cor4
+                   echo -ne "\ngit diff:"
+                   f_cor3
+                   echo $3
+                   f_resetCor
+                   sleep 1
+                   git diff --staged
+                   read -s -n 1
+            ;;
+            n | N)
+                # Choose N to continue without git diff 
+                   echo
+                   # Continuing normally to commit
+            ;;
+            *)
+               echo
+               exit 0
+            ;;
+         esac
+
+      # Git status
+			f_cor4
+			echo -e "git status:\n"
+			f_resetCor
+         git status
+
+      # Git commit -m ""
+			f_cor4
+			echo -e "Creating a message i to git commit -m \"i\":"
+			f_resetCor
+
+			echo -en "In order to commit to git, what is your commit message?\n > "
+			read _ans
+         echo
+
+			f_cor4
+			echo -en "git commit -m \""
+         f_cor3
+			echo -en "${_ans}"
+			f_cor4
+			echo -e "\""
+			f_resetCor
+			git commit -m "$_ans"
+
+      # Git status
+			f_cor4
+			echo -e "\ngit status:"
+			f_resetCor
+			git status
 
 
 
@@ -219,7 +318,7 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
 			f_resetCor
          
          case $v_ans in
-            P)
+            p | P)
                 # Display text based cresential while app is in beta
                    echo
                    echo -e "\nInside the ezGIT app I found this: "
@@ -251,49 +350,6 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
 
 
 
-
-elif [ $1 == "+" ] || [ $1 == "g-ad-cm-m" ]; then
-	# 'git add --all' + 'git status' + 'git commim -m "" '
-   # Almost Equivalent to 'G 7'
-
-      clear
-      f_greet
-
-      # Git add <file>
-			f_cor4
-			echo "git add <insert file>"
-			f_resetCor
-			git add $2
-
-      # Git status
-			f_cor4
-			echo -e "git status:\n"
-			f_resetCor
-         git status
-
-      # Git commit -m ""
-			f_cor4
-			echo -e "Creating a message i to git commit -m \"i\":"
-			f_resetCor
-
-			echo -en "In order to commit to git, what is your commit message?\n > "
-			read _ans
-         echo
-
-			f_cor4
-			echo -en "git commit -m \""
-			tput setaf 4
-			echo -en "${_ans}"
-			f_cor4
-			echo -e "\""
-			f_resetCor
-			git commit -m "$_ans"
-
-      # Git status
-			f_cor4
-			echo -e "\ngit status:"
-			f_resetCor
-			git status
 
 
 
