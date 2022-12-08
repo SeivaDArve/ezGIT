@@ -35,6 +35,9 @@ function f_colors-without-tput {
 	   #echo ${_RED}To do something, specify an argument like \"G 2\"${_RESTORE}
 }
 
+# uDev: Check at every run if email and username exist and are configured according a personal database of emails and usernames
+	# Without a proper email, github will not count your commits for their graph of your activity
+
 # ---------------------------------------------
 
 
