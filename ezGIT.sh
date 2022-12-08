@@ -412,6 +412,7 @@ function setGlobalConfig_menu {
 		# Inform that this menu is under construction:
 		echo -e "$(f_cor4)\n  menu under construction;)\n${RESTORE}"; read; G
 
+      v_whoami=$(whoami)
 		# Entry to adjust Seiva D'Arve:
 		#git config --global user.email "flowreshe.seiva.d.arve@gmail.com"
 		#git config --global user.name "SeivaDArve"	
