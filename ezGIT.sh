@@ -89,6 +89,12 @@ elif [ $1 == "eg" ]; then
       echo "you don\'t need to source G.sh at the file \"source-all-drya-files\""
       echo "Start using if conditions instead"
 
+elif [ $1 == "config" ]; then
+   # Confirming that configurations exist
+      echo "Opening file of configurations for git with vim editor"
+      read -s
+      vim ~/.gitconfig
+
 elif [ $1 == "k" ] || [ $1 == "gkp" ]; then
    # Create a file .gitkeep
       touch .gitkeep
