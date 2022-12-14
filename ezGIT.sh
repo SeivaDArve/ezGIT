@@ -38,6 +38,7 @@ function f_colors-without-tput {
 # uDev: Check at every run if email and username exist and are configured according a personal database of emails and usernames
 	# Without a proper email, github will not count your commits for their graph of your activity
 
+# uDev: if the chosen repo to 'git push' is a repo that is usually encripted, do not allow to push before using encryption
 # ---------------------------------------------
 
 
