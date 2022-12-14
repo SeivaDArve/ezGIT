@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# Alias to use directly as git alias
+
+alias g="git"
+#alias gcm="git commit"
+alias gcm="git commit -m"
+#alias gcm-m="git commit -m"
+alias gcm="git commit"
+alias gpom="git pull origin master"
+alias gdf="git diff"
+alias gch="git checkout"
+alias gchb="git checkout -b"
+alias gac="git add . && git commit"
+alias grs="git restore staged"
+alias gre="git restore"
+alias gcl="git clone"
+alias glgg="git log --graph --abbrev-commit --decorate --format=fotmat:'%C(bold green)%h%C(reset) - %C(cold cyan)%aD%C(reset) %C(bold yellow)(%ar)%C(reset)%C(auto)%%d%C(reset)%n''		%C(white)%s%C(reset)		%C(dim white)- %an%C(reset)' --all"
+alias gmr="git merge"
+alias gfc="git fetch"
+alias gbr="git branch"
+alias glg="git log"
+alias gkp="touch .gitkeep"
+
+#  "gkp"
+#     # Create a file .gitkeep
+#        touch .gitkeep
+#  
+#  "gfv"
+#  	# List favorite git commands
+#  		clear
+#  		echo -e "Favorits menu\n" 
+#  		echo -e "git status \ngit reset  #To unstage files \ngit rebase -i HEAD~2 && reword  #To change old commit messages"
+#  
+#  "gst"
+#     # Git status
+#  
+#  "gad"
+#     # Git add ...
+#  
+#  "gcm"
+#     # Git commit ...
+#  
+#  
+#  "multi"
+#     # Git commit multiple messages
+#  
+#  "g-ad-cm-m-pu"
+#  	# 'git add --all' + 'git commim -m "" ' + 'git push'
+
+

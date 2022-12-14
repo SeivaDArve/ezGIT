@@ -7,25 +7,6 @@
 # List of what is lacking at this version to transcend to the next version:
 	1. bashrc-presence-check: (see if this app is being loaded on "~.bashrc" if not, prompt the user if he want to add it.
 	2. Blind-unsorted-commit-all: When your repo is only about text and there is no need to match any previous code, then this function just commit all there is to commit with either a commit message choosen by you, or with a commit message "Blind and unsorted commit [date]"
-	3. Alias:
-		g="git"
-		gcm="git commit"
-		gcm-m="git commit -m"
-		gcm="git commit"
-		gpom="git pull origin master"
-		gdf="git diff"
-		gch="git checkout"
-		gchb="git checkout -b"
-		gac="git add . && git commit"
-		grs="git restore staged"
-		gre="git restore"
-		gcl="git clone"
-		glgg="git log --graph --abbrev-commit --decorate --format=fotmat:'%C(bold green)%h%C(reset) - %C(cold cyan)%aD%C(reset) %C(bold yellow)(%ar)%C(reset)%C(auto)%%d%C(reset)%n''		%C(white)%s%C(reset)		%C(dim white)- %an%C(reset)' --all"
-		gmr="git merge"
-		gfc="git fetch"
-		gbr="git branch"
-		glg="git log"
-      gkp="touch .gitkeep"
 	4. echo out setaf colored text for every action
    6. Has to have an option to configure and display email
    7. Find the list of all Seiva's repository and git pull all of them (update them)
