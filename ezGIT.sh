@@ -82,6 +82,9 @@ G m1 | goto menu 1
 G m2 | goto menu 2
 
 Example: To do something, specify an argument like "G 2"
+
+(Quit this page with the key: Q)
+
 heredooc
 
 
