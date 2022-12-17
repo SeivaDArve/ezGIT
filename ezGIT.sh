@@ -43,7 +43,44 @@ function f_colors-without-tput {
 # uDev: Instead of creating repos at github.com, then clone, then use: instead, create a function with git init and then push to the remote
 # ---------------------------------------------
 
+function f_git_status-recursive {
+      # Title: script to git git status of ALL repos
 
+      clear
+
+      f_greet
+      echo -e "Searching for \"git status\" at: \n${v_REPOS_CENTER}"
+      cd ${v_REPOS_CENTER}
+
+      function f_output {
+         figlet Title
+         #echo -e "\n\n------ Title: $i -------"
+         echo -e "$i\n\n "
+         git status
+      }
+
+      for i in $(ls); do 
+         # Filter directories from files
+            g=$(file $i)
+
+         # If the variable g returns a directory, we navigate into it
+            if [[ $g =~ "dir" ]]; then 
+               cd $i
+               
+               # Saving the git status into a variable without outputing it to the screen
+                  s=$(git status)
+
+            # Search for git words that indicate work yo be done
+               # uDev: there must be more words, therefore this function must be tested
+               if [[ $s =~ "added" ]]; then f_output;
+                  elif [[ $s =~ "Changes" ]]; then f_output;
+                  elif [[ $s =~ "Untracked" ]]; then f_output;
+               fi
+
+               cd ..
+            fi
+      done
+   }
 
 if [ -z $@ ]; then
    # Do something else if there are no arguments
@@ -123,42 +160,8 @@ elif [ $1 == "." ]; then
          git status
 
    elif [[ $2 == "--all" ]]; then
-      # Title: script to git git status of ALL repos
-
-      clear
-
-      f_greet
-      echo -e "Searching for \"git status\" at: \n${v_REPOS_CENTER}"
-      cd ${v_REPOS_CENTER}
-
-      function f_output {
-         figlet Title
-         #echo -e "\n\n------ Title: $i -------"
-         echo -e "$i\n\n "
-         git status
-      }
-
-      for i in $(ls); do 
-         # Filter directories from files
-            g=$(file $i)
-
-         # If the variable g returns a directory, we navigate into it
-            if [[ $g =~ "dir" ]]; then 
-               cd $i
-               
-               # Saving the git status into a variable without outputing it to the screen
-                  s=$(git status)
-
-            # Search for git words that indicate work yo be done
-               # uDev: there must be more words, therefore this function must be tested
-               if [[ $s =~ "added" ]]; then f_output;
-                  elif [[ $s =~ "Changes" ]]; then f_output;
-                  elif [[ $s =~ "Untracked" ]]; then f_output;
-               fi
-
-               cd ..
-            fi
-      done
+      # Whenever code complexity is found, a function is created to enable better code reading
+         f_git_status-recursive
    fi
 elif [ $1 == "ad" ]; then
    # Git add ...
