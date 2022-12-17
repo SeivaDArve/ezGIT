@@ -21,11 +21,8 @@ alias gfc="git fetch"
 alias gbr="git branch"
 alias glg="git log"
 alias gkp='touch .gitkeep; echo " > file .gitkeep created"'
+alias gdf="git diff"
 
-#  "gkp"
-#     # Create a file .gitkeep
-#        touch .gitkeep
-#  
 #  "gfv"
 #  	# List favorite git commands
 #  		clear
