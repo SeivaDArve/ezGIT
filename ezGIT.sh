@@ -416,15 +416,28 @@ elif [ $1 == "+-" ] || [ $1 == "g-ad-cm-amend" ]; then
 		f_cor4
          echo "git commit --amend? (press anter to confirm)"
 		f_resetCor
+         echo " > Remember: This merges staged files: do you have any?"
       read -sn 1 
       echo
 
       git commit --amend
 
       #uDev: if you do not need to change the commit message, then you can even do git commit --amend --no-edit
+      #uDev: to change the commit message on the terminal without text editor: git commit --ammend -m "new commit message"
 
 
 
+elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
+   # git pull
+      clear 
+      f_greet
+
+		f_cor4
+         echo "git pull? (press Enter to confirm)"
+		f_resetCor
+      read -sn 1 
+      echo
+      git pull
 
 elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
    # git pull
