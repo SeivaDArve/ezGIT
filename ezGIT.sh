@@ -376,7 +376,7 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
          
          case $v_ans in
             p | P)
-                # Display text based cresential while app is in beta
+                # Display text based credential while app is in beta
                    echo
                    echo -e "\nInside the ezGIT app I found this: "
                    f_cor4
@@ -417,7 +417,6 @@ elif [ $1 == "+-" ] || [ $1 == "g-ad-cm-amend" ]; then
          echo "git commit --amend? (press anter to confirm)"
 		f_resetCor
          echo " > Remember: This merges staged files: do you have any?"
-      read -sn 1 
 
       git commit --amend
 
@@ -448,8 +447,14 @@ elif [ $1 == "^" ] || [ $1 == "gpush" ]; then
 		f_cor4
          echo "git push"
 		f_resetCor
-      read -sn 1 
-      echo
+
+    # Display text based credential while app is in beta
+       echo -e "\nInside the ezGIT app I found this: "
+       f_cor4
+       echo -n "seivadarve"; f_resetCor; echo " and this:"; f_cor4;
+       echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+       f_resetCor
+
       git push
 
 elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
