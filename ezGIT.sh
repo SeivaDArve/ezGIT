@@ -418,7 +418,6 @@ elif [ $1 == "+-" ] || [ $1 == "g-ad-cm-amend" ]; then
 		f_resetCor
          echo " > Remember: This merges staged files: do you have any?"
       read -sn 1 
-      echo
 
       git commit --amend
 
@@ -429,6 +428,7 @@ elif [ $1 == "+-" ] || [ $1 == "g-ad-cm-amend" ]; then
 
 elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
    # git pull
+   # Download
       clear 
       f_greet
 
@@ -438,6 +438,19 @@ elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
       read -sn 1 
       echo
       git pull
+
+elif [ $1 == "^" ] || [ $1 == "gpush" ]; then
+   # git push
+   # Upload
+      clear 
+      f_greet
+
+		f_cor4
+         echo "git push"
+		f_resetCor
+      read -sn 1 
+      echo
+      git push
 
 elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
    # git pull
