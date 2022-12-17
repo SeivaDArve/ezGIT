@@ -20,7 +20,7 @@ alias gmr="git merge"
 alias gfc="git fetch"
 alias gbr="git branch"
 alias glg="git log"
-alias gkp="touch .gitkeep"
+alias gkp='touch .gitkeep; echo " > file .gitkeep created"'
 
 #  "gkp"
 #     # Create a file .gitkeep
