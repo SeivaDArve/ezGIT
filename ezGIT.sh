@@ -111,16 +111,55 @@ elif [ $1 == "f" ] || [ $1 == "gfv" ]; then
 		echo -e "Favorits menu\n" 
 		echo -e "git status \ngit reset  #To unstage files \ngit rebase -i HEAD~2 && reword  #To change old commit messages"
 
-elif [ $1 == "." ] || [ $1 == "gst" ]; then
+elif [ $1 == "." ]; then
    # Git status
+   
+   if [[ -z $2 ]]; then
+      clear; f_greet 
 
-   clear; f_greet 
+         f_cor4
+         echo -e "\ngit status:"
+         f_resetCor
+         git status
 
-      f_cor4
-      echo -e "\ngit status:"
-      f_resetCor
-      git status
+   elif [[ $2 == "--all" ]]; then
+      # Title: script to git git status of ALL repos
 
+      clear
+
+      f_greet
+      echo -e "Searching for \"git status\" at: \n${v_REPOS_CENTER}"
+      cd ${v_REPOS_CENTER}
+
+      function f_output {
+         figlet Title
+         #echo -e "\n\n------ Title: $i -------"
+         echo -e "$i\n\n "
+         git status
+      }
+
+      for i in $(ls); do 
+         # Filter directories from files
+            g=$(file $i)
+
+         # If the variable g returns a directory, we navigate into it
+            if [[ $g =~ "dir" ]]; then 
+               cd $i
+               
+               # Saving the git status into a variable without outputing it to the screen
+                  s=$(git status)
+
+            # Search for git words that indicate work yo be done
+               # uDev: there must be more words, therefore this function must be tested
+               if [[ $s =~ "added" ]]; then f_output;
+                  elif [[ $s =~ "Changes" ]]; then f_output;
+                  elif [[ $s =~ "Untracked" ]]; then f_output;
+               fi
+
+               cd ..
+            fi
+      done
+   fi
 elif [ $1 == "ad" ]; then
    # Git add ...
 
