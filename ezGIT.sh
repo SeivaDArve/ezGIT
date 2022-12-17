@@ -402,14 +402,42 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
 
 
 
+elif [ $1 == "+-" ] || [ $1 == "g-ad-cm-amend" ]; then
+   # git commit --ammend
+      # Used in cases where you want to update your last commit (for example you forgot a line of code or you found a bug that you can easily fix. 
+      # It is usefull to keep the git log clean and easy to read.
+      # If you didn't use this option, the are many times creating 3 commits to accomplish things you wanted to do imediatly at the first try
+      # This also avoids git commits -m "same as last commit" because the new commit merges with the last one
+   # It can also change the last commit message
+
+      clear 
+      f_greet
+
+		f_cor4
+         echo "git commit --amend? (press anter to confirm)"
+		f_resetCor
+      read -sn 1 
+      echo
+
+      git commit --amend
+
+      #uDev: if you do not need to change the commit message, then you can even do git commit --amend --no-edit
 
 
 
 
+elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
+   # git pull
+      clear 
+      f_greet
 
+		f_cor4
+         echo "git pull? (press anter to confirm)"
+		f_resetCor
+      read -sn 1 
+      echo
 
-
-
+      git pull
 
 
 
