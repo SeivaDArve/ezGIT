@@ -438,6 +438,12 @@ elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
       echo
       git pull
 
+   # Git status
+      f_cor4
+      echo -e "\ngit status:"
+      f_resetCor
+      git status
+
 elif [ $1 == "^" ] || [ $1 == "gpush" ]; then
    # git push
    # Upload
@@ -457,23 +463,11 @@ elif [ $1 == "^" ] || [ $1 == "gpush" ]; then
 
       git push
 
-elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
-   # git pull
-      clear 
-      f_greet
-
-		f_cor4
-         echo "git pull? (press anter to confirm)"
-		f_resetCor
-      read -sn 1 
-      echo
-
-      git pull
-
-
-
-
-
+   # Git status
+      f_cor4
+      echo -e "\ngit status:"
+      f_resetCor
+      git status
 
 
 elif [ $1 == "+++" ] || [ $1 == "g-ad-cm-m-pu" ]; then
