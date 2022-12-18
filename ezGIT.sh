@@ -49,13 +49,19 @@ function f_git_status-recursive {
       clear
 
       f_greet
-      echo -e "Searching for \"git status\" at: \n${v_REPOS_CENTER}"
+      f_cor3
+      echo -e "Searching for \"git status\" at: \n${v_REPOS_CENTER}\n"
+      f_resetCor
       cd ${v_REPOS_CENTER}
 
       function f_output {
-         figlet Title
-         #echo -e "\n\n------ Title: $i -------"
-         echo -e "$i\n\n "
+         f_horizontal_line
+         f_cor4
+         echo -n " > Repository: "
+         f_cor3
+         echo "$i"
+         echo
+         f_resetCor
          git status
       }
 
@@ -80,6 +86,30 @@ function f_git_status-recursive {
                cd ..
             fi
       done
+}
+
+function f_horizontal_line {
+   # This function calculates the amount of line present in the terminal window for the current zoom and creates an horizontal line across the screen
+
+         v_count="$COLUMNS"
+            #echo -e "There are currently $v_cols columns in the screen \n and from that number, $v_count is the\n number of dashes '-' that the menu will have "
+            #read
+
+         # You may choose the apropriate symbol here
+            v_underscore="-"
+
+         # Store in a var, how many dashes can be replaced by empty spaces (according to the specific amount of available columns)
+            v_underscoreCount=""
+
+            for e in $(seq $v_count); do 
+               v_underscoreCount="$v_underscoreCount$v_underscore"
+            done
+
+         # The result is an horizontal line
+            #echo "var is $v_underscoreCount"
+            #read
+            v_line=$v_underscoreCount
+            echo $v_underscoreCount
 }
 
 function f_heredoc {
@@ -282,7 +312,7 @@ elif [ $1 == "+" ]; then
                 # Display text based cresential while app is in beta
                    echo
                    f_cor4
-                   echo -ne "\ngit diff:"
+                   echo -n "git diff:"
                    f_cor3
                    echo $3
                    f_resetCor
