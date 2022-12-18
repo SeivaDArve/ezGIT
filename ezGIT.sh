@@ -8,10 +8,10 @@ function f_cor1 {
    tput setaf 5 
 }
 function f_cor2 { 
-   tput setaf 6 
+   tput setaf 2 
 }
 function f_cor3 { 
-   tput setaf 8 
+   tput setaf 3
 }
 function f_cor4 { 
    tput setaf 4
@@ -80,14 +80,10 @@ function f_git_status-recursive {
                cd ..
             fi
       done
-   }
+}
 
-if [ -z $@ ]; then
-   # Do something else if there are no arguments
-      echo " > No arguments where given"
-      sleep 1
-      echo " > Here is a list of arguments you may use:"
-      f_cor1; echo -n "   $ G "; f_cor2; echo -n "1"; f_resetCor; echo "  (It means \"git pull\")"
+function f_heredoc {
+
 less << heredooc
 
 ezGIT------------ git menu --------- page 1
@@ -126,6 +122,17 @@ Example: To do something, specify an argument like "G 2"
 
 heredooc
 
+
+}
+
+if [ -z "$*" ]; then
+   # Do something else if there are no arguments
+      echo " > No arguments where given"
+      sleep 1
+      echo " > Here is a list of arguments you may use:"
+      f_cor1; echo -n "   $ G "; f_cor2; echo -n "1"; f_resetCor; echo "  (It means \"git pull\")"
+
+      f_heredoc
 
 elif [ $1 == "eg" ]; then
    # Do something if arg 1 is equal to "eg":
@@ -220,8 +227,9 @@ elif [ $1 == "multi" ]; then
 elif [ $1 == "+" ]; then
 	# 1. Test if $2 was specified
    # 2. git add $2
-   # 3. git status
-   # 4. git commim -m "i" 
+   # 3. Ask if user wants git diff
+   # 4. git status
+   # 5. git commim -m "i" 
 
       clear
       f_greet
@@ -242,29 +250,32 @@ elif [ $1 == "+" ]; then
 			echo -n "git add <insert file>"
          f_cor3
          echo "'"
-			git add $2
+         
+         # When git adding files, we want 'G' to add all files input as arguments. BUT there is one prombem: '+' is the input value that indicates 'git add'. Therefore, the the second arg '+' is not discarded, then 'git add' will throw an error saying "there is no such file called '+'. The next line of code lists all arguments starting at 
+         # arg $2 wich is '+'
+			git add ${*:2}
 
-			f_cor4
-         echo -n "git add "
-         f_cor3
-         echo $2
-			f_resetCor
-         echo
+         # For each argument given starting at arg 2, list it colorfully
+         for i in ${*:2}; do
+            f_cor4
+            echo -n "git add "
+            f_cor3
+            echo $i
+            f_resetCor
+         done
 
 
 
       # Asking for 3 seconds if the user wants 'git diff'
 			f_cor4
-         echo -e "\nDo you want to see the differences between the 2 files? (the last version and the current version) "
+         echo -e "\nDo you want to see the differences between the 2 files? \n(the last version and the current version) "
 			f_resetCor
+         echo " > If no, press Any key"
          echo -n " > If so, press: "
 			f_cor4
          echo "D"
 			f_resetCor
-         echo -n " > If no, press: "
-			f_cor4
-			read -s -N 1 -t 5 -p "N " v_ans
-			f_resetCor
+         read -sn 1 v_ans
          
          case $v_ans in
             d | D)
@@ -279,14 +290,8 @@ elif [ $1 == "+" ]; then
                    git diff --staged
                    read -s -n 1
             ;;
-            n | N)
-                # Choose N to continue without git diff 
-                   echo
-                   # Continuing normally to commit
-            ;;
             *)
                echo
-               exit 0
             ;;
          esac
 
@@ -398,8 +403,18 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
             ;;
          esac
 
+elif [ $1 == "-" ]; then 
+   # unStages a file
+	# uDev: lacks colored text
 
+      f_cor4
+      echo -en "git reset "
+      f_cor3
+      echo -e "$2"
+      f_resetCor
 
+      # uDev: unstage all files given as args besides $1. the argument $1 '-' is not a file. (See 'G +' where this line of code already works)
+      git reset $2
 
 
 elif [ $1 == "+-" ] || [ $1 == "g-ad-cm-amend" ]; then
@@ -422,6 +437,7 @@ elif [ $1 == "+-" ] || [ $1 == "g-ad-cm-amend" ]; then
 
       #uDev: if you do not need to change the commit message, then you can even do git commit --amend --no-edit
       #uDev: to change the commit message on the terminal without text editor: git commit --ammend -m "new commit message"
+      #uDev: if you want to ammed a commit that was ALREADY PUSHED to github there is a method: (warning doind this when working as a team od developers, because it may erase code): ammed you repo locally and then: "git push -f origin main"
 
 
 
@@ -623,41 +639,6 @@ function setGlobalConfig_menu {
 			f_resetCor
 
 			git commit -m "$_ans"
-			;;
-		+) # Stages a file
-			# Alias to "git add ..."
-			# uDev: lacks colored text
-			# uDev: "git add " as an alias gad="git add " ## uDev: Put this into menu 2
-			git add $2
-
-
-         #uDev: case $2 in
-         #        \*)
-         #
-         #           # Command:
-         #           # '$ G + *'
-         #
-         #           # Same as:
-         #           git add *
-         #
-         #           # Same as:
-         #           "git add --all"
-         #
-         #         ;;
-         #           
-			;;
-		-) # unStages a file
-			# uDev: lacks colored text
-
-			f_cor4
-			echo -en "git reset "
-			tput setaf 4
-			echo -e "$2"
-			f_cor4
-			#echo -e "\""
-			f_resetCor
-
-			git reset $2
 			;;
 		6) # Option: git add . && git commit -m '...'
 			# Dev: lacks colored text
