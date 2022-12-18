@@ -73,19 +73,30 @@ function f_git_status-recursive {
             if [[ $g =~ "dir" ]]; then 
                cd $i
                
-               # Saving the git status into a variable without outputing it to the screen
-                  s=$(git status)
 
-            # Search for git words that indicate work yo be done
-               # uDev: there must be more words, therefore this function must be tested
-               if [[ $s =~ "added" ]]; then f_output;
-                  elif [[ $s =~ "Changes" ]]; then f_output;
-                  elif [[ $s =~ "Untracked" ]]; then f_output;
-               fi
+         # Saving the git status into a variable without outputing it to the screen
+            # It sends an error if dir is not repository. Therefore we send Sandard error do /dev/null
+            s=$(git status 2>/dev/null) 
 
-               cd ..
+         # Search for git words that indicate work yo be done
+            # uDev: there must be more words, therefore this function must be tested
+            if [[ $s =~ "added" ]]; then f_output;
+               elif [[ $s =~ "Changes" ]]; then f_output;
+               elif [[ $s =~ "Untracked" ]]; then f_output;
             fi
+
+            cd ..
+         fi
+         
       done
+
+   # Display a message to indicat it is finished:
+      # uDev: lacks color
+      f_horizontal_line
+      echo "git status to all repos under:"
+      echo " > $v_REPOS_CENTER"
+      echo "Finished!"
+      f_horizontal_line
 }
 
 function f_horizontal_line {
