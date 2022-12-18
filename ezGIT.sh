@@ -113,6 +113,9 @@ function f_horizontal_line {
 }
 
 function f_heredoc {
+   # Describes all finctionality
+   # uDev: the BEST documentation happens if you can open the source code and read it
+      # Therefore: uDev: Create a grep function to grep all 'if [' and 'elif' in this document and along with that, search one more line below with the comment that tells what that function does
 
 less << heredooc
 
