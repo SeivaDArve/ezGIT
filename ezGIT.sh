@@ -542,7 +542,8 @@ elif [ $1 == "+++" ] || [ $1 == "g-ad-cm-m-pu" ]; then
 
 else
    # If the arguments you input are neither empty nor listed, then run:
-      echo "doing something if option does not exist"
+      echo "That option does not exist."
+      echo "In case of doubt, run the app again without any option in order for the instructions to be presented to you"
 fi
 
 
