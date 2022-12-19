@@ -495,7 +495,6 @@ elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
          echo "git pull? (press Enter to confirm)"
 		f_resetCor
       read -sn 1 
-      echo
       git pull
 
    # Git status
