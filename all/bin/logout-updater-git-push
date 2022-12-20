@@ -1,1 +1,10 @@
-# this script is meant to be put under ~/.bash_logout to update repo at terminal logout if needed
+#!/bin/bash
+
+# Title: Running before bash logout
+# Description: This script is meant to be put under ~/.bash_logout to update repo at terminal logout if needed
+# Use: at ~/.bash_logout place a line of code like: source ${v_REPOS_CENTER}/ezGIT/bin/logout-updater-git-push
+
+clear
+echo "bye bye;) (from ezGIT)"
+read -s -t 2
+sleep 3
