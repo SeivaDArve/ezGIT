@@ -503,6 +503,10 @@ elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
       f_resetCor
       git status
 
+# uDev: 'G vv' git fetch 
+# uDev: 'G vv --all' git fetch all repos
+# uDev: 'G ^^' git push (blind upload)
+
 elif [ $1 == "^" ] || [ $1 == "gpush" ]; then
    # git push
    # Upload
