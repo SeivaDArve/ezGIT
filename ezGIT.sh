@@ -5,6 +5,7 @@
 # ---------------------------------------------
 
 function f_cor1 {	
+   # For figlet titles
    tput setaf 5 
 }
 function f_cor2 { 
@@ -44,7 +45,7 @@ function f_colors-without-tput {
 # ---------------------------------------------
 
 function f_git_status-recursive {
-      # Title: script to git git status of ALL repos
+   # Title: script to give git status of ALL repos
 
       clear
 
@@ -121,6 +122,41 @@ function f_horizontal_line {
             #read
             v_line=$v_underscoreCount
             echo $v_underscoreCount
+}
+
+function f_tell_repo_name { 
+   # Function to simply tell what the repository's name is
+   
+   # Utility 1:
+      # If a specific list of repositories are found, ezGIT will deny the push before encryption
+   
+   # Get the current directory name
+      v_name=$(basename $(pwd))
+      #echo $v_name
+
+   # Find a .git directory inside our current dir location´
+      v_git_dir=$(find . -maxdepth 1 -name .git)
+
+      if [[ -z $v_git_dir ]]; then 
+         # If dir .git in not found:
+         echo -n "The directory "
+         f_cor4
+         echo -n "$v_name "
+         f_cor3
+         echo -n "is not "
+         f_resetCor
+         echo "a repository"
+
+      elif [[ $v_git_dir == "./.git" ]]; then 
+         # If at our location ./ a dire called .git is found:
+         echo -n "The directory "
+         f_cor4
+         echo -n "$v_name "
+         f_cor3
+         echo -n "is "
+         f_resetCor
+         echo "a repository"
+      fi 
 }
 
 function f_heredoc {
@@ -541,6 +577,12 @@ elif [ $1 == "+++" ] || [ $1 == "g-ad-cm-m-pu" ]; then
       echo "git push"
       echo "#uDev: not ready yet"
 
+
+elif [ $1 == "," ]; then
+   # Simply gives the name of the curent repository
+   # If the current directori is not a repository, that is also mentioned
+
+      f_tell_repo_name
 
 
 
