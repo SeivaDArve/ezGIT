@@ -597,8 +597,12 @@ elif [ $1 == "+++" ] || [ $1 == "g-ad-cm-m-pu" ]; then
 
 
 elif [ $1 == "," ]; then
-   # Simply gives the name of the curent repository
-   # If the current directori is not a repository, that is also mentioned
+   # Info about the current directory (versose version. # uDev: 'G ,,' for non verbose functionality) 
+      # Tells if the current directory name is part of a list of names that may have a dedicated dir for encryption
+         # Some repos will not be allowed do 'git push' with sensitive data exposed
+
+      # Gives the name of the curent repository
+         # If the current directori is not a repository, that is also mentioned
 
       f_tell_repo_name
 
