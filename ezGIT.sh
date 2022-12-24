@@ -12,9 +12,11 @@ function f_cor2 {
    tput setaf 2 
 }
 function f_cor3 { 
+   # Mentioning user input or valiable input
    tput setaf 3
 }
 function f_cor4 { 
+   # Similar to Bold
    tput setaf 4
 }
 function f_resetCor { 
