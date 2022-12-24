@@ -134,6 +134,23 @@ function f_tell_repo_name {
       v_name=$(basename $(pwd))
       #echo $v_name
 
+   # Test if basename is on blacklist or not (There are repositories that have to be encrypted everytime before pushing to github)
+      if [[ $v_name == "ezGIT" ]]; then
+         # $v_name is on blacklist
+         echo "Repo may contain encryptions"
+         v_blackList=1
+      elif [[ $v_name == "dWiki" ]]; then
+         # $v_name is on blacklist
+         echo "Repo may contain encryptions"
+         v_blackList=1
+      else 
+         # $v_name is not on blacklist
+         echo "Repo does not contain encryptions"
+         v_blackList=0
+      fi
+
+      # uDev: in the future: Creating an external text file to describe all blaklist repos would be better that hard coding them here
+
    # Find a .git directory inside our current dir location´
       v_git_dir=$(find . -maxdepth 1 -name .git)
 
@@ -147,7 +164,8 @@ function f_tell_repo_name {
          f_resetCor
          echo "a repository"
 
-      elif [[ $v_git_dir == "./.git" ]]; then 
+      elif [[ $v_git_dir == "./.git" ]] # && basename is on blacklist: test if it's decripted directory is empty
+         then 
          # If at our location ./ a dire called .git is found:
          echo -n "The directory "
          f_cor4
