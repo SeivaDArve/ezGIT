@@ -548,9 +548,10 @@ elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
       f_greet
 
 		f_cor4
-         echo "git pull? (press Enter to confirm)"
+         echo -n "git pull? (press ANY key to confirm) "
 		f_resetCor
       read -sn 1 
+      echo "Starting git pull..."
       git pull
 
    # Git status
