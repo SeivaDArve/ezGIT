@@ -25,7 +25,7 @@ function f_resetCor {
 
 function f_greet {
    f_cor4
-   figlet "ezGIT" 2>/dev/null || echo -n
+   figlet ezGIT -f standard.flf || echo -e "( ezGIT )\n"
    f_resetCor 
 }
 
