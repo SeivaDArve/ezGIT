@@ -3,10 +3,7 @@
 # Alias to use directly as git alias
 
 alias g="git"
-#alias gcm="git commit"
-alias gcm="git commit -m"
-#alias gcm-m="git commit -m"
-alias gcm="git commit"
+alias gst="git status"
 alias gpom="git pull origin master"
 alias gdf="git diff"
 alias gch="git checkout"
@@ -22,22 +19,17 @@ alias gbr="git branch"
 alias glg="git log"
 alias gkp='touch .gitkeep; echo " > file .gitkeep created"'
 alias gdf="git diff"
+alias ggb="# uDev: git global"
+alias gbr="# uDev: Change branch"
+alias gfv="# uDev: List favoutite commands"
 
-#  "gfv"
-#  	# List favorite git commands
-#  		clear
-#  		echo -e "Favorits menu\n" 
-#  		echo -e "git status \ngit reset  #To unstage files \ngit rebase -i HEAD~2 && reword  #To change old commit messages"
-#  
-#  "gst"
-#     # Git status
-#  
+alias gcm="git commit -m"
+alias gcm="git commit"
+#alias gcm="git commit"
+#alias gcmm="git commit -m"
+
 #  "gad"
 #     # Git add ...
-#  
-#  "gcm"
-#     # Git commit ...
-#  
 #  
 #  "multi"
 #     # Git commit multiple messages
