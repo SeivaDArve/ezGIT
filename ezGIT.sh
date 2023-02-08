@@ -1,8 +1,6 @@
 #!/bin/bash
 # Title: ezGIT to replace long git commands for one simple and short command
-
-
-# ---------------------------------------------
+# Use: bully pages: man pages but for developers
 
 function f_cor1 {	
    # For figlet titles
@@ -29,6 +27,67 @@ function f_greet {
    f_resetCor 
 }
 
+function setGlobalConfig_menu {
+   # Confir everytime if .gitconfig is configured
+   # Can also be called by a command
+
+   # Display thr intention of this function
+      echo "ezGIT: Function meant to configure git file"
+
+#
+#		# Inform that this menu is under construction:
+#		echo -e "$(f_cor4)\n  menu under construction;)\n${RESTORE}"; read; G
+#
+#      v_whoami=$(whoami)
+#		# Entry to adjust Seiva D'Arve:
+#		#git config --global user.email "flowreshe.seiva.d.arve@gmail.com"
+#		#git config --global user.name "SeivaDArve"	
+#
+#
+#
+# C) # Configure git manually with vim
+#	 f_cor4
+#	 echo -e "\nIf your email is not configured properly, your commits won't show in your github.com's contribution graph"
+#	 echo " > Type any key to continue... "
+#	 f_resetCor
+#	 read
+#
+#	 if [ -f ./users/set-SeivaDArve.sh ]
+#	 	then
+#	 		f_cor4
+#	 		echo -e "there is a file set-seivadarve.sh"
+#	 		echo -e "To configure this profile, type \"seiva\""
+#	 		echo -e "To configure ~/.gitconfig manually type \"manl\""
+#			echo ""
+#			echo -e "To display ~/.gitconfig type \"list\""
+#	 		f_resetCor
+#	 		read _ans
+#
+#				if [ $_ans == "seiva" ]
+#				then
+#					bash ./users/set-SeivaDArve.sh
+#					echo " > done"
+#				elif [ $_ans == "manl" ]
+#				then
+#	 				vim ~/.gitconfig
+#					echo " > done"
+#				elif [ $_ans == "list" ]
+#				then
+#					cat ~/.gitconfig
+#				else
+#					echo " > You did not type any specific option therefore, not doing anything"
+#				fi
+#
+#		else
+#	 		vim ~/.gitconfig
+#	 fi
+#	 ;;
+
+}
+
+
+
+
 function f_colors-without-tput {
 	# Text Colors before discovering '$ tput setaf'
 	   _RED=$(echo -en '\001\033[00;31m\002')
@@ -38,16 +97,43 @@ function f_colors-without-tput {
 	   #echo ${_RED}To do something, specify an argument like \"G 2\"${_RESTORE}
 }
 
-# uDev: Check at every run if email and username exist and are configured according a personal database of emails and usernames
-	# Without a proper email, github will not count your commits for their graph of your activity
+function f_underscore_creator {
+   # At every 'select' menu, I want the first 
+      # and last option of the menu to be an
+      # horizontal split.
+      # If there was no nested loops, there was no need
+      # for these. Another reasob to create these horizontal
+      # split lines, is force the menu to be vertical 
+   # I want the last line of the menu to be all dashes
+      # That forces the menu to be vertical always
+      # For that, I will count hoe many lines does the
+      # terminal has, store that into a variable v_cols
+      # and insert it into the menu
 
-# uDev: if the chosen repo to 'git push' is a repo that is usually encripted, do not allow to push before using encryption
+         v_cols="$COLUMNS"
+         let "v_count = $v_cols - 5"
+            #echo -e "There are currently $v_cols columns in the screen \n and from that number, $v_count is the\n number of dashes '-' that the menu will have "
+            #read
 
-# uDev: Instead of creating repos at github.com, then clone, then use: instead, create a function with git init and then push to the remote
-# ---------------------------------------------
+         # You may choose the apropriate symbol here
+            v_underscore="-"
+
+         # Store in a var, how many dashes can be replaced by empty spaces (according to the specific amount of available columns)
+            v_underscoreCount=""
+
+            for i in $(seq $v_count); do 
+               v_underscoreCount="$v_underscoreCount$v_underscore"
+            done
+
+         # The result is an horizontal line
+            #echo "var is $v_underscoreCount"
+            #read
+            v_line=$v_underscoreCount
+}
+
 
 function f_git_status-recursive {
-   # Title: script to give git status of ALL repos
+   # bully-pages: script to give git status of ALL repos
 
       clear
 
@@ -179,10 +265,20 @@ function f_tell_repo_name {
       fi 
 }
 
+# uDev: Check at every run if email and username exist and are configured according a personal database of emails and usernames
+	# Without a proper email, github will not count your commits for their graph of your activity
+
+# uDev: if the chosen repo to 'git push' is a repo that is usually encripted, do not allow to push before using encryption
+
+# uDev: Instead of creating repos at github.com, then clone, then use: instead, create a function with git init and then push to the remote
+
+
 function f_heredoc {
    # Describes all finctionality
    # uDev: the BEST documentation happens if you can open the source code and read it
       # Therefore: uDev: Create a grep function to grep all 'if [' and 'elif' in this document and along with that, search one more line below with the comment that tells what that function does
+
+f_horizontal_line
 
 less << heredooc
 
@@ -221,10 +317,30 @@ Example: To do something, specify an argument like "G 2"
 (Quit this page with the key: Q)
 
 heredooc
-
-
 }
 
+
+
+
+
+
+
+
+#  ^^ Functions to be called by G arguments
+#  vv Arguments to be called by G itself and command line
+
+
+
+
+
+
+
+
+
+
+# Before evaluating ezGIT arguments, check if git is configured properly
+   setGlobalConfig_menu
+   
 if [ -z "$*" ]; then
    # Do something else if there are no arguments
       echo " > No arguments where given"
@@ -255,6 +371,9 @@ elif [ $1 == "f" ] || [ $1 == "gfv" ]; then
 		echo -e "Favorits menu\n" 
 		echo -e "git status \ngit reset  #To unstage files \ngit rebase -i HEAD~2 && reword  #To change old commit messages"
 
+elif [ $1 == "global" ]; then
+	 setGlobalConfig_menu
+
 elif [ $1 == "." ]; then
    # Git status
    
@@ -266,7 +385,7 @@ elif [ $1 == "." ]; then
          f_resetCor
          git status
 
-   elif [[ $2 == "--all" ]]; then
+   elif [[ $2 == "all" ]]; then
       # Whenever code complexity is found, a function is created to enable better code reading
          f_git_status-recursive
    fi
@@ -561,7 +680,7 @@ elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
       git status
 
 # uDev: 'G vv' git fetch 
-# uDev: 'G vv --all' git fetch all repos
+# uDev: 'G vv all' git fetch all repos
 # uDev: 'G ^^' git push (blind upload)
 
 elif [ $1 == "^" ] || [ $1 == "gpush" ]; then
@@ -643,21 +762,6 @@ fi
 
 
 
-function setGlobalConfig_menu {
-
-		#This will be a menu soon that can list, edit, remove... to set as global configs. For example the configurations for SeivaDArve"
-
-		# Inform that this menu is under construction:
-		echo -e "$(f_cor4)\n  menu under construction;)\n${RESTORE}"; read; G
-
-      v_whoami=$(whoami)
-		# Entry to adjust Seiva D'Arve:
-		#git config --global user.email "flowreshe.seiva.d.arve@gmail.com"
-		#git config --global user.name "SeivaDArve"	
-}
-
-
-
 # How to use:
 # One way to use this app without installing it at "/bin" is to navigate to this directory where G.sh is located and execute "source G.sh". This way all functions inside itself is loaded into do $PATH variable
 
@@ -674,15 +778,6 @@ function setGlobalConfig_menu {
 
 
 	case $1 in
-		-R) # Check recursively all dirs and see their git status 
-			;;
-		0) # Option: git status
-         #gst
-			f_cor4
-			echo -e "git status:\n"
-			f_resetCor
-			git status
-			;;
 		0+) # Option: git status && git remote show origin
          #gst+
 			f_cor4
@@ -696,23 +791,6 @@ function setGlobalConfig_menu {
 			git remote show origin
 
 			;;
-		1) # Option: git pull
-         #gpl
-			f_cor4
-			echo "git pull:"
-			f_resetCor
-			git pull 
-			;;
-		2) # Option: git push
-         #gpu
-			f_cor4
-			echo "git push:"
-			f_resetCor
-			git push
-
-			;;
-
-
 		3) # Option: git add .
          #gad.
 			f_resetCor
@@ -817,48 +895,8 @@ function setGlobalConfig_menu {
 	 echo "git status:"
 	 f_resetCor
 	 git status
-
 	 ;;
- A) # Option: "menu to set global configuration for the user"
-	 setGlobalConfig_menu
-	 ;;
- C) # Configure git manually with vim
-	 f_cor4
-	 echo -e "\nIf your email is not configured properly, your commits won't show in your github.com's contribution graph"
-	 echo " > Type any key to continue... "
-	 f_resetCor
-	 read
 
-	 if [ -f ./users/set-SeivaDArve.sh ]
-	 	then
-	 		f_cor4
-	 		echo -e "there is a file set-seivadarve.sh"
-	 		echo -e "To configure this profile, type \"seiva\""
-	 		echo -e "To configure ~/.gitconfig manually type \"manl\""
-			echo ""
-			echo -e "To display ~/.gitconfig type \"list\""
-	 		f_resetCor
-	 		read _ans
-
-				if [ $_ans == "seiva" ]
-				then
-					bash ./users/set-SeivaDArve.sh
-					echo " > done"
-				elif [ $_ans == "manl" ]
-				then
-	 				vim ~/.gitconfig
-					echo " > done"
-				elif [ $_ans == "list" ]
-				then
-					cat ~/.gitconfig
-				else
-					echo " > You did not type any specific option therefore, not doing anything"
-				fi
-
-		else
-	 		vim ~/.gitconfig
-	 fi
-	 ;;
  m1) # Option: Menu 1
 
 			# Inform that this menu is under construction:
