@@ -271,8 +271,9 @@ function f_tell_repo_name {
 # uDev: if the chosen repo to 'git push' is a repo that is usually encripted, do not allow to push before using encryption
 
 # uDev: Instead of creating repos at github.com, then clone, then use: instead, create a function with git init and then push to the remote
-# uDev: alias "G upload-count": display how many uploads for github happened today
 
+# uDev: alias "G upload-count": display how many uploads for github happened today
+   # curl -s https://github.com/SeivaDArve | grep "contributions on February 8, 2023" | cut -d ">" -f 2 | cut -d "<" -f 1
 
 function f_heredoc {
    # Describes all finctionality
