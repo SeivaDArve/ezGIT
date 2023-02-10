@@ -33,6 +33,7 @@ function setGlobalConfig_menu {
 
    # Display thr intention of this function
       echo "ezGIT: Function meant to configure git file"
+      echo "   # uDev: if file does not exist, display this message"
 
 #
 #		# Inform that this menu is under construction:
@@ -272,9 +273,6 @@ function f_tell_repo_name {
 
 # uDev: Instead of creating repos at github.com, then clone, then use: instead, create a function with git init and then push to the remote
 
-# uDev: alias "G upload-count": display how many uploads for github happened today
-   # curl -s https://github.com/SeivaDArve | grep "contributions on February 8, 2023" | cut -d ">" -f 2 | cut -d "<" -f 1
-
 function f_heredoc {
    # Describes all finctionality
    # uDev: the BEST documentation happens if you can open the source code and read it
@@ -321,7 +319,93 @@ Example: To do something, specify an argument like "G 2"
 heredooc
 }
 
+function f_curl_uploads_count {
 
+   # Description: Counts how many uploads were made to GitHub.com
+
+   echo "ezGIT: uploads counter"
+
+   function f_get_day {
+      # Gets the desired day for web scraping the github's profile page
+
+      # Day
+
+      echo "type the day number OR leave empty for today"
+      echo -n " > "
+      read v_day
+      
+      if [[ -z $v_day ]]; then # if no argument is given, then:
+         v_day2=$(date +%d)
+
+         # If v_day is less than 10, there is a problem:
+         #
+         # When web scraping github.com, we notice 
+         # that it's output not matching the output if the 
+         # command '$ date'
+         # 
+         # curl + grep OUTPUT: February 8
+         # date OUTPUT: February 08
+         #
+         # Therefore, for day numbers under 10, we must
+         # remove the prefix zero '0'
+         #
+         # '$ curl' OUTPUT must be: February 8
+         # '$ date' OUTPUT must be: February 8
+         #
+
+         # Cutting the '0' from the number:
+            # If day < 10
+               if [[ $v_day2 < 10 ]]; then
+                  f=$(echo $v_day2 | cut -d "0" -f 2)
+                  v_day2=$f
+               fi
+
+            # If day =< 10; then do nothing because it matches github webpage and such number is ready for webscraping
+
+
+
+
+      elif [[ ! -z $v_day ]]; then 
+         # ^ If any argument was given, use that arg for webscraping
+            v_day2=$v_day
+
+         # Due to the fact the user can input invalid numbers, lets test the number:
+            # uDev
+      fi
+
+      # Testing if variable $v_day2 is ready to be used for web scraping
+         echo "result day: $v_day2"
+
+         v_day=$v_day2
+   }
+
+   function f_get_month {
+      #echo "# uDev: type the month number OR leave empty for this month"
+      v_month2=$(date +%B)
+      echo "result month: $v_month2"
+      #read v_month
+
+      v_month=$v_month2
+   }
+
+   function f_get_year {
+      #echo "type the year number OR leave empty for this year"
+      #echo -n " > "
+      #read v_year
+      v_year=2023
+      echo "result year: $v_year"
+   }
+
+   f_get_day
+   f_get_month
+   f_get_year
+
+   echo
+
+   # echo "Curl test: $v_day $v_month"
+   #curl -s https://github.com/SeivaDArve | grep "contributions on $v_month $v_day, 2023" | cut -d ">" -f 2 | cut -d "<" -f 1
+   curl -s https://github.com/SeivaDArve | grep "contributions on " | cut -d ">" -f 2 | cut -d "<" -f 1 | grep Feb | grep " $v_day" | grep "$v_year"
+}
 
 
 
@@ -373,7 +457,7 @@ elif [ $1 == "f" ] || [ $1 == "gfv" ]; then
 		echo -e "Favorits menu\n" 
 		echo -e "git status \ngit reset  #To unstage files \ngit rebase -i HEAD~2 && reword  #To change old commit messages"
 
-elif [ $1 == "global" ]; then
+elif [[ $1 == "global" ]]; then
 	 setGlobalConfig_menu
 
 elif [ $1 == "." ]; then
@@ -443,6 +527,15 @@ elif [ $1 == "multi" ]; then
          done
          ((n=n+1))
       done
+
+elif [ $1 == "count^" ]; then
+   clear
+   f_greet
+   f_curl_uploads_count
+
+elif [ $1 == "new" ]; then
+   # Creates a new repository
+   echo "ezGIT: Do you want to create a new repository?"
 
 
 elif [ $1 == "+" ]; then
