@@ -466,10 +466,11 @@ elif [ $1 == "msg" ]; then
    clear
    f_greet
    if [ -z $2 ]; then
-      echo "G msg: the possibility to edit the message itself is not ready yet"
-      echo "The file 'msg' is always only one. After editing it, just send it"
-      echo 
-      echo "G msg send || G msg receive"
+      echo " > The file 'msg' is always only one. After editing it, just send it"
+      echo "   G msg send || G msg receive"
+      sleep 1
+      vim ${v_REPOS_CENTER}/scratch-paper/some-text 2>/dev/null || echo "File may not exist"
+      /mnt/c/windows/explorer.exe c/Repositories/scratch-paper/ 2>/dev/null || echo "Could not open respective directory"
    elif [ $2 == "send" ]; then
       # uDev: edit a specific text file
       # uDev: In future, the this file is public text in git, mix its letters before sending
