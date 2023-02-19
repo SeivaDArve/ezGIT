@@ -588,15 +588,16 @@ elif [ $1 == "+" ]; then
          echo -n " > If so, press: "
 			f_cor4
          echo "D"
+         echo
+         echo -n "git diff? "
 			f_resetCor
+         echo -n "(press D or ANY key): "
          read -sn 1 v_ans
          
          case $v_ans in
             d | D)
                 # Display text based cresential while app is in beta
-                   echo
-                   f_cor4
-                   echo -n "git diff:"
+                   echo "Starting..."
                    f_cor3
                    echo $3
                    f_resetCor
@@ -605,6 +606,7 @@ elif [ $1 == "+" ]; then
                    read -s -n 1
             ;;
             *)
+               echo "You dind't choose anything..."
                echo
             ;;
          esac
