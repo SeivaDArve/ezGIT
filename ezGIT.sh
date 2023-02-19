@@ -462,6 +462,25 @@ elif [ $1 == "f" ] || [ $1 == "gfv" ]; then
 elif [[ $1 == "global" ]]; then
 	 setGlobalConfig_menu
 
+elif [ $1 == "msg" ]; then
+   clear
+   f_greet
+   if [ -z $2 ]; then
+      echo "G msg: the possibility to edit the message itself is not ready yet"
+      echo "The file 'msg' is always only one. After editing it, just send it"
+      echo 
+      echo "G msg send || G msg receive"
+   elif [ $2 == "send" ]; then
+      # uDev: edit a specific text file
+      # uDev: In future, the this file is public text in git, mix its letters before sending
+      echo "send is not ready yet"
+   elif [ $2 == "receive" ]; then
+      # uDev: rm repo entirely 'scratch-paper' is a possibility, then clone it back in with info. Then open the text file  
+      echo "receiving is not ready yet"
+   else
+      echo "G msg: Choose 'send' or 'receive'"
+   fi
+
 elif [ $1 == "." ]; then
    # Git status
    
