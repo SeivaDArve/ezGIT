@@ -451,6 +451,9 @@ elif [ $1 == "config" ]; then
       read -s
       vim ~/.gitconfig
 
+elif [ $1 == "alias" ]; then
+      vim ${v_REPOS_CENTER}/ezGIT/all/etc/config-bash-alias
+
 elif [ $1 == "k" ] || [ $1 == "gkp" ]; then
    # Create a file .gitkeep
       touch .gitkeep
@@ -470,16 +473,31 @@ elif [ $1 == "msg" ]; then
    if [ -z $2 ]; then
       echo " > The file 'msg' is always only one. After editing it, just send it"
       echo "   G msg send || G msg receive"
-      sleep 1
-      vim ${v_REPOS_CENTER}/scratch-paper/some-text 2>/dev/null || echo "File may not exist"
-      /mnt/c/windows/explorer.exe c/Repositories/scratch-paper/ 2>/dev/null || echo "Could not open respective directory"
+      /mnt/c/windows/explorer.exe "C:\Repositories\scratch-paper" 
+   
    elif [ $2 == "send" ]; then
       # uDev: edit a specific text file
       # uDev: In future, the this file is public text in git, mix its letters before sending
-      echo "send is not ready yet"
+      # uDev: if git status sais that there are modifications, git push
+      # uDev: it must read if "nothing to commit, working tree clean" exists at the git status, and if it is found: do nothing
+      vv=$(pwd)
+      cd ${v_REPOS_CENTER}/scratch-paper
+      git add --all
+      v_date=$(date)
+      git commit -m "$v_date"
+       f_cor4
+       echo -n "seivadarve"; f_resetCor; echo " and this:"; f_cor4;
+       echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+       f_resetCor
+      git push
+      cd $vv
    elif [ $2 == "receive" ]; then
       # uDev: rm repo entirely 'scratch-paper' is a possibility, then clone it back in with info. Then open the text file  
+      # uDev: if git status sais that there are no modifications, git pull
+      # uDev: if git status sais that there are modifications, warn user about it
       echo "receiving is not ready yet"
+   elif [ $2 == "edit" ]; then
+     vim ${v_REPOS_CENTER}/scratch-paper/some-text.txt 
    else
       echo "G msg: Choose 'send' or 'receive'"
    fi

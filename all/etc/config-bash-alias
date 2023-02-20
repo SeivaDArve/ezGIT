@@ -22,6 +22,8 @@ alias gdf="git diff"
 alias ggb="# uDev: git global"
 alias gbr="# uDev: Change branch"
 alias gfv="# uDev: List favoutite commands"
+alias gst="git stash" # When local has 1 commit and remote has 1 commit and now you cannot pull nor push. First you stash, than pull, then git stash apply, then push
+alias gsa="git stash apply" 
 
 alias gcm="git commit -m"
 alias gcm="git commit"
