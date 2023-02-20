@@ -29,6 +29,14 @@ function f_greet {
    f_resetCor 
 }
 
+function f_find_basename {
+   v_relPWD=$(pwd)
+   echo $v_relPWD
+   v_relRepo=$(echo $v_relPWD | sed 's/"$v_REPOS_CENTER"//g')
+   echo $v_relRepo
+   cut -d '/' -f 1 $v_relRepo
+}
+
 function setGlobalConfig_menu {
    # Confir everytime if .gitconfig is configured
    # Can also be called by a command
@@ -508,10 +516,12 @@ elif [ $1 == "." ]; then
    if [[ -z $2 ]]; then
       clear; f_greet 
 
-         echo
-         echo -n "Repository name: "
-         f_cor3
-         echo "$v_repo "
+         #f_find_basename
+         #sleep 2
+         #echo
+         #echo -n "Repository name: "
+         #f_cor3
+         #echo "$v_repo "
          f_cor4
          echo
          echo "git status:"
