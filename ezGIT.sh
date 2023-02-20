@@ -2,6 +2,8 @@
 # Title: ezGIT to replace long git commands for one simple and short command
 # Use: bully pages: man pages but for developers
 
+declare v_repo="ezGIT"
+
 function f_cor1 {	
    # For figlet titles
    tput setaf 5 
@@ -488,8 +490,13 @@ elif [ $1 == "." ]; then
    if [[ -z $2 ]]; then
       clear; f_greet 
 
+         echo
+         echo -n "Repository name: "
+         f_cor3
+         echo "$v_repo "
          f_cor4
-         echo -e "\ngit status:"
+         echo
+         echo "git status:"
          f_resetCor
          git status
 
