@@ -590,6 +590,23 @@ elif [ $1 == "count^" ]; then
    f_greet
    f_curl_uploads_count
 
+elif [ $1 == "B" ]; then
+   clear
+   f_greet
+   echo "ezGIT: Local branches"
+   git branch
+
+   echo
+   echo "ezGIT: Remote branches"
+   git branch -r
+
+   # To see all branches at once (remote and local): git branch -a
+   # To see more details: git branch -v
+   # To see more details: git branch -vv
+   # To see more details: git branch -vr
+   # To see more details: git branch -vva
+   # To see more details: git branch -vvr
+
 elif [ $1 == "new" ]; then
    # Creates a new repository
    echo "ezGIT: Do you want to create a new repository?"
