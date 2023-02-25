@@ -591,21 +591,37 @@ elif [ $1 == "count^" ]; then
    f_curl_uploads_count
 
 elif [ $1 == "B" ]; then
-   clear
-   f_greet
-   echo "ezGIT: Local branches"
-   git branch
+   if [ -z $2 ]; then
+      clear
+      f_greet
+      echo "ezGIT: Local branches"
+      git branch
 
-   echo
-   echo "ezGIT: Remote branches"
-   git branch -r
+      echo
+      echo "ezGIT: Remote branches"
+      git branch -r
 
-   # To see all branches at once (remote and local): git branch -a
-   # To see more details: git branch -v
-   # To see more details: git branch -vv
-   # To see more details: git branch -vr
-   # To see more details: git branch -vva
-   # To see more details: git branch -vvr
+      # To see all branches at once (remote and local): git branch -a
+      # To see more details: git branch -v
+      # To see more details: git branch -vv
+      # To see more details: git branch -vr
+      # To see more details: git branch -vva
+      # To see more details: git branch -vvr
+
+   elif [ $2 == "new" ]; then
+      clear
+      f_greet
+      echo "ezGIT: This command will create a new branch based on the branch you are currently on"
+      echo "uDev: Tell which branch is currently on"
+      echo "The new branch's history will start at the current place of the branch you \"branched off of.\""
+      git checkout -b
+
+   elif [ $2 == ".." ]; then
+      clear
+      f_greet
+      echo "ezGIT: This command will allow to to switch between branches"
+      git checkout
+   fi
 
 elif [ $1 == "new" ]; then
    # Creates a new repository
