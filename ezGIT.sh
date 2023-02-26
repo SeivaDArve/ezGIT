@@ -458,11 +458,12 @@ elif [ $1 == "config" ]; then
       echo "Opening file of configurations for git with vim editor"
       read -s
       echo 
-      echo "Example of content inside ~/.gitconfig file"
+      echo "Example of content inside ~/.gitconfig file:"
       echo "[user]"
       echo "      name = seivadarve"
       echo "      mail = flowreshe.seiva.d.arve@gmail.com"
       echo "      email = flowreshe.seiva.d.arve@gmail.com"
+      read -s -n 1
       vim ~/.gitconfig
 
 elif [ $1 == "alias" ]; then
