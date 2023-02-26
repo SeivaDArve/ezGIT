@@ -416,7 +416,7 @@ function f_curl_uploads_count {
    #curl -s https://github.com/SeivaDArve | grep "contributions on $v_month $v_day, 2023" | cut -d ">" -f 2 | cut -d "<" -f 1
    curl -s https://github.com/SeivaDArve | grep "contributions on " | cut -d ">" -f 2 | cut -d "<" -f 1 | grep Feb | grep " $v_day" | grep "$v_year"
    echo 
-   echo "uDev: Bugs: Some days may not give any output, but may have uplloads" 
+   echo "uDev: Bugs: Some days may not give any output, but may have uploads" 
 }
 
 
