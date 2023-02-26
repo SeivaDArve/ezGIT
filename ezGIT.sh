@@ -457,6 +457,12 @@ elif [ $1 == "config" ]; then
    # Confirming that configurations exist
       echo "Opening file of configurations for git with vim editor"
       read -s
+      echo 
+      echo "Example of content inside ~/.gitconfig file"
+      echo "[user]"
+      echo "      name = seivadarve"
+      echo "      mail = flowreshe.seiva.d.arve@gmail.com"
+      echo "      email = flowreshe.seiva.d.arve@gmail.com"
       vim ~/.gitconfig
 
 elif [ $1 == "alias" ]; then
