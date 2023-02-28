@@ -416,7 +416,7 @@ function f_curl_uploads_count {
    #curl -s https://github.com/SeivaDArve | grep "contributions on $v_month $v_day, 2023" | cut -d ">" -f 2 | cut -d "<" -f 1
    curl -s https://github.com/SeivaDArve | grep "contributions on " | cut -d ">" -f 2 | cut -d "<" -f 1 | grep Feb | grep " $v_day" | grep "$v_year"
    echo 
-   echo "uDev: Bugs: Some days may not give any output, but may have uplloads" 
+   echo "uDev: Bugs: Some days may not give any output, but may have uploads" 
 }
 
 
@@ -457,6 +457,13 @@ elif [ $1 == "config" ]; then
    # Confirming that configurations exist
       echo "Opening file of configurations for git with vim editor"
       read -s
+      echo 
+      echo "Example of content inside ~/.gitconfig file:"
+      echo "[user]"
+      echo "      name = seivadarve"
+      echo "      mail = flowreshe.seiva.d.arve@gmail.com"
+      echo "      email = flowreshe.seiva.d.arve@gmail.com"
+      read -s -n 1
       vim ~/.gitconfig
 
 elif [ $1 == "alias" ]; then
