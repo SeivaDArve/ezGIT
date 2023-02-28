@@ -437,7 +437,7 @@ function f_curl_uploads_count {
 
 
 # Before evaluating ezGIT arguments, check if git is configured properly
-   setGlobalConfig_menu
+   #setGlobalConfig_menu  #uDev
    
 if [ -z "$*" ]; then
    # Do something else if there are no arguments
