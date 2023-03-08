@@ -417,7 +417,8 @@ function f_curl_uploads_count {
    curl -s https://github.com/SeivaDArve | grep "contributions on " | cut -d ">" -f 2 | cut -d "<" -f 1 | grep Feb | grep " $v_day" | grep "$v_year"
    echo 
    echo "uDev: Bugs: Some days may not give any output, but may have uploads" 
-   echo "uDev: While bug is not fixed: Check the source graph at: https://github.com/SeivaDArve"
+   echo "uDev: While bug is not fixed: Check the source graph at: "
+   echo " > https://github.com/SeivaDArve"
 }
 
 
