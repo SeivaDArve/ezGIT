@@ -926,6 +926,11 @@ elif [ $1 == "," ]; then
 
 
 
+elif [ $1 == "-1" ]; then
+   echo "uDev: Move HEAD 1 commit below"
+
+elif [ $1 == "+1" ]; then
+   echo "uDev: Move HEAD 1 commit above"
 
 
 
