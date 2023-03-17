@@ -935,9 +935,12 @@ elif [ $1 == "+1" ]; then
 elif [ $1 == "rebase-false" ]; then
    git config pull.rebase false
 
-
 elif [ $1 == "rebase-true" ]; then
    git config pull.rebase true
+
+elif [ $1 == "uDev" ]; then
+   echo "This function uses the find command to search \"# uDev\" comments om the code"
+
 
 
 
