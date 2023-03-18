@@ -210,7 +210,7 @@ function f_git_pull-recursive {
    # Display a message to indicat it is finished:
       # uDev: lacks color
       f_horizontal_line
-      echo "git status to all repos under:"
+      echo "git pull to all repos under:"
       echo " > $v_REPOS_CENTER"
       echo "Finished!"
       f_horizontal_line
