@@ -29,6 +29,15 @@ function f_greet {
    f_resetCor 
 }
 
+function f_stroken {
+    # Display text based credential while app is in beta
+       echo -e "\nInside the ezGIT app I found this: "
+       f_cor4
+       echo -n "seivadarve"; f_resetCor; echo " and this:"; f_cor4;
+       echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+       f_resetCor
+}
+
 function f_find_basename {
    v_relPWD=$(pwd)
    echo $v_relPWD
@@ -889,12 +898,7 @@ elif [ $1 == "^" ] || [ $1 == "gpush" ]; then
          echo "git push"
 		f_resetCor
 
-    # Display text based credential while app is in beta
-       echo -e "\nInside the ezGIT app I found this: "
-       f_cor4
-       echo -n "seivadarve"; f_resetCor; echo " and this:"; f_cor4;
-       echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
-       f_resetCor
+      f_stroken
 
       git push
 
