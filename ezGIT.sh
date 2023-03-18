@@ -807,11 +807,7 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
             p | P)
                 # Display text based credential while app is in beta
                    echo
-                   echo -e "\nInside the ezGIT app I found this: "
-                   f_cor4
-                   echo -n "seivadarve"; f_resetCor; echo " and this:"; f_cor4;
-                   echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
-                   f_resetCor
+                   f_stroken
 
                    git push
 
@@ -870,6 +866,9 @@ elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
    # Download
       clear 
       f_greet
+   
+      echo
+      f_stroken
 
 		f_cor4
          echo -n "git pull? (press ANY key to confirm) "
@@ -1100,20 +1099,16 @@ fi
 			cat ${_stroken}
 
 	 # Display text based cresential while app is in beta
-	 echo -e "\nInside the ezGIT app I found this: "
-	 f_cor4
-	 echo -n "seivadarve"; f_resetCor; echo " and this:"; f_cor4;
-	 echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
-	 f_resetCor
+      f_stroken
 
-	 git push
+       git push
 
-	 echo ""
-	 f_cor4
-	 echo "git status:"
-	 f_resetCor
-	 git status
-	 ;;
+       echo ""
+       f_cor4
+       echo "git status:"
+       f_resetCor
+       git status
+       ;;
 
  m1) # Option: Menu 1
 
