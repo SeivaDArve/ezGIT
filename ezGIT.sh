@@ -44,6 +44,8 @@ function f_find_basename {
    v_relRepo=$(echo $v_relPWD | sed 's/"$v_REPOS_CENTER"//g')
    echo $v_relRepo
    cut -d '/' -f 1 $v_relRepo
+      
+   # uDev: can be changed by the command 'basename'
 }
 
 function setGlobalConfig_menu {
@@ -152,16 +154,15 @@ function f_underscore_creator {
 }
 
 
-function f_git_status-recursive {
+function f_git_pull-recursive {
    # bully-pages: script to give git status of ALL repos
 
       clear
 
       f_greet
       f_cor3
-      echo -e "Searching for \"git status\" at: \n${v_REPOS_CENTER}\n"
+      echo -e "Trying \"git pull\" at: \n${v_REPOS_CENTER}\n"
       f_resetCor
-      cd ${v_REPOS_CENTER}
 
       function f_output {
          f_horizontal_line
@@ -174,6 +175,68 @@ function f_git_status-recursive {
          git status
       }
 
+      # Mention one possible password
+         f_stroken
+         echo
+
+      cd ${v_REPOS_CENTER}
+      for i in $(ls); do 
+         # Filter directories from files
+            g=$(file $i)
+
+         # If the variable g returns a directory, we navigate into it
+            if [[ $g =~ "dir" ]]; then 
+               cd $i
+               
+         # Echo out what Repo is being mentioned
+            basename $(pwd)
+
+         # Saving the git status into a variable without outputing it to the screen
+            # It sends an error if dir is not repository. Therefore we send Sandard error do /dev/null
+            s=$(git pull 2>/dev/null) 
+
+         #  # Search for git words that indicate work yo be done
+         #     # uDev: there must be more words, therefore this function must be tested
+         #     if [[ $s =~ "added" ]]; then f_output;
+         #        elif [[ $s =~ "Changes" ]]; then f_output;
+         #        elif [[ $s =~ "Untracked" ]]; then f_output;
+         #     fi
+
+            cd ..
+         fi
+         
+      done
+
+   # Display a message to indicat it is finished:
+      # uDev: lacks color
+      f_horizontal_line
+      echo "git status to all repos under:"
+      echo " > $v_REPOS_CENTER"
+      echo "Finished!"
+      f_horizontal_line
+}
+function f_git_status-recursive {
+   # bully-pages: script to give git status of ALL repos
+
+      clear
+
+      f_greet
+      f_cor3
+      echo -e "Searching for \"git status\" at: \n${v_REPOS_CENTER}\n"
+      f_resetCor
+
+      function f_output {
+         f_horizontal_line
+         f_cor4
+         echo -n " > Repository: "
+         f_cor3
+         echo "$i"
+         echo
+         f_resetCor
+         git status
+      }
+
+      cd ${v_REPOS_CENTER}
       for i in $(ls); do 
          # Filter directories from files
             g=$(file $i)
@@ -867,8 +930,8 @@ elif [ $1 == "+-" ] || [ $1 == "g-ad-cm-amend" ]; then
 elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
    # git pull
    # Download
-      clear 
-      f_greet
+   if [[ -z $2 ]]; then
+      clear; f_greet 
    
       echo
       f_stroken
@@ -886,6 +949,12 @@ elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
       echo -e "\ngit status:"
       f_resetCor
       git status
+
+
+   elif [[ $2 == "all" ]]; then
+      f_git_pull-recursive
+
+   fi
 
 # uDev: 'G vv' git fetch 
 # uDev: 'G vv all' git fetch all repos
