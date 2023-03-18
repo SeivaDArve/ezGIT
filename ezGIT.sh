@@ -869,6 +869,7 @@ elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
    
       echo
       f_stroken
+      echo
 
 		f_cor4
          echo -n "git pull? (press ANY key to confirm) "
