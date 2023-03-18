@@ -932,7 +932,7 @@ elif [ $1 == "-1" ]; then
 
 elif [ $1 == "+1" ]; then
    echo "uDev: Move HEAD 1 commit above (next one)"
-   git log --reverse --pretty=%H master | grep -A 1 $(git rev-parse HEAD) | tail -n1 | xargs git checkout 
+   git log --reverse --pretty=%H main | grep -A 1 $(git rev-parse HEAD) | tail -n1 | xargs git checkout 
 
 elif [ $1 == "rebase-false" ]; then
    git config pull.rebase false
