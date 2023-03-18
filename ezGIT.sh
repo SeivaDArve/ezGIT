@@ -549,6 +549,9 @@ elif [ $1 == "." ]; then
    elif [[ $2 == "all" ]]; then
       # Whenever code complexity is found, a function is created to enable better code reading
          f_git_status-recursive
+      
+      # uDev: At windows, if git does not have this config (see line below), then this function will not take effect:
+         # git config --global --add safe.directory /mnt/c/Repositories/upK
    fi
 elif [ $1 == "ad" ]; then
    # Git add ...
