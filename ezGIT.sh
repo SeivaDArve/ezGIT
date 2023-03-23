@@ -108,6 +108,11 @@ function setGlobalConfig_menu {
 }
 
 
+function f_git_pull_dot_files {
+   echo "ezGIT: git pull and install: dot-files"
+   echo " > (files stored at repo: drya)"
+   echo " > cd drya; git pull; cp .../filss .../places"
+}
 
 
 function f_colors-without-tput {
@@ -953,6 +958,9 @@ elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
 
    elif [[ $2 == "all" ]]; then
       f_git_pull-recursive
+
+   elif [[ $2 == "dot" ]]; then
+      f_git_pull_dot_files
 
    fi
 
