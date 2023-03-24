@@ -1008,6 +1008,12 @@ elif [ $1 == "," ]; then
 
       f_tell_repo_name
 
+elif [ $1 == "upk" ]; then
+   echo "ezGIT: uDev: Repos needed to UPK:"
+   echo " > DRYa"
+   echo " > upK"
+   echo " > upK-diario-Dv"
+   echo " > ezGIT"
 
 
 elif [ $1 == "-1" ]; then
