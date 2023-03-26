@@ -544,6 +544,7 @@ elif [ $1 == "config" ]; then
       echo "      email = flowreshe.seiva.d.arve@gmail.com"
       read -s -n 1
       vim ~/.gitconfig
+      # uDev: Create a file at ~/.config/h.h/ezGIT/ with data from "uname -a"
 
 elif [ $1 == "alias" ]; then
       vim ${v_REPOS_CENTER}/ezGIT/all/etc/config-bash-alias
