@@ -1042,6 +1042,7 @@ elif [ $1 == "upk" ]; then
             && git fetch && echo " > git status" && git status && f_horizontal_line
       ;;
       *)
+         # If no args are given,  tell what it is supposed to do
          echo "ezGIT: uDev: Repos needed to UPK:"
          echo " > DRYa"
          echo " > upK"
