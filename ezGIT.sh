@@ -1010,12 +1010,26 @@ elif [ $1 == "," ]; then
       f_tell_repo_name
 
 elif [ $1 == "upk" ]; then
-   echo "ezGIT: uDev: Repos needed to UPK:"
-   echo " > DRYa"
-   echo " > upK"
-   echo " > upK-diario-Dv"
-   echo " > ezGIT"
-
+   case $2 in
+      v)
+         clear
+         echo "ezGIT: Pulling requirements for upk stuff"
+         f_stroken; echo
+         echo "ezGIT: git pull: DRYa; upk; ezGIT; upK-diario-Dv"
+         echo 
+         cd ${v_REPOS_CENTER}/DRYa && echo " > pulling DRYa" && git pull && echo
+         cd ${v_REPOS_CENTER}/ezGIT && echo " > pulling ezGIT" && git pull && echo
+         cd ${v_REPOS_CENTER}/upK && echo " > pulling upK" && git pull && echo
+         cd ${v_REPOS_CENTER}/upK-diario-Dv && echo " > pulling upK-diario-Dv" && git pull && echo
+      ;;
+      *)
+         echo "ezGIT: uDev: Repos needed to UPK:"
+         echo " > DRYa"
+         echo " > upK"
+         echo " > upK-diario-Dv"
+         echo " > ezGIT"
+      ;;
+   esac
 
 elif [ $1 == "-1" ]; then
    echo "ezGIT: Moving HEAD 1 commit below (previous one)"
