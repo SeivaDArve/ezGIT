@@ -1022,6 +1022,25 @@ elif [ $1 == "upk" ]; then
          cd ${v_REPOS_CENTER}/upK && echo " > pulling upK" && git pull && echo
          cd ${v_REPOS_CENTER}/upK-diario-Dv && echo " > pulling upK-diario-Dv" && git pull && echo
       ;;
+      .)
+         clear
+         echo "ezGIT: Fetching requirements for upk stuff"
+         f_stroken; echo
+         f_horizontal_line
+         echo "ezGIT: fetching: DRYa; upk; ezGIT; upK-diario-Dv"
+         echo 
+         cd ${v_REPOS_CENTER}/DRYa && echo " > fetching DRYa" \
+            && git fetch && echo " > git status" && git status && f_horizontal_line
+         
+         cd ${v_REPOS_CENTER}/ezGIT && echo " > fetching ezGIT" \
+            && git fetch && echo " > git status" && git status && f_horizontal_line
+
+         cd ${v_REPOS_CENTER}/upK && echo " > fetching upK" \
+            && git fetch && echo " > git status" && git status && f_horizontal_line
+
+         cd ${v_REPOS_CENTER}/upK-diario-Dv && echo " > fetching upK-diario-Dv" \
+            && git fetch && echo " > git status" && git status && f_horizontal_line
+      ;;
       *)
          echo "ezGIT: uDev: Repos needed to UPK:"
          echo " > DRYa"
