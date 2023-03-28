@@ -1021,6 +1021,12 @@ elif [ $1 == "upk" ]; then
          cd ${v_REPOS_CENTER}/ezGIT && echo " > pulling ezGIT" && git pull && echo
          cd ${v_REPOS_CENTER}/upK && echo " > pulling upK" && git pull && echo
          cd ${v_REPOS_CENTER}/upK-diario-Dv && echo " > pulling upK-diario-Dv" && git pull && echo
+         echo 
+         echo "uDev: After git pulling all, emacs init.el must be moved to the correct place"
+         echo "uDev: While it is not working perfectly, use:"
+         echo "uDev:  > ,..."
+         echo "udev:  > 12"
+         echo "uDev:  > ZZ"
       ;;
       .)
          clear
@@ -1040,6 +1046,8 @@ elif [ $1 == "upk" ]; then
 
          cd ${v_REPOS_CENTER}/upK-diario-Dv && echo " > fetching upK-diario-Dv" \
             && git fetch && echo " > git status" && git status && f_horizontal_line
+         echo 
+         echo "uDev: should check diff between init.el files"
       ;;
       *)
          # If no args are given,  tell what it is supposed to do
