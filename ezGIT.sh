@@ -1013,20 +1013,47 @@ elif [ $1 == "upk" ]; then
    case $2 in
       v)
          clear
+         f_greet
          echo "ezGIT: Pulling requirements for upk stuff"
-         f_stroken; echo
-         echo "ezGIT: git pull: DRYa; upk; ezGIT; upK-diario-Dv"
-         echo 
-         cd ${v_REPOS_CENTER}/DRYa && echo " > pulling DRYa" && git pull && echo
-         cd ${v_REPOS_CENTER}/ezGIT && echo " > pulling ezGIT" && git pull && echo
-         cd ${v_REPOS_CENTER}/upK && echo " > pulling upK" && git pull && echo
-         cd ${v_REPOS_CENTER}/upK-diario-Dv && echo " > pulling upK-diario-Dv" && git pull && echo
-         echo 
-         echo "uDev: After git pulling all, emacs init.el must be moved to the correct place"
-         echo "uDev: While it is not working perfectly, use:"
-         echo "uDev:  > ,..."
-         echo "udev:  > 12"
-         echo "uDev:  > ZZ"
+         echo
+         # If there is no file ~/.netrc configured for automatic git pull and git push, you might uncomment f_stroken:
+            # f_stroken; echo
+         echo "ezGIT: You are about to \"git pull\" all these repos:"
+         echo -n " > DRYa; upk; ezGIT; upK-diario-Dv ... "
+         f_cor4
+         read -s -n 1 -p "Press any key to continue"
+         f_resetCor
+         echo ; echo
+         f_horizontal_line
+         cd ${v_REPOS_CENTER}/DRYa && echo "GIT PULL: DRYa" && echo -n " > " && git pull && echo
+         cd ${v_REPOS_CENTER}/ezGIT && echo "GIT PULL: ezGIT" && echo -n " > " && git pull && echo
+         cd ${v_REPOS_CENTER}/upK && echo "GIT PULL: upK" && echo -n " > " && git pull && echo
+         cd ${v_REPOS_CENTER}/upK-diario-Dv && echo "GIT PULL: upK-diario-Dv" && echo -n " > " && git pull && echo
+         
+         # After updating repositories, lets move their updated dot-files across the system:
+            # Emacs init.el file:
+               echo "Management of init.el file (from inside DRYa repo)"
+               cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el ~/.emacs.d/init.el && \
+               echo " > Was copied to ~/.emacs.d/init.el" || echo " > Not copyed!"
+               echo 
+
+            # Deleting other emacs init files to prevent conflicts:
+               echo "Management of file ~/.emacs (removing it to prevent conflicts)"
+               rm ~/.emacs 2>/dev/null && \
+               echo " > File removed: ~/.emacs" || echo " > File ~/.emacs would be deleted if it was existent" 
+               echo 
+
+            # If we are on windows, the init file will be somewhere at %appdata%
+               if [ -d /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d ]; then
+                  echo "Windows adjustment: "
+                  echo " > %AppData% exists: copying init.el file there"
+                  rm /mnt/c/Users/Dv-User/AppData/Roaming/.emacs 2>/dev/null && \
+                  echo " > ...AppData/Roaming/.emacs was deleted " || echo " > ...AppData/Roaming/.emacs would be deleted on windows if it was existent "
+
+                  cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/init.el
+               fi
+            
+            # Info: This function also exists at DRYa repo. function name is: ,...
       ;;
       .)
          clear
