@@ -1056,7 +1056,7 @@ elif [ $1 == "upk" ]; then
             
             # Info: This function also exists at DRYa repo. function name is: ,...
       ;;
-      .)
+      vv)
          clear
          echo "ezGIT: Fetching requirements for upk stuff"
          f_stroken; echo
