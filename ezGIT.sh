@@ -1046,11 +1046,12 @@ elif [ $1 == "upk" ]; then
             # If we are on windows, the init file will be somewhere at %appdata%
                if [ -d /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d ]; then
                   echo "Windows adjustment: "
-                  echo " > %AppData% exists: copying init.el file there"
-                  rm /mnt/c/Users/Dv-User/AppData/Roaming/.emacs 2>/dev/null && \
-                  echo " > ...AppData/Roaming/.emacs was deleted " || echo " > ...AppData/Roaming/.emacs would be deleted on windows if it was existent "
-
-                  cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/init.el
+                  echo " > %AppData% exists: managing init.el files to their correct places:"
+                     rm /mnt/c/Users/Dv-User/AppData/Roaming/.emacs 2>/dev/null && \
+                     echo " > ...AppData/Roaming/.emacs was deleted " || echo " > ...AppData/Roaming/.emacs would be deleted on windows if it was existent "
+                     cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/init.el \
+                  && echo " > file copied from DRYa to .../AppData/Roaming/.emacs.d/init.el"
+                  echo
                fi
             
             # Info: This function also exists at DRYa repo. function name is: ,...
