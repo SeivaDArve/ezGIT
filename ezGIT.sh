@@ -1110,6 +1110,17 @@ elif [ $1 == "uDev" ]; then
 
 
 
+elif [ $1 == "stash" ]; then
+  f_greet
+  echo "ezGIT: saving current commits for later "
+  echo "       (pulling first and applying current commits later)"
+  echo " > git stash "
+  git stash
+
+elif [ $1 == "unstash" ]; then
+  echo "ezGIT: Apllying saved commits now, to this state"
+  echo " > git stash apply"
+  git stash apply
 
 
 
