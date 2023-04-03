@@ -1030,6 +1030,19 @@ elif [ $1 == "upk" ]; then
          cd ${v_REPOS_CENTER}/upK && echo "GIT PULL: upK" && echo -n " > " && git pull && echo
          cd ${v_REPOS_CENTER}/upK-diario-Dv && echo "GIT PULL: upK-diario-Dv" && echo -n " > " && git pull && echo
          
+
+         # ----------------------------------------------------------
+            # Info about Emacs init file location in Microsoft Windows
+               # On {Windows 10, Windows 8, Windows 7, Windows Vista} , by default, emacs looks at the following directory/file.
+
+               # $HOMEPATH/AppData/Roaming/.emacs
+               # The .emacs file is old emacs convention, used in 1990s and 2000s.
+
+               # $HOMEPATH/AppData/Roaming/.emacs.d/init.el
+               # The .emacs.d/init.el is modern convention.
+         # ----------------------------------------------------------
+
+
          # After updating repositories, lets move their updated dot-files across the system:
             # Emacs init.el file:
                echo "Management of init.el file (from inside DRYa repo)"
