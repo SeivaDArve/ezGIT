@@ -614,6 +614,7 @@ elif [ $1 == "." ]; then
          echo "git status:"
          f_resetCor
          git status
+         echo " >> uDev: Tell how many branches are there"
 
    elif [[ $2 == "all" ]]; then
       # Whenever code complexity is found, a function is created to enable better code reading
