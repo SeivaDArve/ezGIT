@@ -1114,6 +1114,16 @@ elif [ $1 == "+1" ]; then
 elif [ $1 == "reset-head" ]; then
    git checkout main
 
+elif [ $1 == "diff-between-head" ]; then
+   # When navigating between commits like 'G -1' and 'G +1' gif diff might be needed.
+   # If you want to see what is the difference between your current commit and the head commit, use this command
+   #
+   # Usualy we use: gif diff <newest-commit>..<oldest-commit>
+   #
+   # Now we will detect what is the current commit, detect the head commit and 'git diff' both
+
+   echo "uDev: git diff between this commit and head commit is not yet developed (written/programed)"
+
 elif [ $1 == "rebase-false" ]; then
    git config pull.rebase false
 
