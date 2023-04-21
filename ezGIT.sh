@@ -1145,7 +1145,7 @@ elif [ $1 == "stash" ] || [ $1 == "st" ]; then
   echo " > git stash "
   git stash
 
-elif [ $1 == "unstash" ] || [ $1 == "apply" ] || [ $1 == "ap" ]; then
+elif [ $1 == "unstash" ] || [ $1 == "ust" ] || [ $1 == "apply" ] || [ $1 == "ap" ]; then
   echo "ezGIT: Apllying saved commits now, to this state"
   echo " > git stash apply"
   git stash apply
