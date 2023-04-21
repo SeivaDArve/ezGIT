@@ -559,6 +559,9 @@ elif [ $1 == "f" ] || [ $1 == "gfv" ]; then
 		echo -e "Favorits menu\n" 
 		echo -e "git status \ngit reset  #To unstage files \ngit rebase -i HEAD~2 && reword  #To change old commit messages"
 
+elif [ $1 == "lg" ] || [ $1 == "log" ]; then
+   git log
+
 elif [[ $1 == "global" ]]; then
 	 setGlobalConfig_menu
 
