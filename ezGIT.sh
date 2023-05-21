@@ -540,7 +540,6 @@ elif [ $1 == "config" ]; then
       echo "Example of content inside ~/.gitconfig file:"
       echo "[user]"
       echo "      name = seivadarve"
-      echo "      mail = flowreshe.seiva.d.arve@gmail.com"
       echo "      email = flowreshe.seiva.d.arve@gmail.com"
       read -s -n 1
       vim ~/.gitconfig
