@@ -1150,7 +1150,26 @@ elif [ $1 == "unstash" ] || [ $1 == "ust" ] || [ $1 == "apply" ] || [ $1 == "ap"
   git stash apply
 
 
+elif [ $1 == "new-repo" ]; then
 
+   echo '
+uDev: Create a script for this heredoc
+
+      source: https://gist.github.com/alexpchin/dc91e723d4db5018fef8
+
+# Setting up a new Git Repo
+   ## Create a new repository on the command line
+      touch README.md
+      $ git init
+      $ git add README.md
+      $ git commit -m "first commit"
+      $ git remote add origin git@github.com:alexpchin/<reponame>.git
+      $ git push -u origin master
+
+   ## Push an existing repository from the command line
+      $ git remote add origin git@github.com:alexpchin/<reponame>.git
+      $ git push -u origin master
+'
 
 else
    # If the arguments you input are neither empty nor listed, then run:
