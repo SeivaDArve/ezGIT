@@ -722,7 +722,7 @@ elif [ $1 == "new" ]; then
 
 
 elif [ $1 == "+" ]; then
-	# 1. Test if $2 was specified
+   # 1. Test if $2 was specified
    # 2. git add $2
    # 3. Ask if user wants git diff
    # 4. git status
@@ -1126,6 +1126,13 @@ elif [ $1 == "diff-between-head" ]; then
 
    echo "uDev: git diff between this commit and head commit is not yet developed (written/programed)"
 
+
+elif [ $1 == "diff" ]; then
+   clear
+   figlet ezGIT
+   echo "This option is the same as: '$ git diff --staged'"
+   git diff --staged
+   
 elif [ $1 == "rebase-false" ]; then
    git config pull.rebase false
 
