@@ -520,9 +520,12 @@ function f_curl_uploads_count {
    
 if [ -z "$*" ]; then
    # Do something else if there are no arguments
-      echo " > No arguments where given"
+      echo "ezGIT: No arguments were given"
+      echo " > An old list of arguments is going to be given (old, uDev):"
+      echo
+      echo "uDev: when no args are given, show git config info for this device"
+      echo
       sleep 1
-      echo " > Here is a list of arguments you may use:"
       f_cor1; echo -n "   $ G "; f_cor2; echo -n "1"; f_resetCor; echo "  (It means \"git pull\")"
 
       f_heredoc
@@ -1177,6 +1180,12 @@ uDev: Create a script for this heredoc
       $ git remote add origin git@github.com:alexpchin/<reponame>.git
       $ git push -u origin master
 '
+   clear
+   figlet ezGIT
+   echo "ezGIT: create new repo (uDev)"
+   echo
+   echo "Note: When ezGIT is working with DRYa, all repos are at first created at:"
+   echo " > ${v_REPOS_CENTER}"
 
 else
    # If the arguments you input are neither empty nor listed, then run:
