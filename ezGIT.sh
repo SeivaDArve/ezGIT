@@ -2,6 +2,10 @@
 # Title: ezGIT to replace long git commands for one simple and short command
 # Use: bully pages: man pages but for developers
 
+# uDev: Do not allow this software to run without the proper file ~/.gitconfig
+   # if [ -z ~/.gitconfig ]; then echo "ezGIT: Please configure ~/.gitconfig first with the command X"; exit 1; fi
+   # uDev: add info on how to install our dot. Add info on how to run this script anyways without such config instaled
+
 declare v_repo="ezGIT"
 
 function f_cor1 {	
@@ -1132,6 +1136,23 @@ elif [ $1 == "rebase-false" ]; then
 
 elif [ $1 == "rebase-true" ]; then
    git config pull.rebase true
+
+elif [ $1 == "rb" ]; then
+
+   if [ -z $2 ]; then
+      clear
+      figlet ezGIT
+      echo "ezGIT: \"G rb\" (git rebase) requires an extra arg, either t of f (true or false respectively)"
+
+   elif [ $2 == "f" ]; then
+      echo "git config pull.rebase false"
+      git config pull.rebase false
+   
+   elif [ $2 == "t" ]; then
+      echo "git config pull.rebase true"
+      git config pull.rebase true
+
+   fi
 
 elif [ $1 == "uDev" ]; then
    echo "This function uses the find command to search \"# uDev\" comments om the code"
