@@ -524,9 +524,12 @@ function f_curl_uploads_count {
    
 if [ -z "$*" ]; then
    # Do something else if there are no arguments
-      echo " > No arguments where given"
+      echo "ezGIT: No arguments were given"
+      echo " > An old list of arguments is going to be given (old, uDev):"
+      echo
+      echo "uDev: when no args are given, show git config info for this device"
+      echo
       sleep 1
-      echo " > Here is a list of arguments you may use:"
       f_cor1; echo -n "   $ G "; f_cor2; echo -n "1"; f_resetCor; echo "  (It means \"git pull\")"
 
       f_heredoc
@@ -544,7 +547,6 @@ elif [ $1 == "config" ]; then
       echo "Example of content inside ~/.gitconfig file:"
       echo "[user]"
       echo "      name = seivadarve"
-      echo "      mail = flowreshe.seiva.d.arve@gmail.com"
       echo "      email = flowreshe.seiva.d.arve@gmail.com"
       read -s -n 1
       vim ~/.gitconfig
@@ -727,7 +729,7 @@ elif [ $1 == "new" ]; then
 
 
 elif [ $1 == "+" ]; then
-	# 1. Test if $2 was specified
+   # 1. Test if $2 was specified
    # 2. git add $2
    # 3. Ask if user wants git diff
    # 4. git status
@@ -1131,6 +1133,13 @@ elif [ $1 == "diff-between-head" ]; then
 
    echo "uDev: git diff between this commit and head commit is not yet developed (written/programed)"
 
+
+elif [ $1 == "diff" ]; then
+   clear
+   figlet ezGIT
+   echo "This option is the same as: '$ git diff --staged'"
+   git diff --staged
+   
 elif [ $1 == "rebase-false" ]; then
    git config pull.rebase false
 
@@ -1172,7 +1181,32 @@ elif [ $1 == "unstash" ] || [ $1 == "ust" ] || [ $1 == "apply" ] || [ $1 == "ap"
   git stash apply
 
 
+elif [ $1 == "new-repo" ]; then
 
+   echo '
+uDev: Create a script for this heredoc
+
+      source: https://gist.github.com/alexpchin/dc91e723d4db5018fef8
+
+# Setting up a new Git Repo
+   ## Create a new repository on the command line
+      touch README.md
+      $ git init
+      $ git add README.md
+      $ git commit -m "first commit"
+      $ git remote add origin git@github.com:alexpchin/<reponame>.git
+      $ git push -u origin master
+
+   ## Push an existing repository from the command line
+      $ git remote add origin git@github.com:alexpchin/<reponame>.git
+      $ git push -u origin master
+'
+   clear
+   figlet ezGIT
+   echo "ezGIT: create new repo (uDev)"
+   echo
+   echo "Note: When ezGIT is working with DRYa, all repos are at first created at:"
+   echo " > ${v_REPOS_CENTER}"
 
 else
    # If the arguments you input are neither empty nor listed, then run:
