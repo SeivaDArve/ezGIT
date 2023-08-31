@@ -555,9 +555,10 @@ elif [ $1 == "config" ]; then
 elif [ $1 == "alias" ]; then
       vim ${v_REPOS_CENTER}/ezGIT/all/etc/config-bash-alias
 
-elif [ $1 == "k" ] || [ $1 == "gkp" ]; then
+elif [ $1 == "k" ] || [ $1 == "gkp" ] || [ $1 == "kp" ]; then
    # Create a file .gitkeep
       touch .gitkeep
+      echo "ezGIT: file .gitkeep was created"
 
 elif [ $1 == "f" ] || [ $1 == "gfv" ]; then
 	# List favorite git commands
