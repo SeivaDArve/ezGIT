@@ -1182,6 +1182,10 @@ elif [ $1 == "unstash" ] || [ $1 == "ust" ] || [ $1 == "apply" ] || [ $1 == "ap"
   git stash apply
 
 
+elif [ $1 == "file-host" ]; then
+   echo "If you want to use github to download single files just like any other cloud storage instead of cloning entire repos, you can. Github supports that. Here is a link to teach how to do that while this function is under development"
+   echo " > https://www.howtogeek.com/devops/how-to-download-single-files-from-a-github-repository/"
+
 elif [ $1 == "new-repo" ]; then
 
    echo '
