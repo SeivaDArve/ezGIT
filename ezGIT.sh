@@ -28,6 +28,7 @@ function f_resetCor {
 }
 
 function f_greet {
+   clear
    f_cor4
    figlet "ezGIT" || echo -e "( ezGIT )\n"
    f_resetCor 
@@ -541,15 +542,24 @@ elif [ $1 == "eg" ]; then
 
 elif [ $1 == "config" ]; then
    # Confirming that configurations exist
-      echo "Opening file of configurations for git with vim editor"
-      read -s
+      f_greet
+      echo "ezGIT: Opening configurations file of git"
+      echo " > using with vim editor"
+      echo " > changes will be made inside DRYa repo and copied to HOME afterwards"
       echo 
+
       echo "Example of content inside ~/.gitconfig file:"
       echo "[user]"
       echo "      name = seivadarve"
       echo "      email = flowreshe.seiva.d.arve@gmail.com"
-      read -s -n 1
-      vim ~/.gitconfig
+      echo 
+      read -s -t 3 -n 1
+      vim ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/.gitconfig
+
+      # replacing the old file with the new edited one:
+         cp ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/.gitconfig ~ \
+            && echo -e "ezGIT: Changes were applied both places\n > On DRYa repository\n > On this machine at HOME: ~"
+
       # uDev: Create a file at ~/.config/h.h/ezGIT/ with data from "uname -a"
 
 elif [ $1 == "alias" ]; then
@@ -1122,7 +1132,23 @@ elif [ $1 == "+1" ]; then
    echo "ezGIT: Attach HEAD with command: git switch -"
 
 elif [ $1 == "reset-head" ]; then
+   # when you are navigating/exploring/browsing older commits and you are finished, if no changes were applying and there is no need for more navigation, this is the command ends the navigation and brighs back normality
    git checkout main
+
+elif [ $1 == "apply-current-commit" ]; then
+   # We use this when we mess up in a previous commit and after that, when navigate back to the previous/unchanged/un-messed up commit and we what to apply that commit
+   # source: https://stackoverflow.com/questions/13956207/how-can-set-an-older-commit-to-be-head
+   
+   # 1 - Find/save the commit hash using 'git log' and 'git checkout HEAD^1 ' 
+   # 2 - 'git checkout main' to restore head to it normal place (still with the bug)
+   # 3 - 'git reset --hard <commit-hash-here> ' To fix the repository to the desired state with the older commit
+   # 4 - 'git push --force-with-lease' to push it to the remote
+
+   # udev: 1 - using 'G -1' to navigate to the previous commit
+   #       2 - using 'G fix-to-current-commit' will: 1 - '$ git log | head -n 5 > tmp.txt' 
+   #                                                 2 - save the hash from the previous file as a new variable
+   #                                                 3 - Use the hash to bring the banch to normality
+   echo
 
 elif [ $1 == "diff-between-head" ]; then
    # When navigating between commits like 'G -1' and 'G +1' gif diff might be needed.
