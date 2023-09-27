@@ -923,10 +923,24 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
       f_greet
 
       # Sending automatically everything with an automated commit message
+         echo "ezGIT: adding all"
+         echo
 			git add --all
+
+         echo "ezGIT: commiting automatically"
+         echo
 			git commit -m "automated push by ezGIT"
+
+         echo "ezGIT: git status"
+         echo
          git status
+
+         echo "ezGIT: presenting stroken"
+         echo
          f_stroken
+
+         echo "ezGIT: pushint to github"
+         echo
          git push
    fi
       
