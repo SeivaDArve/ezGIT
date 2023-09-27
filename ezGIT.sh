@@ -925,7 +925,7 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
       # Sending automatically everything with an automated commit message
          f_cor3; echo -e "ezGIT: G ++ random"; f_resetCor
          f_cor3; echo -e " > or: G ++ r"; f_resetCor
-         f_cor3; echo -e " > Commints and pushes all contents of the repo fully  automatic "; f_resetCor
+         f_cor3; echo -e " > Commints and pushes all contents of the repo fully automatic "; f_resetCor
          echo
 
          f_cor3; echo -e "ezGIT: adding all"; f_resetCor
