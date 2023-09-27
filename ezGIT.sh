@@ -608,17 +608,57 @@ elif [ $1 == "." ]; then
    if [[ -z $2 ]]; then
       clear; f_greet 
 
-         #f_find_basename
-         #sleep 2
-         #echo
-         #echo -n "Repository name: "
-         #f_cor3
-         #echo "$v_repo "
-         f_cor4
+         # Note: 3 possibilities when calling: '$ G .'
+         #  1. We are inside a valid repository
+         #  2. We are at the root directory where all repos are found
+         #  3. We are outside a valid repository (somewhere else ijnthe file system)
+         #
+         # If used on the root of ${v_REPOS_CENTER} it will throw an error, therefore, we could fix this
+         #
+         #  Here we act accordingly:
+            if [[ $(pwd) == ${v_REPOS_CENTER} ]]; then 
+               # equal: For sure we are not inside a repo. And we recognize this dir. Listing all repos here
+               # We are at the Root of all repos
+               echo 'We are at the root of Repositories, also called by '
+               echo ' > ${v_REPOS_CENTER}'
+               echo
+               echo "Listing all repositories"
+               echo
+               ls -1
+
+            elif [[ $(pwd) != ${v_REPOS_CENTER} ]]; then 
+               # not-equal: Means that we may be inside a repo
+
+               #Two steps to find if current path is valid
+               # 1. If invalid: Throw a beautifull error message
+               # 2. If valid: Must be inside some repo BUT not at the root of all repos   
+
+               #f_find_basename
+               #
+               #
+                #v_name=$(pwd)
+                #basename $v_name
+               # 
+               #
+               # uDev: Search for .git dir, because it would maen that it's paralent dir is our repo name
+
+               #echo -n "Repository name: $v_repo"
+               #f_cor3
+               #echo "$v_repo "
+
+               f_cor4
+               echo; echo "git status:"
+               f_resetCor
+
+               git status
+            #else
+            #   # invalid location found: uDev
+            #   # If $? is equal to 1 or is equal to 2, thenban error occured. If $? is 0, it means last function ran ok.
+            #   git status 1>/dev/null
+            #   if [[ $? != "0" ]]; then echo "Dv: Fatal error, ok?"; fi
+            fi
+
          echo
-         echo "git status:"
-         f_resetCor
-         git status
          echo " >> uDev: Tell how many branches are there"
 
    elif [[ $2 == "all" ]]; then
