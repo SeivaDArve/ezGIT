@@ -846,8 +846,11 @@ elif [ $1 == "+" ]; then
 
 elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
 	# 'git add --all' + 'git status' + 'git commim -m "" '
-   # Almost Equivalent to 'G 7'
 
+   # If no $2 is found, enable the user to write a commit message.
+   # If one $2 is found, commit 'random' automatically
+
+   if [ -z $2 ]; then
       clear
       f_greet
 
@@ -915,6 +918,18 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
                echo
             ;;
          esac
+   elif [ $2 == "r" ] || [ $2 == "random" ]; then
+      clear
+      f_greet
+
+      # Sending automatically everything with an automated commit message
+			git add --all
+			git commit -m "automated push by ezGIT"
+         git status
+         f_stroken
+         git push
+   fi
+      
 
 elif [ $1 == "-" ]; then 
    # unStages a file
