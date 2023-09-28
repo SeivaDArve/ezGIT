@@ -645,32 +645,41 @@ elif [ $1 == "." ]; then
                # not-equal: Means that we may be inside a repo
 
                #Two steps to find if current path is valid
-               # 1. If invalid: Throw a beautifull error message
-               # 2. If valid: Must be inside some repo BUT not at the root of all repos   
+                  # 1. If invalid: Throw a beautifull error message
+                  # 2. If valid: Must be inside some repo BUT not at the root of all repos   
+                  # If variable $? is equal to 1 or is equal to 2, then the last command issued in bash was a failure, an error occured. If $? is 0, it means last function ran ok.
 
-               #f_find_basename
-               #
-               #
-                #v_name=$(pwd)
-                #basename $v_name
-               # 
-               #
-               # uDev: Search for .git dir, because it would maen that it's paralent dir is our repo name
+               # Possibility 1 and 2, (testing if valid or invalid):
+                  git status 1>/dev/null 2>/dev/null  ## Try a normal git status but with no output. MUST BE ONE COMMAND ONLY, becaus $? stores the status of the sucess only of the last command
 
-               #echo -n "Repository name: $v_repo"
-               #f_cor3
-               #echo "$v_repo "
+               if [[ $? != "0" ]]; then  ## Test if last command was a failure (not equal to 0)
+                  # Invalid
+                  echo "Dv: Fatal error, ok? beautiful message here"
+                  echo "udev: 'G a' to navigate and list the root of repos"
+               else
+                  # Valid:
+                  # Insert dir basename here
+                  echo "uDev: insert basename"
 
-               f_cor4
-               echo; echo "git status:"
-               f_resetCor
+                  #f_find_basename
+                  #
+                  #
+                   #v_name=$(pwd)
+                   #basename $v_name
+                  # 
+                  #
+                  # uDev: Search for .git dir, because it would maen that it's paralent dir is our repo name
 
-               git status
-            #else
-            #   # invalid location found: uDev
-            #   # If $? is equal to 1 or is equal to 2, thenban error occured. If $? is 0, it means last function ran ok.
-            #   git status 1>/dev/null
-            #   if [[ $? != "0" ]]; then echo "Dv: Fatal error, ok?"; fi
+                  #echo -n "Repository name: $v_repo"
+                  #f_cor3
+                  #echo "$v_repo "
+
+                  f_cor4
+                  echo; echo "git status:"
+                  f_resetCor
+
+                  git status
+               fi
             fi
 
          echo
@@ -965,7 +974,7 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
       # Sending automatically everything with an automated commit message
          f_cor3; echo -e "ezGIT: G ++ random"; f_resetCor
          f_cor3; echo -e " > or: G ++ r"; f_resetCor
-         f_cor3; echo -e " > Commints and pushes all contents of the repo fully automatic "; f_resetCor
+         f_cor3; echo -e " > Commits and pushes all contents of the repo fully automatic "; f_resetCor
          echo
 
          f_cor3; echo -e "ezGIT: adding all"; f_resetCor
@@ -1098,6 +1107,8 @@ elif [ $1 == "," ]; then
          # If the current directori is not a repository, that is also mentioned
 
       f_tell_repo_name
+
+      #uDev: add options for branches
 
 elif [ $1 == "upk" ]; then
    case $2 in
