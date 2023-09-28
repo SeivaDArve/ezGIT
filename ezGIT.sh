@@ -2,6 +2,10 @@
 # Title: ezGIT to replace long git commands for one simple and short command
 # Use: bully pages: man pages but for developers
 
+# uDev: Do not allow this software to run without the proper file ~/.gitconfig
+   # if [ -z ~/.gitconfig ]; then echo "ezGIT: Please configure ~/.gitconfig first with the command X"; exit 1; fi
+   # uDev: add info on how to install our dot. Add info on how to run this script anyways without such config instaled
+
 declare v_repo="ezGIT"
 
 function f_cor1 {	
@@ -24,6 +28,7 @@ function f_resetCor {
 }
 
 function f_greet {
+   clear
    f_cor4
    figlet "ezGIT" || echo -e "( ezGIT )\n"
    f_resetCor 
@@ -537,23 +542,33 @@ elif [ $1 == "eg" ]; then
 
 elif [ $1 == "config" ]; then
    # Confirming that configurations exist
-      echo "Opening file of configurations for git with vim editor"
-      read -s
+      f_greet
+      echo "ezGIT: Opening configurations file of git"
+      echo " > using with vim editor"
+      echo " > changes will be made inside DRYa repo and copied to HOME afterwards"
       echo 
+
       echo "Example of content inside ~/.gitconfig file:"
       echo "[user]"
       echo "      name = seivadarve"
       echo "      email = flowreshe.seiva.d.arve@gmail.com"
-      read -s -n 1
-      vim ~/.gitconfig
+      echo 
+      read -s -t 3 -n 1
+      vim ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/.gitconfig
+
+      # replacing the old file with the new edited one:
+         cp ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/.gitconfig ~ \
+            && echo -e "ezGIT: Changes were applied both places\n > On DRYa repository\n > On this machine at HOME: ~"
+
       # uDev: Create a file at ~/.config/h.h/ezGIT/ with data from "uname -a"
 
 elif [ $1 == "alias" ]; then
       vim ${v_REPOS_CENTER}/ezGIT/all/etc/config-bash-alias
 
-elif [ $1 == "k" ] || [ $1 == "gkp" ]; then
+elif [ $1 == "k" ] || [ $1 == "gkp" ] || [ $1 == "kp" ]; then
    # Create a file .gitkeep
       touch .gitkeep
+      echo "ezGIT: file .gitkeep was created"
 
 elif [ $1 == "f" ] || [ $1 == "gfv" ]; then
 	# List favorite git commands
@@ -871,8 +886,11 @@ elif [ $1 == "+" ]; then
 
 elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
 	# 'git add --all' + 'git status' + 'git commim -m "" '
-   # Almost Equivalent to 'G 7'
 
+   # If no $2 is found, enable the user to write a commit message.
+   # If one $2 is found, commit 'random' automatically
+
+   if [ -z $2 ]; then
       clear
       f_greet
 
@@ -940,6 +958,32 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
                echo
             ;;
          esac
+   elif [ $2 == "r" ] || [ $2 == "random" ]; then
+      clear
+      f_greet
+
+      # Sending automatically everything with an automated commit message
+         f_cor3; echo -e "ezGIT: G ++ random"; f_resetCor
+         f_cor3; echo -e " > or: G ++ r"; f_resetCor
+         f_cor3; echo -e " > Commints and pushes all contents of the repo fully automatic "; f_resetCor
+         echo
+
+         f_cor3; echo -e "ezGIT: adding all"; f_resetCor
+			git add --all && echo -e " > Done!\n"
+
+         f_cor3; echo "ezGIT: commiting automatically"; f_resetCor
+			git commit -m "automated push by ezGIT"; echo
+
+         f_cor3; echo "ezGIT: git status"; f_resetCor
+         git status; echo
+
+         f_cor3; echo "ezGIT: presenting stroken "; f_resetCor
+         f_stroken; echo 
+
+         f_cor3; echo "ezGIT: pushing to github "; f_resetCor
+         git push
+   fi
+      
 
 elif [ $1 == "-" ]; then 
    # unStages a file
@@ -1157,7 +1201,23 @@ elif [ $1 == "+1" ]; then
    echo "ezGIT: Attach HEAD with command: git switch -"
 
 elif [ $1 == "reset-head" ]; then
+   # when you are navigating/exploring/browsing older commits and you are finished, if no changes were applying and there is no need for more navigation, this is the command ends the navigation and brighs back normality
    git checkout main
+
+elif [ $1 == "apply-current-commit" ]; then
+   # We use this when we mess up in a previous commit and after that, when navigate back to the previous/unchanged/un-messed up commit and we what to apply that commit
+   # source: https://stackoverflow.com/questions/13956207/how-can-set-an-older-commit-to-be-head
+   
+   # 1 - Find/save the commit hash using 'git log' and 'git checkout HEAD^1 ' 
+   # 2 - 'git checkout main' to restore head to it normal place (still with the bug)
+   # 3 - 'git reset --hard <commit-hash-here> ' To fix the repository to the desired state with the older commit
+   # 4 - 'git push --force-with-lease' to push it to the remote
+
+   # udev: 1 - using 'G -1' to navigate to the previous commit
+   #       2 - using 'G fix-to-current-commit' will: 1 - '$ git log | head -n 5 > tmp.txt' 
+   #                                                 2 - save the hash from the previous file as a new variable
+   #                                                 3 - Use the hash to bring the banch to normality
+   echo
 
 elif [ $1 == "diff-between-head" ]; then
    # When navigating between commits like 'G -1' and 'G +1' gif diff might be needed.
@@ -1182,6 +1242,23 @@ elif [ $1 == "rebase-false" ]; then
 elif [ $1 == "rebase-true" ]; then
    git config pull.rebase true
 
+elif [ $1 == "rb" ]; then
+
+   if [ -z $2 ]; then
+      clear
+      figlet ezGIT
+      echo "ezGIT: \"G rb\" (git rebase) requires an extra arg, either t of f (true or false respectively)"
+
+   elif [ $2 == "f" ]; then
+      echo "git config pull.rebase false"
+      git config pull.rebase false
+   
+   elif [ $2 == "t" ]; then
+      echo "git config pull.rebase true"
+      git config pull.rebase true
+
+   fi
+
 elif [ $1 == "uDev" ]; then
    echo "This function uses the find command to search \"# uDev\" comments om the code"
 
@@ -1199,6 +1276,10 @@ elif [ $1 == "unstash" ] || [ $1 == "ust" ] || [ $1 == "apply" ] || [ $1 == "ap"
   echo " > git stash apply"
   git stash apply
 
+
+elif [ $1 == "file-host" ]; then
+   echo "If you want to use github to download single files just like any other cloud storage instead of cloning entire repos, you can. Github supports that. Here is a link to teach how to do that while this function is under development"
+   echo " > https://www.howtogeek.com/devops/how-to-download-single-files-from-a-github-repository/"
 
 elif [ $1 == "new-repo" ]; then
 
