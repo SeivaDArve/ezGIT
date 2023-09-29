@@ -970,7 +970,7 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
 
       # Sending automatically everything with an automated commit message
          # Message to use as commit:
-            v_aut_message="automated push by ezGIT"
+            v_aut_message="Pushed to github.com automatically by ezGIT app"
 
          f_cor3; echo -e "ezGIT running:"; f_resetCor
          f_cor3; echo -e " > G ++ random"; f_resetCor
