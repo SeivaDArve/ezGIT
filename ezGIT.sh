@@ -978,19 +978,19 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
          f_cor3; echo -e " > Commits and pushes all contents of the repo fully automatic "; f_resetCor
          echo
 
-         f_cor3; echo -e "ezGIT: adding all"; f_resetCor
+         f_cor3; echo -e "ezGIT: adding all files into 1 commit"; f_resetCor
 			git add --all && echo -e " > Done!\n"
+
+         f_cor3; echo "ezGIT: default commit message:"; f_resetCor
+         echo " > $v_aut_message"; echo
 
          f_cor3; echo "ezGIT: commiting automatically"; f_resetCor
 			git commit -m "$v_aut_message"; echo
 
-         f_cor3; echo "ezGIT: default commit message"; f_resetCor
-         echo " > $v_aut_message"; echo
-
          f_cor3; echo "ezGIT: git status"; f_resetCor
          git status; echo
 
-         f_cor3; echo "ezGIT: presenting stroken "; f_resetCor
+         f_cor3; echo "ezGIT: presenting Stroken "; f_resetCor
          f_stroken; echo 
 
          f_cor3; echo "ezGIT: pushing to github "; f_resetCor
