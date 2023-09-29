@@ -307,6 +307,7 @@ function f_horizontal_line {
 
 function f_tell_repo_name { 
    # Function to simply tell what the repository's name is
+   # uDev: This function is like: dir-basename for git
    
    # Utility 1:
       # If a specific list of repositories are found, ezGIT will deny the push before encryption
@@ -374,37 +375,30 @@ f_horizontal_line
 
 less << heredooc
 
+uDev: f_horizontal_line
 ezGIT------------ git menu --------- page 1
 
 RECOGNIZE REPOSITORY: OFF
 
-G    | Displays this menu
-G F  | Favourites
-G 0  | git status
-G 0+ | git status && git show origin
-G 1  | git pull
-G 2  | git push
-G 3  | git add .
-G 4  | git add --all
-G 5  | git commit -m '...'
+G        |     | Displays this menu
+G F      |     | Favourites
+G .      |     | git status
+G ,      |     | (show all branches)
+G v      |     | git pull
+G ^      |     | git push
+G + .    |     | git add .
+G + all  |     | git add --all
+G +      | gad | git add <file-name-here>    (stages a file)
+G -      |     | git reset <file-name-here>  (unStages a file)
 
-G +  | gad | "git add ..."    (stages a file)
-G -  |       "git reset ..."  (unStages a file)
-
-G 6  | git add .      &&  git commit -m '...'
-G 7  | git add --all  &&  git commit -m '...'
-
-G 8  | git log
-G 9  | cat stroken && git push && git status
-
-G A  | menu to set global configurations for the user
-G C  | Configure git manually with vim (under construction) 
-G S  | Stop and Clear the screen from this menu
+G config | uDev 
 -------------------------------------------
-G m1 | goto menu 1
-G m2 | goto menu 2
 
-Example: To do something, specify an argument like "G 2"
+Use alias 1, 2, 3 to navigate to next page 
+  (alias are set on-the-go, some were just set)
+
+Example: 1. Install ezGIT on "~/.bashrc" with an 'alias G=".../ezGIT.sh" '
+         2. To do something, specify an argument like "G ."
 
 (Quit this page with the key: Q)
 
@@ -616,6 +610,9 @@ elif [ $1 == "msg" ]; then
    else
       echo "G msg: Choose 'send' or 'receive'"
    fi
+
+elif [ $1 == "install" ]; then
+   echo "uDev: If DRYa does not install this repo, it would install itself"
 
 elif [ $1 == "." ]; then
    # Git status
@@ -972,6 +969,9 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
       f_greet
 
       # Sending automatically everything with an automated commit message
+         # Message to use as commit:
+            v_aut_message="automated push by ezGIT"
+
          f_cor3; echo -e "ezGIT: G ++ random"; f_resetCor
          f_cor3; echo -e " > or: G ++ r"; f_resetCor
          f_cor3; echo -e " > Commits and pushes all contents of the repo fully automatic "; f_resetCor
@@ -981,7 +981,9 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
 			git add --all && echo -e " > Done!\n"
 
          f_cor3; echo "ezGIT: commiting automatically"; f_resetCor
-			git commit -m "automated push by ezGIT"; echo
+			git commit -m "$v_aut_message"; echo
+
+         echo "Commited: $v_aut_message"
 
          f_cor3; echo "ezGIT: git status"; f_resetCor
          git status; echo
