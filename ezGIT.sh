@@ -983,7 +983,8 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
          f_cor3; echo "ezGIT: commiting automatically"; f_resetCor
 			git commit -m "$v_aut_message"; echo
 
-         echo "Commited: $v_aut_message"
+         f_cor3; echo "ezGIT: default commit message"; f_resetCor
+         echo "Commited: $v_aut_message"; echo
 
          f_cor3; echo "ezGIT: git status"; f_resetCor
          git status; echo
