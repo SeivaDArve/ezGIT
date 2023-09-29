@@ -972,8 +972,9 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
          # Message to use as commit:
             v_aut_message="automated push by ezGIT"
 
-         f_cor3; echo -e "ezGIT: G ++ random"; f_resetCor
-         f_cor3; echo -e " > or: G ++ r"; f_resetCor
+         f_cor3; echo -e "ezGIT running:"; f_resetCor
+         f_cor3; echo -e " > G ++ random"; f_resetCor
+         f_cor3; echo -e " > G ++ r"; f_resetCor
          f_cor3; echo -e " > Commits and pushes all contents of the repo fully automatic "; f_resetCor
          echo
 
@@ -984,7 +985,7 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
 			git commit -m "$v_aut_message"; echo
 
          f_cor3; echo "ezGIT: default commit message"; f_resetCor
-         echo "Commited: $v_aut_message"; echo
+         echo " > $v_aut_message"; echo
 
          f_cor3; echo "ezGIT: git status"; f_resetCor
          git status; echo
