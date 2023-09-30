@@ -391,6 +391,9 @@ G + all  |     | git add --all
 G +      | gad | git add <file-name-here>    (stages a file)
 G -      |     | git reset <file-name-here>  (unStages a file)
 
+G ++ <code-here> | automatic git commit with pre set commit message (by code)
+G ++ r           | automatic git commit with message with code/variable: r
+
 G config | uDev 
 -------------------------------------------
 
