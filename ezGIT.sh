@@ -203,7 +203,7 @@ function f_git_pull-recursive {
 
          # Saving the git status into a variable without outputing it to the screen
             # It sends an error if dir is not repository. Therefore we send Sandard error do /dev/null
-            s=$(git pull 2>/dev/null) 
+            s=$(git pull)  ## Or: s=$(git pull 2>/dev/null) 
 
          #  # Search for git words that indicate work yo be done
          #     # uDev: there must be more words, therefore this function must be tested
