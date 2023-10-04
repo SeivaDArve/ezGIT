@@ -540,6 +540,10 @@ elif [ $1 == "eg" ]; then
 elif [ $1 == "config" ]; then
    # Confirming that configurations exist
       f_greet
+
+      # uDev: 'G config ^' edits .gitconfig on DRYa repo
+      # uDev: 'G config v' edits .gitconfig on the machine at $HOME
+
       echo "ezGIT: Opening configurations file of git"
       echo " > using with vim editor"
       echo " > changes will be made inside DRYa repo and copied to HOME afterwards"
