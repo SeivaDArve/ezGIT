@@ -386,9 +386,10 @@ G .      |     | git status
 G ,      |     | (show all branches)
 G v      |     | git pull
 G ^      |     | git push
+G +      | gad | git add <file-name-here>    (stages a file)
 G + .    |     | git add .
 G + all  |     | git add --all
-G +      | gad | git add <file-name-here>    (stages a file)
+G + ^	 |     | git commit -m "<your-commit-message>" (used for staged files)
 G -      |     | git reset <file-name-here>  (unStages a file)
 
 G ++ <code-here> | automatic git commit with pre set commit message (by code)
@@ -789,7 +790,7 @@ elif [ $1 == "B" ]; then
 
 elif [ $1 == "new" ]; then
    # Creates a new repository
-   echo "ezGIT: Do you want to create a new repository?"
+   echo "ezGIT: Do you want to create a new repository? (uDev)"
 
 
 elif [ $1 == "+" ]; then
@@ -799,16 +800,19 @@ elif [ $1 == "+" ]; then
    # 4. git status
    # 5. git commim -m "i" 
 
+   # uDev: if $2 is ^ then like 'G + ^' then, git commit staged files
+
+   function f_no_file_found1 {
+      echo "ezGIT: no file specified. insert iat least 1 file name"
+      exit 1
+   }
+
       clear
       f_greet
 
 
-      function f_1 {
-         echo "insert 1 file first"
-         exit 1
-      }
       # If var $2 is empty, ask for one
-         [ -z $2 ] && f_1
+         [ -z $2 ] && f_no_file_found
 
       
       # Git add <file>
