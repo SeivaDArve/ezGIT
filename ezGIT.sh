@@ -163,40 +163,46 @@ function f_underscore_creator {
             v_line=$v_underscoreCount
 }
 
+function f_output {
+   # Function used by: f_git_pull-recursive, f_git_status-recursive ...
+      # To output it's Git Status
+   f_horizontal_line
+
+   f_cor4; echo -n " > Repository: "
+   f_cor3; echo -e "$v_object \n"
+   f_resetCor
+
+   git status
+}
 
 function f_git_pull-recursive {
-   # bully-pages: script to give git status of ALL repos
+   # Pulling repository changes to ALL repos (recursive)
 
-      clear
+   # Presenting
+      clear; f_greet
 
-      f_greet
-      f_cor3
-      echo -e "Trying \"git pull\" at: \n${v_REPOS_CENTER}\n"
+   # Describing to the user
+      f_cor3; echo -n "ezGIT: "
       f_resetCor
+      echo -e "Trying \"git pull\" at:"
+      echo " > ${v_REPOS_CENTER}"
 
-      function f_output {
-         f_horizontal_line
-         f_cor4
-         echo -n " > Repository: "
-         f_cor3
-         echo "$i"
-         echo
-         f_resetCor
-         git status
-      }
+   # Mention one possible password
+      f_stroken
+      echo
 
-      # Mention one possible password
-         f_stroken
-         echo
+   # function f_output must be loaded here (or previously)
 
       cd ${v_REPOS_CENTER}
-      for i in $(ls); do 
+      for v_object in $(ls); do 
          # Filter directories from files
-            g=$(file $i)
+            v_object_type=$(file $v_object)
 
-         # If the variable g returns a directory, we navigate into it
-            if [[ $g =~ "dir" ]]; then 
-               cd $i
+         # If the variable v_object_type returns a directory, we navigate into it
+            if [[ $v_object_type =~ "dir" ]]; then 
+               cd $v_object
+            
+               f_output #sera?
                
          # Echo out what Repo is being mentioned
             basename $(pwd)
@@ -205,19 +211,20 @@ function f_git_pull-recursive {
             # It sends an error if dir is not repository. Therefore we send Sandard error do /dev/null
             s=$(git pull)  ## Or: s=$(git pull 2>/dev/null) 
 
-         #  # Search for git words that indicate work yo be done
+         #  # Search for git words that indicate work to be done
          #     # uDev: there must be more words, therefore this function must be tested
          #     if [[ $s =~ "added" ]]; then f_output;
          #        elif [[ $s =~ "Changes" ]]; then f_output;
          #        elif [[ $s =~ "Untracked" ]]; then f_output;
          #     fi
 
+         # Navigating backwards before restarting the 'for loop' 
             cd ..
+
          fi
-         
       done
 
-   # Display a message to indicat it is finished:
+   # Finishing: Display a message to indicat it is finished:
       # uDev: lacks color
       f_horizontal_line
       echo "git pull to all repos under:"
@@ -225,6 +232,7 @@ function f_git_pull-recursive {
       echo "Finished!"
       f_horizontal_line
 }
+
 function f_git_status-recursive {
    # bully-pages: script to give git status of ALL repos
 
@@ -235,25 +243,16 @@ function f_git_status-recursive {
       echo -e "Searching for \"git status\" at: \n${v_REPOS_CENTER}\n"
       f_resetCor
 
-      function f_output {
-         f_horizontal_line
-         f_cor4
-         echo -n " > Repository: "
-         f_cor3
-         echo "$i"
-         echo
-         f_resetCor
-         git status
-      }
+      # function f_output must be loaded here (or previously)
 
       cd ${v_REPOS_CENTER}
-      for i in $(ls); do 
+      for v_object in $(ls); do 
          # Filter directories from files
-            g=$(file $i)
+            v_object_type=$(file $v_object)
 
-         # If the variable g returns a directory, we navigate into it
-            if [[ $g =~ "dir" ]]; then 
-               cd $i
+         # If the variable v_object_type returns a directory, we navigate into it
+            if [[ $v_object_type =~ "dir" ]]; then 
+               cd $v_object
                
 
          # Saving the git status into a variable without outputing it to the screen
