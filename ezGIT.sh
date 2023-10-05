@@ -403,6 +403,7 @@ ezGIT------------ git menu --------- page 1
 RECOGNIZE REPOSITORY: OFF (may read repo's script dedicated to be read by ezGIT)
 
 G        |     | Displays this menu
+G ?      |     | Displays this menu
 G F      |     | Favourites
 G .      |     | git status
 G ,      |     | Show info and options of branches
@@ -411,9 +412,10 @@ G ^      |     | git push
 G +      | gad | git add <file-name-here>    (stages a file)
 G + .    |     | git add .
 G + all  |     | git add --all
-G + ^	   |     | git commit -m "<your-commit-message>" (used for staged files)
+G + ^    |     | git commit -m "<your-commit-message>" (used for staged files)
 G -      |     | git reset <file-name-here>  (unStages a file)
 G @      | gcf | git config (menu)
+G !      | glg | git log
 
 G ++ <code-here> | automatic git commit with pre set commit message (by code)
 G ++ b           | automatic git commit with message with code/variable: b
@@ -424,7 +426,7 @@ G (      |     | git stash apply
 
 G repo ^ |     | uDev: automatic sync + open + close + sync to given "repo"
 
-G config  | uDev 
+G config | uDev 
 -------------------------------------------
 
 Use alias 1, 2, 3 to navigate to next page 
@@ -563,6 +565,10 @@ if [ -z "$*" ]; then
       sleep 1
       f_cor1; echo -n "   $ G "; f_cor2; echo -n "1"; f_resetCor; echo "  (It means \"git pull\")"
 
+      f_heredoc
+
+elif [ $1 == "?" ]; then
+   # Same as if no arg are given: Display help menu
       f_heredoc
 
 elif [ $1 == "eg" ]; then
@@ -1345,6 +1351,10 @@ elif [ $1 == "[" ] || [ $1 == "unstash" ] || [ $1 == "ust" ] || [ $1 == "apply" 
 elif [ $1 == "file-host" ]; then
    echo "If you want to use github to download single files just like any other cloud storage instead of cloning entire repos, you can. Github supports that. Here is a link to teach how to do that while this function is under development"
    echo " > https://www.howtogeek.com/devops/how-to-download-single-files-from-a-github-repository/"
+
+elif [ $1 == "!" ]; then
+   # git log
+   git log
 
 elif [ $1 == "new-repo" ]; then
 
