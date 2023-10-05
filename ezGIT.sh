@@ -46,11 +46,13 @@
 # When automatic github.com authentication is not set, we paste on the screen an alternative (as a reminder)
    function f_stroken {
        # Display text based credential while app is in beta
+          echo
           echo -e "\nInside the ezGIT app I found this: "
           f_cor4
           echo -n "seivadarve"; f_resetCor; echo " and this:"; f_cor4;
           echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
           f_resetCor
+          echo
    }
 
 function f_find_basename {
@@ -225,7 +227,6 @@ function f_git_pull-recursive {
 
    # Mention one possible password
       f_stroken
-      echo
 
    # function f_output must be loaded here (or previously)
 
@@ -985,7 +986,6 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
          case $v_ans in
             p | P)
                 # Display text based credential while app is in beta
-                   echo
                    f_stroken
 
                    git push
@@ -1080,9 +1080,7 @@ elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
    if [[ -z $2 ]]; then
       clear; f_greet 
    
-      echo
       f_stroken
-      echo
 
 		f_cor4
          echo -n "git pull? (press ANY key to confirm) "
@@ -1211,7 +1209,7 @@ elif [ $1 == "upk" ]; then
       vv)
          clear
          echo "ezGIT: Fetching requirements for upk stuff"
-         f_stroken; echo
+         f_stroken 
          f_horizontal_line
          echo "ezGIT: fetching: DRYa; upk; ezGIT; upK-diario-Dv"
          echo 
@@ -1422,26 +1420,6 @@ fi
 			read _ans
 			git commit -m "$_ans"
 			;;
-		9) # Option: cat stroken && git push && git status
-			# uDev: lacks colored text
-			echo "ezGIT: continue with: \"cat stroken && git push\" ?"
-			echo "   yes = [ENTER] || no = [Ctrl+C]"; read  ##uDev: add a message like these for each one. Make it a function
-
-			# If you try to cat this file and it does not exist, it should mean DRYa is not installed and it should display a message TO INSTALL DRYa, so yes, ezGIT can should be able to call DRYa into de business; BTW, drya is meant to be holistic first and only then it should fit you. So in the end, ezGIT calls DRYa in order for it to call your PERSONAL credentials, it means it should read from your 'Butler-Pocket'. In my case (username: Dv) my butler is jarve, so drya would get information from my jarve-Pocket to fit me, Dv
-			cat ${_stroken}
-
-	 # Display text based cresential while app is in beta
-      f_stroken
-
-       git push
-
-       echo ""
-       f_cor4
-       echo "git status:"
-       f_resetCor
-       git status
-       ;;
-
  m1) # Option: Menu 1
 
 			# Inform that this menu is under construction:
