@@ -142,6 +142,12 @@ function f_setGlobalConfig_menu {
 
 }
 
+function f_git_status {
+   echo
+   f_cor4; echo -n "ezGIT: "
+   f_resetCor; echo "git status"
+   git status
+}
 
 function f_git_pull_dot_files {
    echo "ezGIT: git pull and install: dot-files"
@@ -729,11 +735,7 @@ elif [ $1 == "." ]; then
                   #f_cor3
                   #echo "$v_repo "
 
-                  f_cor4
-                  echo; echo "git status:"
-                  f_resetCor
-
-                  git status
+                  f_git_status
                fi
             fi
 
@@ -747,32 +749,6 @@ elif [ $1 == "." ]; then
       # uDev: At windows, if git does not have this config (see line below), then this function will not take effect:
          # git config --global --add safe.directory /mnt/c/Repositories/upK
    fi
-elif [ $1 == "ad" ]; then
-   # Git add ...
-
-   clear; f_greet 
-
-      git status
-      f_cor4
-      echo -ne "\ngit add "
-      f_resetCor
-      echo "<your option here>"
-      git add $2
-      git status
-
-elif [ $1 == "cm" ]; then
-   # Git commit ...
-
-   clear; f_greet 
-
-      git status
-      f_cor4
-      echo -ne "\ngit commit "
-      f_resetCor
-      echo "<your option here>"
-      read v_ans
-      git commit -m "$v_ans"
-      git status
 
 elif [ $1 == "multi" ]; then
    # Git commit multiple messages
@@ -1116,11 +1092,7 @@ elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
       git pull
 
    # Git status
-      f_cor4
-      echo -e "\ngit status:"
-      f_resetCor
-      git status
-
+      f_git_status
 
    elif [[ $2 == "all" ]]; then
       f_git_pull-recursive
