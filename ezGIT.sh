@@ -2,48 +2,53 @@
 # Title: ezGIT to replace long git commands for one simple and short command
 # Use: bully pages: man pages but for developers
 
-# uDev: Do not allow this software to run without the proper file ~/.gitconfig
-   # if [ -z ~/.gitconfig ]; then echo "ezGIT: Please configure ~/.gitconfig first with the command X"; exit 1; fi
-   # uDev: add info on how to install our dot. Add info on how to run this script anyways without such config instaled
+# If this script runs, a variable is set to tell which one repo was the last one to run
+   declare v_repo="ezGIT"
 
-declare v_repo="ezGIT"
+# For new users, everytime this script runs, a function CAN be enabled to go on giving random instructions about how ezGIT works, no need to go and read the man pages
+   # uDev
 
-function f_cor1 {	
-   # For figlet titles
-   tput setaf 5 
-}
-function f_cor2 { 
-   tput setaf 2 
-}
-function f_cor3 { 
-   # Mentioning user input or valiable input
-   tput setaf 3
-}
-function f_cor4 { 
-   # Similar to Bold
-   tput setaf 4
-}
-function f_resetCor { 
-   tput sgr0
-}
+# Functions for text colors
+   function f_cor1 {	
+      # For figlet titles
+      tput setaf 5 
+   }
+   function f_cor2 { 
+      tput setaf 2 
+   }
+   function f_cor3 { 
+      # Mentioning user input or valiable input
+      tput setaf 3
+   }
+   function f_cor4 { 
+      # Similar to Bold
+      tput setaf 4
+   }
+   function f_resetCor { 
+      tput sgr0
+   }
 
-function f_greet {
-   clear
-   f_cor4
-   figlet "ezGIT" || echo -e "( ezGIT )\n"
-   f_resetCor 
-}
+# After colors are defined, create a "Face" for our verbose outputs
+   function f_greet {
+      clear
+      f_cor4
+      figlet "ezGIT" || echo -e "( ezGIT )\n"
+      f_resetCor 
+   }
 
-function f_stroken {
-    # Display text based credential while app is in beta
-       echo -e "\nInside the ezGIT app I found this: "
-       f_cor4
-       echo -n "seivadarve"; f_resetCor; echo " and this:"; f_cor4;
-       echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
-       f_resetCor
-}
+# When automatic github.com authentication is not set, we paste on the screen an alternative (as a reminder)
+   function f_stroken {
+       # Display text based credential while app is in beta
+          echo -e "\nInside the ezGIT app I found this: "
+          f_cor4
+          echo -n "seivadarve"; f_resetCor; echo " and this:"; f_cor4;
+          echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+          f_resetCor
+   }
 
 function f_find_basename {
+   #uDev" Needs to search for our .git directory
+
    v_relPWD=$(pwd)
    echo $v_relPWD
    v_relRepo=$(echo $v_relPWD | sed 's/"$v_REPOS_CENTER"//g')
@@ -53,9 +58,27 @@ function f_find_basename {
    # uDev: can be changed by the command 'basename'
 }
 
-function setGlobalConfig_menu {
-   # Confir everytime if .gitconfig is configured
-   # Can also be called by a command
+function f_test_existent_configs {
+   # Confirm everytime if .gitconfig is configured
+   if ! [ -f ~/.gitconfig ]; then
+      # Testing if file is absent
+      f_greet
+      echo "ezGIT: "
+      echo " > File ~/.gitconfig does not exist (not found)."
+      echo " > The uploads graph on github.com does not update without a .gitconfig file at \$HOME dir"
+      echo
+      echo "uDev: Press C to edit the config file"
+      echo "uDev: Press I to install from DRYa"
+      echo "uDev: Press e to edit DRYa's version of the config"
+      echo "uDev: Press E to edit the config at \$HOME"
+   fi
+
+   # uDev: if config is unexistent: f_setGlobalConfig_menu
+}
+
+function f_setGlobalConfig_menu {
+   # Helping the user configuring git
+      # Can be called by either other function or by terminal command
 
    # Display thr intention of this function
       echo "ezGIT: Function meant to configure git file"
@@ -377,24 +400,31 @@ less << heredooc
 uDev: f_horizontal_line
 ezGIT------------ git menu --------- page 1
 
-RECOGNIZE REPOSITORY: OFF
+RECOGNIZE REPOSITORY: OFF (may read repo's script dedicated to be read by ezGIT)
 
 G        |     | Displays this menu
 G F      |     | Favourites
 G .      |     | git status
-G ,      |     | (show all branches)
+G ,      |     | Show info and options of branches
 G v      |     | git pull
 G ^      |     | git push
 G +      | gad | git add <file-name-here>    (stages a file)
 G + .    |     | git add .
 G + all  |     | git add --all
-G + ^	 |     | git commit -m "<your-commit-message>" (used for staged files)
+G + ^	   |     | git commit -m "<your-commit-message>" (used for staged files)
 G -      |     | git reset <file-name-here>  (unStages a file)
+G @      | gcf | git config (menu)
 
 G ++ <code-here> | automatic git commit with pre set commit message (by code)
-G ++ r           | automatic git commit with message with code/variable: r
+G ++ b           | automatic git commit with message with code/variable: b
+G +-     |     | Edits last commit message
 
-G config | uDev 
+G ()     |     | git stash
+G (      |     | git stash apply
+
+G repo ^ |     | uDev: automatic sync + open + close + sync to given "repo"
+
+G config  | uDev 
 -------------------------------------------
 
 Use alias 1, 2, 3 to navigate to next page 
@@ -505,8 +535,11 @@ function f_curl_uploads_count {
 
 
 
-#  ^^ Functions to be called by G arguments
-#  vv Arguments to be called by G itself and command line
+
+
+# ---------------------------------------
+# -- Functions above -- Arguments Below 
+# ---------------------------------------
 
 
 
@@ -518,8 +551,8 @@ function f_curl_uploads_count {
 
 
 # Before evaluating ezGIT arguments, check if git is configured properly
-   #setGlobalConfig_menu  #uDev
-   
+   f_test_existent_configs #uDev
+
 if [ -z "$*" ]; then
    # Do something else if there are no arguments
       echo "ezGIT: No arguments were given"
@@ -539,10 +572,15 @@ elif [ $1 == "eg" ]; then
 
 elif [ $1 == "config" ]; then
    # Confirming that configurations exist
+   
+      # uDev: todo: merge f_setGlobalConfig_menu here
+    
+   # Presenting ezGIT
       f_greet
 
-      # uDev: 'G config ^' edits .gitconfig on DRYa repo
-      # uDev: 'G config v' edits .gitconfig on the machine at $HOME
+   # uDev: 'G config ^' edits .gitconfig on DRYa repo
+   # uDev: 'G config v' edits .gitconfig on the machine at $HOME
+
 
       echo "ezGIT: Opening configurations file of git"
       echo " > using with vim editor"
@@ -580,10 +618,10 @@ elif [ $1 == "f" ] || [ $1 == "gfv" ]; then
 elif [ $1 == "lg" ] || [ $1 == "log" ]; then
    git log
 
-elif [[ $1 == "global" ]]; then
-	 setGlobalConfig_menu
 
 elif [ $1 == "msg" ]; then
+   # Create a while loop to send and receive messages between 2 ezGIT machines
+
    clear
    f_greet
    if [ -z $2 ]; then
@@ -658,8 +696,8 @@ elif [ $1 == "." ]; then
 
                if [[ $? != "0" ]]; then  ## Test if last command was a failure (not equal to 0)
                   # Invalid
-                  echo "Dv: Fatal error, ok? beautiful message here"
-                  echo "udev: 'G a' to navigate and list the root of repos"
+                  echo "uDev: Fatal error, ok? beautiful message here"
+                  echo "uDev: 'G a' to navigate and list the root of repos"
                else
                   # Valid:
                   # Insert dir basename here
@@ -687,7 +725,7 @@ elif [ $1 == "." ]; then
             fi
 
          echo
-         echo " >> uDev: Tell how many branches are there"
+         echo " >> uDev: To edit and view available branches: 'G ,'"
 
    elif [[ $2 == "all" ]]; then
       # Whenever code complexity is found, a function is created to enable better code reading
@@ -974,7 +1012,8 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
                echo
             ;;
          esac
-   elif [ $2 == "r" ] || [ $2 == "random" ]; then
+   elif [ $2 == "b" ] || [ $2 == "blind-upload" ]; then
+      # Blind update
       clear
       f_greet
 
@@ -983,8 +1022,8 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
             v_aut_message="Pushed to github.com automatically by ezGIT app"
 
          f_cor3; echo -e "ezGIT running:"; f_resetCor
-         f_cor3; echo -e " > G ++ random"; f_resetCor
-         f_cor3; echo -e " > G ++ r"; f_resetCor
+         f_cor3; echo -e " > G ++ blind-upload"; f_resetCor
+         f_cor3; echo -e " > G ++ b"; f_resetCor
          f_cor3; echo -e " > Commits and pushes all contents of the repo fully automatic "; f_resetCor
          echo
 
@@ -1078,9 +1117,7 @@ elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
 
    fi
 
-# uDev: 'G vv' git fetch 
-# uDev: 'G vv all' git fetch all repos
-# uDev: 'G ^^' git push (blind upload)
+# uDev: 'G vv' to Pull changes and exec a specific script inside the repo (for example at DRYa to update the entire system includim other repos)
 
 elif [ $1 == "^" ] || [ $1 == "gpush" ]; then
    # git push
@@ -1111,9 +1148,12 @@ elif [ $1 == "+++" ] || [ $1 == "g-ad-cm-m-pu" ]; then
       echo "git push"
       echo "#uDev: not ready yet"
 
-
 elif [ $1 == "," ]; then
-   # Info about the current directory (versose version. # uDev: 'G ,,' for non verbose functionality) 
+      #uDev: add options for branches
+      echo "uDev"
+
+elif [ $1 == "is-encript" ]; then
+   # Info about the current directory (verbose version. # uDev: 'G ,,' for non verbose functionality) 
       # Tells if the current directory name is part of a list of names that may have a dedicated dir for encryption
          # Some repos will not be allowed do 'git push' with sensitive data exposed
 
@@ -1122,7 +1162,6 @@ elif [ $1 == "," ]; then
 
       f_tell_repo_name
 
-      #uDev: add options for branches
 
 elif [ $1 == "upk" ]; then
    case $2 in
@@ -1289,18 +1328,19 @@ elif [ $1 == "uDev" ]; then
 
 
 
-elif [ $1 == "stash" ] || [ $1 == "st" ]; then
+elif [ $1 == "[]" ] || [ $1 == "stash" ] || [ $1 == "st" ]; then
   f_greet
-  echo "ezGIT: saving current commits for later "
-  echo "       (pulling first and applying current commits later)"
-  echo " > git stash "
+  echo "ezGIT: git stash"
+  echo " > saving our current commits for later "
+  echo "   (You may command git pull now)"
   git stash
 
-elif [ $1 == "unstash" ] || [ $1 == "ust" ] || [ $1 == "apply" ] || [ $1 == "ap" ]; then
-  echo "ezGIT: Apllying saved commits now, to this state"
-  echo " > git stash apply"
+elif [ $1 == "[" ] || [ $1 == "unstash" ] || [ $1 == "ust" ] || [ $1 == "apply" ] || [ $1 == "ap" ]; then
+  echo "ezGIT: git stash apply"
+  echo " > Apllying saved/hidden commits now"
   git stash apply
 
+  # uDev: git status
 
 elif [ $1 == "file-host" ]; then
    echo "If you want to use github to download single files just like any other cloud storage instead of cloning entire repos, you can. Github supports that. Here is a link to teach how to do that while this function is under development"
@@ -1315,15 +1355,18 @@ uDev: Create a script for this heredoc
 
 # Setting up a new Git Repo
    ## Create a new repository on the command line
-      touch README.md
+      $ mkdir <name-of-repo>
+      $ cd <name-of-repo>
+      $ touch README.md
+      $ echo "Hello World! This is a new repo!" > <name-of-repo>
       $ git init
       $ git add README.md
-      $ git commit -m "first commit"
-      $ git remote add origin git@github.com:alexpchin/<reponame>.git
+      $ git commit -m "my first commit"
+      $ git remote add origin git@github.com:<user-github-name>/<reponame>.git
       $ git push -u origin master
 
    ## Push an existing repository from the command line
-      $ git remote add origin git@github.com:alexpchin/<reponame>.git
+      $ git remote add origin git@github.com:<user-github-name>/<reponame>.git
       $ git push -u origin master
 '
    clear
