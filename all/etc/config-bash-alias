@@ -26,17 +26,7 @@ alias gst="git stash" # When local has 1 commit and remote has 1 commit and now 
 alias gsa="git stash apply" 
 
 alias gcm="git commit -m"
-alias gcm="git commit"
-#alias gcm="git commit"
-#alias gcmm="git commit -m"
-
-#  "gad"
-#     # Git add ...
-#  
-#  "multi"
-#     # Git commit multiple messages
-#  
-#  "g-ad-cm-m-pu"
-#  	# 'git add --all' + 'git commim -m "" ' + 'git push'
+alias gad="git add"
+alias ggo="git add --all; git commit -m 'bling update'; stroken; git push"
 
 
