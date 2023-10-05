@@ -8,7 +8,7 @@ alias gpom="git pull origin master"
 alias gdf="git diff"
 alias gch="git checkout"
 alias gchb="git checkout -b"
-alias gac="git add . && git commit"
+alias gac="git add . && git commit -m"
 alias grs="git restore staged"
 alias gre="git restore"
 alias gcl="git clone"
@@ -24,9 +24,8 @@ alias gbr="# uDev: Change branch"
 alias gfv="# uDev: List favoutite commands"
 alias gst="git stash" # When local has 1 commit and remote has 1 commit and now you cannot pull nor push. First you stash, than pull, then git stash apply, then push
 alias gsa="git stash apply" 
-
 alias gcm="git commit -m"
 alias gad="git add"
-alias ggo="git add --all; git commit -m 'bling update'; stroken; git push"
+alias ggo="clear; echo 'ezGIT: blindly pull changes'; git add --all; git commit -m 'bling update'; stroken; git push"
 
 
