@@ -1,6 +1,13 @@
 #!/bin/bash
 # Title: ezGIT to replace long git commands for one simple and short command
-# Use: bully pages: man pages but for developers
+
+# How to install and use (uDev):
+   # One way to use this app without installing it at "/bin" is to navigate to this directory where G.sh is located and execute "source G.sh". This way all functions inside itself is loaded into do $PATH variable
+
+	# In order to use ezGIT, one way is to navigate to it's dir and from there
+	# You could type "source ezGIT". This method only works for that terminal
+	# instance and will be unavailable after you close the terminal. So, you
+	# could also add "source <relative path/ezGIT>" to your .bashrc 
 
 # If this script runs, a variable is set to tell which one repo was the last one to run
    declare v_repo="ezGIT"
@@ -1393,35 +1400,12 @@ else
 fi
 
 
-#uDev: You may start deleting "case" and "esac" and adding 'if [ $1 == "K" ]; then' because it is better to create menus
-#uDev: add an option for: "mkdir" + "touch .gitkeep"
-#uDev: add: "alias "G (*)"="git stash"' and 'alias "G )*("="git unstash"'
 
 
-
-
-
-
-
-
-# ---------------------------------------------
-
-
-
-# How to use:
-# One way to use this app without installing it at "/bin" is to navigate to this directory where G.sh is located and execute "source G.sh". This way all functions inside itself is loaded into do $PATH variable
-
-#G () {
-
-	# In order to use ezGIT, one way is to navigate to it's dir and from there
-	# You could type "source ezGIT". This method only works for that terminal
-	# instance and will be unavailable after you close the terminal. So, you
-	# could also add "source <relative path/ezGIT>" to your .bashrc 
-
-	# stroken location at your Butler's Pocket (jarve-pocket in my case)
-	_stroken="/data/data/com.termux/files/home/home.home/Repositories/jarve/stroken"
-
-
+# ----------------------------------------------------------------------
+# Obsolete code to merge:
+   # uDev: We may start deleting "case" and "esac" and adding 
+   #       if statements instead, because it is better to create menus
 
 	case $1 in
 		0+) # Option: git status && git remote show origin
@@ -1436,30 +1420,6 @@ fi
 			f_resetCor
 			git remote show origin
 
-			;;
-		3) # Option: git add .
-         #gad.
-			f_resetCor
-			f_cor4
-			echo "git add ."
-			f_resetCor
-			git add .
-			;;
-		4) # Option: git add --all
-         #gad*
-			echo -n "git add --all"
-			tput setaf 4
-			echo -n "?"
-			f_resetCor
-			read
-			tput setaf 4
-			echo -n "git add --all"
-			f_resetCor
-			echo ":"
-			git add --all
-			f_cor4
-			echo "git add --all"
-			f_resetCor
 			;;
 		5) # Option: git commit -m '...'
 			f_cor4
@@ -1489,35 +1449,6 @@ fi
 			echo -en "\nIn order to commit to git, what is your commit message?\n > "
 			read _ans
 			git commit -m "$_ans"
-			;;
-		7) # Option: git add --all && git commit -m '...' && git status
-			f_cor4
-			echo "git add --all"
-			f_resetCor
-			git add --all
-
-			echo -en "\nIn order to commit to git, what is your commit message?\n > "
-			read _ans
-
-			f_cor4
-			echo -en "git commit -m \""
-			tput setaf 4
-			echo -en "${_ans}"
-			f_cor4
-			echo -e "\""
-			f_resetCor
-			git commit -m "$_ans"
-
-			f_cor4
-			echo -e "\n\ngit status\n\n"
-			f_resetCor
-			git status
-			;;
-		8) # Option: git log
-			f_cor4
-			echo "git log"
-			f_resetCor
-			git log
 			;;
 		9) # Option: cat stroken && git push && git status
 			# uDev: lacks colored text
