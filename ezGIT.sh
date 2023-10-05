@@ -713,8 +713,8 @@ elif [ $1 == "." ]; then
                   echo "uDev: 'G a' to navigate and list the root of repos"
                else
                   # Valid:
-                  # Insert dir basename here
-                  echo "uDev: insert basename"
+                  # Insert dir-basename here when such function is ready (uDev)
+                  echo "uDev: insert git-dir-basename"
 
                   #f_find_basename
                   #
