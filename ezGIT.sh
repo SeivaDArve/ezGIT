@@ -161,6 +161,13 @@ function f_git_push {
    git push
 }
 
+function f_git_pull {
+   echo
+   f_cor4; echo -n "ezGIT: "
+   f_resetCor; echo "git push"
+   git push
+}
+
 function f_git_pull_dot_files {
    echo "ezGIT: git pull and install: dot-files"
    echo " > (files stored at repo: drya)"
@@ -1300,11 +1307,13 @@ elif [ $1 == "rb" ]; then
 
    elif [ $2 == "f" ]; then
       echo "git config pull.rebase false"
-      git config pull.rebase false
+      sudo bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh rb f
+      #git config pull.rebase false
    
    elif [ $2 == "t" ]; then
       echo "git config pull.rebase true"
-      git config pull.rebase true
+      sudo bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh rb t
+      #git config pull.rebase true
 
    fi
 
