@@ -154,6 +154,13 @@ function f_git_status {
    git status
 }
 
+function f_git_push {
+   echo
+   f_cor4; echo -n "ezGIT: "
+   f_resetCor; echo "git push"
+   git push
+}
+
 function f_git_pull_dot_files {
    echo "ezGIT: git pull and install: dot-files"
    echo " > (files stored at repo: drya)"
@@ -996,10 +1003,10 @@ elif [ $1 == "++" ]; then
          case $v_ans in
             p | P)
                 # Display text based credential while app is in beta
-                   echo
-                   f_stroken
-                   git push
-                   f_git_status
+                  echo
+                  f_stroken
+                  f_git_push
+                  f_git_status
             ;;
             *)
                echo
