@@ -2,6 +2,8 @@
 # Title: ezGIT to replace long git commands for one simple and short command
 
 # How to install and use (uDev):
+#  uDev: Instead of these instructions. the HEREDOC should move here; (equivalent of 'G ?')
+#------------
    # One way to use this app without installing it at "/bin" is to navigate to this directory where G.sh is located and execute "source G.sh". This way all functions inside itself is loaded into do $PATH variable
 
 	# In order to use ezGIT, one way is to navigate to it's dir and from there
@@ -46,11 +48,12 @@
 # When automatic github.com authentication is not set, we paste on the screen an alternative (as a reminder)
    function f_stroken {
        # Display text based credential while app is in beta
-          echo
-          echo -e "\nInside the ezGIT app I found this: "
-          f_cor4
-          echo -n "seivadarve"; f_resetCor; echo " and this:"; f_cor4;
-          echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+          f_cor4; echo -ne "\nezGIT: "
+          f_resetCor; echo "stroken"
+                      echo "Inside the ezGIT app I found this: "
+          f_cor4; echo -n "seivadarve";
+          f_resetCor; echo " and this:";
+          f_cor4; echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
           f_resetCor
           echo
    }
@@ -412,6 +415,8 @@ f_horizontal_line
 less << heredooc
 
 uDev: f_horizontal_line
+uDev: This menu should be on the top of the script to be used as help
+
 ezGIT------------ git menu --------- page 1
 
 RECOGNIZE REPOSITORY: OFF (may read repo's script dedicated to be read by ezGIT)
@@ -431,20 +436,25 @@ G -      |     | git reset <file-name-here>  (unStages a file)
 G @      | gcf | git config (menu)
 G !      | glg | git log
 
-G ++ <code-here> | automatic git commit with pre set commit message (by code)
-G ++ b           | automatic git commit with message with code/variable: b
-G +-     |     | Edits last commit message
+G ++     |     | Stages ALL files and promps the user for a commit message
+G ++ b   |     | automatic git commit with message with code/variable: b (for blind update)
+G +-     |     | Ammends/Edits last commit message
 
 G ()     |     | git stash
 G (      |     | git stash apply
+
+G +1     |     | Move 1 commit up
+G -1     |     | Move 1 commit down
+G =      |     | Come back to HEAD
+G %      |     | See diference between current commit and HEAD
+
+G rb f   |     | git pull.rebase false
+G rb t   |     | git pull.rebase true
 
 G repo ^ |     | uDev: automatic sync + open + close + sync to given "repo"
 
 G config | uDev 
 -------------------------------------------
-
-Use alias 1, 2, 3 to navigate to next page 
-  (alias are set on-the-go, some were just set)
 
 Example: 1. Install ezGIT on "~/.bashrc" with an 'alias G=".../ezGIT.sh" '
          2. To do something, specify an argument like "G ."
@@ -589,6 +599,9 @@ elif [ $1 == "eg" ]; then
    # Do something if arg 1 is equal to "eg":
       echo "you don\'t need to source G.sh at the file \"source-all-drya-files\""
       echo "Start using if conditions instead"
+
+elif [ $1 == "pwd" ]; then
+   f_stroken
 
 elif [ $1 == "config" ]; then
    # Confirming that configurations exist
@@ -928,11 +941,11 @@ elif [ $1 == "+" ]; then
 
 
 
-elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
+elif [ $1 == "++" ]; then
 	# 'git add --all' + 'git status' + 'git commim -m "" '
 
    # If no $2 is found, enable the user to write a commit message.
-   # If one $2 is found, commit 'random' automatically
+   # If one $2 variable is found, commit message accordingly automatically
 
    if [ -z $2 ]; then
       clear
@@ -945,10 +958,7 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
 			git add --all
 
       # Git status
-			f_cor4
-			echo -e "git status:\n"
-			f_resetCor
-         git status
+         f_git_status
 
       # Git commit -m ""
 			f_cor4
@@ -969,40 +979,29 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
 			git commit -m "$_ans"
 
       # Git status
-			f_cor4
-			echo -e "\ngit status:"
-			f_resetCor
-			git status
+         f_git-status
 
-      # Asking for 3 seconds if the user wants to push the code to github.com
-			f_cor4
-			echo -e "\nDo you want to push to Guthub.com?"
-			f_resetCor
-         echo -n " > If so, press: "
-			f_cor4
-			read -s -N 1 -t 5 -p "P " v_ans
+      # Asking for 5 seconds if the user wants to push the code to github.com
+			f_cor4; echo -e "\nDo you want to push to Guthub.com?"
+			f_resetCor; echo -n " > If so, press: "
+
+			f_cor4; read -s -N 1 -t 5 -p "P " v_ans
 			f_resetCor
          
          case $v_ans in
             p | P)
                 # Display text based credential while app is in beta
                    f_stroken
-
                    git push
-
-                # Git status one last time
-                  f_cor4
-                  echo -e "\ngit status:"
-                  f_resetCor
-                  git status
-
+                   f_git_status
             ;;
             *)
                echo
             ;;
          esac
+
    elif [ $2 == "b" ] || [ $2 == "blind-upload" ]; then
-      # Blind update
+      # Blind update, variable "b"
       clear
       f_greet
 
@@ -1025,13 +1024,11 @@ elif [ $1 == "++" ] || [ $1 == "g-ad-cm-m" ]; then
          f_cor3; echo "ezGIT: commiting automatically"; f_resetCor
 			git commit -m "$v_aut_message"; echo
 
-         f_cor3; echo "ezGIT: git status"; f_resetCor
-         git status; echo
+         f_git_status
 
-         f_cor3; echo "ezGIT: presenting Stroken "; f_resetCor
-         f_stroken; echo 
+         f_stroken
 
-         f_cor3; echo "ezGIT: pushing to github "; f_resetCor
+         f_cor3; echo "ezGIT: pushing to github.com "; f_resetCor
          git push
    fi
       
@@ -1050,7 +1047,7 @@ elif [ $1 == "-" ]; then
       git reset $2
 
 
-elif [ $1 == "+-" ] || [ $1 == "g-ad-cm-amend" ]; then
+elif [ $1 == "+-" ]; then
    # git commit --ammend
       # Used in cases where you want to update your last commit (for example you forgot a line of code or you found a bug that you can easily fix. 
       # It is usefull to keep the git log clean and easy to read.
@@ -1247,7 +1244,7 @@ elif [ $1 == "+1" ]; then
    git log --reverse --pretty=%H main | grep -A 1 $(git rev-parse HEAD) | tail -n1 | xargs git checkout 
    echo "ezGIT: Attach HEAD with command: git switch -"
 
-elif [ $1 == "reset-head" ]; then
+elif [ $1 == "=" ] || [ $1 == "reset-head" ]; then
    # when you are navigating/exploring/browsing older commits and you are finished, if no changes were applying and there is no need for more navigation, this is the command ends the navigation and brighs back normality
    git checkout main
 
@@ -1266,7 +1263,7 @@ elif [ $1 == "apply-current-commit" ]; then
    #                                                 3 - Use the hash to bring the banch to normality
    echo
 
-elif [ $1 == "diff-between-head" ]; then
+elif [ $1 == "%" ] || [ $1 == "diff-between-head" ]; then
    # When navigating between commits like 'G -1' and 'G +1' gif diff might be needed.
    # If you want to see what is the difference between your current commit and the head commit, use this command
    #
@@ -1283,14 +1280,8 @@ elif [ $1 == "diff" ]; then
    echo "This option is the same as: '$ git diff --staged'"
    git diff --staged
    
-elif [ $1 == "rebase-false" ]; then
-   git config pull.rebase false
-
-elif [ $1 == "rebase-true" ]; then
-   git config pull.rebase true
-
 elif [ $1 == "rb" ]; then
-
+   # Rebasing
    if [ -z $2 ]; then
       clear
       figlet ezGIT
