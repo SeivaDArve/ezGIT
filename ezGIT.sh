@@ -996,6 +996,7 @@ elif [ $1 == "++" ]; then
          case $v_ans in
             p | P)
                 # Display text based credential while app is in beta
+                   echo
                    f_stroken
                    git push
                    f_git_status
