@@ -709,10 +709,13 @@ elif [ $1 == "." ]; then
             if [[ $(pwd) == ${v_REPOS_CENTER} ]]; then 
                # equal: For sure we are not inside a repo. And we recognize this dir. Listing all repos here
                # We are at the Root of all repos
-               echo 'We are at the root of Repositories, also called by '
-               echo ' > ${v_REPOS_CENTER}'
+               echo "ezGIT: git status: 'G .'"
+               echo ' > We are currently not at a git repository'
+               echo '   are at the root dir of Repositories, also called by:'
+               echo '   > variable: ${v_REPOS_CENTER}'
+               echo "   > path: ${v_REPOS_CENTER}"
                echo
-               echo "Listing all repositories"
+               echo "Listing all repositories instead:"
                echo
                ls -1
 
@@ -729,8 +732,10 @@ elif [ $1 == "." ]; then
 
                if [[ $? != "0" ]]; then  ## Test if last command was a failure (not equal to 0)
                   # Invalid
-                  echo "uDev: Fatal error, ok? beautiful message here"
-                  echo "uDev: 'G a' to navigate and list the root of repos"
+                  echo "ezGIT: git status: 'G .'"
+                  echo " > We are currently neither on any repository"
+                  echo "   Neither we are at the central dir of repositories"
+                  echo "   > Jump to the central/root dir with 'G r'"
                else
                   # Valid:
                   # Insert dir-basename here when such function is ready (uDev)
@@ -1100,24 +1105,22 @@ elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
 # uDev: 'G vv' to Pull changes and exec a specific script inside the repo (for example at DRYa to update the entire system includim other repos)
 
 elif [ $1 == "^" ] || [ $1 == "gpush" ]; then
-   # git push
-   # Upload
+   # Simple git push
+
       clear 
       f_greet
 
-		f_cor4
-         echo "git push"
-		f_resetCor
-
+   # Display stroken
       f_stroken
+
+   # Git push
+		f_cor4; echo "ezGIT: git push"
+		f_resetCor
 
       git push
 
    # Git status
-      f_cor4
-      echo -e "\ngit status:"
-      f_resetCor
-      git status
+      f_git_status
 
 
 elif [ $1 == "+++" ] || [ $1 == "g-ad-cm-m-pu" ]; then
