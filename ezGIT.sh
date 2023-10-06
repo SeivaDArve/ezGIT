@@ -1114,7 +1114,7 @@ elif [ $1 == "^" ] || [ $1 == "gpush" ]; then
       f_stroken
 
    # Git push
-		f_cor4; echo "ezGIT: "
+		f_cor4; echo -n "ezGIT: "
 		f_resetCor; echo " git push"
 
       git push
