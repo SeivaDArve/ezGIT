@@ -1115,7 +1115,7 @@ elif [ $1 == "^" ] || [ $1 == "gpush" ]; then
 
    # Git push
 		f_cor4; echo -n "ezGIT: "
-		f_resetCor; echo " git push"
+		f_resetCor; echo "git push"
 
       git push
 
