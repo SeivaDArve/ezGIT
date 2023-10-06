@@ -431,7 +431,7 @@ G ^      |     | git push
 G +      | gad | git add <file-name-here>    (stages a file)
 G + .    |     | git add .
 G + all  |     | git add --all
-G + ^    |     | git commit -m "<your-commit-message>" (used for staged files)
+G + ^    | gcm | (uDev) git commit -m "<your-commit-message>" (used for staged files)
 G -      |     | git reset <file-name-here>  (unStages a file)
 G @      | gcf | git config (menu)
 G !      | glg | git log
@@ -440,8 +440,8 @@ G ++     |     | Stages ALL files and promps the user for a commit message
 G ++ b   |     | automatic git commit with message with code/variable: b (for blind update)
 G +-     |     | Ammends/Edits last commit message
 
-G ()     |     | git stash
-G (      |     | git stash apply
+G []     |     | git stash
+G [      |     | git stash apply
 
 G +1     |     | Move 1 commit up
 G -1     |     | Move 1 commit down
