@@ -45,17 +45,22 @@
       f_resetCor 
    }
 
-# When automatic github.com authentication is not set, we paste on the screen an alternative (as a reminder)
+# When automatic github.com authentication is not set, an alternative (as taxt based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
    function f_stroken {
-       # Display text based credential while app is in beta
-          f_cor4; echo -ne "\nezGIT: "
-          f_resetCor; echo "stroken"
-                      echo "Inside the ezGIT app I found this: "
-          f_cor4; echo -n "seivadarve";
-          f_resetCor; echo " and this:";
-          f_cor4; echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
-          f_resetCor
-          echo
+      # If ~/.netrc exists, no need to print the rest
+         if [ -f ~/.netrc ]; then
+            #echo "netrc exists"
+            echo
+         else
+            f_cor4; echo -ne "\nezGIT: "
+            f_resetCor; echo "stroken"
+                         echo "Inside the ezGIT app I found this: "
+            f_cor4; echo -n "seivadarve";
+            f_resetCor; echo " and this:";
+            f_cor4; echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+            f_resetCor
+            echo
+         fi
    }
 
 function f_find_basename {
