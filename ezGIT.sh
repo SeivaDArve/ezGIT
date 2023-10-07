@@ -1047,8 +1047,8 @@ elif [ $1 == "++" ]; then
                  echo -e " > Commits and pushes all contents of the repo fully automatic "
                  echo
 
-         f_cor3; echo -e "ezGIT: adding all files into 1 commit"; f_resetCor
-			git add --all && echo -e " > Done!\n"
+         f_talk; echo "adding all files to make 1 commit"
+			        git add --all && echo -e " > Done!\n"
 
          f_cor3; echo "ezGIT: default commit message:"; f_resetCor
          echo " > $v_aut_message"; echo
