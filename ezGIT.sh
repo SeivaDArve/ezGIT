@@ -1063,8 +1063,8 @@ elif [ $1 == "++" ]; then
 
          f_stroken
 
-         f_cor3; echo "ezGIT: pushing to github.com "; f_resetCor
-         git push
+         f_talk; echo "pushing to github.com "
+                 git push
    fi
       
 
