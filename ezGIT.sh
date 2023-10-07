@@ -162,8 +162,7 @@ function f_setGlobalConfig_menu {
 
 function f_git_status {
    echo
-   f_cor4; echo -n "ezGIT: "
-   f_resetCor; echo "git status"
+   f_talk; echo "git status"
    git status
 }
 
@@ -173,15 +172,20 @@ function f_git_push {
    git push
 }
 
+function f_git_add_all {
+   echo
+   f_talk; echo "git add --all"
+   git add --all
+}
+
 function f_git_pull {
    echo
-   f_cor4; echo -n "ezGIT: "
-   f_resetCor; echo "git push"
+   f_talk; echo "git push"
    git push
 }
 
 function f_git_pull_dot_files {
-   echo "ezGIT: git pull and install: dot-files"
+   f_talk; echo "git pull and install: dot-files"
    echo " > (files stored at repo: drya)"
    echo " > cd drya; git pull; cp .../filss .../places"
 }
@@ -249,9 +253,7 @@ function f_git_pull-recursive {
       clear; f_greet
 
    # Describing to the user
-      f_cor3; echo -n "ezGIT: "
-      f_resetCor
-      echo -e "Trying \"git pull\" at:"
+      f_talk; echo "git pull (to all repositories) at:"
       echo " > ${v_REPOS_CENTER}"
 
    # Mention one possible password
@@ -290,7 +292,7 @@ function f_git_pull-recursive {
    # Finishing: Display a message to indicat it is finished:
       # uDev: lacks color
       f_horizontal_line
-      echo "git pull to all repos under:"
+      f_talk; echo "git pull (to all repositories) at:"
       echo " > $v_REPOS_CENTER"
       echo "Finished!"
       f_horizontal_line
@@ -985,10 +987,7 @@ elif [ $1 == "++" ]; then
       f_greet
 
       # Git add --all
-			f_cor4
-			echo "git add --all"
-			f_resetCor
-			git add --all
+         f_git_add_all
 
       # Git status
          f_git_status
