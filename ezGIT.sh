@@ -37,7 +37,13 @@
       tput sgr0
    }
 
-# After colors are defined, create a "Face" for our verbose outputs
+# After colors are defined, create a "Face" for each "ezGIT: " descriptor
+   function f_talk {
+      f_cor4
+      echo -n "ezGIT: "; f_resetCor; # ... Text descriptor after this
+   }
+
+# After colors are defined, create a "Face" for each one of our verbose outputs "page"
    function f_greet {
       clear
       f_cor4
@@ -52,9 +58,8 @@
             #echo "netrc exists"
             echo
          else
-            f_cor4; echo -ne "\nezGIT: "
-            f_resetCor; echo "stroken"
-                         echo "Inside the ezGIT app I found this: "
+            f_talk; echo "stroken"
+                    echo " > Inside the ezGIT app I found this: "
             f_cor4; echo -n "seivadarve";
             f_resetCor; echo " and this:";
             f_cor4; echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
@@ -161,8 +166,7 @@ function f_git_status {
 
 function f_git_push {
    echo
-   f_cor4; echo -n "ezGIT: "
-   f_resetCor; echo "git push"
+   f_talk; echo "git push"
    git push
 }
 
@@ -599,7 +603,7 @@ if [ -z "$*" ]; then
    # Do something else if there are no arguments
       clear
       f_greet
-      echo "ezGIT: No arguments were given"
+      f_talk; echo "No arguments were given"
       echo " > Type: 'G ?' To print the instructions manual"
       echo
       echo "uDev: when no args are given, show git config info for this device"
