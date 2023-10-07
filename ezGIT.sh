@@ -620,6 +620,13 @@ elif [ $1 == "eg" ]; then
 elif [ $1 == "pwd" ]; then
    f_stroken
 
+elif [ $1 == "byte-compile" ]; then
+   # Convert bash to binary
+   # Send to /usr/bin
+   # (for speed purposes)
+
+   f_talk; echo "byte compile current version of ezGIT for speed reasons (uDev)"
+
 elif [ $1 == "config" ]; then
    # Confirming that configurations exist
    
