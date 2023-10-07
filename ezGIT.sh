@@ -624,6 +624,7 @@ elif [ $1 == "byte-compile" ]; then
    # Convert bash to binary
    # Send to /usr/bin
    # (for speed purposes)
+   # One tutorial: https://www.baeldung.com/linux/convert-script-into-binary
 
    f_talk; echo "byte compile current version of ezGIT for speed reasons (uDev)"
 
