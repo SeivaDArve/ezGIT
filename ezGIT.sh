@@ -1038,13 +1038,14 @@ elif [ $1 == "++" ]; then
 
       # Sending automatically everything with an automated commit message
          # Message to use as commit:
-            v_aut_message="Pushed to github.com automatically by ezGIT app"
+            #v_aut_message="Pushed to github.com automatically by ezGIT app"
+            v_aut_message="Changing and testing: G ++ b"
 
-         f_cor3; echo -e "ezGIT running:"; f_resetCor
-         f_cor3; echo -e " > G ++ blind-upload"; f_resetCor
-         f_cor3; echo -e " > G ++ b"; f_resetCor
-         f_cor3; echo -e " > Commits and pushes all contents of the repo fully automatic "; f_resetCor
-         echo
+         f_talk; echo "running:"
+                 echo -e " > G ++ blind-upload"
+                 echo -e " > G ++ b"
+                 echo -e " > Commits and pushes all contents of the repo fully automatic "
+                 echo
 
          f_cor3; echo -e "ezGIT: adding all files into 1 commit"; f_resetCor
 			git add --all && echo -e " > Done!\n"
