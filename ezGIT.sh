@@ -1065,6 +1065,8 @@ elif [ $1 == "++" ]; then
 
          f_talk; echo "pushing to github.com "
                  git push
+
+         f_git_status
    fi
       
 
