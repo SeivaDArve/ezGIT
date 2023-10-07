@@ -1068,6 +1068,7 @@ elif [ $1 == "++" ]; then
 
          f_git_status
 
+         echo
          f_talk; echo "All Done!"
    fi
       
