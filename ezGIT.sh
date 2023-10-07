@@ -1067,6 +1067,8 @@ elif [ $1 == "++" ]; then
                  git push
 
          f_git_status
+
+         f_talk; echo "All Done!"
    fi
       
 
