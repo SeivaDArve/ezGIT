@@ -1012,7 +1012,7 @@ elif [ $1 == "++" ]; then
          f_git-status
 
       # Asking for 5 seconds if the user wants to push the code to github.com
-			f_cor4; echo -e "\nDo you want to push to Guthub.com?"
+			f_cor4; echo -e "\nDo you want to push to github.com?"
 			f_resetCor; echo -n " > If so, press: "
 
 			f_cor4; read -s -N 1 -t 5 -p "P " v_ans
