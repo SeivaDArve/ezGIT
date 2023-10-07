@@ -597,15 +597,12 @@ function f_curl_uploads_count {
 
 if [ -z "$*" ]; then
    # Do something else if there are no arguments
+      clear
+      f_greet
       echo "ezGIT: No arguments were given"
-      echo " > An old list of arguments is going to be given (old, uDev):"
+      echo " > Type: 'G ?' To print the instructions manual"
       echo
       echo "uDev: when no args are given, show git config info for this device"
-      echo
-      sleep 1
-      f_cor1; echo -n "   $ G "; f_cor2; echo -n "1"; f_resetCor; echo "  (It means \"git pull\")"
-
-      f_heredoc
 
 elif [ $1 == "?" ]; then
    # Same as if no arg are given: Display help menu
