@@ -18,6 +18,9 @@
    # uDev
 
 # Functions for text colors
+   # uDev: If ezGIT gets byte compiled, there should be a file to configure it's color numbers
+   #       For example at: ~/.config/h.h/ezGIT
+
    function f_cor1 {	
       # For figlet titles
       tput setaf 5 
@@ -1038,8 +1041,7 @@ elif [ $1 == "++" ]; then
 
       # Sending automatically everything with an automated commit message
          # Message to use as commit:
-            #v_aut_message="Pushed to github.com automatically by ezGIT app"
-            v_aut_message="Changing and testing: G ++ b"
+            v_aut_message="Pushed to github.com automatically by ezGIT app"
 
          f_talk; echo "running:"
                  echo -e " > G ++ blind-upload"
