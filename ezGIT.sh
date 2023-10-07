@@ -263,9 +263,6 @@ function f_git_pull-recursive {
             
                f_output #sera?
                
-         # Echo out what Repo is being mentioned
-            basename $(pwd)
-
          # Saving the git status into a variable without outputing it to the screen
             # It sends an error if dir is not repository. Therefore we send Sandard error do /dev/null
             s=$(git pull)  ## Or: s=$(git pull 2>/dev/null) 
