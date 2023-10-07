@@ -1048,13 +1048,16 @@ elif [ $1 == "++" ]; then
                  echo
 
          f_talk; echo "adding all files to make 1 commit"
-			        git add --all && echo -e " > Done!\n"
+			        git add --all && echo " > Done!"
+                 echo
 
-         f_cor3; echo "ezGIT: default commit message:"; f_resetCor
-         echo " > $v_aut_message"; echo
+         f_talk; echo "default commit message:"
+                 echo " > $v_aut_message"
+                 echo
 
-         f_cor3; echo "ezGIT: commiting automatically"; f_resetCor
-			git commit -m "$v_aut_message"; echo
+         f_talk; echo "Creating an automatic commit"
+                 git commit -m "$v_aut_message"
+                 echo
 
          f_git_status
 
