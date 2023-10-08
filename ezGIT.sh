@@ -616,8 +616,9 @@ if [ -z "$*" ]; then
       echo " > Type: 'G ?' To print the instructions manual"
       echo
       echo "uDev: when no args are given, show git config info for this device"
+      echo "Press H to print the help menu (uDev)"
 
-elif [ $1 == "?" ]; then
+elif [ $1 == "?" ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ $1 == "-?" ]; then
    # Same as if no arg are given: Display help menu
       f_heredoc
 
@@ -805,6 +806,7 @@ elif [ $1 == "." ]; then
          # git config --global --add safe.directory /mnt/c/Repositories/upK
    else 
       f_talk; echo "command not known"
+      f_talk; echo "For help: G -h"
    fi
 
 elif [ $1 == "multi" ]; then
@@ -1393,16 +1395,16 @@ uDev: Create a script for this heredoc
       $ git push -u origin master
 '
    clear
-   figlet ezGIT
-   echo "ezGIT: create new repo (uDev)"
+   f_greet
+   f_talk; echo "create new repo (uDev)"
    echo
-   echo "Note: When ezGIT is working with DRYa, all repos are at first created at:"
+   echo "Note: If DRYa exists in the system ezGIT can create all repos by default at:"
    echo " > ${v_REPOS_CENTER}"
 
 else
    # If the arguments you input are neither empty nor listed, then run:
-      echo "That option does not exist."
-      echo "In case of doubt, run the app again without any option in order for the instructions to be presented to you"
+      f_talk; echo "command not known"
+      f_talk; echo "For help: G -h"
 fi
 
 
