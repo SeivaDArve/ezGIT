@@ -1000,7 +1000,7 @@ elif [ $1 == "++" ]; then
 			f_resetCor
 
 			echo "In order to commit to git, what is your commit message?"
-			echo "(leave emplty to abort)"
+			echo "(leave empty to abort)"
          echo -n " > "
 			read _ans
          echo
