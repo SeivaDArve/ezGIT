@@ -888,7 +888,8 @@ elif [ $1 == "+" ]; then
    # uDev: if $2 is ^ then like 'G + ^' then, git commit staged files
 
    function f_no_file_found {
-      f_talk; echo "No file name given. insert at least 1 file name"
+      f_talk; echo "No file name given. "
+      f_talk; echo "Insert at least 1 file name."
    }
 
       clear
@@ -897,11 +898,17 @@ elif [ $1 == "+" ]; then
       # If arg $2 is empty, ask for one: abort
          [ -z $2 ] && f_no_file_found && exit 1
 
-      # If arg $2 is not a known file: abort
-      
-         # When git adding files, we want 'G' to add all files input as arguments. BUT there is one prombem: '+' is the input value that indicates 'git add'. Therefore, the the second arg '+' is not discarded, then 'git add' will throw an error saying "there is no such file called '+'. The next line of code lists all arguments starting at 
+      # Bug fix: Add all files except the arg $1 which is '+'
+         # When git adding files, we want 'G' to add all files input as arguments. 
+         # BUT there is one prombem: '+' is the input value that indicates 'git add'. 
+         # Therefore, the the second arg '+' is not discarded, then 'git add' will throw an error saying 
+         # "there is no such file called '+'. The next line of code lists all arguments starting at 
          # arg $2 wich is '+'
-			git add ${*:2}
+			git add ${*:2}  2>/dev/null  # We are throwing the error messages to /dev/null because we fix it beautifully on the next line
+
+      # If arg $2 is not a known file: abort
+         if [ $? == "128" ]; then f_talk; echo "File name not found"
+                                  f_talk; echo "Please add a list of files names correctly"; exit 1; fi
 
       # For each argument given starting at arg 2, list it colorfully
          for i in ${*:2}; do
