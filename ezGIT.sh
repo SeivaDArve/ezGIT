@@ -1032,6 +1032,7 @@ elif [ $1 == "++" ]; then
             ;;
          esac
 
+   # udev: Create a v_aut_message just to ulpdate the git log (like a time stamp on git log)
    elif [ $2 == "b" ] || [ $2 == "blind-upload" ]; then
       # Blind update, variable "b"
       clear
