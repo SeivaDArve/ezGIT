@@ -731,6 +731,7 @@ elif [ $1 == "install" ]; then
 
 elif [ $1 == "." ]; then
    # Git status
+   # uDev: Remind the user if there are stashed content
    
    if [[ -z $2 ]]; then
       clear; f_greet 
@@ -1340,18 +1341,26 @@ elif [ $1 == "uDev" ]; then
 
 
 elif [ $1 == "[]" ] || [ $1 == "stash" ] || [ $1 == "st" ]; then
-  f_greet
-  echo "ezGIT: git stash"
-  echo " > saving our current commits for later "
-  echo "   (You may command git pull now)"
-  git stash
+   clear
+   f_greet
+   f_talk; echo "git stash"
+           echo " > saving our current commits for later "
+           echo "   (You may command 'git pull' now, if needed)"
+   git stash
+
+   # git status
+      f_git_status
 
 elif [ $1 == "[" ] || [ $1 == "unstash" ] || [ $1 == "ust" ] || [ $1 == "apply" ] || [ $1 == "ap" ]; then
-  echo "ezGIT: git stash apply"
-  echo " > Apllying saved/hidden commits now"
-  git stash apply
+   clear
+   f_greet
+   f_talk; echo "git stash apply"
+           echo " > Apllying saved/stashed/hidden commits now"
+   git stash apply
+   
+   # git status
+      f_git_status
 
-  # uDev: git status
 
 elif [ $1 == "file-host" ]; then
    echo "If you want to use github to download single files just like any other cloud storage instead of cloning entire repos, you can. Github supports that. Here is a link to teach how to do that while this function is under development"
