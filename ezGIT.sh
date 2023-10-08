@@ -732,6 +732,9 @@ elif [ $1 == "install" ]; then
 elif [ $1 == "." ]; then
    # Git status
    # uDev: Remind the user if there are stashed content
+   #       List of stashed changes: git stash list
+   #       Remove/delete last stashed item: git stash drop
+   #       Drop/delete all stashed items: git stash clear
    
    if [[ -z $2 ]]; then
       clear; f_greet 
