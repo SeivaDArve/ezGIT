@@ -1005,12 +1005,8 @@ elif [ $1 == "++" ]; then
 			read _ans
          echo
 
-			f_cor4
-			echo -en "git commit -m \""
-			tput setaf 4
-			echo -en "${_ans}"
-			f_cor4
-			echo -e "\""
+			f_talk; echo -en "git commit -m \""
+         f_cor3; echo -en "${_ans}"
 			f_resetCor
 			git commit -m "$_ans"
 
