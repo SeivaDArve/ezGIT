@@ -887,18 +887,17 @@ elif [ $1 == "+" ]; then
 
    # uDev: if $2 is ^ then like 'G + ^' then, git commit staged files
 
-   function f_no_file_found1 {
-      echo "ezGIT: no file specified. insert iat least 1 file name"
-      exit 1
+   function f_no_file_found {
+      f_talk; echo "No file name given. insert at least 1 file name"
    }
 
       clear
       f_greet
 
+      # If arg $2 is empty, ask for one: abort
+         [ -z $2 ] && f_no_file_found && exit 1
 
-      # If var $2 is empty, ask for one
-         [ -z $2 ] && f_no_file_found
-
+      # If arg $2 is not a known file: abort
       
       # Git add <file>
          f_cor3
@@ -914,9 +913,7 @@ elif [ $1 == "+" ]; then
 
          # For each argument given starting at arg 2, list it colorfully
          for i in ${*:2}; do
-            f_cor4
-            echo -n "git add "
-            f_cor3
+            f_talk; echo -n "git add "; f_cor3
             echo $i
             f_resetCor
          done
