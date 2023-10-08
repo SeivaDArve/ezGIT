@@ -899,19 +899,11 @@ elif [ $1 == "+" ]; then
 
       # If arg $2 is not a known file: abort
       
-      # Git add <file>
-         f_cor3
-         echo -n "'"
-			f_cor4
-			echo -n "git add <insert file>"
-         f_cor3
-         echo "'"
-         
          # When git adding files, we want 'G' to add all files input as arguments. BUT there is one prombem: '+' is the input value that indicates 'git add'. Therefore, the the second arg '+' is not discarded, then 'git add' will throw an error saying "there is no such file called '+'. The next line of code lists all arguments starting at 
          # arg $2 wich is '+'
 			git add ${*:2}
 
-         # For each argument given starting at arg 2, list it colorfully
+      # For each argument given starting at arg 2, list it colorfully
          for i in ${*:2}; do
             f_talk; echo -n "git add "; f_cor3
             echo $i
