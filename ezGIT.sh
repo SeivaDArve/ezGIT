@@ -1007,7 +1007,7 @@ elif [ $1 == "++" ]; then
 
 			f_talk; echo -en "git commit -m \""
          f_cor3; echo -en "${_ans}"
-			f_resetCor
+			f_resetCor; echo "\""
 			git commit -m "$_ans"
 
       # Git status
