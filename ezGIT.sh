@@ -921,7 +921,7 @@ elif [ $1 == "+" ]; then
 
       # Asking for 3 seconds if the user wants 'git diff'
 			f_cor4
-         echo -e "\nDo you want to see the differences between the 2 files? \n(the last version and the current version) "
+         echo -e "\nDo you want to see the differences between the 2 files? \n(the Last + Current version) "
 			f_resetCor
          echo " > If no, press Any key"
          echo -n " > If so, press: "
@@ -951,10 +951,7 @@ elif [ $1 == "+" ]; then
          esac
 
       # Git status
-			f_cor4
-			echo -e "git status:\n"
-			f_resetCor
-         git status
+         f_git_status
 
       # Git commit -m ""
 			f_cor4
@@ -975,12 +972,7 @@ elif [ $1 == "+" ]; then
 			git commit -m "$_ans"
 
       # Git status
-			f_cor4
-			echo -e "\ngit status:"
-			f_resetCor
-			git status
-
-
+         f_git_status
 
 elif [ $1 == "++" ]; then
 	# 'git add --all' + 'git status' + 'git commim -m "" '
@@ -1003,7 +995,9 @@ elif [ $1 == "++" ]; then
 			echo -e "Creating a message i to git commit -m \"i\":"
 			f_resetCor
 
-			echo -en "In order to commit to git, what is your commit message?\n > "
+			echo "In order to commit to git, what is your commit message?"
+			echo "(leave emplty to abort)"
+         echo -n " > "
 			read _ans
          echo
 
@@ -1082,17 +1076,21 @@ elif [ $1 == "++" ]; then
 
 elif [ $1 == "-" ]; then 
    # unStages a file
-	# uDev: lacks colored text
 
-      f_cor4
-      echo -en "git reset "
-      f_cor3
-      echo -e "$2"
+   clear
+   f_greet
+
+   # Git reset
+      f_talk; echo -en "git reset "
+      f_cor3; echo -e "$2"
       f_resetCor
 
-      # uDev: unstage all files given as args besides $1. the argument $1 '-' is not a file. (See 'G +' where this line of code already works)
+   # uDev: unstage all files given as args besides $1. the argument $1 '-' is not a file. (See 'G +' where this line of code already works)
+   # uDev: tem de ser visto os bugs caso sejam dados nomes de ficheiros errados tal como na funcao: G + <nome-errado>
       git reset $2
 
+   # Git status
+      f_git_status
 
 elif [ $1 == "+-" ]; then
    # git commit --ammend
@@ -1164,14 +1162,6 @@ elif [ $1 == "^" ] || [ $1 == "gpush" ]; then
    # Git status
       f_git_status
 
-
-elif [ $1 == "+++" ] || [ $1 == "g-ad-cm-m-pu" ]; then
-	# 'git add --all' + 'git commim -m "" ' + 'git push'
-		clear
-		echo "git add --all"
-      echo "git commit -m"
-      echo "git push"
-      echo "#uDev: not ready yet"
 
 elif [ $1 == "," ]; then
       #uDev: add options for branches
