@@ -1070,6 +1070,13 @@ elif [ $1 == "++" ]; then
 
          echo
          f_talk; echo "All Done!"
+   else
+      # If the arg given is not recognized as a saved git-commit-message, then:
+      f_talk; echo "the last arg is not recognized"
+
+      # uDev: add a feature to add more git-commit-messages
+
+
    fi
       
 
