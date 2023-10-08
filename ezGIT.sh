@@ -1015,7 +1015,7 @@ elif [ $1 == "++" ]; then
 			git commit -m "$_ans"
 
       # Git status
-         f_git-status
+         f_git_status
 
       # Asking for 5 seconds if the user wants to push the code to github.com
 			f_talk; echo "Do you want to push to github.com?"
