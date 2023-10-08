@@ -299,14 +299,13 @@ function f_git_pull-recursive {
 }
 
 function f_git_status-recursive {
-   # bully-pages: script to give git status of ALL repos
+   # git status (all repos)
 
       clear
-
       f_greet
-      f_cor3
-      echo -e "Searching for \"git status\" at: \n${v_REPOS_CENTER}\n"
-      f_resetCor
+
+      f_talk; echo "git status (to all repositories) at:"
+      echo " > $v_REPOS_CENTER"
 
       # function f_output must be loaded here (or previously)
 
@@ -339,7 +338,7 @@ function f_git_status-recursive {
    # Display a message to indicat it is finished:
       # uDev: lacks color
       f_horizontal_line
-      echo "git status to all repos under:"
+      f_talk; echo "git status (to all repositories) at:"
       echo " > $v_REPOS_CENTER"
       echo "Finished!"
       f_horizontal_line
@@ -442,7 +441,9 @@ less << heredooc
 uDev: f_horizontal_line
 uDev: This menu should be on the top of the script to be used as help
 
-ezGIT------------ git menu --------- page 1
+ezGIT------------------------------------------------ 
+
+Instructions:
 
 RECOGNIZE REPOSITORY: OFF (may read repo's script dedicated to be read by ezGIT)
 
@@ -481,8 +482,10 @@ G repo ^ |     | uDev: automatic sync + open + close + sync to given "repo"
 G config | uDev 
 -------------------------------------------
 
+instalation possibilities
 Example: 1. Install ezGIT on "~/.bashrc" with an 'alias G=".../ezGIT.sh" '
          2. To do something, specify an argument like "G ."
+         3. Use: 'G byte-compile'
 
 (Quit this page with the key: Q)
 
@@ -493,7 +496,7 @@ function f_curl_uploads_count {
 
    # Description: Counts how many uploads were made to GitHub.com
 
-   echo "ezGIT: uploads counter"
+   f_talk; echo "uploads counter"
 
    function f_get_day {
       # Gets the desired day for web scraping the github's profile page
@@ -608,6 +611,7 @@ if [ -z "$*" ]; then
    # Do something else if there are no arguments
       clear
       f_greet
+
       f_talk; echo "No arguments were given"
       echo " > Type: 'G ?' To print the instructions manual"
       echo
@@ -618,7 +622,7 @@ elif [ $1 == "?" ]; then
       f_heredoc
 
 elif [ $1 == "eg" ]; then
-   # Do something if arg 1 is equal to "eg":
+   # Do something if arg 1 is equal to "eg" (a test):
       echo "you don\'t need to source G.sh at the file \"source-all-drya-files\""
       echo "Start using if conditions instead"
 
@@ -645,7 +649,7 @@ elif [ $1 == "config" ]; then
    # uDev: 'G config v' edits .gitconfig on the machine at $HOME
 
 
-      echo "ezGIT: Opening configurations file of git"
+      f_talk; echo "Opening configurations file of git"
       echo " > using with vim editor"
       echo " > changes will be made inside DRYa repo and copied to HOME afterwards"
       echo 
@@ -669,24 +673,19 @@ elif [ $1 == "alias" ]; then
 
 elif [ $1 == "k" ] || [ $1 == "gkp" ] || [ $1 == "kp" ]; then
    # Create a file .gitkeep
-      touch .gitkeep
-      echo "ezGIT: file .gitkeep was created"
+      touch .gitkeep && f_talk; echo "file .gitkeep was created"
 
-elif [ $1 == "f" ] || [ $1 == "gfv" ]; then
-	# List favorite git commands
-		clear
-		echo -e "Favorits menu\n" 
-		echo -e "git status \ngit reset  #To unstage files \ngit rebase -i HEAD~2 && reword  #To change old commit messages"
-
-elif [ $1 == "lg" ] || [ $1 == "log" ]; then
+elif [ $1 == "!" ] || [ $1 == "log" ]; then
+   # git log
+   f_talk; echo "git log"
    git log
-
 
 elif [ $1 == "msg" ]; then
    # Create a while loop to send and receive messages between 2 ezGIT machines
 
    clear
    f_greet
+
    if [ -z $2 ]; then
       echo " > The file 'msg' is always only one. After editing it, just send it"
       echo "   G msg send || G msg receive"
@@ -697,26 +696,33 @@ elif [ $1 == "msg" ]; then
       # uDev: In future, the this file is public text in git, mix its letters before sending
       # uDev: if git status sais that there are modifications, git push
       # uDev: it must read if "nothing to commit, working tree clean" exists at the git status, and if it is found: do nothing
+
       vv=$(pwd)
       cd ${v_REPOS_CENTER}/scratch-paper
-      git add --all
+      
+      f_git_add_all
+
       v_date=$(date)
+
       git commit -m "$v_date"
-       f_cor4
-       echo -n "seivadarve"; f_resetCor; echo " and this:"; f_cor4;
-       echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
-       f_resetCor
-      git push
+
+      f_stroken
+
+      f_git_push
+
       cd $vv
+
    elif [ $2 == "receive" ]; then
       # uDev: rm repo entirely 'scratch-paper' is a possibility, then clone it back in with info. Then open the text file  
       # uDev: if git status sais that there are no modifications, git pull
       # uDev: if git status sais that there are modifications, warn user about it
-      echo "receiving is not ready yet"
+      echo "receiving is not ready yet (uDev)"
+
    elif [ $2 == "edit" ]; then
      vim ${v_REPOS_CENTER}/scratch-paper/some-text.txt 
+
    else
-      echo "G msg: Choose 'send' or 'receive'"
+      f_talk; echo "G msg: Choose 'send' or 'receive'"
    fi
 
 elif [ $1 == "install" ]; then
@@ -1360,10 +1366,6 @@ elif [ $1 == "[" ] || [ $1 == "unstash" ] || [ $1 == "ust" ] || [ $1 == "apply" 
 elif [ $1 == "file-host" ]; then
    echo "If you want to use github to download single files just like any other cloud storage instead of cloning entire repos, you can. Github supports that. Here is a link to teach how to do that while this function is under development"
    echo " > https://www.howtogeek.com/devops/how-to-download-single-files-from-a-github-repository/"
-
-elif [ $1 == "!" ]; then
-   # git log
-   git log
 
 elif [ $1 == "new-repo" ]; then
 
