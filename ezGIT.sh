@@ -1123,11 +1123,10 @@ elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
    
       f_stroken
 
-		f_cor4
-         echo -n "git pull? (press ANY key to confirm) "
-		f_resetCor
+      f_talk; echo -n "You are about to: "; f_cor4; echo "git pull"
+      f_resetCor; echo -n " > Are you sure? (Press ANY key to confirm) "
       read -sn 1 
-      echo "Starting git pull..."
+      echo -e "\r > Starting git pull...                          "
       git pull
 
    # Git status
