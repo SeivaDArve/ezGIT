@@ -803,6 +803,8 @@ elif [ $1 == "." ]; then
       
       # uDev: At windows, if git does not have this config (see line below), then this function will not take effect:
          # git config --global --add safe.directory /mnt/c/Repositories/upK
+   else 
+      f_talk; echo "command not known"
    fi
 
 elif [ $1 == "multi" ]; then
