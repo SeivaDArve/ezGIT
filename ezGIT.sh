@@ -80,12 +80,23 @@
 
 function f_find_basename {
    #uDev" Needs to search for our .git directory
+   # uDev: Search for .git dir, because it would maen that it's paralent dir is our repo name
 
-   v_relPWD=$(pwd)
-   echo $v_relPWD
-   v_relRepo=$(echo $v_relPWD | sed 's/"$v_REPOS_CENTER"//g')
-   echo $v_relRepo
-   cut -d '/' -f 1 $v_relRepo
+   ls .git 1>/dev/null; 
+   if [ $? == "0" ]; then echo "is a git repo"; fi
+
+   v_current_pwd=$(pwd)
+   basename $v_current_pwd
+   echo "$v_current_pwd"
+
+                  #echo -n "Repository name: $v_repo"
+                  #f_cor3
+                  #echo "$v_repo "
+                     
+   #echo $v_relPWD
+   #v_relRepo=$(echo $v_relPWD | sed 's/"$v_REPOS_CENTER"//g')
+   #echo $v_relRepo
+   #cut -d '/' -f 1 $v_relRepo
       
    # uDev: can be changed by the command 'basename'
 }
@@ -690,6 +701,7 @@ elif [ $1 == "!" ] || [ $1 == "log" ]; then
 
 elif [ $1 == "msg" ]; then
    # Create a while loop to send and receive messages between 2 ezGIT machines
+   # uDev: sugestion: use irssi (IRC Client)
 
    clear
    f_greet
@@ -768,7 +780,7 @@ elif [ $1 == "." ]; then
                ls -1
 
             elif [[ $(pwd) != ${v_REPOS_CENTER} ]]; then 
-               # not-equal: Means that we may be inside a repo
+               # not-equal: Means that we 'may be'/'may not be' inside a repo. Lets filter:
 
                #Two steps to find if current path is valid
                   # 1. If invalid: Throw a beautifull error message
@@ -776,31 +788,22 @@ elif [ $1 == "." ]; then
                   # If variable $? is equal to 1 or is equal to 2, then the last command issued in bash was a failure, an error occured. If $? is 0, it means last function ran ok.
 
                # Possibility 1 and 2, (testing if valid or invalid):
-                  git status 1>/dev/null 2>/dev/null  ## Try a normal git status but with no output. MUST BE ONE COMMAND ONLY, becaus $? stores the status of the sucess only of the last command
+                  git status 1>/dev/null 2>/dev/null  ## Try a normal git status but with no output. MUST BE ONE COMMAND ONLY, becaus $? stores the status of the sucess only of the last command. If we run 'git status' inside .git we get the status code 128 instead of 0. so both numbers must be checked
+                  v_status_code=$?
 
-               if [[ $? != "0" ]]; then  ## Test if last command was a failure (not equal to 0)
-                  # Invalid
+               if [[ $v_status_code != "0" ]] && [ $v_status_code != "128" ]; then  ## Test if last command was a failure (not equal to 0)
+                  # Invalid: Not on a git repo
                   echo "ezGIT: git status: 'G .'"
                   echo " > We are currently neither on any repository"
                   echo "   Neither we are at the central dir of repositories"
                   echo "   > Jump to the central/root dir with 'G r'"
-               else
-                  # Valid:
+
+               elif [ $v_status_code == "0" ] || [ $v_status_code == "128" ]; then
+                  # Valid: On a git repo, but further down the directory tree
                   # Insert dir-basename here when such function is ready (uDev)
                   echo "uDev: insert git-dir-basename"
 
                   #f_find_basename
-                  #
-                  #
-                   #v_name=$(pwd)
-                   #basename $v_name
-                  # 
-                  #
-                  # uDev: Search for .git dir, because it would maen that it's paralent dir is our repo name
-
-                  #echo -n "Repository name: $v_repo"
-                  #f_cor3
-                  #echo "$v_repo "
 
                   f_git_status
                fi
@@ -1180,8 +1183,8 @@ elif [ $1 == "," ]; then
       #uDev: add options for branches
       echo "uDev: Options for branches"
       echo "see: https://www.nobledesktop.com/learn/git/git-branches"
-      f_talk; echo "Show local branches"
 
+      f_talk; echo "git branch (Show local branches)"
       git branch
 
 elif [ $1 == "is-encript" ]; then
