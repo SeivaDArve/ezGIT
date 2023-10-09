@@ -1002,7 +1002,7 @@ elif [ $1 == "++" ]; then
          f_git_status
 
       # Git commit -m "i"
-         # uDev: If git status says "nothing to commit, working tree clean" then we must not ask for a commit message
+         # uDev: If git status says "nothing to commit, working tree clean" then we must not ask for a commit message. Unless there are N number of commits to upload, which in that case, G ++ be used anyway
 			f_talk; echo -en "Asking user for a commit message "; f_cor3; echo -n "i"; f_resetCor; echo ":"
 
 			echo " > In order to commit to git, what is your commit message?"
