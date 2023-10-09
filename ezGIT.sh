@@ -1030,8 +1030,7 @@ elif [ $1 == "++" ]; then
          
          case $v_ans in
             p | P)
-               # Display text based credential while app is in beta
-                  f_stroken
+               f_stroken
                f_git_push
                f_git_status
             ;;
@@ -1059,12 +1058,12 @@ elif [ $1 == "++" ]; then
                  echo -e " > Commits and pushes all contents of the repo fully automatic "
                  echo
 
-         f_talk; echo "adding all files to make 1 commit"
-			        git add --all && echo " > Done!"
-                 echo
-
          f_talk; echo "default commit message:"
                  echo " > $v_aut_message"
+                 echo
+
+         f_talk; echo "adding all files to make 1 commit"
+			        git add --all && echo " > Done!"
                  echo
 
          f_talk; echo "Creating an automatic commit"
