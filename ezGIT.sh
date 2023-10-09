@@ -995,13 +995,12 @@ elif [ $1 == "++" ]; then
          f_git_status
 
       # Git commit -m "i"
-			f_talk; echo -e "Asking user for a commit message:"
+			f_talk; echo -en "Asking user for a commit message "; f_cor3; echo -n "i"; f_resetCor; echo ":"
 
 			echo " > In order to commit to git, what is your commit message?"
 			echo " > leave empty to abort"
          f_cor3
 			read -p " > " v_ans
-         #echo -n " > "
          f_resetCor
          echo
 
