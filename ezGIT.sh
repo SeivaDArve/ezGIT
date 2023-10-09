@@ -1036,7 +1036,8 @@ elif [ $1 == "++" ]; then
                f_git_status
             ;;
             *)
-               f_talk; echo; echo; echo "5 seconds expired..."
+               echo; echo
+               f_talk; echo "5 seconds expired..."
             ;;
          esac
          
