@@ -1022,7 +1022,8 @@ elif [ $1 == "++" ]; then
 
       # Asking for 5 seconds if the user wants to push the code to github.com
 			f_talk; echo "Do you want to push to github.com?"
-			f_resetCor; echo -n " > If so, press: "
+                 echo " > Press any key to abort (wait 5 seconds)"
+			f_resetCor; echo -n " > To upload, press: "
 
 			f_cor4; read -s -N 1 -t 5 -p "P " v_ans
 			f_resetCor
