@@ -1178,7 +1178,11 @@ elif [ $1 == "^" ] || [ $1 == "gpush" ]; then
 
 elif [ $1 == "," ]; then
       #uDev: add options for branches
-      echo "uDev"
+      echo "uDev: Options for branches"
+      echo "see: https://www.nobledesktop.com/learn/git/git-branches"
+      f_talk; echo "Show local branches"
+
+      git branch
 
 elif [ $1 == "is-encript" ]; then
    # Info about the current directory (verbose version. # uDev: 'G ,,' for non verbose functionality) 
