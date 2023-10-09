@@ -1066,7 +1066,6 @@ elif [ $1 == "++" ]; then
 
          f_talk; echo "Creating an automatic commit"
                  git commit -m "$v_aut_message"
-                 echo
 
          f_git_status
 
