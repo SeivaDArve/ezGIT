@@ -994,21 +994,21 @@ elif [ $1 == "++" ]; then
       # Git status
          f_git_status
 
-      # Git commit -m ""
-			f_cor4
-			echo -e "Creating a message i to git commit -m \"i\":"
-			f_resetCor
+      # Git commit -m "i"
+			f_talk; echo -e "Asking user for a commit message:"
 
-			echo "In order to commit to git, what is your commit message?"
-			echo "(leave empty to abort)"
-         echo -n " > "
-			read _ans
+			echo " > In order to commit to git, what is your commit message?"
+			echo " > leave empty to abort"
+         f_cor3
+			read -p " > " v_ans
+         #echo -n " > "
+         f_resetCor
          echo
 
 			f_talk; echo -en "git commit -m \""
-         f_cor3; echo -en "${_ans}"
+         f_cor3; echo -en "${v_ans}"
 			f_resetCor; echo "\""
-			git commit -m "$_ans"
+			git commit -m "$v_ans"
 
       # Git status
          f_git_status
