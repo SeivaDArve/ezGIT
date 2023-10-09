@@ -1052,9 +1052,7 @@ elif [ $1 == "++" ]; then
          # Message to use as commit:
             v_aut_message="Pushed to github.com automatically by ezGIT app"
 
-         f_talk; echo "running:"
-                 echo -e " > G ++ blind-upload"
-                 echo -e " > G ++ b"
+         f_talk; echo "running 'blind-upload' or 'b':"
                  echo -e " > Commits and pushes all contents of the repo fully automatic "
                  echo
 
