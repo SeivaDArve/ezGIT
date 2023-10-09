@@ -1183,11 +1183,20 @@ elif [ $1 == "^" ] || [ $1 == "gpush" ]; then
 
 elif [ $1 == "," ]; then
       #uDev: add options for branches
-      echo "uDev: Options for branches"
+
+      clear
+      f_greet
+
+      f_talk; echo "Options for branches (uDev)"
       echo "see: https://www.nobledesktop.com/learn/git/git-branches"
 
-      f_talk; echo "git branch (Show local branches)"
+      echo
+      f_talk; echo "git branch (Show local branches): G , v"
       git branch
+
+      f_done
+
+      #uDev: G , ... (switches to previous branch)
 
 elif [ $1 == "is-encript" ]; then
    # Info about the current directory (verbose version. # uDev: 'G ,,' for non verbose functionality) 
