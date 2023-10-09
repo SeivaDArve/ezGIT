@@ -46,6 +46,12 @@
       echo -n "ezGIT: "; f_resetCor; # ... Text descriptor after this
    }
 
+# After each ezGIT function finishes, say "done"
+   function f_done {
+      echo
+      f_talk; echo "Done!"
+}
+
 # After colors are defined, create a "Face" for each one of our verbose outputs "page"
    function f_greet {
       clear
@@ -1029,9 +1035,11 @@ elif [ $1 == "++" ]; then
                f_git_status
             ;;
             *)
-               f_talk; echo "5 seconds expired..."
+               f_talk; echo; echo; echo "5 seconds expired..."
             ;;
          esac
+         
+         f_done
 
    # udev: Create a v_aut_message just to ulpdate the git log (like a time stamp on git log)
    elif [ $2 == "b" ] || [ $2 == "blind-upload" ]; then
