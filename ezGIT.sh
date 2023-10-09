@@ -801,7 +801,7 @@ elif [ $1 == "." ]; then
                elif [ $v_status_code == "0" ] || [ $v_status_code == "128" ]; then
                   # Valid: On a git repo, but further down the directory tree
                   # Insert dir-basename here when such function is ready (uDev)
-                  echo "uDev: insert git-dir-basename"
+                  f_talk; echo "git-dir-basename (uDev)"
 
                   #f_find_basename
 
@@ -811,6 +811,8 @@ elif [ $1 == "." ]; then
 
          echo
          echo " >> uDev: To edit and view available branches: 'G ,'"
+
+         f_done
 
    elif [[ $2 == "all" ]]; then
       # Whenever code complexity is found, a function is created to enable better code reading
