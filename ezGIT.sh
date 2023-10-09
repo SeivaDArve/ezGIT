@@ -56,6 +56,7 @@
 
 # When automatic github.com authentication is not set, an alternative (as taxt based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
    function f_stroken {
+      # While the app is in beta, this is usefull
       # If ~/.netrc exists, no need to print the rest
          if [ -f ~/.netrc ]; then
             #echo "netrc exists"
@@ -995,6 +996,7 @@ elif [ $1 == "++" ]; then
          f_git_status
 
       # Git commit -m "i"
+         # uDev: If git status says "nothing to commit, working tree clean" then we must not ask for a commit message
 			f_talk; echo -en "Asking user for a commit message "; f_cor3; echo -n "i"; f_resetCor; echo ":"
 
 			echo " > In order to commit to git, what is your commit message?"
@@ -1021,10 +1023,10 @@ elif [ $1 == "++" ]; then
          
          case $v_ans in
             p | P)
-                # Display text based credential while app is in beta
+               # Display text based credential while app is in beta
                   f_stroken
-                  f_git_push
-                  f_git_status
+               f_git_push
+               f_git_status
             ;;
             *)
                echo
