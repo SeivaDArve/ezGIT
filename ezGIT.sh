@@ -1191,8 +1191,16 @@ elif [ $1 == "," ]; then
       echo "see: https://www.nobledesktop.com/learn/git/git-branches"
 
       echo
-      f_talk; echo "git branch (Show local branches): G , v"
+      f_talk; echo "git local branches: G , v"
       git branch
+
+      echo
+      f_talk; echo "git remote branches: G , ^"
+      git branch -r
+
+      echo
+      f_talk; echo "git local and remote : G , all"
+      git branch -a
 
       f_done
 
