@@ -218,6 +218,16 @@ function f_colors-without-tput {
 	   #echo ${_RED}To do something, specify an argument like \"G 2\"${_RESTORE}
 }
 
+function f_random_sugestions {
+   # From a list of hints/sugestions, give one diferent every time this function is called
+
+   # uDev: Sort random:
+      v_sugestion_1="Random sugestion: To edit and view available branches: 'G ,'"
+      #v_sugestion_2="Sugestion 2 (uDev)"
+
+   f_talk; echo $v_sugestion_1
+}
+
 function f_underscore_creator {
    # At every 'select' menu, I want the first 
       # and last option of the menu to be an
@@ -699,6 +709,15 @@ elif [ $1 == "!" ] || [ $1 == "log" ]; then
    f_talk; echo "git log"
    git log
 
+elif [ $1 == "1!" ] || [ $1 == "log1" ]; then
+   # git log in one line
+   f_talk; echo "git log --oneline"
+   git log --oneline
+
+elif [ $1 == "watch" ] || [ $1 == "8" ]; then
+   # This function allows the user to open a second terminal to watch live what is changing in the git log tree.
+   watch -ct -n1 git --no-pager log --color --all --oneline --decorate --graph
+
 elif [ $1 == "msg" ]; then
    # Create a while loop to send and receive messages between 2 ezGIT machines
    # uDev: sugestion: use irssi (IRC Client)
@@ -769,14 +788,14 @@ elif [ $1 == "." ]; then
             if [[ $(pwd) == ${v_REPOS_CENTER} ]]; then 
                # equal: For sure we are not inside a repo. And we recognize this dir. Listing all repos here
                # We are at the Root of all repos
-               echo "ezGIT: git status: 'G .'"
+               f_talk; echo "git status: 'G .'"
                echo ' > We are currently not at a git repository'
                echo '   are at the root dir of Repositories, also called by:'
                echo '   > variable: ${v_REPOS_CENTER}'
                echo "   > path: ${v_REPOS_CENTER}"
                echo
-               echo "Listing all repositories instead:"
-               echo
+               f_talk; echo "Listing all repositories instead:"
+               echo " > uDev: test if list is dir instead of using \$ls"
                ls -1
 
             elif [[ $(pwd) != ${v_REPOS_CENTER} ]]; then 
@@ -810,7 +829,8 @@ elif [ $1 == "." ]; then
             fi
 
          echo
-         echo " >> uDev: To edit and view available branches: 'G ,'"
+
+         f_random_sugestions
 
          f_done
 
