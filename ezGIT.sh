@@ -1162,7 +1162,7 @@ elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
 
 # uDev: 'G vv' to Pull changes and exec a specific script inside the repo (for example at DRYa to update the entire system includim other repos)
 
-elif [ $1 == "^" ] || [ $1 == "gpush" ]; then
+elif [ $1 == "^" ] || [ $1 == "push" ]; then
    # Simple git push
 
       clear 
@@ -1216,6 +1216,7 @@ elif [ $1 == "upk" ]; then
       v)
          clear
          f_greet
+
          echo "ezGIT: Pulling requirements for upk stuff"
          echo
          # If there is no file ~/.netrc configured for automatic git pull and git push, you might uncomment f_stroken:
