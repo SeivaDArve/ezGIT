@@ -1168,16 +1168,10 @@ elif [ $1 == "^" ] || [ $1 == "gpush" ]; then
       clear 
       f_greet
 
-   # Display stroken
       f_stroken
 
-   # Git push
-		f_cor4; echo -n "ezGIT: "
-		f_resetCor; echo "git push"
+      f_git_push
 
-      git push
-
-   # Git status
       f_git_status
 
 
