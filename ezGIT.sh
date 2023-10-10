@@ -1304,18 +1304,27 @@ elif [ $1 == "upk" ]; then
    esac
 
 elif [ $1 == "-1" ]; then
-   echo "ezGIT: Moving HEAD 1 commit below (previous one)"
+   f_talk; echo "Moving HEAD 1 commit below (previous one)"
+   echo " > Attach HEAD with: G ="
+
    git checkout HEAD^1
-   echo "ezGIT: Attach HEAD with command: git switch -"
 
 elif [ $1 == "+1" ]; then
-   echo "ezGIT: Moving HEAD 1 commit above (next one)"
+   f_talk; echo "Moving HEAD 1 commit above (next one)"
+   echo " > Attach HEAD with: G ="
+
    git log --reverse --pretty=%H main | grep -A 1 $(git rev-parse HEAD) | tail -n1 | xargs git checkout 
-   echo "ezGIT: Attach HEAD with command: git switch -"
 
 elif [ $1 == "=" ] || [ $1 == "reset-head" ]; then
    # when you are navigating/exploring/browsing older commits and you are finished, if no changes were applying and there is no need for more navigation, this is the command ends the navigation and brighs back normality
+
+   clear
+   f_greet
+
+   f_talk; echo "git checkout main"
    git checkout main
+   
+   f_git_status
 
 elif [ $1 == "apply-current-commit" ]; then
    # We use this when we mess up in a previous commit and after that, when navigate back to the previous/unchanged/un-messed up commit and we what to apply that commit
