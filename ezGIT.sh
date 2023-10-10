@@ -66,7 +66,7 @@
       # If ~/.netrc exists, no need to print the rest
          if [ -f ~/.netrc ]; then
             #echo "netrc exists"
-            echo
+            echo "it exists" 1>/dev/null
          else
             f_talk; echo "stroken"
                     echo " > Inside the ezGIT app I found this: "
