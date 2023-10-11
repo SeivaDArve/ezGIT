@@ -187,6 +187,7 @@ function f_git_status {
 #function f_git_statusno_color {
 #   # uDev: Create a git status function to be used by the command '$ watch'
 #   git status
+#   git fetch
 #}
 
 function f_git_push {
