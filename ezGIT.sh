@@ -56,7 +56,7 @@
    function f_greet {
       clear
       f_cor4
-      figlet "ezGIT" || echo -e "( ezGIT )\n"
+      figlet "ezGIT" 2>/dev/null || echo -e "( ezGIT )\n"
       f_resetCor 
    }
 
