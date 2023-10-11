@@ -1061,7 +1061,8 @@ elif [ $1 == "++" ]; then
             ;;
             *)
                echo; echo
-               f_talk; echo "5 seconds expired..."
+               f_talk; echo "Aborted" 1>/dev/null
+               #f_talk; echo "5 seconds expired..."  ## Bug
             ;;
          esac
          
@@ -1103,6 +1104,10 @@ elif [ $1 == "++" ]; then
 
          echo
          f_talk; echo "All Done!"
+   elif [ $2 == "u" ] || [ $2 == "udev" ]; then
+      # Added uDev comments
+      f_talk; echo "uDev: Will upload: Added only uDev comments to files"
+
    else
       # If the arg given is not recognized as a saved git-commit-message, then:
       f_talk; echo "the last arg is not recognized"
@@ -1115,6 +1120,8 @@ elif [ $1 == "++" ]; then
 
 elif [ $1 == "-" ]; then 
    # unStages a file
+
+   # uDev: Missing "all" like command: G - all
 
    clear
    f_greet
