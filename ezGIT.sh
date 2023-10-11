@@ -1111,9 +1111,40 @@ elif [ $1 == "++" ]; then
          echo
          f_talk; echo "All Done!"
    elif [ $2 == "u" ] || [ $2 == "udev" ]; then
-      # Added uDev comments
-      f_talk; echo "uDev: Will upload: Added only uDev comments to files"
+      # Update adding only uDev comments, variable "u"
+      clear
+      f_greet
 
+      # Sending automatically everything with an automated commit message
+         # Message to use as commit:
+         v_aut_message="Improvements made only around uDev comments (added/modifeied/etc..)"
+
+         f_talk; echo "running 'uDev' or 'u':"
+                 echo -e " > Commits and pushes all contents of the repo fully automatic "
+                 echo
+
+         f_talk; echo "default commit message:"
+                 echo " > $v_aut_message"
+                 echo
+
+         f_talk; echo "adding all files to make 1 commit"
+			        git add --all && echo " > Done!"
+                 echo
+
+         f_talk; echo "Creating an automatic commit"
+                 git commit -m "$v_aut_message"
+
+         f_git_status
+
+         f_stroken
+
+         f_talk; echo "pushing to github.com "
+                 git push
+
+         f_git_status
+
+         echo
+         f_talk; echo "All Done!"
    else
       # If the arg given is not recognized as a saved git-commit-message, then:
       f_talk; echo "the last arg is not recognized"
