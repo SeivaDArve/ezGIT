@@ -632,7 +632,9 @@ function f_curl_uploads_count {
 
 
 
-
+# uDev: apply dp_title: bully-pages (change to: deep "pages") title here
+#       dp_title_a: before 
+#       dp_title_z: after
 
 
 
@@ -780,6 +782,8 @@ elif [ $1 == "." ]; then
    #       Remove/delete last stashed item: git stash drop
    #       Drop/delete all stashed items: git stash clear
    
+   # uDev: Tell the user if "encript before push" + "decript after pull" is "on" (detects a directory .git-encrypt/ in the tree
+
    if [[ -z $2 ]]; then
       clear; f_greet 
 
@@ -882,38 +886,9 @@ elif [ $1 == "count^" ]; then
    f_greet
    f_curl_uploads_count
 
-elif [ $1 == "B" ]; then
-   if [ -z $2 ]; then
-      clear
-      f_greet
-      echo "ezGIT: Local branches"
-      git branch
 
-      echo
-      echo "ezGIT: Remote branches"
-      git branch -r
-
-      # To see all branches at once (remote and local): git branch -a
-      # To see more details: git branch -v
-      # To see more details: git branch -vv
-      # To see more details: git branch -vr
-      # To see more details: git branch -vva
-      # To see more details: git branch -vvr
-
-   elif [ $2 == "new" ]; then
-      clear
-      f_greet
-      echo "ezGIT: This command will create a new branch based on the branch you are currently on"
-      echo "uDev: Tell which branch is currently on"
-      echo "The new branch's history will start at the current place of the branch you \"branched off of.\""
-      git checkout -b
-
-   elif [ $2 == ".." ]; then
-      clear
-      f_greet
-      echo "ezGIT: This command will allow to to switch between branches"
-      git checkout
-   fi
+# elif [ $1 == "raspberry bare repo" ]; then
+   # Adds a raspberry pi as a remote git repositorynand we push changes there instead of github.com
 
 elif [ $1 == "new" ]; then
    # Creates a new repository
@@ -1242,6 +1217,7 @@ elif [ $1 == "^" ] || [ $1 == "push" ]; then
 elif [ $1 == "," ]; then
       #uDev: add options for branches
 
+   if [ -z $2 ]; then
       clear
       f_greet
 
@@ -1262,7 +1238,12 @@ elif [ $1 == "," ]; then
 
       f_done
 
-      #uDev: G , ... (switches to previous branch)
+   elif [ $2 == "..." ]; then
+      clear
+      f_greet
+      echo "ezGIT: Switch Back-n-Forward between 2 branches"
+      git checkout
+   fi
 
 elif [ $1 == "is-encript" ]; then
    # Info about the current directory (verbose version. # uDev: 'G ,,' for non verbose functionality) 
@@ -1274,6 +1255,8 @@ elif [ $1 == "is-encript" ]; then
 
       f_tell_repo_name
 
+   # uDev: Add an option to push changes ONLY FULLY ENCRIPTED like moedaz, where no sesnsitive personal data should be visible
+      # OR, Detect a directory ".git-encrypt/" to encrypt before any push and to decrypt after every pull
 
 elif [ $1 == "upk" ]; then
    case $2 in
