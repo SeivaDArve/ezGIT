@@ -907,6 +907,7 @@ elif [ $1 == "+" ]; then
    function f_no_file_found {
       f_talk; echo "No file name given. "
       f_talk; echo "Insert at least 1 file name."
+      #uDev: If no file is given, do a git diff --staged
    }
 
       clear
