@@ -1258,6 +1258,33 @@ elif [ $1 == "is-encript" ]; then
    # uDev: Add an option to push changes ONLY FULLY ENCRIPTED like moedaz, where no sesnsitive personal data should be visible
       # OR, Detect a directory ".git-encrypt/" to encrypt before any push and to decrypt after every pull
 
+
+
+
+
+# uDev: This topic of encryption is udev only because we need a 'stroken' file for it's automation
+#
+#elif [ $1 == "encript" ]; then
+#   # Needs: sudo apt install gpg
+#
+#   # Encrypt
+#      gpg -c file-name.txt  # Will duplicate the file and to the copy, and extention .gpg will be added: file-name.txt.gpg
+#   
+#   # To clear the caches password immediatly after
+#      gpgconf --reload gpg-agent
+#   
+#   # Delete the original file
+#      rm file-name.txt  # Keep the duplicated/encrypted: file-name.txt.gpg
+#
+#elif [ $1 == "decript" ]; then
+#   # Needs: sudo apt install gpg
+#
+#   # Decrypt
+#      gpg -d file-name.txt.gpg
+#
+#   # Delete the original file
+#     rm file-name.txt.gpg  # Keep the duplicated/decrypted: file-name.txt
+
 elif [ $1 == "upk" ]; then
    case $2 in
       v)
