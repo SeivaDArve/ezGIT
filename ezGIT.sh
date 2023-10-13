@@ -649,10 +649,21 @@ if [ -z "$*" ]; then
       f_greet
 
       f_talk; echo "No arguments were given"
-      echo " > Type: 'G ?' To print the instructions manual"
+      echo " > To print the instructions manual type: G ?"
+      echo " > Or, you have 5 secs to press: H (uDev)"
       echo
-      echo "uDev: when no args are given, show git config info for this device"
-      echo "Press H to print the help menu (uDev)"
+
+      f_horizontal_line
+      echo
+
+      f_talk; echo "User Name (at github.com)"
+      echo -n " > "
+      git config --get user.name
+
+      echo
+      f_talk; echo "User mail (at github.com)"
+      echo -n " > "
+      git config --get user.email
 
 elif [ $1 == "?" ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ $1 == "-?" ]; then
    # Same as if no arg are given: Display help menu
