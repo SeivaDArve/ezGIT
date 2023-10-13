@@ -652,6 +652,8 @@ if [ -z "$*" ]; then
       echo " > To print the instructions manual type: G ?"
       echo " > Or, you have 5 secs to press: H (uDev)"
       echo
+      echo " > Type G c to list all configs (uDev)"
+      #git config --list
 
       f_horizontal_line
       echo
