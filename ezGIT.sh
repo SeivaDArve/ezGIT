@@ -30,6 +30,7 @@
    }
    function f_cor3 { 
       # Mentioning user input or valiable input
+      # Used at user inputs: git commits; ...
       tput setaf 3
    }
    function f_cor4 { 
