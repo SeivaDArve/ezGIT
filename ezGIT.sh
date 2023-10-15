@@ -30,10 +30,12 @@
    }
    function f_cor3 { 
       # Mentioning user input or valiable input
+      # Used at user inputs: git commits; ...
       tput setaf 3
    }
    function f_cor4 { 
       # Similar to Bold
+      # Used at: f_talk
       tput setaf 4
    }
    function f_resetCor { 
@@ -1114,7 +1116,10 @@ elif [ $1 == "++" ]; then
                  echo
 
          f_talk; echo "default commit message:"
-                 echo " > $v_aut_message"
+                 echo -n " > "
+                 f_cor3
+                 echo "$v_aut_message"
+                 f_resetCor
                  echo
 
          f_talk; echo "adding all files to make 1 commit"
