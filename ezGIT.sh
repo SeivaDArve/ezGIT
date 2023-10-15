@@ -916,6 +916,7 @@ elif [ $1 == "+" ]; then
    # 5. git commim -m "i" 
 
    # uDev: if $2 is ^ then like 'G + ^' then, git commit staged files
+   # uDev: if $2 is > then like 'G + >' then, git diff --staged files
 
    function f_no_file_found {
       f_talk; echo "No file name given. "
@@ -1470,6 +1471,13 @@ elif [ $1 == "uDev" ]; then
 
 
 
+elif [ $1 == "[!]" ] || [ $1 == "stash-list" ] || [ $1 == "st-l" ]; then
+   clear
+   f_greet
+   f_talk; echo "List of stashes:"
+   
+   git stash list
+
 elif [ $1 == "[]" ] || [ $1 == "stash" ] || [ $1 == "st" ]; then
    clear
    f_greet
@@ -1491,6 +1499,12 @@ elif [ $1 == "[" ] || [ $1 == "unstash" ] || [ $1 == "ust" ] || [ $1 == "apply" 
    # git status
       f_git_status
 
+elif [ $1 == "[!] v" ] || [ $1 == "stash-clear" ] || [ $1 == "st-c" ]; then
+   clear
+   f_greet
+   f_talk; echo "Clear/erase all stashes:"
+
+   git stash clear
 
 elif [ $1 == "file-host" ]; then
    echo "If you want to use github to download single files just like any other cloud storage instead of cloning entire repos, you can. Github supports that. Here is a link to teach how to do that while this function is under development"
