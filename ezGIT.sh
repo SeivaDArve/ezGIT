@@ -23,24 +23,38 @@
 
    function f_cor1 {	
       # For figlet titles
+      # uDev: If tput is not installed, use system colors
       tput setaf 5 
    }
    function f_cor2 { 
+      # uDev: If tput is not installed, use system colors
       tput setaf 2 
    }
    function f_cor3 { 
       # Mentioning user input or valiable input
       # Used at user inputs: git commits; ...
+      # uDev: If tput is not installed, use system colors
       tput setaf 3
    }
    function f_cor4 { 
       # Similar to Bold
       # Used at: f_talk
+      # uDev: If tput is not installed, use system colors
       tput setaf 4
    }
    function f_resetCor { 
+      # uDev: If tput is not installed, use system colors
       tput sgr0
    }
+
+function f_colors-without-tput {
+	# Text Colors before discovering '$ tput setaf'
+	   _RED=$(echo -en '\001\033[00;31m\002')
+	   _RESTORE=$(echo -en '\001\033[0m\002')
+
+	# Text formating before discovering '$ tput'
+	   #echo ${_RED}To do something, specify an argument like \"G 2\"${_RESTORE}
+}
 
 # After colors are defined, create a "Face" for each "ezGIT: " descriptor
    function f_talk {
@@ -216,15 +230,6 @@ function f_git_pull_dot_files {
    echo " > cd drya; git pull; cp .../filss .../places"
 }
 
-
-function f_colors-without-tput {
-	# Text Colors before discovering '$ tput setaf'
-	   _RED=$(echo -en '\001\033[00;31m\002')
-	   _RESTORE=$(echo -en '\001\033[0m\002')
-
-	# Text formating before discovering '$ tput'
-	   #echo ${_RED}To do something, specify an argument like \"G 2\"${_RESTORE}
-}
 
 function f_random_sugestions {
    # From a list of hints/sugestions, give one diferent every time this function is called
