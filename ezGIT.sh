@@ -230,6 +230,24 @@ function f_git_pull_dot_files {
    echo " > cd drya; git pull; cp .../filss .../places"
 }
 
+function f_git_commit {
+   # uDev: If git status says "nothing to commit, working tree clean" then we must not ask for a commit message. Unless there are N number of commits to upload, which in that case, G ++ be used anyway
+   f_talk; echo -en "Asking user for a commit message "; f_cor3; echo -n "i"; f_resetCor; echo ":"
+
+   echo " > In order to commit to git, what is your commit message?"
+   # uDev: save cursor position here to overwrite text "leave empty to abort" 
+   echo " > (leave empty to abort)"
+   f_cor3
+   read -p " > " v_ans
+   f_resetCor
+   echo
+
+   f_talk; echo -en "git commit -m \""
+   f_cor3; echo -en "${v_ans}"
+   f_resetCor; echo "\""
+   git commit -m "$v_ans"
+
+}
 
 function f_random_sugestions {
    # From a list of hints/sugestions, give one diferent every time this function is called
@@ -916,6 +934,15 @@ elif [ $1 == "new" ]; then
    # Creates a new repository
    echo "ezGIT: Do you want to create a new repository? (uDev)"
 
+elif [ $1 == "m" ] || [ $1 == "commit" ]; then
+   # Ask the user for a commit message
+   
+   clear
+   f_greet
+
+   f_git_status
+   f_git_commit
+   f_git_status
 
 elif [ $1 == "+" ]; then
    # 1. Test if $2 was specified
@@ -1032,20 +1059,7 @@ elif [ $1 == "++" ]; then
          f_git_status
 
       # Git commit -m "i"
-         # uDev: If git status says "nothing to commit, working tree clean" then we must not ask for a commit message. Unless there are N number of commits to upload, which in that case, G ++ be used anyway
-			f_talk; echo -en "Asking user for a commit message "; f_cor3; echo -n "i"; f_resetCor; echo ":"
-
-			echo " > In order to commit to git, what is your commit message?"
-			echo " > leave empty to abort"
-         f_cor3
-			read -p " > " v_ans
-         f_resetCor
-         echo
-
-			f_talk; echo -en "git commit -m \""
-         f_cor3; echo -en "${v_ans}"
-			f_resetCor; echo "\""
-			git commit -m "$v_ans"
+         f_git_commit
 
       # Git status
          f_git_status
