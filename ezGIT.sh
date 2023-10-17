@@ -796,6 +796,8 @@ elif [ $1 == "." ]; then
    #       List of stashed changes: git stash list
    #       Remove/delete last stashed item: git stash drop
    #       Drop/delete all stashed items: git stash clear
+   #
+   # uDev: Perform git fetch before git status, this way the user knows how much ahead or behind his branch is according to the origin
    
    # uDev: Tell the user if "encript before push" + "decript after pull" is "on" (detects a directory .git-encrypt/ in the tree
 
