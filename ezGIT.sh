@@ -934,7 +934,7 @@ elif [ $1 == "new" ]; then
    # Creates a new repository
    echo "ezGIT: Do you want to create a new repository? (uDev)"
 
-elif [ $1 == "m" ] || [ $1 == "commit" ]; then
+elif [ $1 == "m" ] || [ $1 == ">" ] || [ $1 == "commit" ]; then
    # Ask the user for a commit message
    
    clear
