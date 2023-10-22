@@ -665,8 +665,12 @@ function f_curl_uploads_count {
 
 
 
-# Before evaluating ezGIT arguments, check if git is configured properly
-   f_test_existent_configs #uDev
+# Before evaluating ezGIT arguments:
+   # Check if git is configured properly
+      f_test_existent_configs #uDev
+
+   # Check if variable ${v_REPOS_CENTER} is configured properly
+      # uDev: If not configured, tell the user what to do
 
 if [ -z "$*" ]; then
    # Do something else if there are no arguments
