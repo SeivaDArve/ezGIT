@@ -249,6 +249,18 @@ function f_git_commit {
 
 }
 
+function f_unstage_all {
+   # Unstage all files
+      clear
+      f_greet
+
+      # Git reset
+         f_talk; echo -e "git reset all staged files"
+
+      # Unstaging ALL files
+         git reset
+}
+
 function f_random_sugestions {
    # From a list of hints/sugestions, give one diferent every time this function is called
 
@@ -1178,22 +1190,39 @@ elif [ $1 == "++" ]; then
 elif [ $1 == "-" ]; then 
    # unStages a file
 
-   # uDev: Missing "all" like command: G - all
 
-   clear
-   f_greet
+   if [ -z $2 ]; then         # Note: ezGIT allows 'G -' and 'G - all' to unstage all files, but the command is same, simply: 'git reset' 
+      # Unstage all files
+         f_unstage_all
 
-   # Git reset
-      f_talk; echo -en "git reset "
-      f_cor3; echo -e "$2"
-      f_resetCor
+      # Git status
+         f_git_status
 
-   # uDev: unstage all files given as args besides $1. the argument $1 '-' is not a file. (See 'G +' where this line of code already works)
-   # uDev: tem de ser visto os bugs caso sejam dados nomes de ficheiros errados tal como na funcao: G + <nome-errado>
-      git reset $2
 
-   # Git status
-      f_git_status
+   elif [ $2 == "all" ]; then   # Note: ezGIT allows 'G -' and 'G - all' to unstage all files, but the command is same, simply: 'git reset' 
+      # Unstage all files
+         f_unstage_all
+
+      # Git status
+         f_git_status
+
+   else
+
+      clear
+      f_greet
+
+      # Git reset
+         f_talk; echo -en "git reset "
+         f_cor3; echo -e "$2"
+         f_resetCor
+
+      # uDev: unstage all files given as args besides $1. the argument $1 '-' is not a file. (See 'G +' where this line of code already works)
+      # uDev: tem de ser visto os bugs caso sejam dados nomes de ficheiros errados tal como na funcao: G + <nome-errado>
+         git reset $2
+
+      # Git status
+         f_git_status
+   fi
 
 elif [ $1 == "+-" ]; then
    # git commit --ammend
