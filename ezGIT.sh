@@ -3,6 +3,7 @@
 
 # How to install and use (uDev):
 #  uDev: Instead of these instructions. the HEREDOC should move here; (equivalent of 'G ?')
+
 #------------
    # One way to use this app without installing it at "/bin" is to navigate to this directory where G.sh is located and execute "source G.sh". This way all functions inside itself is loaded into do $PATH variable
 
@@ -10,6 +11,8 @@
 	# You could type "source ezGIT". This method only works for that terminal
 	# instance and will be unavailable after you close the terminal. So, you
 	# could also add "source <relative path/ezGIT>" to your .bashrc 
+
+# uDev: must create alias A as "all" (example: 'G . all' and 'G . A')
 
 # If this script runs, a variable is set to tell which one repo was the last one to run
    declare v_repo="ezGIT"
