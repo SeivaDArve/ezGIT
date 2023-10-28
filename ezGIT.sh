@@ -1132,7 +1132,7 @@ elif [ $1 == "++" ]; then
 
          f_stroken
 
-         f_talk; echo "pushing to github.com "
+         f_talk; echo -e "\npushing to github.com "
                  git push
 
          f_git_status
