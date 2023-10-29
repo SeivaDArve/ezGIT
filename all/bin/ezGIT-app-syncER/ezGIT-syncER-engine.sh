@@ -43,8 +43,8 @@ function f_rc {
       f_talk; echo "Done!"
 }
 
-function f_diary_help {
-   echo "ezGIT-syncER: No valid arguments were given"
+function f_help {
+   echo "ezGIT-syncER: Help: No valid arguments were given"
    echo " > When arguments are not given,"
    echo " > a separate repository will open (if installed)"
    echo " > That has a daily log of actvities (user specific)"
@@ -103,7 +103,7 @@ function f_file_closed {
 
 }
 
-function f_diary_master {
+function f_start_running {
    # Function that will run in case this repository "upk" does find an external user repo with his personal dily log info
 
    # Emacs and vim can make a file if it does not exist. 
@@ -111,7 +111,6 @@ function f_diary_master {
       # The file that is going to be open must exist there before
       # If -f finds a file, this function will run
 
-   clear
    figlet $v_sync_name
 
    # Opening presentation:
@@ -187,10 +186,10 @@ if [ -z "$*" ]; then
 
    if [ -f ${v_REPOS_CENTER}/$v_choosen_repo/$v_choosen_file ]; then
       # If file $v_choosen_repo exists, then:
-         f_diary_master
+         f_start_running
    else
       # If file $v_choosen_repo does not exist, then:
-         f_diary_help
+         f_help
    fi
 
 elif [ $1 == "encrypt" ]; then
