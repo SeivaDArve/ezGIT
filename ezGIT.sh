@@ -1518,7 +1518,7 @@ elif [ $1 == "rb" ]; then
 
    elif [ $2 == "f" ]; then
       echo "git config pull.rebase false"
-      sudo bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh rb f
+      sudo bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh rb f  ## uDev: sudo does not exist on termux and gives an error
       #git config pull.rebase false
    
    elif [ $2 == "t" ]; then
