@@ -79,23 +79,24 @@ function f_colors-without-tput {
       f_resetCor 
    }
 
-# When automatic github.com authentication is not set, an alternative (as taxt based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
-   function f_stroken {
-      # While the app is in beta, this is usefull
-      # If ~/.netrc exists, no need to print the rest
-         if [ -f ~/.netrc ]; then
-            #echo "netrc exists"
-            echo "it exists" 1>/dev/null
-         else
-            f_talk; echo "stroken"
-                    echo " > Inside the ezGIT app I found this: "
-            f_cor4; echo -n "seivadarve";
-            f_resetCor; echo " and this:";
-            f_cor4; echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
-            f_resetCor
-            echo
-         fi
-   }
+function f_stroken {
+   # When automatic github.com authentication is not set, an alternative (as taxt based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
+   # While the app is in beta, this is usefull
+
+   # If ~/.netrc exists, no need to print the rest
+      if [ -f ~/.netrc ]; then
+         #echo "netrc exists"
+         echo "it exists" 1>/dev/null
+      else
+         f_talk; echo "stroken"
+                 echo " > Inside the ezGIT app I found this: "
+         f_cor4; echo -n "seivadarve";
+         f_resetCor; echo " and this:";
+         f_cor4; echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+         f_resetCor
+         echo
+      fi
+}
 
 function f_find_basename {
    #uDev" Needs to search for our .git directory
