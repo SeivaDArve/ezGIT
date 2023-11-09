@@ -265,6 +265,16 @@ function f_unstage_all {
          git reset
 }
 
+function f_tell_current_branch {
+   # Print on the screen current branch without '*'
+   f_talk; echo -n "Currently on branch: "
+
+   f_cor3
+      git branch | grep "*" | sed "s/\* //g"
+   f_resetCor
+
+}
+
 function f_random_sugestions {
    # From a list of hints/sugestions, give one diferent every time this function is called
 
@@ -1299,6 +1309,13 @@ elif [ $1 == "," ]; then
       clear
       f_greet
 
+      f_tell_current_branch
+
+   elif [ $2 == "+" ]; then
+      echo
+
+   elif [ $2 == "all" ]; then
+
       f_talk; echo "Options for branches (uDev)"
       echo "see: https://www.nobledesktop.com/learn/git/git-branches"
 
@@ -1321,6 +1338,12 @@ elif [ $1 == "," ]; then
       f_greet
       echo "ezGIT: Switch Back-n-Forward between 2 branches"
       git checkout
+
+   elif [ $2 == "h" ]; then
+      echo "Help: Telling what options there are for branches"
+
+   else 
+      f_talk; echo "Option not recognized"
    fi
 
 elif [ $1 == "is-encript" ]; then
