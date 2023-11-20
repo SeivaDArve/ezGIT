@@ -1160,7 +1160,7 @@ elif [ $1 == "++" ]; then
 
       # Sending automatically everything with an automated commit message
          # Message to use as commit:
-         v_aut_message="Improvements made only around uDev comments (added/modifeied/etc..)"
+         v_aut_message="Improvements made only around uDev comments (added/modify/etc..)"
 
          f_talk; echo "running 'uDev' or 'u':"
                  echo -e " > Commits and pushes all contents of the repo fully automatic "
