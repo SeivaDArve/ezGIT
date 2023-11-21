@@ -925,6 +925,11 @@ elif [ $1 == "." ]; then
       f_talk; echo "For help: G -h"
    fi
 
+
+#elif [ $1 == "+!" ]; then
+   # Not only commits these staged files, but also squashes with the previous commit
+   # This is usefull when our next commit should be past of our last commit and we forgot. Now we are adding stuff to our last commit
+
 elif [ $1 == "multi" ]; then
    # Git commit multiple messages
 
