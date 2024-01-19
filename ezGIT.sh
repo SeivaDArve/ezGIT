@@ -976,7 +976,37 @@ elif [ $1 == "count^" ]; then
 
 elif [ $1 == "new" ]; then
    # Creates a new repository
-   echo "ezGIT: Do you want to create a new repository? (uDev)"
+      echo "ezGIT: Do you want to create a new repository? (uDev)"
+
+   # Prompt to ask weather or not to START crearing a new repo
+      f_greet
+      f_talk; echo "Do you want to create a new repository? "
+              echo " > Tap (y/N) To Create a repository"
+              read -sn 1 v_ans
+              echo
+              echo "Your answer was: $v_ans"
+
+      if [ $v_ans == "y" ] || [ $v_ans == "Y" ]; then
+                 echo
+                 echo $v_line  ## Using horizontal line
+         f_talk; echo "Do you want a README file in it? "
+                 echo " > Tap (y/N) To Create a repository"
+                 read -sn 1 v_ans2
+                 echo
+                 echo "Your answer was: $v_ans2"
+                 sleep 1
+      fi
+
+   # Telling a summary of what is going to happen
+      f_greet
+      f_talk; echo "Summary:"
+      echo " > Create repo: $v_ans"
+      echo " > Create README: $v_ans2"
+      echo
+
+      read -sn 1 -p "Press ANY key to continue (use: CTRL-C to cancel)" 
+      echo
+      echo "uDev: All this functionality is not ready yet to apply changes"
 
 elif [ $1 == "m" ] || [ $1 == ">" ] || [ $1 == "commit" ]; then
    # Ask the user for a commit message
