@@ -1,20 +1,17 @@
 #!/bin/bash
 # Title: ezGIT to replace long git commands for one simple and short command
 
+#----------------------------------------------------------------------------
 # Instructions: 1. Search this file for the keywords: "function f_heredoc {"
 #                  (It is the equivalent of 'G ?' on the terminal)
 #               2. It explains: How to install and use
-
-#------------
+#----------------------------------------------------------------------------
 
 # uDev: must create alias A as "all" (example: 'G . all' and 'G . A')
+# uDev: For new users, everytime this script runs, a function CAN be enabled to go on giving random instructions about how ezGIT works, no need to go and read the man pages
 
 # If this script runs, a variable is set to tell which one repo was the last one to run
    declare v_repo="ezGIT"
-
-# For new users, everytime this script runs, a function CAN be enabled to go on giving random instructions about how ezGIT works, no need to go and read the man pages
-   # uDev
-
 
 # Functions for text colors
    # uDev: If ezGIT gets byte compiled, there should be a file to configure it's color numbers
