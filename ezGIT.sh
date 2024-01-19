@@ -130,7 +130,8 @@ function f_heredoc {
 
    G repo ^ |     | uDev: automatic sync + open + close + sync to given "repo"
 
-   G config | uDev 
+   G c      |     | uDev: List all configs
+   G config |     | uDev: Automatic configuration for fast start (DRY)
    -------------------------------------------------------------------
 
    Instalation possibilities
