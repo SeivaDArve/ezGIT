@@ -1,16 +1,11 @@
 #!/bin/bash
 # Title: ezGIT to replace long git commands for one simple and short command
 
-# How to install and use (uDev):
-#  uDev: Instead of these instructions. the HEREDOC should move here; (equivalent of 'G ?')
+# Instructions: 1. Search this file for the keywords: "function f_heredoc {"
+#                  (It is the equivalent of 'G ?' on the terminal)
+#               2. It explains: How to install and use
 
 #------------
-   # One way to use this app without installing it at "/bin" is to navigate to this directory where G.sh is located and execute "source G.sh". This way all functions inside itself is loaded into do $PATH variable
-
-	# In order to use ezGIT, one way is to navigate to it's dir and from there
-	# You could type "source ezGIT". This method only works for that terminal
-	# instance and will be unavailable after you close the terminal. So, you
-	# could also add "source <relative path/ezGIT>" to your .bashrc 
 
 # uDev: must create alias A as "all" (example: 'G . all' and 'G . A')
 
@@ -19,6 +14,7 @@
 
 # For new users, everytime this script runs, a function CAN be enabled to go on giving random instructions about how ezGIT works, no need to go and read the man pages
    # uDev
+
 
 # Functions for text colors
    # uDev: If ezGIT gets byte compiled, there should be a file to configure it's color numbers
@@ -78,6 +74,84 @@ function f_colors-without-tput {
       figlet "ezGIT" 2>/dev/null || echo -e "( ezGIT )\n"
       f_resetCor 
    }
+
+function f_heredoc {
+   # Describes all functionality
+   # uDev: the BEST documentation happens if you can open the source code and read it
+      # Therefore: uDev: Create a grep function to grep all 'if [' and 'elif' in this document and along with that, search one more line below with the comment that tells what that function does
+
+
+      # Clearing the screen and introducing the app
+         f_greet
+
+   # Create an horizontal line using DRYa's built-in scripts
+      echo $v_line
+
+   # Placing the title:
+      f_talk; echo "Instructions"
+
+   # Choose only on of these 2:
+      #less << heredooc
+      cat << heredooc
+
+   Intro:
+    > To do something, specify an argument after the letter: G
+
+   Table of possible Arguments that go along G:
+
+   G        |     | Displays this menu
+   G ?      |     | Displays this menu
+   G F      |     | Favourites
+   G .      |     | git status
+   G ,      |     | Show info and options of branches
+   G v      |     | git pull
+   G ^      |     | git push
+   G +      | gad | git add <file-name-here>    (stages a file)
+   G + .    |     | git add .
+   G + all  |     | git add --all
+   G + ^    | gcm | (uDev) git commit -m "<your-commit-message>" (used for staged files)
+   G -      |     | git reset <file-name-here>  (unStages a file)
+   G @      | gcf | git config (menu)
+   G !      | glg | git log
+
+   G ++     |     | Stages ALL files and promps the user for a commit message
+   G ++ b   |     | automatic git commit with message with code/variable: b (for blind update)
+   G +-     |     | Ammends/Edits last commit message
+
+   G []     |     | git stash
+   G [      |     | git stash apply
+
+   G +1     |     | Move 1 commit up
+   G -1     |     | Move 1 commit down
+   G =      |     | Come back to HEAD
+   G %      |     | See diference between current commit and HEAD
+
+   G rb f   |     | git pull.rebase false
+   G rb t   |     | git pull.rebase true
+
+   G new    |     | Menu to create new GIT repositories
+
+   G repo ^ |     | uDev: automatic sync + open + close + sync to given "repo"
+
+   G config | uDev 
+   -------------------------------------------------------------------
+
+   Instalation possibilities
+    > Install ezGIT on "~/.bashrc" with an 'alias G=".../ezGIT.sh" '
+    > Use: 'G byte-compile' (uDev)
+
+   Using without instalation (ezGIT is a simple Bash app)
+    1. One way to use this app without installing it at "/bin" is to navigate to this directory where G.sh is located and execute "source G.sh" to load all functions inside itself into the Terminal's environment variables
+
+    2. You can also navigate to G.sh and run "bash G.sh" along with some argument like "?". If would be "bash G.sh ?"
+
+   (Quit this page with the hoykey: Q)
+   
+heredooc
+
+   # Create an horizontal line using DRYa's built-in scripts
+      echo $v_line
+}
 
 function f_stroken {
    # When automatic github.com authentication is not set, an alternative (as taxt based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
@@ -514,68 +588,6 @@ function f_tell_repo_name {
 
 # uDev: Instead of creating repos at github.com, then clone, then use: instead, create a function with git init and then push to the remote
 
-function f_heredoc {
-   # Describes all finctionality
-   # uDev: the BEST documentation happens if you can open the source code and read it
-      # Therefore: uDev: Create a grep function to grep all 'if [' and 'elif' in this document and along with that, search one more line below with the comment that tells what that function does
-
-f_horizontal_line
-
-less << heredooc
-
-uDev: f_horizontal_line
-uDev: This menu should be on the top of the script to be used as help
-
-ezGIT------------------------------------------------ 
-
-Instructions:
-
-RECOGNIZE REPOSITORY: OFF (may read repo's script dedicated to be read by ezGIT)
-
-G        |     | Displays this menu
-G ?      |     | Displays this menu
-G F      |     | Favourites
-G .      |     | git status
-G ,      |     | Show info and options of branches
-G v      |     | git pull
-G ^      |     | git push
-G +      | gad | git add <file-name-here>    (stages a file)
-G + .    |     | git add .
-G + all  |     | git add --all
-G + ^    | gcm | (uDev) git commit -m "<your-commit-message>" (used for staged files)
-G -      |     | git reset <file-name-here>  (unStages a file)
-G @      | gcf | git config (menu)
-G !      | glg | git log
-
-G ++     |     | Stages ALL files and promps the user for a commit message
-G ++ b   |     | automatic git commit with message with code/variable: b (for blind update)
-G +-     |     | Ammends/Edits last commit message
-
-G []     |     | git stash
-G [      |     | git stash apply
-
-G +1     |     | Move 1 commit up
-G -1     |     | Move 1 commit down
-G =      |     | Come back to HEAD
-G %      |     | See diference between current commit and HEAD
-
-G rb f   |     | git pull.rebase false
-G rb t   |     | git pull.rebase true
-
-G repo ^ |     | uDev: automatic sync + open + close + sync to given "repo"
-
-G config | uDev 
--------------------------------------------
-
-instalation possibilities
-Example: 1. Install ezGIT on "~/.bashrc" with an 'alias G=".../ezGIT.sh" '
-         2. To do something, specify an argument like "G ."
-         3. Use: 'G byte-compile'
-
-(Quit this page with the key: Q)
-
-heredooc
-}
 
 function f_curl_uploads_count {
 
@@ -978,6 +990,9 @@ elif [ $1 == "m" ] || [ $1 == ">" ] || [ $1 == "commit" ]; then
    f_git_status
    f_git_commit
    f_git_status
+
+# elif [ $1 == "recognize-repo" ]; then
+   # RECOGNIZE REPOSITORY: OFF (may read repo's script dedicated to be read by ezGIT)
 
 elif [ $1 == "+" ]; then
    # 1. Test if $2 was specified
