@@ -976,10 +976,17 @@ elif [ $1 == "count^" ]; then
    # Adds a raspberry pi as a remote git repositorynand we push changes there instead of github.com
 
 elif [ $1 == "new" ]; then
-   # Creates a new repository
-      echo "ezGIT: Do you want to create a new repository? (uDev)"
 
-   # Prompt to ask weather or not to START crearing a new repo
+   if [ -z $2 ]; then
+      clear
+      f_greet
+      f_talk; echo "What new thing do you want?"
+              echo " > G new repo"
+              echo " > G new ?"
+
+   elif [ $2 == "repo" ]; then
+      # Creates a new repository
+
       f_greet
       f_talk; echo "Do you want to create a new repository? "
               echo " > Tap (y/N) To Create a repository"
@@ -998,16 +1005,67 @@ elif [ $1 == "new" ]; then
                  sleep 1
       fi
 
-   # Telling a summary of what is going to happen
+      # Telling a summary of what is going to happen
+         f_greet
+         f_talk; echo "Summary:"
+         echo " > Create repo: $v_ans"
+         echo " > Create README: $v_ans2"
+         echo
+
+         read -sn 1 -p "Press ANY key to continue (use: CTRL-C to cancel)" 
+         echo
+         echo
+
+         echo "uDev: All this functionality is not ready yet to apply changes"
+
+
+   elif [ $2 == "?" ]; then
+      clear
       f_greet
-      f_talk; echo "Summary:"
-      echo " > Create repo: $v_ans"
-      echo " > Create README: $v_ans2"
+      echo "Right now the only options is: G new repo"
+      echo " > Will be listed how to manually make a repo:"
       echo
 
-      read -sn 1 -p "Press ANY key to continue (use: CTRL-C to cancel)" 
+      # Horizontal line:
+         echo $v_line
+
+
+      echo '
+uDev: Create a script for this heredoc
+
+      source: https://gist.github.com/alexpchin/dc91e723d4db5018fef8
+
+# Setting up a new Git Repo
+   ## Create a new repository on the command line
+      $ mkdir <name-of-repo>
+      $ cd <name-of-repo>
+      $ touch README.md
+      $ echo "Hello World! This is a new repo!" > <name-of-repo>
+      $ git init
+      $ git add README.md
+      $ git commit -m "my first commit"
+      $ git remote add origin git@github.com:<user-github-name>/<reponame>.git
+      $ git push -u origin master
+
+   ## Push an existing repository from the command line
+      $ git remote add origin git@github.com:<user-github-name>/<reponame>.git
+      $ git push -u origin master
+      '
+      f_talk; echo "create new repo (uDev)"
       echo
-      echo "uDev: All this functionality is not ready yet to apply changes"
+      echo "Note: If DRYa exists in the system ezGIT can create all repos by default at:"
+      echo " > ${v_REPOS_CENTER}"
+
+
+
+   else
+      clear
+      f_greet
+      echo "Option not valid"
+      echo " > try: G new ?"
+
+   fi
+
 
 elif [ $1 == "m" ] || [ $1 == ">" ] || [ $1 == "commit" ]; then
    # Ask the user for a commit message
@@ -1643,36 +1701,6 @@ elif [ $1 == "[!] v" ] || [ $1 == "stash-clear" ] || [ $1 == "st-c" ]; then
 elif [ $1 == "file-host" ]; then
    echo "If you want to use github to download single files just like any other cloud storage instead of cloning entire repos, you can. Github supports that. Here is a link to teach how to do that while this function is under development"
    echo " > https://www.howtogeek.com/devops/how-to-download-single-files-from-a-github-repository/"
-
-elif [ $1 == "new-repo" ]; then
-
-   echo '
-uDev: Create a script for this heredoc
-
-      source: https://gist.github.com/alexpchin/dc91e723d4db5018fef8
-
-# Setting up a new Git Repo
-   ## Create a new repository on the command line
-      $ mkdir <name-of-repo>
-      $ cd <name-of-repo>
-      $ touch README.md
-      $ echo "Hello World! This is a new repo!" > <name-of-repo>
-      $ git init
-      $ git add README.md
-      $ git commit -m "my first commit"
-      $ git remote add origin git@github.com:<user-github-name>/<reponame>.git
-      $ git push -u origin master
-
-   ## Push an existing repository from the command line
-      $ git remote add origin git@github.com:<user-github-name>/<reponame>.git
-      $ git push -u origin master
-'
-   clear
-   f_greet
-   f_talk; echo "create new repo (uDev)"
-   echo
-   echo "Note: If DRYa exists in the system ezGIT can create all repos by default at:"
-   echo " > ${v_REPOS_CENTER}"
 
 else
    # If the arguments you input are neither empty nor listed, then run:
