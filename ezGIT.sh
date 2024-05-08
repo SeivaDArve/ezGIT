@@ -351,7 +351,7 @@ function f_random_sugestions {
    # From a list of hints/sugestions, give one diferent every time this function is called
 
    # uDev: Sort random:
-      v_sugestion_1="Random sugestion: To edit and view available branches: 'G ,'"
+      v_sugestion_1="Random sugestion for today: To edit and view available branches: 'G ,'"
       #v_sugestion_2="Sugestion 2 (uDev)"
 
    f_talk; echo $v_sugestion_1
