@@ -975,6 +975,16 @@ elif [ $1 == "count^" ]; then
 # elif [ $1 == "raspberry bare repo" ]; then
    # Adds a raspberry pi as a remote git repositorynand we push changes there instead of github.com
 
+elif [ $1 == "export-git-log" ]; then
+   echo "uDev: Export with dates, all the git log to a file"
+   echo "      This might be usefull if you want to delete the repo"
+   echo "      and open a new one with the same name"
+   echo "      Sometimes passowrd are commited and your only safety is"
+   echo "      to delete all the git log that reveals it by digging the past"
+   echo
+   echo "      by exporting this log, you might commit just the text in the"
+   echo "      new repo"
+
 elif [ $1 == "new" ]; then
 
    if [ -z $2 ]; then
