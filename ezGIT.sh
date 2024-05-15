@@ -401,6 +401,7 @@ function f_output {
    f_resetCor
 
    git status
+   #echo "------------------------------------->"
 }
 
 function f_git_pull-recursive {
@@ -480,11 +481,10 @@ function f_git_status-recursive {
             # It sends an error if dir is not repository. Therefore we send Sandard error do /dev/null
             s=$(git status 2>/dev/null) 
 
-         # Search for git words that indicate work yo be done
+         # Search for git words that indicate work to be done
             # uDev: there must be more words, therefore this function must be tested
-            if [[ $s =~ "added" ]]; then f_output;
-               elif [[ $s =~ "Changes" ]]; then f_output;
-               elif [[ $s =~ "Untracked" ]]; then f_output;
+            if [[ $s =~ "added" ]] || [[ $s =~ "Changes" ]] || [[ $s =~ "Untracked" ]]; then 
+                  f_output
             fi
 
             cd ..
