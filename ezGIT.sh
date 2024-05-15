@@ -401,6 +401,7 @@ function f_output {
    f_resetCor
 
    git status
+   #echo "------------------------------------->"
 }
 
 function f_git_pull-recursive {
@@ -480,11 +481,10 @@ function f_git_status-recursive {
             # It sends an error if dir is not repository. Therefore we send Sandard error do /dev/null
             s=$(git status 2>/dev/null) 
 
-         # Search for git words that indicate work yo be done
+         # Search for git words that indicate work to be done
             # uDev: there must be more words, therefore this function must be tested
-            if [[ $s =~ "added" ]]; then f_output;
-               elif [[ $s =~ "Changes" ]]; then f_output;
-               elif [[ $s =~ "Untracked" ]]; then f_output;
+            if [[ $s =~ "added" ]] || [[ $s =~ "Changes" ]] || [[ $s =~ "Untracked" ]]; then 
+                  f_output
             fi
 
             cd ..
@@ -936,9 +936,12 @@ elif [ $1 == "." ]; then
    fi
 
 
-#elif [ $1 == "+!" ]; then
+elif [ $1 == "+!" ] || [ $1 == "squash" ]; then
    # Not only commits these staged files, but also squashes with the previous commit
    # This is usefull when our next commit should be past of our last commit and we forgot. Now we are adding stuff to our last commit
+   # uDev: Tell ezGIT how many previous commits to squash into a single one
+   echo "uDev: Squash options are not ready yet"
+   echo ' > Tutorial: https://youtu.be/V5KrD7CmO4o?si=xL4OiMt6Avjuxnt7'
 
 elif [ $1 == "multi" ]; then
    # Git commit multiple messages
