@@ -936,9 +936,12 @@ elif [ $1 == "." ]; then
    fi
 
 
-#elif [ $1 == "+!" ]; then
+elif [ $1 == "+!" ] || [ $1 == "squash" ]; then
    # Not only commits these staged files, but also squashes with the previous commit
    # This is usefull when our next commit should be past of our last commit and we forgot. Now we are adding stuff to our last commit
+   # uDev: Tell ezGIT how many previous commits to squash into a single one
+   echo "uDev: Squash options are not ready yet"
+   echo ' > Tutorial: https://youtu.be/V5KrD7CmO4o?si=xL4OiMt6Avjuxnt7'
 
 elif [ $1 == "multi" ]; then
    # Git commit multiple messages
