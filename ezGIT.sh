@@ -754,37 +754,77 @@ elif [ $1 == "byte-compile" ]; then
 
 elif [ $1 == "config" ]; then
    # Confirming that configurations exist
-   
-      # uDev: todo: merge f_setGlobalConfig_menu here
     
    # Presenting ezGIT
       f_greet
 
+   # uDev: todo: merge f_setGlobalConfig_menu here
    # uDev: 'G config ^' edits .gitconfig on DRYa repo
    # uDev: 'G config v' edits .gitconfig on the machine at $HOME
+   # uDev: 'G config m' edits .confif/h.h/.gitconfig+machine to identify traitsID for this machine of the same user
 
-   # To read better, put our spetial file into variable
-      v_drya_file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig"
+   # To read better, put our spetial files into variable
+      # At DRYa's repo
+         v_drya_file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig"
+
+      # Locally at ~/
+         v_users_file=~/.gitconfig
+
+   if [ -z $2 ]; then
+      # Help, verbose instructions
+
+      f_talk; echo "G config"
+              echo 
+              echo "Editing .gitconfig file"
+              echo " > You need to specify: 'G config ^' (edit DRYa's repo version)"
+              echo " >                  or: 'G config v' (edit only locally)"
+              echo " >                  or: 'G config m' (edit extra stuff, machine specific)"
+              echo 
+
+   elif [ $2 == "^" ]; then
+      # Edit DRY's file
+
+      # Verbose small explanation
+         f_talk; echo "Opening configurations file of git"
+         echo " > using with vim editor"
+         echo " > changes will be made inside DRYa repo and copied to HOME afterwards"
+         echo 
+
+         echo "Example of content inside ~/.gitconfig file:"
+         echo "[user]"
+         echo "      name = seivadarve"
+         echo "      email = flowreshe.seiva.d.arve@gmail.com"
+         echo 
+
+         # uDev: Replace timmer with: "Press Enter"
+            read -s -t 3 -n 1
+
+      # Edit file at it's Origin (inside DRYa's repo)
+         vim $v_drya_file
+
+      # Replacing the old file (at user's local machine) with the new edited one from DRYa's Repo:
+         cp $v_drya_file ~ && echo -e "ezGIT: Changes were applied both places\n > On DRYa repository\n > On this machine at HOME: ~"
+
+         echo
+         echo "uDev: traitsID is not ready (to append this machine's name to local config - for the same user"
+
+   elif [ $2 == "v" ]; then
+      # Edit local file
+         # uDev: Add verbose: "Press Enter"
+         vim $v_users_file
+
+   elif [ $2 == "m" ]; then
+      # For the same user with diferent devices, lets identify this device on the configs, to be listed on '$ git log' and apretiate on git's history which machine/device did what job
+         # uDev: Add verbose: "Press Enter" when this fx gets developed
+            
+         f_talk; echo "uDev: Identifying this machine with traitsID for the same user is not ready"
+
+   else
+      f_talk; echo "Invalid function, or uDev"
+   fi
    
 
-   # Verbose small explanation
-      f_talk; echo "Opening configurations file of git"
-      echo " > using with vim editor"
-      echo " > changes will be made inside DRYa repo and copied to HOME afterwards"
-      echo 
 
-      echo "Example of content inside ~/.gitconfig file:"
-      echo "[user]"
-      echo "      name = seivadarve"
-      echo "      email = flowreshe.seiva.d.arve@gmail.com"
-      echo 
-      read -s -t 3 -n 1
-
-   # Edit file at it's Origin (inside DRYa's repo)
-      vim $v_drya_file
-
-   # Replacing the old file (at user's local machine) with the new edited one from DRYa's Repo:
-      cp $v_drya_file ~ && echo -e "ezGIT: Changes were applied both places\n > On DRYa repository\n > On this machine at HOME: ~"
 
    # uDev: Create a file at ~/.config/h.h/ezGIT/ with data from "uname -a"
 
