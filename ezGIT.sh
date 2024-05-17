@@ -763,7 +763,11 @@ elif [ $1 == "config" ]; then
    # uDev: 'G config ^' edits .gitconfig on DRYa repo
    # uDev: 'G config v' edits .gitconfig on the machine at $HOME
 
+   # To read better, put our spetial file into variable
+      v_drya_file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig"
+   
 
+   # Verbose small explanation
       f_talk; echo "Opening configurations file of git"
       echo " > using with vim editor"
       echo " > changes will be made inside DRYa repo and copied to HOME afterwards"
@@ -775,13 +779,14 @@ elif [ $1 == "config" ]; then
       echo "      email = flowreshe.seiva.d.arve@gmail.com"
       echo 
       read -s -t 3 -n 1
-      vim ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/.gitconfig
 
-      # replacing the old file with the new edited one:
-         cp ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/.gitconfig ~ \
-            && echo -e "ezGIT: Changes were applied both places\n > On DRYa repository\n > On this machine at HOME: ~"
+   # Edit file at it's Origin (inside DRYa's repo)
+      vim $v_drya_file
 
-      # uDev: Create a file at ~/.config/h.h/ezGIT/ with data from "uname -a"
+   # Replacing the old file (at user's local machine) with the new edited one from DRYa's Repo:
+      cp $v_drya_file ~ && echo -e "ezGIT: Changes were applied both places\n > On DRYa repository\n > On this machine at HOME: ~"
+
+   # uDev: Create a file at ~/.config/h.h/ezGIT/ with data from "uname -a"
 
 elif [ $1 == "alias" ]; then
       vim ${v_REPOS_CENTER}/ezGIT/all/etc/config-bash-alias
