@@ -2,9 +2,11 @@
 # Title: ezGIT to replace long git commands for one simple and short command
 
 #----------------------------------------------------------------------------
-# Instructions: 1. Search this file for the keywords: "function f_heredoc {"
-#                  (It is the equivalent of 'G ?' on the terminal)
-#               2. It explains: How to install and use
+# Instructions: 1. For instructions: Search this file for the:
+#                  > keywords: "function f_heredoc {"
+#                  > or Hashtag: #78654
+#                  > or prompt 'G ?' in the terminal
+#                    It explains how to install and use.
 #----------------------------------------------------------------------------
 
 # uDev: must create alias A as "all" (example: 'G . all' and 'G . A')
@@ -73,7 +75,7 @@ function f_colors-without-tput {
    }
 
 function f_heredoc {
-   # Describes all functionality
+   # dee: 'Instructions for ezGIT functions'  #78654
    # uDev: the BEST documentation happens if you can open the source code and read it
       # Therefore: uDev: Create a grep function to grep all 'if [' and 'elif' in this document and along with that, search one more line below with the comment that tells what that function does
 
@@ -337,13 +339,23 @@ function f_unstage_all {
          git reset
 }
 
+function f_save_current_branch {
+   # Guardar numa variavel qual o ramo atual
+      v_current_ramo=$(git branch | grep "*" | sed "s/\* //g")
+}
+
 function f_tell_current_branch {
    # Print on the screen current branch without '*'
-   f_talk; echo -n "Currently on branch: "
 
-   f_cor3
-      git branch | grep "*" | sed "s/\* //g"
-   f_resetCor
+   # Verbose Title   
+      f_talk; echo -n "Currently on branch: "
+
+   f_save_current_branch
+
+   # Verbose Output
+      f_cor3
+      echo $v_current_ramo 
+      f_resetCor
 
 }
 
@@ -754,37 +766,77 @@ elif [ $1 == "byte-compile" ]; then
 
 elif [ $1 == "config" ]; then
    # Confirming that configurations exist
-   
-      # uDev: todo: merge f_setGlobalConfig_menu here
     
    # Presenting ezGIT
       f_greet
 
+   # uDev: todo: merge f_setGlobalConfig_menu here
    # uDev: 'G config ^' edits .gitconfig on DRYa repo
    # uDev: 'G config v' edits .gitconfig on the machine at $HOME
+   # uDev: 'G config m' edits .confif/h.h/.gitconfig+machine to identify traitsID for this machine of the same user
 
-   # To read better, put our spetial file into variable
-      v_drya_file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig"
+   # To read better, put our spetial files into variable
+      # At DRYa's repo
+         v_drya_file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig"
+
+      # Locally at ~/
+         v_users_file=~/.gitconfig
+
+   if [ -z $2 ]; then
+      # Help, verbose instructions
+
+      f_talk; echo "G config"
+              echo 
+              echo "Editing .gitconfig file"
+              echo " > You need to specify: 'G config ^' (edit DRYa's repo version)"
+              echo " >                  or: 'G config v' (edit only locally)"
+              echo " >                  or: 'G config m' (edit extra stuff, machine specific)"
+              echo 
+
+   elif [ $2 == "^" ]; then
+      # Edit DRY's file
+
+      # Verbose small explanation
+         f_talk; echo "Opening configurations file of git"
+         echo " > using with vim editor"
+         echo " > changes will be made inside DRYa repo and copied to HOME afterwards"
+         echo 
+
+         echo "Example of content inside ~/.gitconfig file:"
+         echo "[user]"
+         echo "      name = seivadarve"
+         echo "      email = flowreshe.seiva.d.arve@gmail.com"
+         echo 
+
+         # uDev: Replace timmer with: "Press Enter"
+            read -s -t 3 -n 1
+
+      # Edit file at it's Origin (inside DRYa's repo)
+         vim $v_drya_file
+
+      # Replacing the old file (at user's local machine) with the new edited one from DRYa's Repo:
+         cp $v_drya_file ~ && echo -e "ezGIT: Changes were applied both places\n > On DRYa repository\n > On this machine at HOME: ~"
+
+         echo
+         echo "uDev: traitsID is not ready (to append this machine's name to local config - for the same user"
+
+   elif [ $2 == "v" ]; then
+      # Edit local file
+         # uDev: Add verbose: "Press Enter"
+         vim $v_users_file
+
+   elif [ $2 == "m" ]; then
+      # For the same user with diferent devices, lets identify this device on the configs, to be listed on '$ git log' and apretiate on git's history which machine/device did what job
+         # uDev: Add verbose: "Press Enter" when this fx gets developed
+            
+         f_talk; echo "uDev: Identifying this machine with traitsID for the same user is not ready"
+
+   else
+      f_talk; echo "Invalid function, or uDev"
+   fi
    
 
-   # Verbose small explanation
-      f_talk; echo "Opening configurations file of git"
-      echo " > using with vim editor"
-      echo " > changes will be made inside DRYa repo and copied to HOME afterwards"
-      echo 
 
-      echo "Example of content inside ~/.gitconfig file:"
-      echo "[user]"
-      echo "      name = seivadarve"
-      echo "      email = flowreshe.seiva.d.arve@gmail.com"
-      echo 
-      read -s -t 3 -n 1
-
-   # Edit file at it's Origin (inside DRYa's repo)
-      vim $v_drya_file
-
-   # Replacing the old file (at user's local machine) with the new edited one from DRYa's Repo:
-      cp $v_drya_file ~ && echo -e "ezGIT: Changes were applied both places\n > On DRYa repository\n > On this machine at HOME: ~"
 
    # uDev: Create a file at ~/.config/h.h/ezGIT/ with data from "uname -a"
 
@@ -1247,6 +1299,18 @@ elif [ $1 == "++" ]; then
       clear
       f_greet
 
+      # Antes do upload, verificar qual é o ramo atual, e implicar com o user cajo seja 'main'
+      # Porque blind updates terá a intençao de ser apenas para ramos 'dev' 
+         f_save_current_branch   
+         #echo $v_current_ramo 
+         if [ $v_current_ramo == "main" ]; then 
+            echo "Voce está no ramo 'main' de certeza que quer um Blind-Update???"
+            echo " > ENTER para continuar"
+            echo " > Ctrl-C para cancelar"
+            read -sn 1 -p " > "
+            echo
+         fi
+
       # Sending automatically everything with an automated commit message
          # Message to use as commit:
             v_aut_message="Pushed to github.com automatically by ezGIT app"
@@ -1427,7 +1491,8 @@ elif [ $1 == "^" ] || [ $1 == "push" ]; then
 
 
 elif [ $1 == "," ]; then
-      #uDev: add options for branches
+   # dee: 'Opcoes: git branch'  #566889
+   #       uDev: add options for branches
 
    if [ -z $2 ]; then
       clear
@@ -1435,8 +1500,58 @@ elif [ $1 == "," ]; then
 
       f_tell_current_branch
 
-   elif [ $2 == "+" ]; then
+      echo "See all branches with: G , all"
       echo
+      echo "Para mudar para o ramo <v_ramo>:"
+      echo " > G , . v_ramo"
+
+   elif [ $2 == "." ]; then
+      echo "Qual é o ramo para o qual quer mudar?"
+      read -p " > " v_ramo
+      echo
+      git checkout $v_ramo
+      echo
+      echo "uDev: alterar 'G , . v_ramo' apenas para 'G , ramo'"
+
+   elif [ $2 == "v" ]; then
+      # Dizer qual o ramo atual
+      f_tell_current_branch
+
+   elif [ $2 == "diff" ]; then
+      # Ver as diferencas entre branches
+      git checkout main
+      echo
+      echo "Qual é o ramo do qual quer ver as diferencas?"
+      read -p " > " v_ramo
+      echo
+      #echo "Se juntassemos ambos os ramos num ficheiro de referencia"
+      #echo "A vermelho será representado o que falta ao ramo 'main'"
+      #echo "A verde é o que está..."
+      git diff $v_ramo
+
+   elif [ $2 == "-" ]; then
+      # Delete a branch
+      echo "Qual é o ramo a apagar?"
+      read -p " > " v_ramo
+      echo
+      git checkout main && echo "Mudou para ramo 'main'. ENTER para apagar $v_ramo"
+      echo
+      read -sn 1 v_ans
+      git branch --delete $v_ramo && echo "Ramo $v_ramo apagado"
+      echo
+
+   elif [ $2 == "+" ]; then
+      # Criar um novo branch
+
+      # Perguntar o nome
+         echo "What is the name of the new branch?"
+         read -p " > " v_new
+         echo
+         git branch $v_new
+
+      # Switch para o novo branch
+         git checkout $v_new
+         echo "Criou e mudou para o ramo: $v_new"
 
    elif [ $2 == "all" ]; then
 
@@ -1452,7 +1567,7 @@ elif [ $1 == "," ]; then
       git branch -r
 
       echo
-      f_talk; echo "git local and remote : G , all"
+      f_talk; echo "git local and remote: G , all"
       git branch -a
 
       f_done
@@ -1658,11 +1773,21 @@ elif [ $1 == "diff" ]; then
    git diff --staged
    
 elif [ $1 == "rb" ]; then
-   # Rebasing
+   # Rebasing: set true/false and interactive rebase
    if [ -z $2 ]; then
       clear
       figlet ezGIT
       echo "ezGIT: \"G rb\" (git rebase) requires an extra arg, either t of f (true or false respectively)"
+
+   elif [ $2 == "i" ]; then
+      echo "Rebasing is used for example to squash multiple commits into one"
+      echo " > For an interactive rebase of last 6 commits: git rebase -i HEAD~6"
+      echo " > THE MOST RECENT ONE: is the bottom one. The oldest: the top one"
+      echo
+      echo "To merge all 5 most recent commits into the 6th (which is the oldest):"
+      echo " > Leave the 1st line (top line) saying 'pick'"
+      echo " > Change all other 5 lines below from 'pick' to 'squash' or simply 's'"
+      echo " > Save and exit the file to apply"
 
    elif [ $2 == "f" ]; then
       echo "git config pull.rebase false"
