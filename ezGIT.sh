@@ -1301,8 +1301,13 @@ elif [ $1 == "++" ]; then
       # Porque blind updates terá a intençao de ser apenas para ramos 'dev' 
          f_save_current_branch   
          #echo $v_current_ramo 
-         if [ $v_current_ramo == "main" ]; then echo "Voce está ni ramo 'main', de certeza que quer um Blind-Update??? (Enter para continuar)"; read -sn 1; fi
-         echo
+         if [ $v_current_ramo == "main" ]; then 
+            echo "Voce está no ramo 'main' de certeza que quer um Blind-Update???"
+            echo " > ENTER para continuar"
+            echo " > Ctrl-C para cancelar"
+            read -sn 1
+            echo
+         fi
 
       # Sending automatically everything with an automated commit message
          # Message to use as commit:
