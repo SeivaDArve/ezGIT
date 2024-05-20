@@ -1496,6 +1496,7 @@ elif [ $1 == "," ]; then
    elif [ $2 == "diff" ]; then
       # Ver as diferencas entre branches
       git checkout main
+      echo
       echo "Qual é o ramo do qual quer ver as diferencas?"
       read -p " > " v_ramo
       echo
@@ -1510,7 +1511,8 @@ elif [ $1 == "," ]; then
       read -p " > " v_ramo
       echo
       git checkout main && echo "Mudou para ramo 'main'. ENTER para apagar $v_ramo"
-      read -sn
+      echo
+      read -sn 1 v_ans
       git branch --delete $v_ramo && echo "Ramo $v_ramo apagado"
       echo
 
