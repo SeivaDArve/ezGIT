@@ -337,13 +337,23 @@ function f_unstage_all {
          git reset
 }
 
+function f_save_current_branch {
+   # Guardar numa variavel qual o ramo atual
+      v_current_ramo=$(git branch | grep "*" | sed "s/\* //g")
+}
+
 function f_tell_current_branch {
    # Print on the screen current branch without '*'
-   f_talk; echo -n "Currently on branch: "
 
-   f_cor3
-      git branch | grep "*" | sed "s/\* //g"
-   f_resetCor
+   # Verbose Title   
+      f_talk; echo -n "Currently on branch: "
+
+   f_save_current_branch
+
+   # Verbose Output
+      f_cor3
+      echo $v_current_ramo 
+      f_resetCor
 
 }
 
@@ -1287,6 +1297,11 @@ elif [ $1 == "++" ]; then
       clear
       f_greet
 
+      # Antes do upload, verificar qual é o ramo atual, e implicar com o user cajo seja 'main'
+      # Porque blind updates terá a intençao de ser apenas para ramos 'dev' 
+         f_save_current_branch   
+         echo $v_current_ramo 
+
       # Sending automatically everything with an automated commit message
          # Message to use as commit:
             v_aut_message="Pushed to github.com automatically by ezGIT app"
@@ -1478,7 +1493,7 @@ elif [ $1 == "," ]; then
 
       echo "See all branches with: G , all"
       echo
-      echo "Para mudar para o ramo v_ramo:"
+      echo "Para mudar para o ramo <v_ramo>:"
       echo " > G , . v_ramo"
 
    elif [ $2 == "." ]; then
