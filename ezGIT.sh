@@ -1300,7 +1300,9 @@ elif [ $1 == "++" ]; then
       # Antes do upload, verificar qual é o ramo atual, e implicar com o user cajo seja 'main'
       # Porque blind updates terá a intençao de ser apenas para ramos 'dev' 
          f_save_current_branch   
-         echo $v_current_ramo 
+         #echo $v_current_ramo 
+         if [ $v_current_ramo == "main" ]; then echo "Voce está ni ramo 'main', de certeza que quer um Blind-Update??? (Enter para continuar)"; read -sn 1; fi
+         echo
 
       # Sending automatically everything with an automated commit message
          # Message to use as commit:
