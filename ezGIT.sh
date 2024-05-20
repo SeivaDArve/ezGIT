@@ -1467,7 +1467,8 @@ elif [ $1 == "^" ] || [ $1 == "push" ]; then
 
 
 elif [ $1 == "," ]; then
-      #uDev: add options for branches
+   # dee: 'Opcoes: git branch' #566889
+   #       uDev: add options for branches
 
    if [ -z $2 ]; then
       clear
@@ -1475,8 +1476,35 @@ elif [ $1 == "," ]; then
 
       f_tell_current_branch
 
-   elif [ $2 == "+" ]; then
+      echo "See all branches with: G , all"
       echo
+      echo "Para mudar para o ramo v_ramo:"
+      echo " > G , . v_ramo"
+
+   elif [ $2 == "." ]; then
+      echo "Qual é o ramo para o qual quer mudar?"
+      read -p " > " v_ramo
+      echo
+      git checkout $v_ramo
+      echo
+      echo "uDev: alterar 'G , . v_ramo' apenas para 'G , ramo'"
+
+   elif [ $2 == "v" ]; then
+      # Dizer qual o ramo atual
+      f_tell_current_branch
+
+   elif [ $2 == "+" ]; then
+      # Criar um novo branch
+
+      # Perguntar o nome
+         echo "What is the name of the new branch?"
+         read -p " > " v_new
+         echo
+         git branch $v_new
+
+      # Switch para o novo branch
+         git checkout $v_new
+         echo "Criou e mudou para o ramo: $v_new"
 
    elif [ $2 == "all" ]; then
 
@@ -1492,7 +1520,7 @@ elif [ $1 == "," ]; then
       git branch -r
 
       echo
-      f_talk; echo "git local and remote : G , all"
+      f_talk; echo "git local and remote: G , all"
       git branch -a
 
       f_done
