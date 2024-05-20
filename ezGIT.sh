@@ -1493,7 +1493,7 @@ elif [ $1 == "," ]; then
       # Dizer qual o ramo atual
       f_tell_current_branch
 
-   elif [ $2 == "d" ]; then
+   elif [ $2 == "diff" ]; then
       # Ver as diferencas entre branches
       git checkout main
       echo "Qual é o ramo do qual quer ver as diferencas?"
@@ -1509,7 +1509,9 @@ elif [ $1 == "," ]; then
       echo "Qual é o ramo a apagar?"
       read -p " > " v_ramo
       echo
-      git checkout -d $v_ramo
+      git checkout main && echo "Mudou para ramo 'main'. ENTER para apagar $v_ramo"
+      read -sn
+      git branch --delete $v_ramo && echo "Ramo $v_ramo apagado"
       echo
 
    elif [ $2 == "+" ]; then
