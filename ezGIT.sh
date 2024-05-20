@@ -1493,6 +1493,25 @@ elif [ $1 == "," ]; then
       # Dizer qual o ramo atual
       f_tell_current_branch
 
+   elif [ $2 == "d" ]; then
+      # Ver as diferencas entre branches
+      git checkout main
+      echo "Qual é o ramo do qual quer ver as diferencas?"
+      read -p " > " v_ramo
+      echo
+      #echo "Se juntassemos ambos os ramos num ficheiro de referencia"
+      #echo "A vermelho será representado o que falta ao ramo 'main'"
+      #echo "A verde é o que está..."
+      git diff $v_ramo
+
+   elif [ $2 == "-" ]; then
+      # Delete a branch
+      echo "Qual é o ramo a apagar?"
+      read -p " > " v_ramo
+      echo
+      git checkout -d $v_ramo
+      echo
+
    elif [ $2 == "+" ]; then
       # Criar um novo branch
 
