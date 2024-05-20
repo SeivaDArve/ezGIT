@@ -1305,7 +1305,7 @@ elif [ $1 == "++" ]; then
             echo "Voce está no ramo 'main' de certeza que quer um Blind-Update???"
             echo " > ENTER para continuar"
             echo " > Ctrl-C para cancelar"
-            read -sn 1
+            read -sn 1 -p " > "
             echo
          fi
 
