@@ -2,9 +2,11 @@
 # Title: ezGIT to replace long git commands for one simple and short command
 
 #----------------------------------------------------------------------------
-# Instructions: 1. Search this file for the keywords: "function f_heredoc {"
-#                  (It is the equivalent of 'G ?' on the terminal)
-#               2. It explains: How to install and use
+# Instructions: 1. For instructions: Search this file for the:
+#                  > keywords: "function f_heredoc {"
+#                  > or Hashtag: #78654
+#                  > or prompt 'G ?' in the terminal
+#                    It explains how to install and use.
 #----------------------------------------------------------------------------
 
 # uDev: must create alias A as "all" (example: 'G . all' and 'G . A')
@@ -73,7 +75,7 @@ function f_colors-without-tput {
    }
 
 function f_heredoc {
-   # Describes all functionality
+   # dee: 'Instructions for ezGIT functions'  #78654
    # uDev: the BEST documentation happens if you can open the source code and read it
       # Therefore: uDev: Create a grep function to grep all 'if [' and 'elif' in this document and along with that, search one more line below with the comment that tells what that function does
 
@@ -1489,7 +1491,7 @@ elif [ $1 == "^" ] || [ $1 == "push" ]; then
 
 
 elif [ $1 == "," ]; then
-   # dee: 'Opcoes: git branch' #566889
+   # dee: 'Opcoes: git branch'  #566889
    #       uDev: add options for branches
 
    if [ -z $2 ]; then
