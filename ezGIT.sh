@@ -1782,6 +1782,12 @@ elif [ $1 == "rb" ]; then
    elif [ $2 == "i" ]; then
       echo "Rebasing is used for example to squash multiple commits into one"
       echo " > For an interactive rebase of last 6 commits: git rebase -i HEAD~6"
+      echo " > THE MOST RECENT ONE: is the bottom one. The oldest: the top one"
+      echo
+      echo "To merge all 5 most recent commits into the 6th (which is the oldest):"
+      echo " > Leave the 1st one saying 'pick'"
+      echo " > Change all other 5 from 'pick' to 'squash' or simply 's'"
+      echo " > Save and exit the file to apply"
 
    elif [ $2 == "f" ]; then
       echo "git config pull.rebase false"
