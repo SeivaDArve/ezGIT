@@ -1773,11 +1773,15 @@ elif [ $1 == "diff" ]; then
    git diff --staged
    
 elif [ $1 == "rb" ]; then
-   # Rebasing
+   # Rebasing: set true/false and interactive rebase
    if [ -z $2 ]; then
       clear
       figlet ezGIT
       echo "ezGIT: \"G rb\" (git rebase) requires an extra arg, either t of f (true or false respectively)"
+
+   elif [ $2 == "i" ]; then
+      echo "Rebasing is used for example to squash multiple commits into one"
+      echo " > For an interactive rebase of last 6 commits: git rebase -i HEAD~6"
 
    elif [ $2 == "f" ]; then
       echo "git config pull.rebase false"
