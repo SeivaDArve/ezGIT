@@ -1785,8 +1785,8 @@ elif [ $1 == "rb" ]; then
       echo " > THE MOST RECENT ONE: is the bottom one. The oldest: the top one"
       echo
       echo "To merge all 5 most recent commits into the 6th (which is the oldest):"
-      echo " > Leave the 1st one saying 'pick'"
-      echo " > Change all other 5 from 'pick' to 'squash' or simply 's'"
+      echo " > Leave the 1st line (top line) saying 'pick'"
+      echo " > Change all other 5 lines below from 'pick' to 'squash' or simply 's'"
       echo " > Save and exit the file to apply"
 
    elif [ $2 == "f" ]; then
