@@ -1780,14 +1780,21 @@ elif [ $1 == "rb" ]; then
       echo "ezGIT: \"G rb\" (git rebase) requires an extra arg, either t of f (true or false respectively)"
 
    elif [ $2 == "i" ]; then
-      echo "Rebasing is used for example to squash multiple commits into one"
-      echo " > For an interactive rebase of last 6 commits: git rebase -i HEAD~6"
-      echo " > THE MOST RECENT ONE: is the bottom one. The oldest: the top one"
-      echo
-      echo "To merge all 5 most recent commits into the 6th (which is the oldest):"
-      echo " > Leave the 1st line (top line) saying 'pick'"
-      echo " > Change all other 5 lines below from 'pick' to 'squash' or simply 's'"
-      echo " > Save and exit the file to apply"
+      if [ -z $2 ]; then
+         echo "Rebasing is used for example to squash multiple commits into one"
+         echo " > For an interactive rebase of last 6 commits: git rebase -i HEAD~6"
+         echo " > THE MOST RECENT ONE: is the bottom one. The oldest: the top one"
+         echo
+         echo "To merge all 5 most recent commits into the 6th (which is the oldest):"
+         echo " > Leave the 1st line (top line) saying 'pick'"
+         echo " > Change all other 5 lines below from 'pick' to 'squash' or simply 's'"
+         echo " > Save and exit the file to apply"
+      else 
+         # Se foi dado um terceiro arg, usar isso para completar o comando
+         # '$ G rb i 3'
+         # Isso vai dizer ao 'git rebase -i' quantos commits colocar no ficheiro interativi
+         git rebase -i HEAD~$3
+      fi
 
    elif [ $2 == "f" ]; then
       echo "git config pull.rebase false"
