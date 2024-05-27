@@ -1793,6 +1793,8 @@ elif [ $1 == "rb" ]; then
          # Se foi dado um terceiro arg, usar isso para completar o comando
          # '$ G rb i 3'
          # Isso vai dizer ao 'git rebase -i' quantos commits colocar no ficheiro interativi
+         echo $3
+         read
          git rebase -i HEAD~$3
       fi
 
