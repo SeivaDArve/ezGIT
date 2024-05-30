@@ -354,7 +354,7 @@ function f_tell_current_branch {
 
    # Verbose Output
       f_cor3
-      echo $v_current_ramo 
+      echo "$v_current_ramo"
       f_resetCor
 
 }
@@ -1490,20 +1490,46 @@ elif [ $1 == "^" ] || [ $1 == "push" ]; then
       f_git_status
 
 
-elif [ $1 == "," ]; then
-   # dee: 'Opcoes: git branch'  #566889
-   #       uDev: add options for branches
+elif [ $1 == "," ]; then  
+   # dee: Options for branches #566889
+
+   # Ler nome do repositorio atual:
+      v_name=$(basename $(pwd))
+
+   # Ler ramo atual:
+      v_ramo_atual=$(git symbolic-ref --short HEAD)
+
+   function f_list_all_branches {
+      # Mostra todos os ramos locais   
+         while read -r branch
+         do
+            branches+=("$branch")
+         done < <(git branch)
+
+       # Exibe os ramos
+          #echo "Ramos existentes:"
+          for branch in "${branches[@]}"; do
+              echo " > $branch"
+          done
+    }
 
    if [ -z $2 ]; then
       clear
       f_greet
 
-      f_tell_current_branch
+      f_talk; echo -n "Current repo: "
+              f_cor3
+              echo "$v_name"
+              f_resetCor
+              echo
 
-      echo "See all branches with: G , all"
+      f_tell_current_branch
       echo
-      echo "Para mudar para o ramo <v_ramo>:"
-      echo " > G , . v_ramo"
+
+      f_talk; echo "Listing all branches:"
+      f_list_all_branches
+
+
 
    elif [ $2 == "." ]; then
       echo "Qual é o ramo para o qual quer mudar?"
@@ -1531,19 +1557,35 @@ elif [ $1 == "," ]; then
 
    elif [ $2 == "-" ]; then
       # Delete a branch
-      echo "Qual é o ramo a apagar?"
+      
+      f_greet
+
+      f_talk; echo "Going to checkout 'main' branch first:"
+              echo
+
+      f_talk; echo "Delete a branch from list:"
+              f_list_all_branches
+              echo
+
+      f_talk; echo "Qual é o ramo a apagar?"
       read -p " > " v_ramo
       echo
+
+      # Passar para o 'main' primeiro
       git checkout main && echo "Mudou para ramo 'main'. ENTER para apagar $v_ramo"
       echo
-      read -sn 1 v_ans
+      
       git branch --delete $v_ramo && echo "Ramo $v_ramo apagado"
       echo
 
    elif [ $2 == "+" ]; then
       # Criar um novo branch
 
+      f_greet
+
       # Perguntar o nome
+         f_talk; echo "Creating a branch from the current branch: uDev"
+         echo
          echo "What is the name of the new branch?"
          read -p " > " v_new
          echo
@@ -1552,6 +1594,14 @@ elif [ $1 == "," ]; then
       # Switch para o novo branch
          git checkout $v_new
          echo "Criou e mudou para o ramo: $v_new"
+
+   elif [ $2 == "d" ]; then
+      # Muda para o ramo 'dev'
+      git checkout dev
+
+   elif [ $2 == "m" ]; then
+      # Muda para o ramo 'main'
+      git checkout main
 
    elif [ $2 == "all" ]; then
 
@@ -1580,6 +1630,11 @@ elif [ $1 == "," ]; then
 
    elif [ $2 == "h" ]; then
       echo "Help: Telling what options there are for branches"
+      echo
+      echo "See all branches with: G , all"
+      echo
+      echo "Para mudar para o ramo <v_ramo>:"
+      echo " > G , . v_ramo"
 
    else 
       f_talk; echo "Option not recognized"
