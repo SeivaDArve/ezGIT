@@ -1605,6 +1605,8 @@ elif [ $1 == "," ]; then
 
    #elif [ $2 == "merge" ]; then
    #   # Merges 2 branches
+   #
+   #   uDev: Sempre que 1 ramo seja convergido em 'main', perguntar qual vai ser a versao nova da app que está em main
          
    elif [ $2 == "all" ]; then
 
