@@ -1603,6 +1603,9 @@ elif [ $1 == "," ]; then
       # Muda para o ramo 'main'
       git checkout main
 
+   #elif [ $2 == "merge" ]; then
+   #   # Merges 2 branches
+         
    elif [ $2 == "all" ]; then
 
       f_talk; echo "Options for branches (uDev)"
