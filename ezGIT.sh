@@ -1840,7 +1840,7 @@ elif [ $1 == "rb" ]; then
       echo "ezGIT: \"G rb\" (git rebase) requires an extra arg, either t of f (true or false respectively)"
 
    elif [ $2 == "i" ]; then
-      if [ -z $2 ]; then
+      if [ -z $3 ]; then
          echo "Rebasing is used for example to squash multiple commits into one"
          echo " > For an interactive rebase of last 6 commits: git rebase -i HEAD~6"
          echo " > THE MOST RECENT ONE: is the bottom one. The oldest: the top one"
@@ -1853,8 +1853,8 @@ elif [ $1 == "rb" ]; then
          # Se foi dado um terceiro arg, usar isso para completar o comando
          # '$ G rb i 3'
          # Isso vai dizer ao 'git rebase -i' quantos commits colocar no ficheiro interativi
-         echo $3
-         read
+         echo " > rebasing $3 commits away form HEAD"
+         sleep 1
          git rebase -i HEAD~$3
       fi
 
