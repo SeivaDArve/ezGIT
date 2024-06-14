@@ -480,6 +480,8 @@ function f_git_status-recursive {
       # function f_output must be loaded here (or previously)
 
       cd ${v_REPOS_CENTER}
+      #v=$(pwd); echo; read $v  ## debug
+
       for v_object in $(ls); do 
          # Filter directories from files
             v_object_type=$(file $v_object)
@@ -967,7 +969,11 @@ elif [ $1 == "." ]; then
                elif [ $v_status_code == "0" ] || [ $v_status_code == "128" ]; then
                   # Valid: On a git repo, but further down the directory tree
                   # Insert dir-basename here when such function is ready (uDev)
-                  f_talk; echo "git-dir-basename (uDev)"
+   
+                  # Extrair do `pwd` o nome da repo atual
+                     v_repo=$(pwd | sed "s/Repositories\// /" | cut -d ' ' -f 2 | sed "s/\// /" | cut -d ' ' -f 1)
+
+                  f_talk; echo "Repo Name: $v_repo"
 
                   #f_find_basename
 
