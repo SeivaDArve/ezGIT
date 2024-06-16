@@ -274,7 +274,7 @@ function f_setGlobalConfig_menu {
 
 function f_git_status {
    echo
-   f_talk; echo "git status"
+   f_talk; echo "`git status`"
    git status
 }
 
@@ -474,7 +474,7 @@ function f_git_status-recursive {
       clear
       f_greet
 
-      f_talk; echo "git status (to all repositories) at:"
+      f_talk; echo "`git status` (to all repositories) at:"
       echo " > $v_REPOS_CENTER"
 
       # function f_output must be loaded here (or previously)
@@ -851,7 +851,7 @@ elif [ $1 == "k" ] || [ $1 == "gkp" ] || [ $1 == "kp" ]; then
 
 elif [ $1 == "!" ] || [ $1 == "log" ]; then
    # git log
-   f_talk; echo "git log"
+   f_talk; echo "`git log`"
    git log
 
 elif [ $1 == "1!" ] || [ $1 == "log1" ]; then
@@ -1143,7 +1143,7 @@ uDev: Create a script for this heredoc
    fi
 
 
-elif [ $1 == "m" ] || [ $1 == ">" ] || [ $1 == "commit" ]; then
+elif [ $1 == "m" ] || [ $1 == "commit" ]; then
    # Ask the user for a commit message
    
    clear
