@@ -729,25 +729,25 @@ if [ -z "$*" ]; then
       f_greet
 
       f_talk; echo "No arguments were given"
-      echo " > To print the instructions manual type: G ?"
-      echo " > Or, you have 5 secs to press: H (uDev)"
-      echo
-      echo " > Type G c to list all configs (uDev)"
+              echo ' > To print instructions: `G h`'
+              echo ' > To print all configs:  `G cf h`'
       #git config --list
 
-      f_horizontal_line
+      #f_horizontal_line
       echo
 
-      f_talk; echo "User Name (at github.com)"
-      echo -n " > "
+      f_talk; echo "User Name @ at github.com"
+              echo -n " > "
+
       git config --get user.name
 
-      echo
-      f_talk; echo "User mail (at github.com)"
-      echo -n " > "
+              echo
+      f_talk; echo "User mail @ github.com"
+              echo -n " > "
+
       git config --get user.email
 
-elif [ $1 == "?" ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ $1 == "-?" ]; then
+elif [ $1 == "h" ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ $1 == "?" ] || [ $1 == "-?" ]; then
    # Same as if no arg are given: Display help menu
       f_heredoc
 
@@ -767,7 +767,7 @@ elif [ $1 == "byte-compile" ]; then
 
    f_talk; echo "byte compile current version of ezGIT for speed reasons (uDev)"
 
-elif [ $1 == "config" ]; then
+elif [ $1 == "config" ] || [ $1 == "cf" ]; then
    # Confirming that configurations exist
     
    # Presenting ezGIT
@@ -777,6 +777,7 @@ elif [ $1 == "config" ]; then
    # uDev: 'G config ^' edits .gitconfig on DRYa repo
    # uDev: 'G config v' edits .gitconfig on the machine at $HOME
    # uDev: 'G config m' edits .confif/h.h/.gitconfig+machine to identify traitsID for this machine of the same user
+   # uDev: 'G config h' listas all configs
 
    # To read better, put our spetial files into variable
       # At DRYa's repo
@@ -791,9 +792,10 @@ elif [ $1 == "config" ]; then
       f_talk; echo "G config"
               echo 
               echo "Editing .gitconfig file"
-              echo " > You need to specify: 'G config ^' (edit DRYa's repo version)"
-              echo " >                  or: 'G config v' (edit only locally)"
+              echo " > You need to specify: 'G config ^' (edit centrally (at DRYa's repo)i)"
+              echo " >                  or: 'G config v' (edit locally only)"
               echo " >                  or: 'G config m' (edit extra stuff, machine specific)"
+              echo " >                  or: 'G config h' (list all configs)"
               echo 
 
    elif [ $2 == "^" ]; then
@@ -1789,23 +1791,24 @@ elif [ $1 == "is-encript" ]; then
 elif [ $1 == "upk" ]; then
    case $2 in
       v)
-         clear
          f_greet
 
-         echo "ezGIT: Pulling requirements for upk stuff"
-         echo
+         f_talk; echo "Pulling requirements for upk stuff"
+                 echo
          # If there is no file ~/.netrc configured for automatic git pull and git push, you might uncomment f_stroken:
             # f_stroken; echo
-         echo "ezGIT: You are about to \"git pull\" all these repos:"
-         echo -n " > DRYa; upk; ezGIT; upK-diario-Dv ... "
-         f_cor4
-         read -s -n 1 -p "Press any key to continue"
+         f_talk; echo "You are about to \"git pull\" all these repos:"
+                 echo -n " > DRYa; upk; ezGIT; upK-diario-Dv ... "
+         f_cor4; read -s -n 1 -p "Press any key to continue"
          f_resetCor
-         echo ; echo
+         echo
+         echo
+
          f_horizontal_line
-         cd ${v_REPOS_CENTER}/DRYa && echo "GIT PULL: DRYa" && echo -n " > " && git pull && echo
-         cd ${v_REPOS_CENTER}/ezGIT && echo "GIT PULL: ezGIT" && echo -n " > " && git pull && echo
-         cd ${v_REPOS_CENTER}/upK && echo "GIT PULL: upK" && echo -n " > " && git pull && echo
+
+         cd ${v_REPOS_CENTER}/DRYa          && echo "GIT PULL: DRYa"          && echo -n " > " && git pull && echo
+         cd ${v_REPOS_CENTER}/ezGIT         && echo "GIT PULL: ezGIT"         && echo -n " > " && git pull && echo
+         cd ${v_REPOS_CENTER}/upK           && echo "GIT PULL: upK"           && echo -n " > " && git pull && echo
          cd ${v_REPOS_CENTER}/upK-diario-Dv && echo "GIT PULL: upK-diario-Dv" && echo -n " > " && git pull && echo
          
 
@@ -1849,7 +1852,7 @@ elif [ $1 == "upk" ]; then
       ;;
       vv)
          clear
-         echo "ezGIT: Fetching requirements for upk stuff"
+         f_talk; echo "Fetching requirements for upk stuff"
          f_stroken 
          f_horizontal_line
          echo "ezGIT: fetching: DRYa; upk; ezGIT; upK-diario-Dv"
@@ -1879,24 +1882,26 @@ elif [ $1 == "upk" ]; then
    esac
 
 elif [ $1 == "-1" ]; then
+
    f_talk; echo "Moving HEAD 1 commit below (previous one)"
-   echo " > Attach HEAD with: G ="
+           echo " > Attach HEAD with: G ="
 
    git checkout HEAD^1
 
 elif [ $1 == "+1" ]; then
+
    f_talk; echo "Moving HEAD 1 commit above (next one)"
-   echo " > Attach HEAD with: G ="
+           echo " > Attach HEAD with: G ="
 
    git log --reverse --pretty=%H main | grep -A 1 $(git rev-parse HEAD) | tail -n1 | xargs git checkout 
 
 elif [ $1 == "=" ] || [ $1 == "reset-head" ]; then
    # when you are navigating/exploring/browsing older commits and you are finished, if no changes were applying and there is no need for more navigation, this is the command ends the navigation and brighs back normality
 
-   clear
    f_greet
 
    f_talk; echo "git checkout main"
+
    git checkout main
    
    f_git_status
@@ -1928,16 +1933,18 @@ elif [ $1 == "%" ] || [ $1 == "diff-between-head" ]; then
 
 
 elif [ $1 == "diff" ]; then
-   clear
-   figlet ezGIT
+   
+   f_greet
+
    echo "This option is the same as: '$ git diff --staged'"
    git diff --staged
    
 elif [ $1 == "rb" ]; then
    # Rebasing: set true/false and interactive rebase
    if [ -z $2 ]; then
-      clear
-      figlet ezGIT
+
+      f_greet
+
       echo "ezGIT: \"G rb\" (git rebase) requires an extra arg, either t of f (true or false respectively)"
 
    elif [ $2 == "i" ]; then
@@ -1977,15 +1984,17 @@ elif [ $1 == "uDev" ]; then
 
 
 elif [ $1 == "[!]" ] || [ $1 == "stash-list" ] || [ $1 == "st-l" ]; then
-   clear
+
    f_greet
+
    f_talk; echo "List of stashes:"
    
    git stash list
 
 elif [ $1 == "[]" ] || [ $1 == "stash" ] || [ $1 == "st" ]; then
-   clear
+
    f_greet
+
    f_talk; echo "git stash"
            echo " > saving our current commits for later "
            echo "   (You may command 'git pull' now, if needed)"
@@ -1995,8 +2004,9 @@ elif [ $1 == "[]" ] || [ $1 == "stash" ] || [ $1 == "st" ]; then
       f_git_status
 
 elif [ $1 == "[" ] || [ $1 == "unstash" ] || [ $1 == "ust" ] || [ $1 == "apply" ] || [ $1 == "ap" ]; then
-   clear
+
    f_greet
+
    f_talk; echo "git stash apply"
            echo " > Apllying saved/stashed/hidden commits now"
    git stash apply
@@ -2005,8 +2015,8 @@ elif [ $1 == "[" ] || [ $1 == "unstash" ] || [ $1 == "ust" ] || [ $1 == "apply" 
       f_git_status
 
 elif [ $1 == "[!] v" ] || [ $1 == "stash-clear" ] || [ $1 == "st-c" ]; then
-   clear
    f_greet
+
    f_talk; echo "Clear/erase all stashes:"
 
    git stash clear
