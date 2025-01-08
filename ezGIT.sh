@@ -5,60 +5,58 @@
 # Instructions: 1. For instructions: Search this file for the:
 #                  > keywords: "function f_heredoc {"
 #                  > or Hashtag: #78654
-#                  > or prompt 'G ?' in the terminal
+#                  > or prompt 'G h' in the terminal
 #                    It explains how to install and use.
 #----------------------------------------------------------------------------
 
 # uDev: must create alias A as "all" (example: 'G . all' and 'G . A')
 # uDev: For new users, everytime this script runs, a function CAN be enabled to go on giving random instructions about how ezGIT works, no need to go and read the man pages
 
+# uDev: Functions for text colors
+#       If ezGIT gets byte compiled, there should be a file to configure it's color numbers
+#       For example at: ~/.config/h.h/ezGIT
+
+
 # If this script runs, a variable is set to tell which one repo was the last one to run
-   declare v_repo="ezGIT"
+   v_repo="ezGIT"
 
-# Functions for text colors
-   # uDev: If ezGIT gets byte compiled, there should be a file to configure it's color numbers
-   #       For example at: ~/.config/h.h/ezGIT
-
-   function f_cor1 {	
-      # For figlet titles
-      # uDev: If tput is not installed, use system colors
-      tput setaf 5 
-   }
-   function f_cor2 { 
-      # uDev: If tput is not installed, use system colors
-      tput setaf 2 
-   }
-   function f_cor3 { 
-      # Mentioning user input or valiable input
-      # Used at user inputs: git commits; ...
-      # uDev: If tput is not installed, use system colors
-      tput setaf 3
-   }
-   function f_cor4 { 
-      # Similar to Bold
-      # Used at: f_talk
-      # uDev: If tput is not installed, use system colors
-      tput setaf 4
-   }
-   function f_resetCor { 
-      # uDev: If tput is not installed, use system colors
-      tput sgr0
-   }
-
-function f_colors-without-tput {
+function f_colors_without_tput {
 	# Text Colors before discovering '$ tput setaf'
-	   _RED=$(echo -en '\001\033[00;31m\002')
 	   _RESTORE=$(echo -en '\001\033[0m\002')
+	       _RED=$(echo -en '\001\033[00;31m\002')
 
-	# Text formating before discovering '$ tput'
-	   #echo ${_RED}To do something, specify an argument like \"G 2\"${_RESTORE}
+	# Example of Text formating before discovering '$ tput'
+	# > `echo ${_RED}To do something, specify an argument like \"G 2\"${_RESTORE}`
 }
 
-# After colors are defined, create a "Face" for each "ezGIT: " descriptor
-   function f_talk {
-      f_cor4
-      echo -n "ezGIT: "; f_resetCor; # ... Text descriptor after this
-   }
+function f_c1 { 
+   # Mentioning user input or valiable input
+   # uDev: If tput is not installed, use system colors
+   
+   # Used at user inputs: git commits; ...
+   tput setaf 3
+}
+
+function f_c2 { 
+   # Similar to Bold
+   # uDev: If tput is not installed, use system colors
+   
+   # Used at: f_talk
+   tput setaf 4
+}
+
+function f_rc { 
+   # Reset cor
+   # uDev: If tput is not installed, use system colors
+
+   tput sgr0
+}
+
+function f_talk {
+   # After colors are defined, create a "Face" for each `echo` with "ezGIT" descriptor  (example: `f_talk; echo "A dog is running"` )
+   f_c2; echo -n "ezGIT: "
+   f_rc
+}
 
 function f_done {
    # After each ezGIT function finishes, say "done"
@@ -66,22 +64,23 @@ function f_done {
    f_talk; echo "Done!"
 }
 
-# After colors are defined, create a "Face" for each one of our verbose outputs "page"
-   function f_greet {
-      clear
-      f_cor4
-      figlet "ezGIT" 2>/dev/null || echo -e "( ezGIT )\n"
-      f_resetCor 
-   }
+function f_greet {
+   # After colors are defined, create a "Face" for each one of our verbose outputs "page"
+   clear
+   f_c2
+   figlet "ezGIT" 2>/dev/null || echo -e "( ezGIT )\n"
+   f_rc 
+}
 
 function f_heredoc {
-   # dee: 'Instructions for ezGIT functions'  #78654
+   # dee-up: 'Instructions for ezGIT functions'  #78654
+
    # uDev: the BEST documentation happens if you can open the source code and read it
-      # Therefore: uDev: Create a grep function to grep all 'if [' and 'elif' in this document and along with that, search one more line below with the comment that tells what that function does
+   #       Therefore: uDev: Create a grep function to grep all 'if [' and 'elif' in this document and along with that, search one more line below with the comment that tells what that function does
 
 
-      # Clearing the screen and introducing the app
-         f_greet
+   # Clearing the screen and introducing the app
+      f_greet
 
    # Create an horizontal line using DRYa's built-in scripts
       echo $v_line
@@ -159,16 +158,15 @@ function f_stroken {
 
    # If ~/.netrc exists, no need to print the rest
       if [ -f ~/.netrc ]; then
-         #echo "netrc exists"
+         #echo "~/.netrc exists"
          echo "it exists" 1>/dev/null
       else
-         f_talk; echo "stroken"
-                 echo " > Inside the ezGIT app I found this: "
-         f_cor4; echo -n "seivadarve";
-         f_resetCor; echo " and this:";
-         f_cor4; echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
-         f_resetCor
-         echo
+         f_talk; echo    "stroken"
+                 echo    " > Inside the ezGIT app I found this: "
+           f_c2; echo -n "seivadarve"
+           f_rc; echo              " and this:";
+           f_c2; echo    "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+           f_rc; echo
       fi
 }
 
@@ -184,7 +182,7 @@ function f_find_basename {
    echo "$v_current_pwd"
 
                   #echo -n "Repository name: $v_repo"
-                  #f_cor3
+                  #f_c1
                   #echo "$v_repo "
                      
    #echo $v_relPWD
@@ -223,7 +221,7 @@ function f_setGlobalConfig_menu {
 
 #
 #		# Inform that this menu is under construction:
-#		echo -e "$(f_cor4)\n  menu under construction;)\n${RESTORE}"; read; G
+#		echo -e "$(f_c2)\n  menu under construction;)\n${RESTORE}"; read; G
 #
 #      v_whoami=$(whoami)
 #		# Entry to adjust Seiva D'Arve:
@@ -233,21 +231,21 @@ function f_setGlobalConfig_menu {
 #
 #
 # C) # Configure git manually with vim
-#	 f_cor4
+#	 f_c2
 #	 echo -e "\nIf your email is not configured properly, your commits won't show in your github.com's contribution graph"
 #	 echo " > Type any key to continue... "
-#	 f_resetCor
+#	 f_rc
 #	 read
 #
 #	 if [ -f ./users/set-SeivaDArve.sh ]
 #	 	then
-#	 		f_cor4
+#	 		f_c2
 #	 		echo -e "there is a file set-seivadarve.sh"
 #	 		echo -e "To configure this profile, type \"seiva\""
 #	 		echo -e "To configure ~/.gitconfig manually type \"manl\""
 #			echo ""
 #			echo -e "To display ~/.gitconfig type \"list\""
-#	 		f_resetCor
+#	 		f_rc
 #	 		read _ans
 #
 #				if [ $_ans == "seiva" ]
@@ -273,8 +271,9 @@ function f_setGlobalConfig_menu {
 }
 
 function f_git_status {
-   echo
+           echo
    f_talk; echo "`git status`"
+
    git status
 }
 
@@ -285,77 +284,79 @@ function f_git_status {
 #}
 
 function f_git_push {
-   echo
+           echo
    f_talk; echo "git push"
+
    git push
 }
 
 function f_git_add_all {
-   echo
+           echo
    f_talk; echo "git add --all"
+
    git add --all
 }
 
 function f_git_pull {
-   echo
+           echo
    f_talk; echo "git push"
+
    git push
 }
 
 function f_git_pull_dot_files {
    f_talk; echo "git pull and install: dot-files"
-   echo " > (files stored at repo: drya)"
-   echo " > cd drya; git pull; cp .../filss .../places"
+           echo " > (files stored at repo: drya)"
+           echo " > cd drya; git pull; cp .../filss .../places"
 }
 
 function f_git_commit {
    # uDev: If git status says "nothing to commit, working tree clean" then we must not ask for a commit message. Unless there are N number of commits to upload, which in that case, G ++ be used anyway
-   f_talk; echo -en "Asking user for a commit message "; f_cor3; echo -n "i"; f_resetCor; echo ":"
+   f_talk;  echo -en "Asking user for a commit message "
+     f_c1;  echo -n  "i"
+     f_rc;  echo      ":"
+            echo " > In order to commit to git, what is your commit message?"
 
-   echo " > In order to commit to git, what is your commit message?"
    # uDev: save cursor position here to overwrite text "leave empty to abort" 
-   echo " > (leave empty to abort)"
-   f_cor3
-   read -p " > " v_ans
-   f_resetCor
-   echo
+   
+           echo    " > (leave empty to abort)"
+     f_c1; read -p " > " v_ans
+     f_rc; echo
 
    f_talk; echo -en "git commit -m \""
-   f_cor3; echo -en "${v_ans}"
-   f_resetCor; echo "\""
+     f_c1; echo -en "${v_ans}"
+     f_rc; echo     "\""
+
    git commit -m "$v_ans"
 
 }
 
 function f_unstage_all {
    # Unstage all files
-      clear
-      f_greet
 
-      # Git reset
-         f_talk; echo -e "git reset all staged files"
+   f_greet
 
-      # Unstaging ALL files
-         git reset
+   f_talk; echo -e "git reset all staged files"
+
+   # Unstaging ALL files
+      git reset
 }
 
 function f_save_current_branch {
    # Guardar numa variavel qual o ramo atual
-      v_current_ramo=$(git branch | grep "*" | sed "s/\* //g")
+
+   v_current_ramo=$(git branch | grep "*" | sed "s/\* //g")
 }
 
 function f_tell_current_branch {
    # Print on the screen current branch without '*'
 
-   # Verbose Title   
-      f_talk; echo -n "Currently on branch: "
+   f_talk; echo -n "Currently on branch: "
 
    f_save_current_branch
 
-   # Verbose Output
-      f_cor3
-      echo "$v_current_ramo"
-      f_resetCor
+   f_c1; echo "$v_current_ramo"
+   f_rc
 
 }
 
@@ -405,27 +406,25 @@ function f_underscore_creator {
 }
 
 function f_output {
-   # Function used by: f_git_pull-recursive, f_git_status-recursive ...
+   # Function used by: f_git_pull_recursive, f_git_status-recursive ...
       # To output it's Git Status
    f_horizontal_line
 
-   f_cor4; echo -n " > Repository: "
-   f_cor3; echo -e "$v_object \n"
-   f_resetCor
+   f_c2; echo -n " > Repository: "
+   f_c1; echo -e "$v_object \n"
+   f_rc
 
    git status
-   #echo "------------------------------------->"
 }
 
-function f_git_pull-recursive {
+function f_git_pull_recursive {
    # Pulling repository changes to ALL repos (recursive)
 
-   # Presenting
-      clear; f_greet
+   f_greet
 
    # Describing to the user
       f_talk; echo "git pull (to all repositories) at:"
-      echo " > ${v_REPOS_CENTER}"
+              echo " > ${v_REPOS_CENTER}"
 
    # Mention one possible password
       f_stroken
@@ -574,22 +573,22 @@ function f_tell_repo_name {
       if [[ -z $v_git_dir ]]; then 
          # If dir .git in not found:
          echo -n "The directory "
-         f_cor4
+         f_c2
          echo -n "$v_name "
-         f_cor3
+         f_c1
          echo -n "is not "
-         f_resetCor
+         f_rc
          echo "a repository"
 
       elif [[ $v_git_dir == "./.git" ]] # && basename is on blacklist: test if it's decripted directory is empty
          then 
          # If at our location ./ a dire called .git is found:
          echo -n "The directory "
-         f_cor4
+         f_c2
          echo -n "$v_name "
-         f_cor3
+         f_c1
          echo -n "is "
-         f_resetCor
+         f_rc
          echo "a repository"
       fi 
 }
@@ -1109,9 +1108,9 @@ elif [ $1 == "multi" ]; then
    clear; f_greet 
 
       git status
-      f_cor4
+      f_c2
       echo -e "\ngit commit multiple messages"
-      f_resetCor
+      f_rc
       echo 
       declare -a messages
       declare n=1
@@ -1289,24 +1288,24 @@ elif [ $1 == "+" ]; then
 
       # For each argument given starting at arg 2, list it colorfully
          for i in ${*:2}; do
-            f_talk; echo -n "git add "; f_cor3
+            f_talk; echo -n "git add "; f_c1
             echo $i
-            f_resetCor
+            f_rc
          done
 
 
 
       # Asking for 3 seconds if the user wants 'git diff'
-			f_cor4
+			f_c2
          echo -e "\nDo you want to see the differences between the 2 files? \n(the Last + Current version) "
-			f_resetCor
+			f_rc
          echo " > If no, press Any key"
          echo -n " > If so, press: "
-			f_cor4
+			f_c2
          echo "D"
          echo
          echo -n "git diff? "
-			f_resetCor
+			f_rc
          echo -n "(press D or ANY key): "
          read -sn 1 v_ans
          
@@ -1314,9 +1313,9 @@ elif [ $1 == "+" ]; then
             d | D)
                 # Display text based cresential while app is in beta
                    echo "Starting..."
-                   f_cor3
+                   f_c1
                    echo $3
-                   f_resetCor
+                   f_rc
                    sleep 1
                    git diff --staged
                    read -s -n 1
@@ -1331,21 +1330,21 @@ elif [ $1 == "+" ]; then
          f_git_status
 
       # Git commit -m ""
-			f_cor4
+			f_c2
 			echo -e "Creating a message i to git commit -m \"i\":"
-			f_resetCor
+			f_rc
 
 			echo -en "In order to commit to git, what is your commit message?\n > "
 			read _ans
          echo
 
-			f_cor4
+			f_c2
 			echo -en "git commit -m \""
-         f_cor3
+         f_c1
 			echo -en "${_ans}"
-			f_cor4
+			f_c2
 			echo -e "\""
-			f_resetCor
+			f_rc
 			git commit -m "$_ans"
 
       # Git status
@@ -1376,10 +1375,10 @@ elif [ $1 == "++" ]; then
       # Asking for 5 seconds if the user wants to push the code to github.com
 			f_talk; echo "Do you want to push to github.com?"
                  echo " > Press any key to abort (wait 5 seconds)"
-			f_resetCor; echo -n " > To upload, press: "
+			f_rc; echo -n " > To upload, press: "
 
-			f_cor4; read -s -N 1 -t 5 -p "P " v_ans
-			f_resetCor
+			f_c2; read -s -N 1 -t 5 -p "P " v_ans
+			f_rc
          
          case $v_ans in
             p | P)
@@ -1459,9 +1458,9 @@ elif [ $1 == "++" ]; then
 
          f_talk; echo "default commit message:"
                  echo -n " > "
-                 f_cor3
+                 f_c1
                  echo "$v_aut_message"
-                 f_resetCor
+                 f_rc
                  echo
 
          f_talk; echo "adding all files to make 1 commit"
@@ -1518,8 +1517,8 @@ elif [ $1 == "-" ]; then
 
       # Git reset
          f_talk; echo -en "git reset "
-         f_cor3; echo -e "$2"
-         f_resetCor
+         f_c1; echo -e "$2"
+         f_rc
 
       # uDev: unstage all files given as args besides $1. the argument $1 '-' is not a file. (See 'G +' where this line of code already works)
       # uDev: tem de ser visto os bugs caso sejam dados nomes de ficheiros errados tal como na funcao: G + <nome-errado>
@@ -1540,9 +1539,9 @@ elif [ $1 == "+-" ]; then
       clear 
       f_greet
 
-		f_cor4
+		f_c2
          echo "git commit --amend? (press anter to confirm)"
-		f_resetCor
+		f_rc
          echo " > Remember: This merges staged files: do you have any?"
 
       git commit --amend
@@ -1561,8 +1560,8 @@ elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
    
       f_stroken
 
-      f_talk; echo -n "You are about to: "; f_cor4; echo "git pull"
-      f_resetCor; echo -n " > Are you sure? (Press ANY key to confirm) "
+      f_talk; echo -n "You are about to: "; f_c2; echo "git pull"
+      f_rc; echo -n " > Are you sure? (Press ANY key to confirm) "
       read -sn 1 
       echo -e "\r > Starting git pull...                          "
       git pull
@@ -1571,7 +1570,7 @@ elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
       f_git_status
 
    elif [[ $2 == "all" ]]; then
-      f_git_pull-recursive
+      f_git_pull_recursive
 
    elif [[ $2 == "dot" ]]; then
       f_git_pull_dot_files
@@ -1621,9 +1620,9 @@ elif [ $1 == "," ]; then
       f_greet
 
       f_talk; echo -n "Current repo: "
-              f_cor3
+              f_c1
               echo "$v_name"
-              f_resetCor
+              f_rc
               echo
 
       f_tell_current_branch
@@ -1799,8 +1798,8 @@ elif [ $1 == "upk" ]; then
             # f_stroken; echo
          f_talk; echo "You are about to \"git pull\" all these repos:"
                  echo -n " > DRYa; upk; ezGIT; upK-diario-Dv ... "
-         f_cor4; read -s -n 1 -p "Press any key to continue"
-         f_resetCor
+         f_c2; read -s -n 1 -p "Press any key to continue"
+         f_rc
          echo
          echo
 
@@ -2042,40 +2041,40 @@ fi
 	case $1 in
 		0+) # Option: git status && git remote show origin
          #gst+
-			f_cor4
+			f_c2
 			echo -e "git status:\n"
-			f_resetCor
+			f_rc
 			git status
 
-			f_cor4
+			f_c2
 			echo -e "\ngit remote show origin:"
-			f_resetCor
+			f_rc
 			git remote show origin
 
 			;;
 		5) # Option: git commit -m '...'
-			f_cor4
+			f_c2
 			echo -en "git commit -m \"...\""
-			f_resetCor
+			f_rc
 			echo ":"
 			echo -en "In order to commit to git, what is your commit message?\n > "
 			read _ans
 
-			f_cor4
+			f_c2
 			echo -en "git commit -m \""
 			tput setaf 4
 			echo -en "${_ans}"
-			f_cor4
+			f_c2
 			echo -e "\""
-			f_resetCor
+			f_rc
 
 			git commit -m "$_ans"
 			;;
 		6) # Option: git add . && git commit -m '...'
 			# Dev: lacks colored text
-			f_cor4
+			f_c2
 			echo "git add ."
-			f_resetCor
+			f_rc
 			git add . 
 
 			echo -en "\nIn order to commit to git, what is your commit message?\n > "
@@ -2085,20 +2084,20 @@ fi
  m1) # Option: Menu 1
 
 			# Inform that this menu is under construction:
-			echo -e "$(f_cor4)\n  menu under construction;)\n${RESTORE}"; read; G
+			echo -e "$(f_c2)\n  menu under construction;)\n${RESTORE}"; read; G
 
 			;;
 		m2) # Option: Menu 2
 
 			# Inform that this menu is under construction:
-			echo -e "$(f_cor4)\n  menu under construction;)\n${RESTORE}"; read; G
+			echo -e "$(f_c2)\n  menu under construction;)\n${RESTORE}"; read; G
 			;;
 		S) # Option: Stop and Clear the screen from this menu
 
 			clear
-			f_cor4
+			f_c2
 			echo "clear"
-			f_resetCor
+			f_rc
 			;;
 		*) # If you type an incorrect option OR if you type nothing, the menu is displayed (this is not a bug)
       ;;
