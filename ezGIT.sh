@@ -60,10 +60,10 @@ function f_colors-without-tput {
       echo -n "ezGIT: "; f_resetCor; # ... Text descriptor after this
    }
 
-# After each ezGIT function finishes, say "done"
-   function f_done {
-      echo
-      f_talk; echo "Done!"
+function f_done {
+   # After each ezGIT function finishes, say "done"
+
+   f_talk; echo "Done!"
 }
 
 # After colors are defined, create a "Face" for each one of our verbose outputs "page"
@@ -366,6 +366,7 @@ function f_random_sugestions {
       v_sugestion_1="Random sugestion for today: To edit and view available branches: 'G ,'"
       #v_sugestion_2="Sugestion 2 (uDev)"
 
+           echo
    f_talk; echo $v_sugestion_1
 }
 
@@ -700,9 +701,9 @@ function f_curl_uploads_count {
 
 
 
-# ---------------------------------------
-# -- Functions above -- Arguments Below 
-# ---------------------------------------
+# -----------------------------------------
+# -- Functions above --+-- Arguments Below 
+# -----------------------------------------
 
 
 
@@ -913,81 +914,175 @@ elif [ $1 == "install" ]; then
    echo "uDev: If DRYa does not install this repo, it would install itself"
 
 elif [ $1 == "." ]; then
-   # Git status
+   # Git status (for current repo or for all)
+
    # uDev: Remind the user if there are stashed content
    #       List of stashed changes: git stash list
    #       Remove/delete last stashed item: git stash drop
    #       Drop/delete all stashed items: git stash clear
-   #
+   
    # uDev: Perform git fetch before git status, this way the user knows how much ahead or behind his branch is according to the origin
    
    # uDev: Tell the user if "encript before push" + "decript after pull" is "on" (detects a directory .git-encrypt/ in the tree
 
    if [[ -z $2 ]]; then
-      clear; f_greet 
+      # If no extra args are given, git status only to current repo
 
-         # Note: 3 possibilities when calling: '$ G .'
-         #  1. We are inside a valid repository
-         #  2. We are at the root directory where all repos are found
-         #  3. We are outside a valid repository (somewhere else ijnthe file system)
-         #
-         # If used on the root of ${v_REPOS_CENTER} it will throw an error, therefore, we could fix this
-         #
-         #  Here we act accordingly:
-            if [[ $(pwd) == ${v_REPOS_CENTER} ]]; then 
-               # equal: For sure we are not inside a repo. And we recognize this dir. Listing all repos here
-               # We are at the Root of all repos
-               f_talk; echo "git status: 'G .'"
-               echo ' > We are currently not at a git repository'
-               echo '   are at the root dir of Repositories, also called by:'
-               echo '   > variable: ${v_REPOS_CENTER}'
-               echo "   > path: ${v_REPOS_CENTER}"
-               echo
-               f_talk; echo "Listing all repositories instead:"
-               echo " > uDev: test if list is dir instead of using \$ls"
-               ls -1
+      f_greet 
 
-            elif [[ $(pwd) != ${v_REPOS_CENTER} ]]; then 
-               # not-equal: Means that we 'may be'/'may not be' inside a repo. Lets filter:
+      # Note: 3 possibilities when calling: '$ G .'
+      #  1. We are inside a valid repository
+      #  2. We are at the root directory where all repos are found
+      #  3. We are outside a valid repository (somewhere else ijnthe file system)
+      #
+      # If used on the root of ${v_REPOS_CENTER} it will throw an error, therefore, we could fix this
+      #
+      #  Here we act accordingly:
 
-               #Two steps to find if current path is valid
-                  # 1. If invalid: Throw a beautifull error message
-                  # 2. If valid: Must be inside some repo BUT not at the root of all repos   
-                  # If variable $? is equal to 1 or is equal to 2, then the last command issued in bash was a failure, an error occured. If $? is 0, it means last function ran ok.
+      if [[ $(pwd) == ${v_REPOS_CENTER} ]]; then 
+         # equal: For sure we are not inside a repo. And we recognize this dir. Listing all repos here
+         # We are at the Root of all repos
 
-               # Possibility 1 and 2, (testing if valid or invalid):
-                  git status 1>/dev/null 2>/dev/null  ## Try a normal git status but with no output. MUST BE ONE COMMAND ONLY, becaus $? stores the status of the sucess only of the last command. If we run 'git status' inside .git we get the status code 128 instead of 0. so both numbers must be checked
-                  v_status_code=$?
+         f_talk; echo 'git status: `G .`'
+                 echo ' > This command does not work outside a git repository'
+                 echo 
+                 echo ' We are where DRYa saves all repositories we can go into'
+                 echo '  > variable: ${v_REPOS_CENTER}'
+                 echo "  > path: ${v_REPOS_CENTER}/"
+                 echo
+         f_talk; echo "Listing all valid repositories: "
 
-               if [[ $v_status_code != "0" ]] && [ $v_status_code != "128" ]; then  ## Test if last command was a failure (not equal to 0)
-                  # Invalid: Not on a git repo
-                  echo "ezGIT: git status: 'G .'"
-                  echo " > We are currently neither on any repository"
-                  echo "   Neither we are at the central dir of repositories"
-                  echo "   > Jump to the central/root dir with 'G r'"
+         #echo " > uDev: test if list is dir instead of using \$ls"
+         
 
-               elif [ $v_status_code == "0" ] || [ $v_status_code == "128" ]; then
-                  # Valid: On a git repo, but further down the directory tree
-                  # Insert dir-basename here when such function is ready (uDev)
-   
-                  # Extrair do `pwd` o nome da repo atual
-                     v_repo=$(pwd | sed "s/Repositories\// /" | cut -d ' ' -f 2 | sed "s/\// /" | cut -d ' ' -f 1)
+         # Ficheiro que menciona ficheiros que convem mover para fora de Repos-Center
+            unset v_files
 
-                  f_talk; echo "Repo Name: $v_repo"
+         # Ficheiro que menciona diretorios que convem mover para fora de Repos-Center
+            unset v_non_repo
 
-                  #f_find_basename
+         # Listar todas as pastas que sao repo (e enfiar em 2 variaveis todos os ficheiros e pastas que nao sao repo)
+         # Filtra entre pastas e ficheiros
+         # Entre as pastas, filtra repos e nao-repos
+            for i in $(ls)
+            do
+               
+               # Verificar o tipo de TODOS os ficheiros
+                  v_tipo=$(file $i)
 
-                  f_git_status
+
+               if [[ $v_tipo =~ "directory" ]]; then
+                  # Saber se é pasta ou ficheiro:
+
+                  # Se for pasta, testa se é repo ou nao
+                     cd $i  # Entra na pasta a testar se é repo
+                     ls .git 1>/dev/null 2>/dev/null  # Procura por uma pasta especifica que so os repos tem
+                     v_last_cmd=$?  # Guarda o estado de saida do "teste" se é ou nao é repositorio
+
+
+                  # Apos o teste feito, filtra para cada variavel, as pastas que sao repo e as que nao sao repo
+                     [[ $v_last_cmd == 0 ]] && echo " > $i/"
+                     [[ $v_last_cmd == 2 ]] && v_non_repo="$v_non_repo $i"
+
+                  # Voltar a pasta inicial
+                     cd ..
+
+               else
+                  # Se nao for pasta, é ficheiro e guarda o nome nesta variavel
+                  v_files="$v_files $i"
                fi
-            fi
 
-         echo
+            done
 
-         f_random_sugestions
+         # Print a last echo (to distance from f_done)
+            echo
 
-         f_done
+         function f_print_invalid_items {
+            # Fx that prints both non-repos and files
 
-   elif [[ $2 == "all" ]]; then
+            f_talk; echo "Invalid repos and files (should be moved out): "
+
+            # Print non-repos
+               for i in $v_non_repo
+               do
+                  echo " > $i/"
+               done
+
+
+            # Print `echo` only if both variables exist (to make space between them)
+               [[ ! -z $v_files    ]] && [[ ! -z $v_non_repo ]] && echo
+
+
+            # Print files
+               for i in $v_files
+               do
+                  echo " > $i"
+               done
+
+            # Print a last echo (to distance from f_done)
+               echo
+
+         }
+
+         # See if any of the variables are set. If so, run the fx that prints them
+         unset v_verbose
+         [[ ! -z $v_non_repo ]] && v_verbose=1
+         [[ ! -z $v_files    ]] && v_verbose=1
+         
+         [[ $v_verbose == "1" ]] && f_print_invalid_items
+
+
+
+
+         
+
+
+      else
+      #elif [[ $(pwd) != ${v_REPOS_CENTER} ]]; then 
+         # not-equal: Means that we 'may be'/'may not be' inside a repo. Lets filter:
+
+
+
+
+         #Two steps to find if current path is valid
+            # 1. If invalid: Throw a beautifull error message
+            # 2. If valid: Must be inside some repo BUT not at the root of all repos   
+            # If variable $? is equal to 1 or is equal to 2, then the last command issued in bash was a failure, an error occured. If $? is 0, it means last function ran ok.
+
+         # Possibility 1 and 2, (testing if valid or invalid):
+            git status 1>/dev/null 2>/dev/null  ## Try a normal git status but with no output. MUST BE ONE COMMAND ONLY, becaus $? stores the status of the sucess only of the last command. If we run 'git status' inside .git we get the status code 128 instead of 0. so both numbers must be checked
+            v_status_code=$?
+
+         if [[ $v_status_code != "0" ]] && [ $v_status_code != "128" ]; then  ## Test if last command was a failure (not equal to 0)
+            # Invalid: Not on a git repo
+            echo "ezGIT: git status: 'G .'"
+            echo " > We are currently neither on any repository"
+            echo "   Neither we are at the central dir of repositories"
+            echo "   > Jump to the central/root dir with 'G r'"
+
+         elif [ $v_status_code == "0" ] || [ $v_status_code == "128" ]; then
+            # Valid: On a git repo, but further down the directory tree
+            # Insert dir-basename here when such function is ready (uDev)
+
+            # Extrair do `pwd` o nome da repo atual
+               v_repo=$(pwd | sed "s/Repositories\// /" | cut -d ' ' -f 2 | sed "s/\// /" | cut -d ' ' -f 1)
+
+            f_talk; echo "Repo Name: $v_repo"
+
+            #f_find_basename
+
+            f_git_status
+         fi
+
+
+
+
+      fi
+
+      #f_random_sugestions
+      f_done
+
+   elif [ $2 == "all" ] || [ $2 == "A" ]; then
       # Whenever code complexity is found, a function is created to enable better code reading
          f_git_status-recursive
       
@@ -995,7 +1090,7 @@ elif [ $1 == "." ]; then
          # git config --global --add safe.directory /mnt/c/Repositories/upK
    else 
       f_talk; echo "command not known"
-      f_talk; echo "For help: G -h"
+              echo " > For help: G -h"
    fi
 
 
@@ -1297,7 +1392,7 @@ elif [ $1 == "++" ]; then
             ;;
          esac
          
-         f_done
+         echo; f_done
 
    # udev: Create a v_aut_message just to ulpdate the git log (like a time stamp on git log)
    elif [ $2 == "b" ] || [ $2 == "blind-upload" ]; then
@@ -1631,7 +1726,7 @@ elif [ $1 == "," ]; then
       f_talk; echo "git local and remote: G , all"
       git branch -a
 
-      f_done
+      echo; f_done
 
    elif [ $2 == "..." ]; then
       clear
