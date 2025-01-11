@@ -480,6 +480,9 @@ function f_git_status_recursive {
 
       cd ${v_REPOS_CENTER}
 
+      # Contador de instancias nao regularizadas com o github.com
+         v_contador=0
+
       for i in $(ls); do 
          # Filter directories from files
             v_object_type=$(file $i)
@@ -498,7 +501,8 @@ function f_git_status_recursive {
                   # uDev: there must be more words, therefore this function must be tested
                   # uDev: Adicionar palavras tambem em PT-PT senao da erro
                   if [[ $s =~ "added" ]] || [[ $s =~ "Changes" ]] || [[ $s =~ "Untracked" ]] || [[ $s =~ "modificado" ]]; then 
-                        f_output
+                     f_output
+                     v_contador=$(($v_contador+1))
                   fi
 
                # Voltar para a pasta anterior
@@ -516,6 +520,8 @@ function f_git_status_recursive {
               echo "Finished!"
 
       f_horizontal_line
+
+      echo "contador: $v_contador"
 }
 
 function f_horizontal_line {
