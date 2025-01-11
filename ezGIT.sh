@@ -1964,21 +1964,34 @@ elif [ $1 == "rb" ]; then
       if [ -z $3 ]; then
          # uDev: Test is arg #3 is actually a number
          
-         echo "Rebasing is used for example to squash multiple commits into one"
-         echo " > For an interactive rebase of last 6 commits: git rebase -i HEAD~6"
-         echo " > THE MOST RECENT ONE: is the bottom one. The oldest: the top one"
-         echo
-         echo "To merge all 5 most recent commits into the 6th (which is the oldest):"
-         echo " > Leave the 1st line (top line) saying 'pick'"
-         echo " > Change all other 5 lines below from 'pick' to 'squash' or simply 's'"
-         echo " > Save and exit the file to apply"
+         f_greet 
+
+         f_talk; echo 'Tutorial: `G rb i` (Git rebase interactive)'
+                 echo
+                 echo "Rebasing is used for example to squash multiple commits into one"
+                 echo " > For an interactive rebase of last 6 commits: git rebase -i HEAD~6"
+                 echo " > THE MOST RECENT ONE: is the bottom one. The oldest: the top one"
+                 echo
+                 echo "To merge all 5 most recent commits into the 6th (which is the oldest):"
+                 echo " > Leave the 1st line (top line) saying 'pick'"
+                 echo " > Change all other 5 lines below from 'pick' to 'squash' or simply 's'"
+                 echo " > Save and exit the file to apply"
+                 echo
+         
+         f_talk; echo 'Press any key to attempt `git rebase -i` (interactive)'
+
+         read -sn1; git rebase -i
+
       else 
          # Se foi dado um terceiro arg, usar isso para completar o comando
-         # '$ G rb i 3'
+         # `G rb i 3`
          # Isso vai dizer ao 'git rebase -i' quantos commits colocar no ficheiro interativi
-         echo " > rebasing $3 commits away form HEAD"
-         sleep 1
-         git rebase -i HEAD~$3
+
+         f_greet 
+
+         f_talk; echo "Sure?? Rebasing $3 commits away form HEAD?"
+                 echo " > Press any key to: \`git rebase -i HEAD~$3\`"
+                 read -sn1; git rebase -i HEAD~$3
       fi
 
    elif [ $2 == "f" ]; then
