@@ -471,48 +471,47 @@ function f_git_pull_recursive {
 function f_git_status_recursive {
    # git status (all repos)
 
-      f_greet
+   f_greet
 
-      f_talk; echo '`git status` (to all repositories) at:'
-              echo " > $v_REPOS_CENTER"
+   f_talk; echo '`git status` (to all repositories) at:'
+           echo " > $v_REPOS_CENTER"
 
-      # function f_output must be loaded here (or previously)
+   # function f_output must be loaded here (or previously)
 
-      cd ${v_REPOS_CENTER}
+   cd ${v_REPOS_CENTER}
 
-      # Contador de instancias nao regularizadas com o github.com
-         v_contador=0
+   # Contador de instancias nao regularizadas com o github.com
+      v_contador=0
 
-      for i in $(ls); do 
-         # Filter directories from files
-            v_object_type=$(file $i)
+   for i in $(ls); do 
+      # Filter directories from files
+         v_object_type=$(file $i)
 
-         # If the variable v_object_type returns a directory, we navigate into it
-            if [[ $v_object_type =~ "dir" ]]; then 
-               cd $i
-               
-              #echo "A verificar: $i"; read -sn 1  # Debug
+      # If the variable v_object_type returns a directory, we navigate into it
+         if [[ $v_object_type =~ "dir" ]]; then 
+            cd $i
+            
+           #echo "A verificar: $i"; read -sn 1  # Debug
 
-               # Saving the git status into a variable without outputing it to the screen
-                  # It sends an error if dir is not repository. Therefore we send Sandard error do /dev/null
-                  s=$(git status 2>/dev/null) 
+            # Saving the git status into a variable without outputing it to the screen
+               # It sends an error if dir is not repository. Therefore we send Sandard error do /dev/null
+               s=$(git status 2>/dev/null) 
 
-               # Search for git words that indicate work to be done
-                  # uDev: there must be more words, therefore this function must be tested
-                  # uDev: Adicionar palavras tambem em PT-PT senao da erro
-                  if [[ $s =~ "added" ]] || [[ $s =~ "Changes" ]] || [[ $s =~ "Untracked" ]] || [[ $s =~ "modificado" ]]; then 
-                     f_output
-                     v_contador=$(($v_contador+1))
-                  fi
+            # Search for git words that indicate work to be done
+               # uDev: there must be more words, therefore this function must be tested
+               # uDev: Adicionar palavras tambem em PT-PT senao da erro
+               if [[ $s =~ "added" ]] || [[ $s =~ "Changes" ]] || [[ $s =~ "Untracked" ]] || [[ $s =~ "modificado" ]]; then 
+                  f_output
+                  v_contador=$(($v_contador+1))
+               fi
 
-               # Voltar para a pasta anterior
-                 cd ..
-            fi
-      done
+            # Voltar para a pasta anterior
+              cd ..
+         fi
+   done
       
 
    # Display a message to indicate it is finished:
-      # uDev: add color
       f_horizontal_line
 
       f_talk; echo "git status (to all repositories) at:"
@@ -521,7 +520,10 @@ function f_git_status_recursive {
 
       f_horizontal_line
 
-      echo "contador: $v_contador"
+   # Se nao houver nenhuma instancia por regularizar (em que $v_contador = 0) entao, apaga todo o ecra
+      #echo "contador: $v_contador"  # Debug
+      
+      [[ $v_contador == "0" ]] && f_greet && f_talk && echo "Git Status: Tudo OK"
 }
 
 function f_horizontal_line {
