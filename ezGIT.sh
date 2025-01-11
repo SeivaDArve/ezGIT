@@ -1958,10 +1958,12 @@ elif [ $1 == "rb" ]; then
 
       f_greet
 
-      echo "ezGIT: \"G rb\" (git rebase) requires an extra arg, either t of f (true or false respectively)"
+      f_talk; echo '`G rb` (git rebase) requires an extra arg, either t of f (true or false respectively)'
 
    elif [ $2 == "i" ]; then
       if [ -z $3 ]; then
+         # uDev: Test is arg #3 is actually a number
+         
          echo "Rebasing is used for example to squash multiple commits into one"
          echo " > For an interactive rebase of last 6 commits: git rebase -i HEAD~6"
          echo " > THE MOST RECENT ONE: is the bottom one. The oldest: the top one"
