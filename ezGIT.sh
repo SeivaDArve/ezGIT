@@ -503,6 +503,9 @@ function f_git_status_recursive {
                if [[ $s =~ "added" ]] || [[ $s =~ "Changes" ]] || [[ $s =~ "Untracked" ]] || [[ $s =~ "modificado" ]]; then 
                   f_output
                   v_contador=$(($v_contador+1))
+
+                  # uDev: PRECISA INFORMAR TAMBEM QUANDO O git status ENCONTRA commited files SEM TER SIDO AINDA ENVIADOS PARA O GITHUB
+
                fi
 
             # Voltar para a pasta anterior
