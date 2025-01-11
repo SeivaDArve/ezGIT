@@ -2049,6 +2049,10 @@ elif [ $1 == "[!] v" ] || [ $1 == "stash-clear" ] || [ $1 == "st-c" ]; then
 
    git stash clear
 
+elif [ $1 == "origin-info" ]; then
+   f_c2; echo -e "\ngit remote show origin:"
+   f_rc; git remote show origin
+
 elif [ $1 == "file-host" ]; then
    echo "If you want to use github to download single files just like any other cloud storage instead of cloning entire repos, you can. Github supports that. Here is a link to teach how to do that while this function is under development"
    echo " > https://www.howtogeek.com/devops/how-to-download-single-files-from-a-github-repository/"
@@ -2056,80 +2060,8 @@ elif [ $1 == "file-host" ]; then
 else
    # If the arguments you input are neither empty nor listed, then run:
       f_talk; echo "command not known"
-      f_talk; echo "For help: G -h"
+      f_talk; echo "For help: G h"
 fi
 
 
 
-
-# ----------------------------------------------------------------------
-# Obsolete code to merge:
-   # uDev: We may start deleting "case" and "esac" and adding 
-   #       if statements instead, because it is better to create menus
-
-	case $1 in
-		0+) # Option: git status && git remote show origin
-         #gst+
-			f_c2
-			echo -e "git status:\n"
-			f_rc
-			git status
-
-			f_c2
-			echo -e "\ngit remote show origin:"
-			f_rc
-			git remote show origin
-
-			;;
-		5) # Option: git commit -m '...'
-			f_c2
-			echo -en "git commit -m \"...\""
-			f_rc
-			echo ":"
-			echo -en "In order to commit to git, what is your commit message?\n > "
-			read _ans
-
-			f_c2
-			echo -en "git commit -m \""
-			tput setaf 4
-			echo -en "${_ans}"
-			f_c2
-			echo -e "\""
-			f_rc
-
-			git commit -m "$_ans"
-			;;
-		6) # Option: git add . && git commit -m '...'
-			# Dev: lacks colored text
-			f_c2
-			echo "git add ."
-			f_rc
-			git add . 
-
-			echo -en "\nIn order to commit to git, what is your commit message?\n > "
-			read _ans
-			git commit -m "$_ans"
-			;;
- m1) # Option: Menu 1
-
-			# Inform that this menu is under construction:
-			echo -e "$(f_c2)\n  menu under construction;)\n${RESTORE}"; read; G
-
-			;;
-		m2) # Option: Menu 2
-
-			# Inform that this menu is under construction:
-			echo -e "$(f_c2)\n  menu under construction;)\n${RESTORE}"; read; G
-			;;
-		S) # Option: Stop and Clear the screen from this menu
-
-			clear
-			f_c2
-			echo "clear"
-			f_rc
-			;;
-		*) # If you type an incorrect option OR if you type nothing, the menu is displayed (this is not a bug)
-      ;;
-	esac
-
-#}
