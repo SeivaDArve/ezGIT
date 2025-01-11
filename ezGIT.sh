@@ -406,12 +406,12 @@ function f_underscore_creator {
 }
 
 function f_output {
-   # Function used by: f_git_pull_recursive, f_git_status-recursive ...
+   # Function used by: f_git_pull_recursive, f_git_status_recursive ...
       # To output it's Git Status
    f_horizontal_line
 
    f_c2; echo -n " > Repository: "
-   f_c1; echo -e "$v_object \n"
+   f_c1; echo -e "$i \n"
    f_rc
 
    git status
@@ -432,13 +432,13 @@ function f_git_pull_recursive {
    # function f_output must be loaded here (or previously)
 
       cd ${v_REPOS_CENTER}
-      for v_object in $(ls); do 
+      for i in $(ls); do 
          # Filter directories from files
-            v_object_type=$(file $v_object)
+            v_object_type=$(file $i)
 
          # If the variable v_object_type returns a directory, we navigate into it
             if [[ $v_object_type =~ "dir" ]]; then 
-               cd $v_object
+               cd $i
             
                f_output #sera?
                
@@ -468,50 +468,53 @@ function f_git_pull_recursive {
       f_horizontal_line
 }
 
-function f_git_status-recursive {
+function f_git_status_recursive {
    # git status (all repos)
 
-      clear
       f_greet
 
-      f_talk; echo "`git status` (to all repositories) at:"
-      echo " > $v_REPOS_CENTER"
+      f_talk; echo '`git status` (to all repositories) at:'
+              echo " > $v_REPOS_CENTER"
 
       # function f_output must be loaded here (or previously)
 
       cd ${v_REPOS_CENTER}
-      #v=$(pwd); echo; read $v  ## debug
 
-      for v_object in $(ls); do 
+      for i in $(ls); do 
          # Filter directories from files
-            v_object_type=$(file $v_object)
+            v_object_type=$(file $i)
 
          # If the variable v_object_type returns a directory, we navigate into it
             if [[ $v_object_type =~ "dir" ]]; then 
-               cd $v_object
+               cd $i
                
+              #echo "A verificar: $i"; read -sn 1  # Debug
 
-         # Saving the git status into a variable without outputing it to the screen
-            # It sends an error if dir is not repository. Therefore we send Sandard error do /dev/null
-            s=$(git status 2>/dev/null) 
+               # Saving the git status into a variable without outputing it to the screen
+                  # It sends an error if dir is not repository. Therefore we send Sandard error do /dev/null
+                  s=$(git status 2>/dev/null) 
 
-         # Search for git words that indicate work to be done
-            # uDev: there must be more words, therefore this function must be tested
-            if [[ $s =~ "added" ]] || [[ $s =~ "Changes" ]] || [[ $s =~ "Untracked" ]]; then 
-                  f_output
+               # Search for git words that indicate work to be done
+                  # uDev: there must be more words, therefore this function must be tested
+                  # uDev: Adicionar palavras tambem em PT-PT senao da erro
+                  if [[ $s =~ "added" ]] || [[ $s =~ "Changes" ]] || [[ $s =~ "Untracked" ]] || [[ $s =~ "modificado" ]]; then 
+                        f_output
+                  fi
+
+               # Voltar para a pasta anterior
+                 cd ..
             fi
-
-            cd ..
-         fi
-         
       done
+      
 
-   # Display a message to indicat it is finished:
-      # uDev: lacks color
+   # Display a message to indicate it is finished:
+      # uDev: add color
       f_horizontal_line
+
       f_talk; echo "git status (to all repositories) at:"
-      echo " > $v_REPOS_CENTER"
-      echo "Finished!"
+              echo " > $v_REPOS_CENTER"
+              echo "Finished!"
+
       f_horizontal_line
 }
 
@@ -1085,7 +1088,7 @@ elif [ $1 == "." ]; then
 
    elif [ $2 == "all" ] || [ $2 == "A" ]; then
       # Whenever code complexity is found, a function is created to enable better code reading
-         f_git_status-recursive
+         f_git_status_recursive
       
       # uDev: At windows, if git does not have this config (see line below), then this function will not take effect:
          # git config --global --add safe.directory /mnt/c/Repositories/upK
