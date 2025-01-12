@@ -336,7 +336,7 @@ function f_unstage_all {
 
    f_greet
 
-   f_talk; echo -e "git reset all staged files"
+   f_talk; echo 'Unstage all files `git reset`:'
 
    # Unstaging ALL files
       git reset
@@ -1525,8 +1525,9 @@ elif [ $1 == "-" ]; then
          f_git_status
 
    else
+      # Unstage specific file given by the user
+      # uDev: The user might give more than one file to unstage, $3 $4 $5 etc... So, a `for` loop must be added: For i in (all arfs expect $2, do, unstage)
 
-      clear
       f_greet
 
       # Git reset
