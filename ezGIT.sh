@@ -1583,7 +1583,7 @@ elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
    # Git status
       f_git_status
 
-   elif [[ $2 == "all" ]]; then
+   elif [[ $2 == "all" ]] || [[ $2 == "A" ]]; then
       f_git_pull_recursive
 
    elif [[ $2 == "dot" ]]; then
