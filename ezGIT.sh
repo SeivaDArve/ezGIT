@@ -1234,17 +1234,17 @@ uDev: Create a script for this heredoc
       $ git push -u origin master
       '
       f_talk; echo "create new repo (uDev)"
-      echo
-      echo "Note: If DRYa exists in the system ezGIT can create all repos by default at:"
-      echo " > ${v_REPOS_CENTER}"
+              echo
+              echo "Note: If DRYa exists in the system ezGIT can create all repos by default at:"
+              echo " > ${v_REPOS_CENTER}"
 
 
 
    else
 
       f_greet
-      echo "Option not valid"
-      echo " > try: G new ?"
+      f_talk; echo "Option not valid"
+              echo " > try: G new ?"
 
    fi
 
@@ -1273,10 +1273,9 @@ elif [ $1 == "+" ]; then
 
    function f_no_file_found {
       f_talk; echo "No file name given. "
-      f_talk; echo "Insert at least 1 file name."
+              echo " > Insert at least 1 file name."
       #uDev: If no file is given, do a git diff --staged
    }
-
 
       f_greet
 
@@ -1297,9 +1296,11 @@ elif [ $1 == "+" ]; then
 
       # For each argument given starting at arg 2, list it colorfully
          for i in ${*:2}; do
-            f_talk; echo -n "git add "; f_c1
-            echo $i
-            f_rc
+
+            f_talk; echo -n "git add "
+              f_c1; echo $i
+              f_rc
+
          done
 
 
@@ -1555,6 +1556,9 @@ elif [ $1 == "--" ]; then
 
    else 
       # Restore only the specified file to its original state
+
+      # uDev: Se o arg $1 nao for o unico (ou seja, se ecistir mais args apos "--") entao podemos iterar todos os arg menos no arg $1, para isso, podemos remover o arg $1 com o comando `shift`
+
          f_greet
          f_talk; echo 'Discarding changes locally `git restore .`'
                  echo -n ' > To file: '
