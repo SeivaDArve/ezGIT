@@ -587,24 +587,19 @@ function f_tell_repo_name {
 
       if [[ -z $v_git_dir ]]; then 
          # If dir .git in not found:
-         echo -n "The directory "
-         f_c2
-         echo -n "$v_name "
-         f_c1
-         echo -n "is not "
-         f_rc
-         echo "a repository"
 
-      elif [[ $v_git_dir == "./.git" ]] # && basename is on blacklist: test if it's decripted directory is empty
-         then 
+               echo -n "The directory "
+         f_c2; echo -n "$v_name "
+         f_c1; echo -n "is not "
+         f_rc; echo    "a repository"
+
+      elif [[ $v_git_dir == "./.git" ]]; then  # && basename is on blacklist: test if it's decripted directory is empty
          # If at our location ./ a dire called .git is found:
-         echo -n "The directory "
-         f_c2
-         echo -n "$v_name "
-         f_c1
-         echo -n "is "
-         f_rc
-         echo "a repository"
+
+               echo -n "The directory "
+         f_c2; echo -n "$v_name "
+         f_c1; echo -n "is "
+         f_rc; echo "a repository"
       fi 
 }
 
@@ -739,27 +734,27 @@ function f_curl_uploads_count {
 
 if [ -z "$*" ]; then
    # Do something else if there are no arguments
-      clear
-      f_greet
 
-      f_talk; echo "No arguments were given"
-              echo ' > To print instructions: `G h`'
-              echo ' > To print all configs:  `G cf h`'
-      #git config --list
+   f_greet
 
-      #f_horizontal_line
-      echo
+   f_talk; echo "No arguments were given"
+           echo ' > To print instructions: `G h`'
+           echo ' > To print all configs:  `G cf h`'
+   #git config --list
 
-      f_talk; echo "User Name @ at github.com"
-              echo -n " > "
+   #f_horizontal_line
+   echo
 
-      git config --get user.name
+   f_talk; echo "User Name @ at github.com"
+           echo -n " > "
 
-              echo
-      f_talk; echo "User mail @ github.com"
-              echo -n " > "
+   git config --get user.name
 
-      git config --get user.email
+           echo
+   f_talk; echo "User mail @ github.com"
+           echo -n " > "
+
+   git config --get user.email
 
 elif [ $1 == "h" ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ $1 == "?" ] || [ $1 == "-?" ]; then
    # Same as if no arg are given: Display help menu
@@ -817,15 +812,15 @@ elif [ $1 == "config" ] || [ $1 == "cf" ]; then
 
       # Verbose small explanation
          f_talk; echo "Opening configurations file of git"
-         echo " > using with vim editor"
-         echo " > changes will be made inside DRYa repo and copied to HOME afterwards"
-         echo 
+                 echo " > using with vim editor"
+                 echo " > changes will be made inside DRYa repo and copied to HOME afterwards"
+                 echo 
 
-         echo "Example of content inside ~/.gitconfig file:"
-         echo "[user]"
-         echo "      name = seivadarve"
-         echo "      email = flowreshe.seiva.d.arve@gmail.com"
-         echo 
+                 echo "Example of content inside ~/.gitconfig file:"
+                 echo "[user]"
+                 echo "      name = seivadarve"
+                 echo "      email = flowreshe.seiva.d.arve@gmail.com"
+                 echo 
 
          # uDev: Replace timmer with: "Press Enter"
             read -s -t 3 -n 1
@@ -846,9 +841,9 @@ elif [ $1 == "config" ] || [ $1 == "cf" ]; then
 
    elif [ $2 == "m" ]; then
       # For the same user with diferent devices, lets identify this device on the configs, to be listed on '$ git log' and apretiate on git's history which machine/device did what job
-         # uDev: Add verbose: "Press Enter" when this fx gets developed
-            
-         f_talk; echo "uDev: Identifying this machine with traitsID for the same user is not ready"
+      # uDev: Add verbose: "Press Enter" when this fx gets developed
+         
+      f_talk; echo "uDev: Identifying this machine with traitsID for the same user is not ready"
 
    else
       f_talk; echo "Invalid function, or uDev"
@@ -884,7 +879,6 @@ elif [ $1 == "msg" ]; then
    # Create a while loop to send and receive messages between 2 ezGIT machines
    # uDev: sugestion: use irssi (IRC Client)
 
-   clear
    f_greet
 
    if [ -z $2 ]; then
@@ -1120,31 +1114,31 @@ elif [ $1 == "+!" ] || [ $1 == "squash" ]; then
 elif [ $1 == "multi" ]; then
    # Git commit multiple messages
 
-   clear; f_greet 
+   f_greet 
 
-      git status
-      f_c2
-      echo -e "\ngit commit multiple messages"
-      f_rc
-      echo 
-      declare -a messages
-      declare n=1
-      while true; do
-         read -p "Insert commit n.$n: " v_ans
+   git status
+   f_c2
+   echo -e "\ngit commit multiple messages"
+   f_rc
+   echo 
+   declare -a messages
+   declare n=1
+   while true; do
+      read -p "Insert commit n.$n: " v_ans
 
-         if [[ $v_ans == "done" ]]; then
-            break
-         fi
-         messages+=$v_ans
+      if [[ $v_ans == "done" ]]; then
+         break
+      fi
+      messages+=$v_ans
 
-         for i in ${messages[@]}; do
-            echo -e "$i\n"
-         done
-         ((n=n+1))
+      for i in ${messages[@]}; do
+         echo -e "$i\n"
       done
+      ((n=n+1))
+   done
 
 elif [ $1 == "count^" ]; then
-   clear
+
    f_greet
    f_curl_uploads_count
 
@@ -1165,7 +1159,7 @@ elif [ $1 == "export-git-log" ]; then
 elif [ $1 == "new" ]; then
 
    if [ -z $2 ]; then
-      clear
+
       f_greet
       f_talk; echo "What new thing do you want?"
               echo " > G new repo"
@@ -1207,7 +1201,7 @@ elif [ $1 == "new" ]; then
 
 
    elif [ $2 == "?" ]; then
-      clear
+
       f_greet
       echo "Right now the only options is: G new repo"
       echo " > Will be listed how to manually make a repo:"
@@ -1246,7 +1240,7 @@ uDev: Create a script for this heredoc
 
 
    else
-      clear
+
       f_greet
       echo "Option not valid"
       echo " > try: G new ?"
@@ -1257,7 +1251,7 @@ uDev: Create a script for this heredoc
 elif [ $1 == "m" ] || [ $1 == "commit" ]; then
    # Ask the user for a commit message
    
-   clear
+
    f_greet
 
    f_git_status
@@ -1283,7 +1277,7 @@ elif [ $1 == "+" ]; then
       #uDev: If no file is given, do a git diff --staged
    }
 
-      clear
+
       f_greet
 
       # If arg $2 is empty, ask for one: abort
@@ -1372,7 +1366,7 @@ elif [ $1 == "++" ]; then
    # If one $2 variable is found, commit message accordingly automatically
 
    if [ -z $2 ]; then
-      clear
+
       f_greet
 
       # Git add --all
@@ -1413,7 +1407,7 @@ elif [ $1 == "++" ]; then
    # udev: Create a v_aut_message just to ulpdate the git log (like a time stamp on git log)
    elif [ $2 == "b" ] || [ $2 == "blind-upload" ]; then
       # Blind update, variable "b"
-      clear
+
       f_greet
 
       # Antes do upload, verificar qual é o ramo atual, e implicar com o user cajo seja 'main'
@@ -1460,7 +1454,7 @@ elif [ $1 == "++" ]; then
          f_talk; echo "All Done!"
    elif [ $2 == "u" ] || [ $2 == "udev" ]; then
       # Update adding only uDev comments, variable "u"
-      clear
+
       f_greet
 
       # Sending automatically everything with an automated commit message
@@ -1550,6 +1544,7 @@ elif [ $1 == "--" ]; then
 
    if [ -z $2 ]; then
       # Restore work dir to previous commit (fully, to all files)
+         f_greet
          f_talk; echo 'Discarding all changes locally `git restore .`'
          git restore .
 
@@ -1558,6 +1553,7 @@ elif [ $1 == "--" ]; then
 
    else 
       # Restore only the specified file to its original state
+         f_greet
          f_talk; echo 'Discarding changes locally `git restore .`'
                  echo -n ' > To file: '
            f_c1; echo    "$2"
