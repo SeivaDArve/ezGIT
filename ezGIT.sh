@@ -1507,7 +1507,7 @@ elif [ $1 == "++" ]; then
       
 
 elif [ $1 == "-" ]; then 
-   # unStages a file
+   # unStages a file or all files
 
 
    if [ -z $2 ]; then         # Note: ezGIT allows 'G -' and 'G - all' to unstage all files, but the command is same, simply: 'git reset' 
@@ -1531,14 +1531,39 @@ elif [ $1 == "-" ]; then
 
       f_greet
 
-      # Git reset
-         f_talk; echo -en "git reset "
-         f_c1; echo -e "$2"
-         f_rc
+      # Git reset (unstage)
+         f_talk; echo -n "git reset "
+           f_c1; echo -e "$2"
+           f_rc
 
       # uDev: unstage all files given as args besides $1. the argument $1 '-' is not a file. (See 'G +' where this line of code already works)
       # uDev: tem de ser visto os bugs caso sejam dados nomes de ficheiros errados tal como na funcao: G + <nome-errado>
          git reset $2
+
+      # Git status
+         f_git_status
+   fi
+
+elif [ $1 == "--" ]; then 
+   # Discard changes in a file or all files (restores working dir to its previous commit)
+
+
+   if [ -z $2 ]; then
+      # Restore work dir to previous commit (fully, to all files)
+         f_talk; echo 'Discarding all changes locally `git restore .`'
+         git restore .
+
+      # Git status
+         f_git_status
+
+   else 
+      # Restore only the specified file to its original state
+         f_talk; echo 'Discarding changes locally `git restore .`'
+                 echo -n ' > To file: '
+           f_c1; echo    "$2"
+           f_rc; echo
+
+         git restore $2
 
       # Git status
          f_git_status
