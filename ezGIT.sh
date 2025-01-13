@@ -272,7 +272,7 @@ function f_setGlobalConfig_menu {
 
 function f_git_status {
            echo
-   f_talk; echo "`git status`"
+   f_talk; echo 'Current State: `git status`'
 
    git status
 }
@@ -285,21 +285,21 @@ function f_git_status {
 
 function f_git_push {
            echo
-   f_talk; echo "git push"
+   f_talk; echo 'Send to Github: `git push`'
 
    git push
 }
 
 function f_git_add_all {
            echo
-   f_talk; echo "git add --all"
+   f_talk; echo 'Staging all files: `git add --all`'
 
    git add --all
 }
 
 function f_git_pull {
            echo
-   f_talk; echo "git push"
+   f_talk; echo 'Receiving from Github: `git pull`'
 
    git push
 }
@@ -336,10 +336,9 @@ function f_unstage_all {
 
    f_greet
 
-   f_talk; echo 'Unstage all files `git reset`:'
+   f_talk; echo 'Unstage all files: `git reset`'
 
-   # Unstaging ALL files
-      git reset
+   git reset
 }
 
 function f_save_current_branch {
@@ -423,8 +422,11 @@ function f_git_pull_recursive {
    f_greet
 
    # Describing to the user
-      f_talk; echo "git pull (to all repositories) at:"
-              echo " > ${v_REPOS_CENTER}"
+      f_talk; echo    "git pull (to all repositories) at:"
+              echo -n " > "
+        f_c1; echo       "$v_REPOS_CENTER"
+        f_rc; echo
+              echo    "Starting:"
 
    # Mention one possible password
       f_stroken
@@ -461,10 +463,15 @@ function f_git_pull_recursive {
 
    # Finishing: Display a message to indicat it is finished:
       # uDev: lacks color
+
       f_horizontal_line
-      f_talk; echo "git pull (to all repositories) at:"
-      echo " > $v_REPOS_CENTER"
-      echo "Finished!"
+
+      f_talk; echo    "git pull (to all repositories) at:"
+              echo -n " > "
+        f_c1; echo       "$v_REPOS_CENTER"
+        f_rc; echo
+              echo    "Finished!"
+
       f_horizontal_line
 }
 
