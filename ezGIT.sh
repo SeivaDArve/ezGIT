@@ -312,7 +312,7 @@ function f_git_pull_dot_files {
 
 function f_git_commit {
    # uDev: If git status says "nothing to commit, working tree clean" then we must not ask for a commit message. Unless there are N number of commits to upload, which in that case, G ++ be used anyway
-   f_talk;  echo -en "Asking user for a commit message "
+   f_talk;  echo -en "Asking user for a commit message (to staged files)"
      f_c1;  echo -n  "i"
      f_rc;  echo      ":"
             echo " > In order to commit to git, what is your commit message?"
@@ -738,6 +738,7 @@ if [ -z "$*" ]; then
    f_greet
 
    f_talk; echo "No arguments were given"
+           echo ' > To Open fzf Main Menu: `G m`'
            echo ' > To print instructions: `G h`'
            echo ' > To print all configs:  `G cf h`'
    #git config --list
@@ -1248,9 +1249,8 @@ uDev: Create a script for this heredoc
    fi
 
 
-elif [ $1 == "m" ] || [ $1 == "commit" ]; then
-   # Ask the user for a commit message
-   
+elif [ $1 == "cm" ] || [ $1 == "commit" ]; then
+   # Ask the user for a commit message (for staged files)
 
    f_greet
 
@@ -1541,6 +1541,8 @@ elif [ $1 == "-" ]; then
 elif [ $1 == "--" ]; then 
    # Discard changes in a file or all files (restores working dir to its previous commit)
 
+   # uDev: Ask if user is sure before discarding chenged files
+   # uDev: Ask if user wants to delete untracked files
 
    if [ -z $2 ]; then
       # Restore work dir to previous commit (fully, to all files)
@@ -1589,7 +1591,7 @@ elif [ $1 == "+-" ]; then
 
 
 
-elif [ $1 == "v" ] || [ $1 == "gpull" ]; then
+elif [ $1 == "v" ] || [ $1 == "pull" ]; then
    # git pull
    # Download
    if [[ -z $2 ]]; then
@@ -1747,27 +1749,29 @@ elif [ $1 == "," ]; then
    #
    #   uDev: Sempre que 1 ramo seja convergido em 'main', perguntar qual vai ser a versao nova da app que está em main
          
-   elif [ $2 == "all" ]; then
+   elif [ $2 == "all" ] || [ $2 == "A" ]; then
 
       f_talk; echo "Options for branches (uDev)"
-      echo "see: https://www.nobledesktop.com/learn/git/git-branches"
-
-      echo
+              echo "see: https://www.nobledesktop.com/learn/git/git-branches"
+              echo
       f_talk; echo "git local branches: G , v"
+
       git branch
 
-      echo
+              echo
       f_talk; echo "git remote branches: G , ^"
+
       git branch -r
 
-      echo
+              echo
       f_talk; echo "git local and remote: G , all"
+
       git branch -a
 
       echo; f_done
 
    elif [ $2 == "..." ]; then
-      clear
+
       f_greet
       echo "ezGIT: Switch Back-n-Forward between 2 branches"
       git checkout
@@ -1835,10 +1839,9 @@ elif [ $1 == "upk" ]; then
             # f_stroken; echo
          f_talk; echo "You are about to \"git pull\" all these repos:"
                  echo -n " > DRYa; upk; ezGIT; upK-diario-Dv ... "
-         f_c2; read -s -n 1 -p "Press any key to continue"
-         f_rc
-         echo
-         echo
+         f_c2;   read -s -n 1 -p "Press any key to continue"
+         f_rc;   echo
+                 echo
 
          f_horizontal_line
 
@@ -1972,7 +1975,8 @@ elif [ $1 == "diff" ]; then
    
    f_greet
 
-   echo "This option is the same as: '$ git diff --staged'"
+   f_talk; echo '`Difference on staged files `git diff --staged`'
+
    git diff --staged
    
 elif [ $1 == "rb" ]; then
@@ -2080,10 +2084,15 @@ elif [ $1 == "file-host" ]; then
    echo "If you want to use github to download single files just like any other cloud storage instead of cloning entire repos, you can. Github supports that. Here is a link to teach how to do that while this function is under development"
    echo " > https://www.howtogeek.com/devops/how-to-download-single-files-from-a-github-repository/"
 
+elif [ $1 == "m" ] || [ $1 == "menu" ]; then
+   # Menu fzf
+   f_talk; echo "uDev: Menu fzf"
+
 else
    # If the arguments you input are neither empty nor listed, then run:
-      f_talk; echo "command not known"
-      f_talk; echo "For help: G h"
+      f_talk; echo "Command not known"
+              echo " > Menu fzf: G m"
+              echo " > For help: G h"
 fi
 
 
