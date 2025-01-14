@@ -1488,6 +1488,7 @@ elif [ $1 == "++" ]; then
                     echo  "ANY KEY: continuar || Ctrl-C: cancelar"
             read -sn 1 -p " > "
                     echo
+                    echo
          fi
 
       # Sending automatically everything with an automated commit message
