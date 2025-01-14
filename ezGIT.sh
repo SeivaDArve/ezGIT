@@ -319,6 +319,10 @@ function f_git_commit {
    f_talk; echo -en "Adding a commit message "
      f_c1; echo -n                          "i"
      f_rc; echo                              " (to staged files):"
+           echo -n ' > `git commit -m "'
+     f_c1; echo -n                    "i"
+     f_rc; echo                        '" `'
+           echo
            echo    " > What is your commit message?"
            echo    " > (leave empty to abort)"  # uDev: save cursor position here to overwrite text "leave empty to abort" 
      f_c1; read -p " > " v_ans
