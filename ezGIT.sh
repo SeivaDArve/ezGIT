@@ -476,6 +476,65 @@ function f_git_pull_recursive {
       f_horizontal_line
 }
 
+function f_git_push_recursive {
+   # Pulling repository changes to ALL repos (recursive)
+
+   f_greet
+
+   # Describing to the user
+      f_talk; echo    "git push (to all repositories) at:"
+              echo -n " > "
+        f_c1; echo       "$v_REPOS_CENTER"
+        f_rc; echo
+              echo    "Starting:"
+
+   # Mention one possible password
+      f_stroken
+
+   # function f_output must be loaded here (or previously)
+
+      cd ${v_REPOS_CENTER}
+      for i in $(ls); do 
+         # Filter directories from files
+            v_object_type=$(file $i)
+
+         # If the variable v_object_type returns a directory, we navigate into it
+            if [[ $v_object_type =~ "dir" ]]; then 
+               cd $i
+            
+               f_output #sera?
+               
+         # Saving the git status into a variable without outputing it to the screen
+            # It sends an error if dir is not repository. Therefore we send Sandard error do /dev/null
+            s=$(git push)  ## Or: s=$(git pull 2>/dev/null) 
+
+         #  # Search for git words that indicate work to be done
+         #     # uDev: there must be more words, therefore this function must be tested
+         #     if [[ $s =~ "added" ]]; then f_output;
+         #        elif [[ $s =~ "Changes" ]]; then f_output;
+         #        elif [[ $s =~ "Untracked" ]]; then f_output;
+         #     fi
+
+         # Navigating backwards before restarting the 'for loop' 
+            cd ..
+
+         fi
+      done
+
+   # Finishing: Display a message to indicat it is finished:
+      # uDev: lacks color
+
+      f_horizontal_line
+
+      f_talk; echo    "git push recursive (to all repositories) at:"
+              echo -n " > "
+        f_c1; echo       "$v_REPOS_CENTER"
+        f_rc; echo
+              echo    "Finished!"
+
+      f_horizontal_line
+}
+
 function f_git_status_recursive {
    # git status (all repos)
 
@@ -508,7 +567,7 @@ function f_git_status_recursive {
             # Search for git words that indicate work to be done
                # uDev: there must be more words, therefore this function must be tested
                # uDev: Adicionar palavras tambem em PT-PT senao da erro
-               if [[ $s =~ "added" ]] || [[ $s =~ "Changes" ]] || [[ $s =~ "Untracked" ]] || [[ $s =~ "modificado" ]]; then 
+               if [[ $s =~ "added" ]] || [[ $s =~ "Changes" ]] || [[ $s =~ "Untracked" ]] || [[ $s =~ "modificado" ]] || [[ $s =~ "branch is ahead" ]]; then 
                   f_output
                   v_contador=$(($v_contador+1))
 
@@ -1587,7 +1646,6 @@ elif [ $1 == "+-" ]; then
       # This also avoids git commits -m "same as last commit" because the new commit merges with the last one
    # It can also change the last commit message
 
-      clear 
       f_greet
 
 		f_c2
@@ -1604,17 +1662,23 @@ elif [ $1 == "+-" ]; then
 
 
 elif [ $1 == "v" ] || [ $1 == "pull" ]; then
-   # git pull
-   # Download
+   # git pull (Download updates from github)
+
    if [[ -z $2 ]]; then
-      clear; f_greet 
+
+      f_greet 
    
       f_stroken
 
-      f_talk; echo -n "You are about to: "; f_c2; echo "git pull"
-      f_rc; echo -n " > Are you sure? (Press ANY key to confirm) "
-      read -sn 1 
+      f_talk; echo -n "You are about to: "
+        f_c2; echo                      "git pull"
+        f_rc; echo -n " > Are you sure? (Press ANY key to confirm) "
+
+         read -sn 1 
+
+      # uDev: Usar ANSI para apagar toda a linha, em vez de usar espacos em branco
       echo -e "\r > Starting git pull...                          "
+
       git pull
 
    # Git status
@@ -1633,6 +1697,7 @@ elif [ $1 == "v" ] || [ $1 == "pull" ]; then
 elif [ $1 == "^" ] || [ $1 == "push" ]; then
    # Simple git push
 
+   if [ -z $2 ]; then
       clear 
       f_greet
 
@@ -1641,6 +1706,18 @@ elif [ $1 == "^" ] || [ $1 == "push" ]; then
       f_git_push
 
       f_git_status
+
+   elif [ $2 == "A" ]; then
+
+      f_git_push_recursive
+      # f_talk; echo "Git pull Recursive"
+      # shift
+      # for i in $*; do
+      #    f_git_push
+      #    f_git_status
+      # done
+   fi
+
 
 
 elif [ $1 == "," ]; then  
