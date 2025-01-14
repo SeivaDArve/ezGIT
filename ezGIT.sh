@@ -16,6 +16,7 @@
 #       If ezGIT gets byte compiled, there should be a file to configure it's color numbers
 #       For example at: ~/.config/h.h/ezGIT
 
+# uDev: 1x por cada mes, fazer git pull para o HD externo no contexto de backup (pode ate ser usado git --bare)
 
 # If this script runs, a variable is set to tell which one repo was the last one to run
    v_repo="ezGIT"
@@ -466,7 +467,7 @@ function f_git_pull_recursive {
 
       f_horizontal_line
 
-      f_talk; echo    "git pull (to all repositories) at:"
+      f_talk; echo    "git pull recursive (to all repositories) at:"
               echo -n " > "
         f_c1; echo       "$v_REPOS_CENTER"
         f_rc; echo
