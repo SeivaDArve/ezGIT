@@ -1593,6 +1593,7 @@ elif [ $1 == "--" ]; then
    if [ -z $2 ]; then
       # Restore work dir to previous commit (fully, to all files)
          f_greet
+
          f_talk; echo 'Discarding all changes locally `git restore .`'
          git restore .
 
