@@ -567,7 +567,7 @@ function f_git_status_recursive {
             # Search for git words that indicate work to be done
                # uDev: there must be more words, therefore this function must be tested
                # uDev: Adicionar palavras tambem em PT-PT senao da erro
-               if [[ $s =~ "added" ]] || [[ $s =~ "Changes" ]] || [[ $s =~ "Untracked" ]] || [[ $s =~ "modificado" ]] || [[ $s =~ "branch is ahead" ]]; then 
+               if [[ $s =~ "added" ]] || [[ $s =~ "Changes" ]] || [[ $s =~ "Untracked" ]] || [[ $s =~ "modificado" ]] || [[ $s =~ "branch is ahead" ]] || [[ $s =~ "have diverged" ]]; then 
                   f_output
                   v_contador=$(($v_contador+1))
 
