@@ -16,6 +16,8 @@
 #       If ezGIT gets byte compiled, there should be a file to configure it's color numbers
 #       For example at: ~/.config/h.h/ezGIT
 
+# uDev: criar fx para terstar se a repo atual é publica ou privada (ou entao fazer logo a lista de todas)
+
 # uDev: 1x por cada mes, fazer git pull para o HD externo no contexto de backup (pode ate ser usado git --bare)
 
 # If this script runs, a variable is set to tell which one repo was the last one to run
