@@ -1523,10 +1523,8 @@ elif [ $1 == "++" ]; then
 
          f_talk; echo "default commit message:"
                  echo -n " > "
-                 f_c1
-                 echo "$v_aut_message"
-                 f_rc
-                 echo
+           f_c1; echo "$v_aut_message"
+           f_rc; echo
 
          f_talk; echo "adding all files to make 1 commit"
 			        git add --all && echo " > Done!"
