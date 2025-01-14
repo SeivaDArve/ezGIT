@@ -597,7 +597,7 @@ function f_git_status_recursive {
    # Se nao houver nenhuma instancia por regularizar (em que $v_contador = 0) entao, apaga todo o ecra
       #echo "contador: $v_contador"  # Debug
       
-      [[ $v_contador == "0" ]] && f_greet && f_talk && echo "Git Status Recursivo (a todos os repositorios):" && echo -e " > Verificar Untracked/Uncommited/Added: Tudo OK\n > Verificar se falta upload dos Commited: uDev\n "
+      [[ $v_contador == "0" ]] && f_greet && f_talk && echo "Git Status Recursivo (a todos os repositorios):" && echo -e " > Tudo OK (beta version)\n "
 }
 
 function f_horizontal_line {
