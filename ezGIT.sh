@@ -1445,10 +1445,10 @@ elif [ $1 == "++" ]; then
       elif [ $v_ans == "p" ] || [ $v_ans == "P" ]; then
          # If valid key "p" was given
          
+         echo
          f_stroken
          f_git_push
          f_git_status
-         echo
          echo; f_done
  
       else
