@@ -1481,11 +1481,11 @@ elif [ $1 == "++" ]; then
          f_save_current_branch   
          #echo $v_current_ramo 
          if [ $v_current_ramo == "main" ]; then 
-            echo "Voce está no ramo 'main' de certeza que quer um Blind-Update???"
-            echo " > ENTER para continuar"
-            echo " > Ctrl-C para cancelar"
+            f_talk; echo  "Voce está no ramo 'main' de certeza que quer um Blind-Update???"
+                    echo  " > ENTER para continuar"
+                    echo  " > Ctrl-C para cancelar"
             read -sn 1 -p " > "
-            echo
+                    echo
          fi
 
       # Sending automatically everything with an automated commit message
