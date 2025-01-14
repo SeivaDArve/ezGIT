@@ -1481,9 +1481,11 @@ elif [ $1 == "++" ]; then
          f_save_current_branch   
          #echo $v_current_ramo 
          if [ $v_current_ramo == "main" ]; then 
-            f_talk; echo  "Voce está no ramo 'main' de certeza que quer um Blind-Update???"
-                    echo  " > ENTER para continuar"
-                    echo  " > Ctrl-C para cancelar"
+            f_talk; echo "Blind Update and Upload"
+                    echo  " > Voce está no ramo 'main' "
+                    echo  " > Tem a certeza que quer um Blind-Update???"
+                    echo
+                    echo  "ANY KEY: continuar || Ctrl-C: cancelar"
             read -sn 1 -p " > "
                     echo
          fi
