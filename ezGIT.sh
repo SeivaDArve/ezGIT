@@ -286,7 +286,7 @@ function f_git_status {
 
 function f_git_push {
            echo
-   f_talk; echo 'Send to Github: `git push`'
+   f_talk; echo 'Sending to Github: `git push`'
 
    git push
 }
@@ -312,21 +312,20 @@ function f_git_pull_dot_files {
 }
 
 function f_git_commit {
-   # uDev: If git status says "nothing to commit, working tree clean" then we must not ask for a commit message. Unless there are N number of commits to upload, which in that case, G ++ be used anyway
-   f_talk;  echo -en "Asking user for a commit message (to staged files)"
-     f_c1;  echo -n  "i"
-     f_rc;  echo      ":"
-            echo " > In order to commit to git, what is your commit message?"
+   # Git commit -m ""
 
-   # uDev: save cursor position here to overwrite text "leave empty to abort" 
-   
-           echo    " > (leave empty to abort)"
+   # uDev: If git status says "nothing to commit, working tree clean" then we must not ask for a commit message. Unless there are N number of commits to upload, which in that case, G ++ be used anyway
+           echo
+   f_talk; echo -en "Adding a commit message "
+     f_c1; echo -n                          "i"
+     f_rc; echo                              " (to staged files):"
+           echo    " > What is your commit message?"
+           echo    " > (leave empty to abort)"  # uDev: save cursor position here to overwrite text "leave empty to abort" 
      f_c1; read -p " > " v_ans
      f_rc; echo
-
-   f_talk; echo -en "git commit -m \""
-     f_c1; echo -en "${v_ans}"
-     f_rc; echo     "\""
+   f_talk; echo -n 'git commit -m "'
+     f_c1; echo -n               "$v_ans"
+     f_rc; echo                        '"'
 
    git commit -m "$v_ans"
 
@@ -1318,6 +1317,7 @@ uDev: Create a script for this heredoc
 
 elif [ $1 == "cm" ] || [ $1 == "commit" ]; then
    # Ask the user for a commit message (for staged files)
+   # uDev: Test first if actually there are staged files
 
    f_greet
 
@@ -1331,7 +1331,7 @@ elif [ $1 == "cm" ] || [ $1 == "commit" ]; then
 elif [ $1 == "+" ]; then
    # 1. Test if $2 was specified
    # 2. git add $2
-   # 3. Ask if user wants git diff
+   # 3.  -------- Ask if user wants git diff: NOPE, USE `G =` INSTEAD
    # 4. git status
    # 5. git commim -m "i" 
 
@@ -1344,88 +1344,71 @@ elif [ $1 == "+" ]; then
       #uDev: If no file is given, do a git diff --staged
    }
 
-      f_greet
+   f_greet
 
-      # If arg $2 is empty, ask for one: abort
-         [ -z $2 ] && f_no_file_found && exit 1
+   # If arg $2 is empty, ask for one: abort
+      [ -z $2 ] && f_no_file_found && exit 1
 
-      # Bug fix: Add all files except the arg $1 which is '+'
-         # When git adding files, we want 'G' to add all files input as arguments. 
-         # BUT there is one prombem: '+' is the input value that indicates 'git add'. 
-         # Therefore, the the second arg '+' is not discarded, then 'git add' will throw an error saying 
-         # "there is no such file called '+'. The next line of code lists all arguments starting at 
-         # arg $2 wich is '+'
-			git add ${*:2}  2>/dev/null  # We are throwing the error messages to /dev/null because we fix it beautifully on the next line
+   # Bug fix: Add all files except the arg $1 which is '+'
+      # When git adding files, we want 'G' to add all files input as arguments. 
+      # BUT there is one prombem: '+' is the input value that indicates 'git add'. 
+      # Therefore, the the second arg '+' is not discarded, then 'git add' will throw an error saying 
+      # "there is no such file called '+'. The next line of code lists all arguments starting at 
+      # arg $2 wich is '+'
+      git add ${*:2}  2>/dev/null  # We are throwing the error messages to /dev/null because we fix it beautifully on the next line
 
-      # If arg $2 is not a known file: abort
-         if [ $? == "128" ]; then f_talk; echo "File name not found"
-                                  f_talk; echo "Please add a list of files names correctly"; exit 1; fi
+   # If arg $2 is not a known file: abort
+      if [ $? == "128" ]; then 
+         f_talk; echo "File name not found"
+         f_talk; echo "Please add a list of files names correctly"
+         exit 1
+      fi
 
-      # For each argument given starting at arg 2, list it colorfully
-         for i in ${*:2}; do
+   # For each argument given starting at arg 2, list it colorfully
+      for i in ${*:2}; do
 
-            f_talk; echo -n "git add "
-              f_c1; echo $i
-              f_rc
+         f_talk; echo -n "git add "
+           f_c1; echo $i
+           f_rc
 
-         done
+      done
 
 
 
-      # Asking for 3 seconds if the user wants 'git diff'
-			f_c2
-         echo -e "\nDo you want to see the differences between the 2 files? \n(the Last + Current version) "
-			f_rc
-         echo " > If no, press Any key"
-         echo -n " > If so, press: "
-			f_c2
-         echo "D"
-         echo
-         echo -n "git diff? "
-			f_rc
-         echo -n "(press D or ANY key): "
-         read -sn 1 v_ans
-         
-         case $v_ans in
-            d | D)
-                # Display text based cresential while app is in beta
-                   echo "Starting..."
-                   f_c1
-                   echo $3
-                   f_rc
-                   sleep 1
-                   git diff --staged
-                   read -s -n 1
-            ;;
-            *)
-               echo "You dind't choose anything..."
-               echo
-            ;;
-         esac
+   # Asking for 3 seconds if the user wants 'git diff'
+            echo
+      f_c2; echo -e "Do you want to see the differences between the 2 files?"
+            echo    "(the Last + Current version) "
+      f_rc; echo    " > If no, press Any key"
+            echo -n " > If so, press: "
+      f_c2; echo                     "D"
+            echo
+            echo -n "git diff? "
+      f_rc; echo -n           "(press D or ANY key): "
 
-      # Git status
-         f_git_status
+      read -sn 1 v_ans
+      
+      case $v_ans in
+         d | D)
+             # Display text based cresential while app is in beta
+                      echo "Starting..."
+                f_c1; echo $3
+                f_rc
 
-      # Git commit -m ""
-			f_c2
-			echo -e "Creating a message i to git commit -m \"i\":"
-			f_rc
+                git diff --staged
+                read -s -n 1
+         ;;
+         *)
+            echo "You dind't choose anything..."
+            echo
+         ;;
+      esac
 
-			echo -en "In order to commit to git, what is your commit message?\n > "
-			read _ans
-         echo
+   f_git_status
 
-			f_c2
-			echo -en "git commit -m \""
-         f_c1
-			echo -en "${_ans}"
-			f_c2
-			echo -e "\""
-			f_rc
-			git commit -m "$_ans"
+   f_git_commit
 
-      # Git status
-         f_git_status
+   f_git_status
 
 elif [ $1 == "++" ]; then
 	# 'git add --all' + 'git status' + 'git commim -m "" '
@@ -1437,42 +1420,42 @@ elif [ $1 == "++" ]; then
 
       f_greet
 
-      # Git add --all
-         f_git_add_all
+      f_git_add_all  # Git add --all
 
-      # Git status
-         f_git_status
+      f_git_status
 
-      # Git commit -m "i"
-         f_git_commit
+      f_git_commit   # Git commit -m "i"
 
-      # Git status
-         f_git_status
+      f_git_status
 
       # Asking for 5 seconds if the user wants to push the code to github.com
 			f_talk; echo "Do you want to push to github.com?"
                  echo " > Press any key to abort (wait 5 seconds)"
-			f_rc; echo -n " > To upload, press: "
+           f_rc; echo -n " > To upload, press: "
 
-			f_c2; read -s -N 1 -t 5 -p "P " v_ans
-			f_rc
+			  f_c2; read -s -N 1 -t 5 -p "P " v_ans
+			  f_rc
          
-         case $v_ans in
-            p | P)
-               f_stroken
-               f_git_push
-               f_git_status
-            ;;
-            *)
-               echo; echo
-               f_talk; echo "Aborted" 1>/dev/null
-               #f_talk; echo "5 seconds expired..."  ## Bug
-            ;;
-         esac
-         
+
+      if [ -z $v_ans ]; then
+         # If, after the prompt for "commit message" the time expires or the Field is left blank, then Uploading is aborted
          echo; f_done
 
-   # udev: Create a v_aut_message just to ulpdate the git log (like a time stamp on git log)
+      elif [ $v_ans == "p" ] || [ $v_ans == "P" ]; then
+         # If valid key "p" was given
+         
+         f_stroken
+         f_git_push
+         f_git_status
+         echo; f_done
+
+      else
+         # If invalid key was given
+         echo; f_done
+
+      fi
+
+   # udev: Create a v_aut_message just to update the git log (like a time stamp on git log)
    elif [ $2 == "b" ] || [ $2 == "blind-upload" ]; then
       # Blind update, variable "b"
 
@@ -1513,13 +1496,16 @@ elif [ $1 == "++" ]; then
 
          f_stroken
 
-         f_talk; echo -e "\npushing to github.com "
-                 git push
+                 echo
+         f_talk; echo "pushing to github.com "
+
+         f_git_push
 
          f_git_status
 
-         echo
-         f_talk; echo "All Done!"
+                 echo
+         f_talk; echo "Done!"
+
    elif [ $2 == "u" ] || [ $2 == "udev" ]; then
       # Update adding only uDev comments, variable "u"
 
@@ -2023,18 +2009,21 @@ elif [ $1 == "+1" ]; then
 
    git log --reverse --pretty=%H main | grep -A 1 $(git rev-parse HEAD) | tail -n1 | xargs git checkout 
 
-elif [ $1 == "=" ] || [ $1 == "reset-head" ]; then
+elif [ $1 == "1" ] || [ $1 == "reset-head" ]; then
    # when you are navigating/exploring/browsing older commits and you are finished, if no changes were applying and there is no need for more navigation, this is the command ends the navigation and brighs back normality
 
    f_greet
 
-   f_talk; echo "git checkout main"
+   f_talk; echo 'Comming to most Updated branch: `git checkout main`'
 
    git checkout main
    
    f_git_status
 
 elif [ $1 == "apply-current-commit" ]; then
+
+   echo
+
    # We use this when we mess up in a previous commit and after that, when navigate back to the previous/unchanged/un-messed up commit and we what to apply that commit
    # source: https://stackoverflow.com/questions/13956207/how-can-set-an-older-commit-to-be-head
    
@@ -2047,27 +2036,34 @@ elif [ $1 == "apply-current-commit" ]; then
    #       2 - using 'G fix-to-current-commit' will: 1 - '$ git log | head -n 5 > tmp.txt' 
    #                                                 2 - save the hash from the previous file as a new variable
    #                                                 3 - Use the hash to bring the banch to normality
-   echo
 
-elif [ $1 == "%" ] || [ $1 == "diff-between-head" ]; then
-   # When navigating between commits like 'G -1' and 'G +1' gif diff might be needed.
-   # If you want to see what is the difference between your current commit and the head commit, use this command
-   #
-   # Usualy we use: gif diff <newest-commit>..<oldest-commit>
-   #
-   # Now we will detect what is the current commit, detect the head commit and 'git diff' both
-
-   echo "uDev: git diff between this commit and head commit is not yet developed (written/programed)"
-
-
-elif [ $1 == "diff" ]; then
+elif [ $1 == "=" ] || [ $1 == "diff" ]; then
    
-   f_greet
+   if [ -z $2 ]; then
+      f_greet
 
-   f_talk; echo '`Difference on staged files `git diff --staged`'
+      f_talk; echo '`Difference on staged files `git diff --staged`'
 
-   git diff --staged
-   
+      # uDev: test if ready there are staged files
+      git diff --staged
+
+   elif [ $2 == "%" ] || [ $1 == "diff-between-head" ]; then
+      # When navigating between commits like 'G -1' and 'G +1' gif diff might be needed.
+      # If you want to see what is the difference between your current commit and the head commit, use this command
+      #
+      # Usualy we use: gif diff <newest-commit>..<oldest-commit>
+      #
+      # Now we will detect what is the current commit, detect the head commit and 'git diff' both
+
+      echo "uDev: git diff between this commit and head commit is not yet developed (written/programed)"
+
+   elif [ $2 == "2" ] || [ $1 == "diff-between-2-files" ]; then
+      # This option does not use `git` and it is still usefull. It needs 2 files to be input as $3 and $4
+
+      f_talk; echo 'Diff between 2 files (without `git`)'
+              echo ' > `G = 2 <file-1> <file-2>` needs more 2 args for each file ($3 and $4)'
+   fi 
+
 elif [ $1 == "rb" ]; then
    # Rebasing: set true/false and interactive rebase
    if [ -z $2 ]; then
@@ -2123,11 +2119,9 @@ elif [ $1 == "rb" ]; then
    fi
 
 elif [ $1 == "uDev" ]; then
-   echo "This function uses the find command to search \"# uDev\" comments om the code"
+   echo 'This function uses the find command to search "# uDev" comments on the code'
 
-
-
-elif [ $1 == "[!]" ] || [ $1 == "stash-list" ] || [ $1 == "st-l" ]; then
+elif [ $1 == "[.]" ] || [ $1 == "stash-list" ] || [ $1 == "st-l" ]; then
 
    f_greet
 
@@ -2142,10 +2136,10 @@ elif [ $1 == "[]" ] || [ $1 == "stash" ] || [ $1 == "st" ]; then
    f_talk; echo "git stash"
            echo " > saving our current commits for later "
            echo "   (You may command 'git pull' now, if needed)"
+
    git stash
 
-   # git status
-      f_git_status
+   f_git_status
 
 elif [ $1 == "[" ] || [ $1 == "unstash" ] || [ $1 == "ust" ] || [ $1 == "apply" ] || [ $1 == "ap" ]; then
 
@@ -2153,10 +2147,10 @@ elif [ $1 == "[" ] || [ $1 == "unstash" ] || [ $1 == "ust" ] || [ $1 == "apply" 
 
    f_talk; echo "git stash apply"
            echo " > Apllying saved/stashed/hidden commits now"
+
    git stash apply
    
-   # git status
-      f_git_status
+   f_git_status
 
 elif [ $1 == "[!] v" ] || [ $1 == "stash-clear" ] || [ $1 == "st-c" ]; then
    f_greet
@@ -2166,8 +2160,11 @@ elif [ $1 == "[!] v" ] || [ $1 == "stash-clear" ] || [ $1 == "st-c" ]; then
    git stash clear
 
 elif [ $1 == "origin-info" ]; then
-   f_c2; echo -e "\ngit remote show origin:"
-   f_rc; git remote show origin
+         echo 
+   f_c2; echo "git remote show origin:"
+   f_rc
+
+   git remote show origin
 
 elif [ $1 == "file-host" ]; then
    echo "If you want to use github to download single files just like any other cloud storage instead of cloning entire repos, you can. Github supports that. Here is a link to teach how to do that while this function is under development"
