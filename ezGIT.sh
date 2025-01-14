@@ -1154,10 +1154,6 @@ elif [ $1 == "." ]; then
 
             f_git_status
          fi
-
-
-
-
       fi
 
       #f_random_sugestions
