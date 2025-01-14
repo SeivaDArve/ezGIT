@@ -46,6 +46,14 @@ function f_c2 {
    tput setaf 4
 }
 
+function f_c3 { 
+   # Similar to Bold
+   # uDev: If tput is not installed, use system colors
+   
+   # Used at: f_talk
+   tput setaf 6
+}
+
 function f_rc { 
    # Reset cor
    # uDev: If tput is not installed, use system colors
@@ -274,7 +282,7 @@ function f_setGlobalConfig_menu {
 function f_git_status {
            echo
    f_talk; echo -n 'Current State: '
-     f_c1; echo    '`git status`'
+     f_c3; echo    '`git status`'
      f_rc
 
    git status
