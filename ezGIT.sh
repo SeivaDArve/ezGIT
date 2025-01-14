@@ -1171,7 +1171,7 @@ elif [ $1 == "." ]; then
          # git config --global --add safe.directory /mnt/c/Repositories/upK
    else 
       f_talk; echo "command not known"
-              echo " > For help: G -h"
+              echo " > For help: G h"
    fi
 
 
@@ -1254,7 +1254,6 @@ elif [ $1 == "new" ]; then
                  read -sn 1 v_ans2
                  echo
                  echo "Your answer was: $v_ans2"
-                 sleep 1
       fi
 
       # Telling a summary of what is going to happen
@@ -1267,7 +1266,6 @@ elif [ $1 == "new" ]; then
          read -sn 1 -p "Press ANY key to continue (use: CTRL-C to cancel)" 
          echo
          echo
-
          echo "uDev: All this functionality is not ready yet to apply changes"
 
 
@@ -1307,8 +1305,6 @@ uDev: Create a script for this heredoc
               echo
               echo "Note: If DRYa exists in the system ezGIT can create all repos by default at:"
               echo " > ${v_REPOS_CENTER}"
-
-
 
    else
 
