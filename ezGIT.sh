@@ -1527,10 +1527,9 @@ elif [ $1 == "++" ]; then
            f_c1; echo "$v_aut_message"
            f_rc; echo
 
-         f_talk; echo "adding all files to make 1 commit"
-			        git add --all && echo " > Done!"
-                 echo
+         f_git_add_all && echo " > Done!"
 
+                 echo
          f_talk; echo "Creating an automatic commit"
                  git commit -m "$v_aut_message"
 
@@ -1538,22 +1537,18 @@ elif [ $1 == "++" ]; then
 
          f_stroken
 
-         f_talk; echo "pushing to github.com "
-                 git push
+         f_git_push
 
          f_git_status
 
-         echo
+                 echo
          f_talk; echo "All Done!"
    else
       # If the arg given is not recognized as a saved git-commit-message, then:
       f_talk; echo "the last arg is not recognized"
 
       # uDev: add a feature to add more git-commit-messages
-
-
    fi
-      
 
 elif [ $1 == "-" ]; then 
    # unStages a file or all files
