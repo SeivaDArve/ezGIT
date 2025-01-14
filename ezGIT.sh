@@ -1453,6 +1453,7 @@ elif [ $1 == "++" ]; then
  
       else
          # If invalid key was given
+         echo
          echo; f_done
 
       fi
