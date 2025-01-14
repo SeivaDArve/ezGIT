@@ -1448,6 +1448,7 @@ elif [ $1 == "++" ]; then
          f_stroken
          f_git_push
          f_git_status
+         echo
          echo; f_done
 
       else
