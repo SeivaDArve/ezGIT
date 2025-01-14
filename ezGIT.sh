@@ -1450,7 +1450,7 @@ elif [ $1 == "++" ]; then
          f_git_status
          echo
          echo; f_done
-
+ 
       else
          # If invalid key was given
          echo; f_done
