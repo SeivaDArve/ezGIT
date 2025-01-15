@@ -299,6 +299,7 @@ function f_git_push {
            echo
    f_talk; echo -n 'Sending to Github: '
      f_c3; echo    '`git push`'
+     f_rc
 
    git push
 }
@@ -307,6 +308,7 @@ function f_git_add_all {
            echo
    f_talk; echo -n 'Staging all files: '
      f_c3; echo    '`git add --all`'
+     f_rc
 
    git add --all
 }
@@ -315,6 +317,7 @@ function f_git_pull {
            echo
    f_talk; echo -n 'Receiving from Github: '
      f_c3; echo    '`git pull`'
+     f_rc
 
    git push
 }
@@ -356,6 +359,7 @@ function f_unstage_all {
 
    f_talk; echo -n 'Unstage all files: '
      f_c3; echo    '`git reset`'
+     f_rc
 
    git reset
 }
