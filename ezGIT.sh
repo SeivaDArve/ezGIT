@@ -845,6 +845,7 @@ if [ -z "$*" ]; then
 
    git config --get user.name
 
+           echo 
    f_talk; echo "User mail @ github.com"
            echo -n " > "
 
