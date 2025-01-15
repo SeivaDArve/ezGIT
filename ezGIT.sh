@@ -1523,9 +1523,6 @@ elif [ $1 == "++" ]; then
 
          f_stroken
 
-                 echo
-         f_talk; echo "pushing to github.com "
-
          f_git_push
 
          f_git_status
