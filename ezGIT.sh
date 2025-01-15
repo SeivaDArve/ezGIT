@@ -2185,6 +2185,21 @@ elif [ $1 == "origin-info" ]; then
 
    git remote show origin
 
+elif [ $1 == "SET" ] || [ $1 == "set-current-repo-to-sync-mode" ]; then
+   # Create a ".config.G" file inside the current repo to manage repo specific functions
+
+   # Possibilities: 
+   #  > Encrypt data before uploading
+   #  > Decrypt data after downloading
+   #    (semelhate ao alias `upk`)
+   #
+   #    Se houver algum ficheiro para abrir logo apos download (tal como a repo `upk` faz), assim o ficheiro o especificara
+   #    Depois aplicar em algum bloco de tarefas, `mo todo` ou `G todo`
+
+   # uDev:  testar `git crypt`
+
+   echo "uDev: set config file at each repo"
+  
 elif [ $1 == "file-host" ]; then
    echo "If you want to use github to download single files just like any other cloud storage instead of cloning entire repos, you can. Github supports that. Here is a link to teach how to do that while this function is under development"
    echo " > https://www.howtogeek.com/devops/how-to-download-single-files-from-a-github-repository/"
@@ -2199,6 +2214,3 @@ else
               echo " > Menu fzf: G m"
               echo " > For help: G h"
 fi
-
-
-
