@@ -620,7 +620,7 @@ function f_git_status_recursive {
    # Se nao houver nenhuma instancia por regularizar (em que $v_contador = 0) entao, apaga todo o ecra
       #echo "contador: $v_contador"  # Debug
       
-      [[ $v_contador == "0" ]] && f_greet && f_talk && echo "Git Status Recursivo (a todos os repositorios):" && echo -e " > Tudo OK (beta version)\n "
+      [[ $v_contador == "0" ]] && f_greet && f_talk && echo "Git Status Recursivo" && echo "     (a todos os repositorios):" && echo -e " > Tudo OK (beta version)\n "
 }
 
 function f_horizontal_line {
@@ -834,17 +834,17 @@ if [ -z "$*" ]; then
            echo ' > To Open fzf Main Menu: `G m`'
            echo ' > To print instructions: `G h`'
            echo ' > To print all configs:  `G cf h`'
+           echo
+
    #git config --list
 
    #f_horizontal_line
-   echo
 
    f_talk; echo "User Name @ at github.com"
            echo -n " > "
 
    git config --get user.name
 
-           echo
    f_talk; echo "User mail @ github.com"
            echo -n " > "
 
@@ -1180,6 +1180,7 @@ elif [ $1 == "." ]; then
       fi
 
       #f_random_sugestions
+      echo
       f_done
 
    elif [ $2 == "all" ] || [ $2 == "A" ]; then
