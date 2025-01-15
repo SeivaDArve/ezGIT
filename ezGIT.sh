@@ -209,14 +209,13 @@ function f_test_existent_configs {
    if ! [ -f ~/.gitconfig ]; then
       # Testing if file is absent
       f_greet
-      echo "ezGIT: "
-      echo " > File ~/.gitconfig does not exist (not found)."
-      echo " > The uploads graph on github.com does not update without a .gitconfig file at \$HOME dir"
-      echo
-      echo "uDev: Press C to edit the config file"
-      echo "uDev: Press I to install from DRYa"
-      echo "uDev: Press e to edit DRYa's version of the config"
-      echo "uDev: Press E to edit the config at \$HOME"
+      f_talk; echo " > File ~/.gitconfig does not exist (not found)."
+              echo " > The uploads graph on github.com does not update without a .gitconfig file at \$HOME dir"
+              echo
+              echo "uDev: Press C to edit the config file"
+              echo "uDev: Press I to install from DRYa"
+              echo "uDev: Press e to edit DRYa's version of the config"
+              echo "uDev: Press E to edit the config at \$HOME"
    fi
 
    # uDev: if config is unexistent: f_setGlobalConfig_menu
@@ -227,8 +226,8 @@ function f_setGlobalConfig_menu {
       # Can be called by either other function or by terminal command
 
    # Display thr intention of this function
-      echo "ezGIT: Function meant to configure git file"
-      echo "   # uDev: if file does not exist, display this message"
+      f_talk; echo "Function meant to configure git file"
+              echo " > uDev: if file does not exist, display this message"
 
 #
 #		# Inform that this menu is under construction:
@@ -298,21 +297,24 @@ function f_git_status {
 
 function f_git_push {
            echo
-   f_talk; echo 'Sending to Github: `git push`'
+   f_talk; echo -n 'Sending to Github: '
+     f_c3; echo    '`git push`'
 
    git push
 }
 
 function f_git_add_all {
            echo
-   f_talk; echo 'Staging all files: `git add --all`'
+   f_talk; echo -n 'Staging all files: '
+     f_c3; echo    '`git add --all`'
 
    git add --all
 }
 
 function f_git_pull {
            echo
-   f_talk; echo 'Receiving from Github: `git pull`'
+   f_talk; echo -n 'Receiving from Github: '
+     f_c3; echo    '`git pull`'
 
    git push
 }
@@ -352,7 +354,8 @@ function f_unstage_all {
 
    f_greet
 
-   f_talk; echo 'Unstage all files: `git reset`'
+   f_talk; echo -n 'Unstage all files: '
+     f_c3; echo    '`git reset`'
 
    git reset
 }
