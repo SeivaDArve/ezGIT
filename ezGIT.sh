@@ -2194,6 +2194,8 @@ elif [ $1 == "SET" ] || [ $1 == "set-current-repo-to-sync-mode" ]; then
    #
    #    Se houver algum ficheiro para abrir logo apos download (tal como a repo `upk` faz), assim o ficheiro o especificara
    #    Depois aplicar em algum bloco de tarefas, `mo todo` ou `G todo`
+   #     
+   #    Nesse ficheiro tambem incrementa um numero cada vez que faz uma alteracao, para que outros dispositivos com `jarve` instalado possam usar webscraping para saber se algum repo precisa ser atualizado. Web scraping é mais rapido do que um 'git request' com `git fetch`
 
    # uDev:  testar `git crypt`
 
