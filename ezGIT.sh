@@ -32,36 +32,56 @@ function f_colors_without_tput {
 	# > `echo ${_RED}To do something, specify an argument like \"G 2\"${_RESTORE}`
 }
 
-function f_c1 { 
-   # Mentioning user input or valiable input
-   # uDev: If tput is not installed, use system colors
-   
-   # Used at user inputs: git commits; ...
-   tput setaf 3
-}
 
-function f_c2 { 
-   # Similar to Bold
-   # uDev: If tput is not installed, use system colors
-   
-   # Used at: f_talk
-   tput setaf 4
-}
+#      
+#      
+#      
+#      
+#      
+#      
+#      # Colors now were repladed as a test. They now come from the boilerplate/ dir
+          source ${v_REPOS_CENTER}/DRYa/all/bin/boilerplates/colors-boilerplate.sh
+#      
+#      function f_c1 { 
+#         # Mentioning user input or valiable input
+#         # uDev: If tput is not installed, use system colors
+#         
+#         # Used at user inputs: git commits; ...
+#         tput setaf 3
+#      }
+#      
+#      function f_c2 { 
+#         # Similar to Bold
+#         # uDev: If tput is not installed, use system colors
+#         
+#         # Used at: f_talk
+#         tput setaf 4
+#      }
+#      
+#      function f_c3 { 
+#         # Similar to Bold
+#         # uDev: If tput is not installed, use system colors
+#         
+#         # Used at: f_talk
+#         tput setaf 6
+#      }
+#      
+#      function f_rc { 
+#         # Reset cor
+#         # uDev: If tput is not installed, use system colors
+#      
+#         tput sgr0
+#      }
+#      
+#      
+#      
+#      
+#      
 
-function f_c3 { 
-   # Similar to Bold
-   # uDev: If tput is not installed, use system colors
-   
-   # Used at: f_talk
-   tput setaf 6
-}
 
-function f_rc { 
-   # Reset cor
-   # uDev: If tput is not installed, use system colors
 
-   tput sgr0
-}
+
+
 
 function f_talk {
    # After colors are defined, create a "Face" for each `echo` with "ezGIT" descriptor  (example: `f_talk; echo "A dog is running"` )
