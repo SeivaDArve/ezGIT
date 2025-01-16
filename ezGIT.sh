@@ -40,6 +40,7 @@ function f_colors_without_tput {
 #      
 #      
 #      # Colors now were repladed as a test. They now come from the boilerplate/ dir
+          # uDev: test if drya repo exists, if not, an alternative should exist
           source ${v_REPOS_CENTER}/DRYa/all/bin/boilerplates/colors-boilerplate.sh
 #      
 #      function f_c1 { 
@@ -96,6 +97,7 @@ function f_done {
 }
 
 function f_greet {
+   # Clearing the screen and introducing the app
    # After colors are defined, create a "Face" for each one of our verbose outputs "page"
    clear
    f_c2
@@ -110,8 +112,7 @@ function f_heredoc {
    #       Therefore: uDev: Create a grep function to grep all 'if [' and 'elif' in this document and along with that, search one more line below with the comment that tells what that function does
 
 
-   # Clearing the screen and introducing the app
-      f_greet
+   f_greet
 
    # Create an horizontal line using DRYa's built-in scripts
       echo $v_line
