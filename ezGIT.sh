@@ -2136,6 +2136,9 @@ elif [ $1 == "rb" ]; then
 
    fi
 
+elif [ $1 == "n" ] || [ $1 == "next" ]; then
+   echo "uDev: recursively goes into all repos and stops at the first that is not normal yet (possibilities: commits to be made, updates to fetch, push to github is needed, etc... )"
+
 elif [ $1 == "uDev" ]; then
    echo 'This function uses the find command to search "# uDev" comments on the code'
 
