@@ -1585,6 +1585,43 @@ elif [ $1 == "++" ]; then
 
                  echo
          f_talk; echo "All Done!"
+
+   elif [ $2 == "s" ] || [ $2 == "same-as-last-commit" ]; then
+      # Update adding only info that is about the same as last commit
+      # uDev: Squash automatically with last commit
+
+      f_greet
+
+      # Sending automatically everything with an automated commit message
+         # Message to use as commit:
+         v_aut_message="This commit is the same as last commit (created automatically)"
+
+         f_talk; echo "running 's' or 'same-as-last-commit':"
+                 echo -e " > Commits and pushes all contents of the repo fully automatic "
+                 echo
+
+         f_talk; echo "default commit message:"
+                 echo -n " > "
+           f_c1; echo "$v_aut_message"
+           f_rc; echo
+
+         f_git_add_all && echo " > Done!"
+
+                 echo
+         f_talk; echo "Creating an automatic commit"
+                 git commit -m "$v_aut_message"
+
+         f_git_status
+
+         f_stroken
+
+         f_git_push
+
+         f_git_status
+
+                 echo
+         f_talk; echo "All Done!"
+
    else
       # If the arg given is not recognized as a saved git-commit-message, then:
       f_talk; echo "the last arg is not recognized"
