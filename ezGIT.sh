@@ -1586,7 +1586,7 @@ elif [ $1 == "++" ]; then
                  echo
          f_talk; echo "All Done!"
 
-   elif [ $2 == "s" ] || [ $2 == "same-as-last-commit" ]; then
+   elif [ $2 == "s" ] || [ $2 == "same" ] || [ $2 == "same-as-last-commit" ]; then
       # Update adding only info that is about the same as last commit
       # uDev: Squash automatically with last commit
 
