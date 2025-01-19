@@ -1622,6 +1622,14 @@ elif [ $1 == "++" ]; then
                  echo
          f_talk; echo "All Done!"
 
+   elif [ $2 == "!" ]; then
+      f_greet 
+      f_talk; echo "uDev: Option to commit current state and automatically squash it with the previous commit"
+      echo
+      f_talk; echo "Previous commit was:"
+      echo -n " > "
+      git log --oneline | head -n 1
+
    else
       # If the arg given is not recognized as a saved git-commit-message, then:
       f_talk; echo "the last arg is not recognized"
