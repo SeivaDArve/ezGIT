@@ -41,7 +41,7 @@ function f_colors_without_tput {
 #      
 #      # Colors now were repladed as a test. They now come from the boilerplate/ dir
           # uDev: test if drya repo exists, if not, an alternative should exist
-          source ${v_REPOS_CENTER}/DRYa/all/bin/boilerplates/colors-boilerplate.sh
+         source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
 #      
 #      function f_c1 { 
 #         # Mentioning user input or valiable input
@@ -1250,10 +1250,15 @@ elif [ $1 == "multi" ]; then
       ((n=n+1))
    done
 
-elif [ $1 == "count^" ]; then
+elif [ $1 == "count" ] || [[ $1 == "N" ]]; then
 
-   f_greet
-   f_curl_uploads_count
+   if [[ -z $2 ]]; then
+      f_talk; echo "This fx is meant to count how many uploads to github.com happened in a specific day"
+
+   elif [[ $2 == "^" ]] || [[ $2 == "uploaded" ]]; then
+      f_greet
+      f_curl_uploads_count
+   fi
 
 
 # elif [ $1 == "raspberry bare repo" ]; then
