@@ -448,6 +448,53 @@ function f_underscore_creator {
             v_line=$v_underscoreCount
 }
 
+      function f_blind_brain {
+         # Antes do upload, verificar qual é o ramo atual, e implicar com o user cajo seja 'main'
+         # Porque blind updates terá a intençao de ser apenas para ramos 'dev' 
+            f_save_current_branch   
+            #echo $v_current_ramo 
+            if [ $v_current_ramo == "main" ]; then 
+               f_talk; echo "Blind Update and Upload"
+                       echo  " > Voce está no ramo 'main' "
+                       echo  " > Tem a certeza que quer um Blind-Update???"
+                       echo
+                       echo  "ANY KEY: continuar || Ctrl-C: cancelar"
+               read -sn 1 -p " > "
+                       echo
+                       echo
+            fi
+
+         # Sending automatically everything with an automated commit message
+            # Message to use as commit:
+               v_aut_message="Pushed to github.com automatically by ezGIT app"
+
+            f_talk; echo    "running 'blind-upload' or 'b':"
+                    echo -e " > Commits and pushes all contents of the repo fully automatic "
+                    echo
+
+            f_talk; echo "default commit message:"
+                    echo " > $v_aut_message"
+                    echo
+
+            f_talk; echo "adding all files to make 1 commit"
+                    git add --all && echo " > Done!"
+                    echo
+
+            f_talk; echo "Creating an automatic commit"
+                    git commit -m "$v_aut_message"
+
+            f_git_status
+
+            f_stroken
+
+            f_git_push
+
+            f_git_status
+
+                    echo
+            f_talk; echo "Done!"
+      }
+
 function f_output {
    # Function used by: f_git_pull_recursive, f_git_status_recursive ...
       # To output it's Git Status
@@ -1511,50 +1558,38 @@ elif [ $1 == "++" ]; then
 
       f_greet
 
-      # Antes do upload, verificar qual é o ramo atual, e implicar com o user cajo seja 'main'
-      # Porque blind updates terá a intençao de ser apenas para ramos 'dev' 
-         f_save_current_branch   
-         #echo $v_current_ramo 
-         if [ $v_current_ramo == "main" ]; then 
-            f_talk; echo "Blind Update and Upload"
-                    echo  " > Voce está no ramo 'main' "
-                    echo  " > Tem a certeza que quer um Blind-Update???"
-                    echo
-                    echo  "ANY KEY: continuar || Ctrl-C: cancelar"
-            read -sn 1 -p " > "
-                    echo
-                    echo
-         fi
+      if [ -z $3 ]; then
+         f_blind_brain
 
-      # Sending automatically everything with an automated commit message
-         # Message to use as commit:
-            v_aut_message="Pushed to github.com automatically by ezGIT app"
+      elif [ $3 == "A" ]; then
+         # Recursively push ALL automatically
 
-         f_talk; echo "running 'blind-upload' or 'b':"
-                 echo -e " > Commits and pushes all contents of the repo fully automatic "
-                 echo
 
-         f_talk; echo "default commit message:"
-                 echo " > $v_aut_message"
-                 echo
+         cd ${v_REPOS_CENTER}
 
-         f_talk; echo "adding all files to make 1 commit"
-			        git add --all && echo " > Done!"
-                 echo
+         for i in $(ls); do 
+            # Filter directories from files
+               v_object_type=$(file $i)
 
-         f_talk; echo "Creating an automatic commit"
-                 git commit -m "$v_aut_message"
+            # If the variable v_object_type returns a directory, we navigate into it
+               if [[ $v_object_type =~ "dir" ]]; then 
+                  cd $i
+               
+                  
+               f_blind_brain
 
-         f_git_status
 
-         f_stroken
 
-         f_git_push
+            # Saving the git status into a variable without outputing it to the screen
+               # It sends an error if dir is not repository. Therefore we send Sandard error do /dev/null
+               s=$(git pull)  ## Or: s=$(git pull 2>/dev/null) 
 
-         f_git_status
+            # Navigating backwards before restarting the 'for loop' 
+               cd ..
+               fi
+            done
+      fi
 
-                 echo
-         f_talk; echo "Done!"
 
    elif [ $2 == "u" ] || [ $2 == "udev" ]; then
       # Update adding only uDev comments, variable "u"
