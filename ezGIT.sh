@@ -468,15 +468,15 @@ function f_underscore_creator {
             # Message to use as commit:
                v_aut_message="Pushed to github.com automatically by ezGIT app"
 
-            f_talk; echo    "running 'blind-upload' or 'b':"
+            f_talk; echo    "Running 'blind-upload' or 'b':"
                     echo -e " > Commits and pushes all contents of the repo fully automatic "
                     echo
 
-            f_talk; echo "default commit message:"
+            f_talk; echo "Default commit message:"
                     echo " > $v_aut_message"
                     echo
 
-            f_talk; echo "adding all files to make the automatic commit"
+            f_talk; echo "Adding all files to make the automatic commit"
                     git add --all && echo " > Done!"
                     echo
 
