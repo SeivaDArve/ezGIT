@@ -476,7 +476,7 @@ function f_underscore_creator {
                     echo " > $v_aut_message"
                     echo
 
-            f_talk; echo "adding all files to make 1 commit"
+            f_talk; echo "adding all files to make the automatic commit"
                     git add --all && echo " > Done!"
                     echo
 
