@@ -321,7 +321,7 @@ function f_git_fetch {
      f_rc
 
    git fetch
-   git status
+   git status; s=$(git status)
 }
 
 function f_git_push {
@@ -348,7 +348,7 @@ function f_git_pull {
      f_c3; echo    '`git pull`'
      f_rc
 
-   git push
+   git pull
 }
 
 function f_git_commit {
@@ -1821,12 +1821,36 @@ elif [ $1 == "vv" ] || [ $1 == "fetch" ]; then
 
    elif [ $2 == "loop" ] || [ $2 == "l" ]; then
       
+      v_secs="10"  # Time it takes to restart the loop
+
+      v_off=" > Currently OFF"
+      v_on=" > Currently ON"
+      v_state=$v_off
+
       while true
       do
          f_greet
-         git fetch
-         f_git_status
-         sleep 10
+         f_git_fetch
+
+         # Download changes, if any
+            [[ $v_state =~ "ON" ]] && [[ $s =~ "is behind" ]] && f_git_pull && f_git_status
+         
+                 echo
+                 f_talk; echo "Press T to toggle automatic download (with git pull)" 
+                 echo "$v_state"
+                 echo
+
+         f_talk; echo "Next loop in: $v_secs" 
+
+         read -sn1 -t $v_secs v_key
+
+         # Toggle automatic downloads On/Off
+            [[ $v_key == "t" ]] && [[ $v_state =~ "OFF" ]] && v_state=$v_on  && continue
+            [[ $v_key == "T" ]] && [[ $v_state =~ "OFF" ]] && v_state=$v_on  && continue
+            [[ $v_key == "t" ]] && [[ $v_state =~ "ON"  ]] && v_state=$v_off && continue
+            [[ $v_key == "T" ]] && [[ $v_state =~ "ON"  ]] && v_state=$v_off && continue
+
+           
       done
    fi
 
