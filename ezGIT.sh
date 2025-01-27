@@ -310,11 +310,19 @@ function f_git_status {
    git status
 }
 
-#function f_git_statusno_color {
-#   # uDev: Create a git status function to be used by the command '$ watch'
-#   git status
-#   git fetch
-#}
+function f_git_fetch {
+  # May use a while loop and waiting for upstream changes without downloading
+
+           echo
+   f_talk; echo -n 'Current State: '
+     f_c3; echo -n '`git fetch`'
+     f_rc; echo -n ' and '
+     f_c3; echo    '`git status`'
+     f_rc
+
+   git fetch
+   git status
+}
 
 function f_git_push {
            echo
@@ -341,12 +349,6 @@ function f_git_pull {
      f_rc
 
    git push
-}
-
-function f_git_pull_dot_files {
-   f_talk; echo "git pull and install: dot-files"
-           echo " > (files stored at repo: drya)"
-           echo " > cd drya; git pull; cp .../filss .../places"
 }
 
 function f_git_commit {
@@ -1806,12 +1808,27 @@ elif [ $1 == "v" ] || [ $1 == "pull" ]; then
          f_heredoc
       fi
 
-   elif [[ $2 == "dot" ]]; then
-      f_git_pull_dot_files
-
    fi
 
-# uDev: 'G vv' to Pull changes and exec a specific script inside the repo (for example at DRYa to update the entire system includim other repos)
+elif [ $1 == "vv" ] || [ $1 == "fetch" ]; then
+   # 'G vv' fetch changes
+   # It may exec specific scripts inside the current repo (for example at DRYa to update the entire system includim other repos)
+
+   if [[ -z $2 ]]; then
+
+      f_greet
+      f_git_fetch
+
+   elif [ $2 == "loop" ] || [ $2 == "l" ]; then
+      
+      while true
+      do
+         f_greet
+         git fetch
+         f_git_status
+         sleep 10
+      done
+   fi
 
 elif [ $1 == "^" ] || [ $1 == "push" ]; then
    # Simple git push
