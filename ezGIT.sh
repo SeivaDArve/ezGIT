@@ -10,6 +10,7 @@
 #----------------------------------------------------------------------------
 
 # uDev: must create alias A as "all" (example: 'G . all' and 'G . A')
+
 # uDev: For new users, everytime this script runs, a function CAN be enabled to go on giving random instructions about how ezGIT works, no need to go and read the man pages
 
 # uDev: Functions for text colors
@@ -20,90 +21,44 @@
 
 # uDev: 1x por cada mes, fazer git pull para o HD externo no contexto de backup (pode ate ser usado git --bare)
 
+# uDev: Check at every run if email and username exist and are configured according a personal database of emails and usernames
+#       Without a proper email, github will not count your commits for their graph of your activity
+
+# uDev: if the chosen repo to 'git push' is a repo that is usually encripted, do not allow to push before using encryption
+
+# uDev: Instead of creating repos at github.com, then clone, then use: instead, create a function with git init and then push to the remote
+
+
+
 # If this script runs, a variable is set to tell which one repo was the last one to run
    v_repo="ezGIT"
 
-function f_colors_without_tput {
-	# Text Colors before discovering '$ tput setaf'
-	   _RESTORE=$(echo -en '\001\033[0m\002')
-	       _RED=$(echo -en '\001\033[00;31m\002')
+# Colors now were repladed as a test. They now come from the boilerplate/ dir
+   # uDev: test if drya repo exists, if not, an alternative should exist
+   source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
 
-	# Example of Text formating before discovering '$ tput'
-	# > `echo ${_RED}To do something, specify an argument like \"G 2\"${_RESTORE}`
-}
-
-
-#      
-#      
-#      
-#      
-#      
-#      
-#      # Colors now were repladed as a test. They now come from the boilerplate/ dir
-          # uDev: test if drya repo exists, if not, an alternative should exist
-         source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
-#      
-#      function f_c1 { 
-#         # Mentioning user input or valiable input
-#         # uDev: If tput is not installed, use system colors
-#         
-#         # Used at user inputs: git commits; ...
-#         tput setaf 3
-#      }
-#      
-#      function f_c2 { 
-#         # Similar to Bold
-#         # uDev: If tput is not installed, use system colors
-#         
-#         # Used at: f_talk
-#         tput setaf 4
-#      }
-#      
-#      function f_c3 { 
-#         # Similar to Bold
-#         # uDev: If tput is not installed, use system colors
-#         
-#         # Used at: f_talk
-#         tput setaf 6
-#      }
-#      
-#      function f_rc { 
-#         # Reset cor
-#         # uDev: If tput is not installed, use system colors
-#      
-#         tput sgr0
-#      }
-#      
-#      
-#      
-#      
-#      
+   v_greet="ezGIT"
+   v_talk="ezGIT: "
+   # function f_c1  # Used at user inputs: git commits; ...
+   # function f_c2  # Used at: f_talk
+   # function f_c3  # Used at: f_talk
+   # function f_rc  # Reset cor
 
 
-
-
-
-
-function f_talk {
-   # After colors are defined, create a "Face" for each `echo` with "ezGIT" descriptor  (example: `f_talk; echo "A dog is running"` )
-   f_c2; echo -n "ezGIT: "
-   f_rc
-}
-
-function f_done {
-   # After each ezGIT function finishes, say "done"
-
-   f_talk; echo "Done!"
-}
-
-function f_greet {
-   # Clearing the screen and introducing the app
-   # After colors are defined, create a "Face" for each one of our verbose outputs "page"
-   clear
-   f_c2
-   figlet "ezGIT" 2>/dev/null || echo -e "( ezGIT )\n"
-   f_rc 
-}
+#     function f_talk {
+#        # After colors are defined, create a "Face" for each `echo` with "ezGIT" descriptor  (example: `f_talk; echo "A dog is running"` )
+#        f_c2; echo -n "ezGIT: "
+#        f_rc
+#     }
+#     
+#     function f_greet {
+#        # Clearing the screen and introducing the app
+#        # After colors are defined, create a "Face" for each one of our verbose outputs "page"
+#        clear
+#        f_c2
+#        figlet "ezGIT" 2>/dev/null || echo -e "( ezGIT )\n"
+#        f_rc 
+#     }
 
 function f_heredoc {
    # dee-up: 'Instructions for ezGIT functions'  #78654
@@ -385,6 +340,13 @@ function f_unstage_all {
    git reset
 }
 
+function f_test_if_currently_at_any_repo {
+   # Test if we are actually at a git repository
+      git status &>/dev/null
+
+      [[ $? =~ "1" ]] && f_talk && echo -e "You are not currently at any repo \n" && exit 1
+}
+
 function f_save_current_branch {
    # Guardar numa variavel qual o ramo atual
 
@@ -437,52 +399,52 @@ function f_underscore_creator {
             v_line=$v_underscoreCount
 }
 
-      function f_blind_brain {
-         # Antes do upload, verificar qual é o ramo atual, e implicar com o user cajo seja 'main'
-         # Porque blind updates terá a intençao de ser apenas para ramos 'dev' 
-            f_save_current_branch   
-            #echo $v_current_ramo 
-            if [ $v_current_ramo == "main" ]; then 
-               f_talk; echo "Blind Update and Upload"
-                       echo  " > Voce está no ramo 'main' "
-                       echo  " > Tem a certeza que quer um Blind-Update???"
-                       echo
-                       echo  "ANY KEY: continuar || Ctrl-C: cancelar"
-               read -sn 1 -p " > "
-                       echo
-                       echo
-            fi
+function f_blind_brain {
+   # Antes do upload, verificar qual é o ramo atual, e implicar com o user cajo seja 'main'
+   # Porque blind updates terá a intençao de ser apenas para ramos 'dev' 
+      f_save_current_branch   
+      #echo $v_current_ramo 
+      if [ $v_current_ramo == "main" ]; then 
+         f_talk; echo "Blind Update and Upload"
+                 echo  " > Voce está no ramo 'main' "
+                 echo  " > Tem a certeza que quer um Blind-Update???"
+                 echo
+                 echo  "ANY KEY: continuar || Ctrl-C: cancelar"
+         read -sn 1 -p " > "
+                 echo
+                 echo
+      fi
 
-         # Sending automatically everything with an automated commit message
-            # Message to use as commit:
-               v_aut_message="Pushed to github.com automatically by ezGIT app"
+   # Sending automatically everything with an automated commit message
+      # Message to use as commit:
+         v_aut_message="Pushed to github.com automatically by ezGIT app"
 
-            f_talk; echo    "Running 'blind-upload' or 'b':"
-                    echo -e " > Commits and pushes all contents of the repo fully automatic "
-                    echo
+      f_talk; echo    "Running 'blind-upload' or 'b':"
+              echo -e " > Commits and pushes all contents of the repo fully automatic "
+              echo
 
-            f_talk; echo "Default commit message:"
-                    echo " > $v_aut_message"
-                    echo
+      f_talk; echo "Default commit message:"
+              echo " > $v_aut_message"
+              echo
 
-            f_talk; echo "Adding all files to make the automatic commit"
-                    git add --all && echo " > Done!"
-                    echo
+      f_talk; echo "Adding all files to make the automatic commit"
+              git add --all && echo " > Done!"
+              echo
 
-            f_talk; echo "Creating an automatic commit"
-                    git commit -m "$v_aut_message"
+      f_talk; echo "Creating an automatic commit"
+              git commit -m "$v_aut_message"
 
-            f_git_status
+      f_git_status
 
-            f_stroken
+      f_stroken
 
-            f_git_push
+      f_git_push
 
-            f_git_status
+      f_git_status
 
-                    echo
-            f_talk; echo "Done!"
-      }
+              echo
+      f_talk; echo "Done!"
+}
 
 function f_output {
    # Function used by: f_git_pull_recursive, f_git_status_recursive ...
@@ -753,14 +715,6 @@ function f_tell_repo_name {
       fi 
 }
 
-# uDev: Check at every run if email and username exist and are configured according a personal database of emails and usernames
-	# Without a proper email, github will not count your commits for their graph of your activity
-
-# uDev: if the chosen repo to 'git push' is a repo that is usually encripted, do not allow to push before using encryption
-
-# uDev: Instead of creating repos at github.com, then clone, then use: instead, create a function with git init and then push to the remote
-
-
 function f_curl_uploads_count {
 
    # Description: Counts how many uploads were made to GitHub.com
@@ -851,6 +805,33 @@ function f_curl_uploads_count {
    echo "uDev: Bugs: Some days may not give any output, but may have uploads" 
    echo "uDev: While bug is not fixed: Check the source graph at: "
    echo " > https://github.com/SeivaDArve"
+}
+
+function f_print_invalid_items {
+   # Fx that prints both non-repos and files
+
+   f_talk; echo "Invalid repos and files (should be moved out): "
+
+   # Print non-repos
+      for i in $v_non_repo
+      do
+         echo " > $i/"
+      done
+
+
+   # Print `echo` only if both variables exist (to make space between them)
+      [[ ! -z $v_files    ]] && [[ ! -z $v_non_repo ]] && echo
+
+
+   # Print files
+      for i in $v_files
+      do
+         echo " > $i"
+      done
+
+   # Print a last echo (to distance from f_done)
+      echo
+
 }
 
 
@@ -999,6 +980,7 @@ elif [ $1 == "config" ] || [ $1 == "cf" ]; then
 
    else
       f_talk; echo "Invalid function, or uDev"
+
    fi
    
 
@@ -1020,8 +1002,12 @@ elif [ $1 == ".." ] || [ $1 == "!" ] || [ $1 == "log" ]; then
       # If no arg is given, show normal git log
 
       f_greet
-      f_talk; echo 'Show entire git log `git log`'
-              echo
+      f_talk; echo -n 'Show entire git log '
+        f_c3; echo    '`git log`'
+        f_rc; echo
+
+      f_test_if_currently_at_any_repo
+
       git log
 
    elif [ $2 == "1" ]; then
@@ -1031,6 +1017,8 @@ elif [ $1 == ".." ] || [ $1 == "!" ] || [ $1 == "log" ]; then
       f_talk; echo -n 'Show entire git log with single lines '
         f_c3; echo    '`git log --oneline`'
         f_rc; echo
+
+      f_test_if_currently_at_any_repo
 
       git log --oneline
 
@@ -1042,6 +1030,10 @@ elif [ $1 == ".." ] || [ $1 == "!" ] || [ $1 == "log" ]; then
               echo -n ' > '
         f_c3; echo       '`git log --oneline | head -n 1`'
         f_rc; echo
+
+
+      f_test_if_currently_at_any_repo
+
 
       # Save last commit message for text manipulation
          v_last_commit=$(git log --oneline | head -n 1)
@@ -1121,27 +1113,27 @@ elif [ $1 == "." ]; then
    #       Remove/delete last stashed item: git stash drop
    #       Drop/delete all stashed items: git stash clear
    
-   # uDev: Perform git fetch before git status, this way the user knows how much ahead or behind his branch is according to the origin
+   # uDev: Perform git fetch before git status
    
    # uDev: Tell the user if "encript before push" + "decript after pull" is "on" (detects a directory .git-encrypt/ in the tree
 
    if [[ -z $2 ]]; then
       # If no extra args are given, git status only to current repo
 
-      f_greet 
-
       # Note: 3 possibilities when calling: '$ G .'
       #  1. We are inside a valid repository
       #  2. We are at the root directory where all repos are found
       #  3. We are outside a valid repository (somewhere else ijnthe file system)
       #
-      # If used on the root of ${v_REPOS_CENTER} it will throw an error, therefore, we could fix this
-      #
-      #  Here we act accordingly:
+      #  If used on the root of ${v_REPOS_CENTER} it will throw an error, therefore, we could fix this
+
+
+      f_greet 
 
       if [[ $(pwd) == ${v_REPOS_CENTER} ]]; then 
-         # equal: For sure we are not inside a repo. And we recognize this dir. Listing all repos here
-         # We are at the Root of all repos
+         # 1. For sure we are not inside a repo, 
+         #    we are exactly at the Repos Center. 
+         #    ... Listing all repos here
 
          f_talk; echo 'git status: `G .`'
                  echo ' > This command does not work outside a git repository'
@@ -1152,37 +1144,30 @@ elif [ $1 == "." ]; then
                  echo
          f_talk; echo "Listing all valid repositories: "
 
-         #echo " > uDev: test if list is dir instead of using \$ls"
-         
 
-         # Ficheiro que menciona ficheiros que convem mover para fora de Repos-Center
-            unset v_files
+         # Vai ser filtrado pastas-repo, pastas-nao-repo, ficheiros. Para os dois ultimos, limpamos as suas variaveis
+            unset v_files     # Ficheiro que menciona ficheiros que convem mover para fora de Repos-Center
+            unset v_non_repo  # Ficheiro que menciona diretorios que convem mover para fora de Repos-Center
 
-         # Ficheiro que menciona diretorios que convem mover para fora de Repos-Center
-            unset v_non_repo
+            for i in $(ls); do
+               # Listar recursivamente as pastas que sao repo (e enfiar em 2 variaveis todos os ficheiros e pastas que nao sao repo)
 
-         # Listar todas as pastas que sao repo (e enfiar em 2 variaveis todos os ficheiros e pastas que nao sao repo)
-         # Filtra entre pastas e ficheiros
-         # Entre as pastas, filtra repos e nao-repos
-            for i in $(ls)
-            do
-               
                # Verificar o tipo de TODOS os ficheiros
                   v_tipo=$(file $i)
 
 
                if [[ $v_tipo =~ "directory" ]]; then
-                  # Saber se é pasta ou ficheiro:
+                  # Saber se é pasta ou ficheiro
 
                   # Se for pasta, testa se é repo ou nao
-                     cd $i  # Entra na pasta a testar se é repo
-                     ls .git 1>/dev/null 2>/dev/null  # Procura por uma pasta especifica que so os repos tem
-                     v_last_cmd=$?  # Guarda o estado de saida do "teste" se é ou nao é repositorio
+                     cd $i                # Entra na pasta a testar se é repo
+                     ls .git &>/dev/null  # Procura por uma pasta especifica que so os repos tem (pasta .git)
+                     v_last_cmd=$?        # Guarda o estado de saida do "teste" se é ou nao é repositorio
 
 
                   # Apos o teste feito, filtra para cada variavel, as pastas que sao repo e as que nao sao repo
-                     [[ $v_last_cmd == 0 ]] && echo " > $i/"
-                     [[ $v_last_cmd == 2 ]] && v_non_repo="$v_non_repo $i"
+                     [[ $v_last_cmd == 0 ]] && echo " > $i/"               # Se o teste correu bem, listar
+                     [[ $v_last_cmd == 2 ]] && v_non_repo="$v_non_repo $i" # Se o teste correu mal, guardar essa info
 
                   # Voltar a pasta inicial
                      cd ..
@@ -1194,42 +1179,14 @@ elif [ $1 == "." ]; then
 
             done
 
-         # Print a last echo (to distance from f_done)
-            echo
-
-         function f_print_invalid_items {
-            # Fx that prints both non-repos and files
-
-            f_talk; echo "Invalid repos and files (should be moved out): "
-
-            # Print non-repos
-               for i in $v_non_repo
-               do
-                  echo " > $i/"
-               done
-
-
-            # Print `echo` only if both variables exist (to make space between them)
-               [[ ! -z $v_files    ]] && [[ ! -z $v_non_repo ]] && echo
-
-
-            # Print files
-               for i in $v_files
-               do
-                  echo " > $i"
-               done
-
-            # Print a last echo (to distance from f_done)
-               echo
-
-         }
+            echo # Print a last echo (to distance from f_done)
 
          # See if any of the variables are set. If so, run the fx that prints them
-         unset v_verbose
-         [[ ! -z $v_non_repo ]] && v_verbose=1
-         [[ ! -z $v_files    ]] && v_verbose=1
-         
-         [[ $v_verbose == "1" ]] && f_print_invalid_items
+            unset v_verbose
+            [[ ! -z $v_non_repo ]] && v_verbose=1
+            [[ ! -z $v_files    ]] && v_verbose=1
+            
+            [[ $v_verbose == "1" ]] && f_print_invalid_items
 
 
 
@@ -1250,7 +1207,7 @@ elif [ $1 == "." ]; then
             # If variable $? is equal to 1 or is equal to 2, then the last command issued in bash was a failure, an error occured. If $? is 0, it means last function ran ok.
 
          # Possibility 1 and 2, (testing if valid or invalid):
-            git status 1>/dev/null 2>/dev/null  ## Try a normal git status but with no output. MUST BE ONE COMMAND ONLY, becaus $? stores the status of the sucess only of the last command. If we run 'git status' inside .git we get the status code 128 instead of 0. so both numbers must be checked
+            git status &>/dev/null  ## Try a normal git status but with no output. MUST BE ONE COMMAND ONLY, becaus $? stores the status of the sucess only of the last command. If we run 'git status' inside .git we get the status code 128 instead of 0. so both numbers must be checked
             v_status_code=$?
 
          if [[ $v_status_code != "0" ]] && [ $v_status_code != "128" ]; then  ## Test if last command was a failure (not equal to 0)
