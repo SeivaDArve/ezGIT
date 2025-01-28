@@ -1519,6 +1519,7 @@ elif [ $1 == "++" ]; then
 
 			  f_c2; read -s -N 1 -t 5 -p "P " v_ans
 			  f_rc
+           echo
          
 
       if [ -z $v_ans ]; then
