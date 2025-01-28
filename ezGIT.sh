@@ -366,9 +366,9 @@ function f_git_commit {
    f_talk; echo -n 'git commit -m "'
      f_c1; echo -n               "$v_ans"
      f_rc; echo                        '"'
-           echo
 
    git commit -m "$v_ans"  # uDev: Add f_sucess
+           echo
 
 }
 
