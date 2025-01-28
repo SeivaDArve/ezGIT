@@ -337,9 +337,10 @@ function f_unstage_all {
 
    f_talk; echo -n 'Unstage all files: '
      f_c3; echo    '`git reset`'
-     f_rc; echo
+     f_rc
 
    git reset
+   echo
 }
 
 function f_test_if_currently_at_any_repo {
@@ -1236,7 +1237,6 @@ elif [ $1 == "." ]; then
          fi
       fi
 
-      echo
       f_done
 
    elif [ $2 == "all" ] || [ $2 == "A" ]; then
