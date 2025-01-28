@@ -445,7 +445,6 @@ function f_blind_brain {
 
       f_git_status
 
-              echo
       f_talk; echo "Done!"
 }
 
