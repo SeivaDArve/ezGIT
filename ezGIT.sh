@@ -368,6 +368,7 @@ function f_git_commit {
      f_rc; echo                        '"'
 
    git commit -m "$v_ans"  # uDev: Add f_sucess
+
            echo
 
 }
@@ -1047,8 +1048,8 @@ elif [ $1 == ".." ] || [ $1 == "!" ] || [ $1 == "log" ]; then
 
          v_ID=$(echo "$v_last_commit" | cut -d " " -f 1)
 
-         f_talk; echo -n "Last commit Hash is: "
-           f_c3; echo "$v_ID"
+         f_talk; echo "Last commit Hash was: "
+           f_c3; echo " > $v_ID"
            f_rc; echo
 
          v_commit=$(echo "$v_last_commit" | sed "s/$v_ID //g")
