@@ -411,8 +411,9 @@ function f_blind_brain {
                  echo  " > Voce está no ramo 'main' "
                  echo  " > Tem a certeza que quer um Blind-Update???"
                  echo
-                 echo  "ANY KEY: continuar || Ctrl-C: cancelar"
-         read -sn 1 -p " > "
+         #        echo  "ANY KEY: continuar || Ctrl-C: cancelar"
+         #read -sn 1 -p " > "
+         f_prsK
                  echo
                  echo
       fi
