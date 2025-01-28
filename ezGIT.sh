@@ -302,10 +302,9 @@ function f_setGlobalConfig_menu {
 }
 
 function f_git_status {
-           echo
    f_talk; echo -n 'Current State: '
      f_c3; echo    '`git status`'
-     f_rc
+     f_rc; echo
 
    git status
 }
@@ -313,40 +312,36 @@ function f_git_status {
 function f_git_fetch {
   # May use a while loop and waiting for upstream changes without downloading
 
-           echo
    f_talk; echo -n 'Current State: '
      f_c3; echo -n '`git fetch`'
      f_rc; echo -n ' and '
      f_c3; echo    '`git status`'
-     f_rc
+     f_rc; echo
 
    git fetch
    git status; s=$(git status)
 }
 
 function f_git_push {
-           echo
    f_talk; echo -n 'Sending to Github: '
      f_c3; echo    '`git push`'
-     f_rc
+     f_rc; echo
 
    git push
 }
 
 function f_git_add_all {
-           echo
    f_talk; echo -n 'Staging all files: '
      f_c3; echo    '`git add --all`'
-     f_rc
+     f_rc; echo
 
    git add --all
 }
 
 function f_git_pull {
-           echo
    f_talk; echo -n 'Receiving from Github: '
      f_c3; echo    '`git pull`'
-     f_rc
+     f_rc; echo
 
    git pull
 }
@@ -355,7 +350,7 @@ function f_git_commit {
    # Git commit -m ""
 
    # uDev: If git status says "nothing to commit, working tree clean" then we must not ask for a commit message. Unless there are N number of commits to upload, which in that case, G ++ be used anyway
-           echo
+
    f_talk; echo -en "Adding a commit message "
      f_c1; echo -n                          "i"
      f_rc; echo                              " (to staged files):"
@@ -382,7 +377,7 @@ function f_unstage_all {
 
    f_talk; echo -n 'Unstage all files: '
      f_c3; echo    '`git reset`'
-     f_rc
+     f_rc; echo
 
    git reset
 }
@@ -401,19 +396,8 @@ function f_tell_current_branch {
    f_save_current_branch
 
    f_c1; echo "$v_current_ramo"
-   f_rc
+   f_rc; echo
 
-}
-
-function f_random_sugestions {
-   # From a list of hints/sugestions, give one diferent every time this function is called
-
-   # uDev: Sort random:
-      v_sugestion_1="Random sugestion for today: To edit and view available branches: 'G ,'"
-      #v_sugestion_2="Sugestion 2 (uDev)"
-
-           echo
-   f_talk; echo $v_sugestion_1
 }
 
 function f_underscore_creator {
@@ -1288,7 +1272,6 @@ elif [ $1 == "." ]; then
          fi
       fi
 
-      #f_random_sugestions
       echo
       f_done
 
@@ -1553,6 +1536,9 @@ elif [ $1 == "++" ]; then
    if [ -z $2 ]; then
 
       f_greet
+
+		f_talk; echo 'Staging all and commiting `G ++`'
+              echo
 
       f_git_add_all  # Git add --all
 
