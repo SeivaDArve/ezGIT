@@ -282,7 +282,7 @@ function f_git_fetch {
 function f_git_push {
    f_talk; echo -n 'Sending to Github: '
      f_c3; echo    '`git push`'
-     f_rc; echo
+     f_rc
 
    git push
            echo
