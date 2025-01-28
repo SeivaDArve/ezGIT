@@ -413,7 +413,7 @@ function f_blind_brain {
                  echo
          #        echo  "ANY KEY: continuar || Ctrl-C: cancelar"
          #read -sn 1 -p " > "
-         f_prsK
+         v_txt="G ++ b"; f_prsK
                  echo
                  echo
       fi
