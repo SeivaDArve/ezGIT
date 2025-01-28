@@ -1226,6 +1226,7 @@ elif [ $1 == "." ]; then
             f_talk; echo "Repo Name: $v_repo"
                     echo
 
+
             #f_find_basename
 
             f_git_status
