@@ -450,52 +450,52 @@ function f_underscore_creator {
             v_line=$v_underscoreCount
 }
 
-      function f_blind_brain {
-         # Antes do upload, verificar qual é o ramo atual, e implicar com o user cajo seja 'main'
-         # Porque blind updates terá a intençao de ser apenas para ramos 'dev' 
-            f_save_current_branch   
-            #echo $v_current_ramo 
-            if [ $v_current_ramo == "main" ]; then 
-               f_talk; echo "Blind Update and Upload"
-                       echo  " > Voce está no ramo 'main' "
-                       echo  " > Tem a certeza que quer um Blind-Update???"
-                       echo
-                       echo  "ANY KEY: continuar || Ctrl-C: cancelar"
-               read -sn 1 -p " > "
-                       echo
-                       echo
-            fi
+function f_blind_brain {
+   # Antes do upload, verificar qual é o ramo atual, e implicar com o user cajo seja 'main'
+   # Porque blind updates terá a intençao de ser apenas para ramos 'dev' 
+      f_save_current_branch   
+      #echo $v_current_ramo 
+      if [ $v_current_ramo == "main" ]; then 
+         f_talk; echo "Blind Update and Upload"
+                 echo  " > Voce está no ramo 'main' "
+                 echo  " > Tem a certeza que quer um Blind-Update???"
+                 echo
+                 echo  "ANY KEY: continuar || Ctrl-C: cancelar"
+         read -sn 1 -p " > "
+                 echo
+                 echo
+      fi
 
-         # Sending automatically everything with an automated commit message
-            # Message to use as commit:
-               v_aut_message="Pushed to github.com automatically by ezGIT app"
+   # Sending automatically everything with an automated commit message
+      # Message to use as commit:
+         v_aut_message="Pushed to github.com automatically by ezGIT app"
 
-            f_talk; echo    "Running 'blind-upload' or 'b':"
-                    echo -e " > Commits and pushes all contents of the repo fully automatic "
-                    echo
+      f_talk; echo    "Running 'blind-upload' or 'b':"
+              echo -e " > Commits and pushes all contents of the repo fully automatic "
+              echo
 
-            f_talk; echo "Default commit message:"
-                    echo " > $v_aut_message"
-                    echo
+      f_talk; echo "Default commit message:"
+              echo " > $v_aut_message"
+              echo
 
-            f_talk; echo "Adding all files to make the automatic commit"
-                    git add --all && echo " > Done!"
-                    echo
+      f_talk; echo "Adding all files to make the automatic commit"
+              git add --all && echo " > Done!"
+              echo
 
-            f_talk; echo "Creating an automatic commit"
-                    git commit -m "$v_aut_message"
+      f_talk; echo "Creating an automatic commit"
+              git commit -m "$v_aut_message"
 
-            f_git_status
+      f_git_status
 
-            f_stroken
+      f_stroken
 
-            f_git_push
+      f_git_push
 
-            f_git_status
+      f_git_status
 
-                    echo
-            f_talk; echo "Done!"
-      }
+              echo
+      f_talk; echo "Done!"
+}
 
 function f_output {
    # Function used by: f_git_pull_recursive, f_git_status_recursive ...
