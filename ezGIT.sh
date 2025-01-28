@@ -411,11 +411,10 @@ function f_blind_brain {
                  echo  " > Voce está no ramo 'main' "
                  echo  " > Tem a certeza que quer um Blind-Update???"
                  echo
-         #        echo  "ANY KEY: continuar || Ctrl-C: cancelar"
-         #read -sn 1 -p " > "
-         v_txt="G ++ b"; f_prsK
-                 echo
-                 echo
+
+         # Asking if the user is sure and wants to proceed
+            v_txt="G ++ b"; f_prsK
+            echo
       fi
 
    # Sending automatically everything with an automated commit message
