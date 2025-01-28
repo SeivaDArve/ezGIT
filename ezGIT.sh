@@ -259,9 +259,10 @@ function f_setGlobalConfig_menu {
 function f_git_status {
    f_talk; echo -n 'Current State: '
      f_c3; echo    '`git status`'
-     f_rc; 
+     f_rc 
 
    git status
+           echo
 }
 
 function f_git_fetch {
