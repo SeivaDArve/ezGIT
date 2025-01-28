@@ -1784,6 +1784,7 @@ elif [ $1 == "v" ] || [ $1 == "pull" ]; then
       echo -e "\r > Starting git pull...                          "
 
       git pull
+      echo
 
    # Git status
       f_git_status
