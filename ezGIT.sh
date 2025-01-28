@@ -387,6 +387,13 @@ function f_unstage_all {
    git reset
 }
 
+function f_test_if_currently_at_any_repo {
+   # Test if we are actually at a git repository
+      git status &>/dev/null
+
+      [[ $? =~ "1" ]] && f_talk && echo -e "You are not currently at any repo \n" && exit 1
+}
+
 function f_save_current_branch {
    # Guardar numa variavel qual o ramo atual
 
@@ -1012,6 +1019,7 @@ elif [ $1 == "config" ] || [ $1 == "cf" ]; then
 
    else
       f_talk; echo "Invalid function, or uDev"
+
    fi
    
 
@@ -1033,8 +1041,12 @@ elif [ $1 == ".." ] || [ $1 == "!" ] || [ $1 == "log" ]; then
       # If no arg is given, show normal git log
 
       f_greet
-      f_talk; echo 'Show entire git log `git log`'
-              echo
+      f_talk; echo -n 'Show entire git log '
+        f_c3; echo    '`git log`'
+        f_rc; echo
+
+      f_test_if_currently_at_any_repo
+
       git log
 
    elif [ $2 == "1" ]; then
@@ -1044,6 +1056,8 @@ elif [ $1 == ".." ] || [ $1 == "!" ] || [ $1 == "log" ]; then
       f_talk; echo -n 'Show entire git log with single lines '
         f_c3; echo    '`git log --oneline`'
         f_rc; echo
+
+      f_test_if_currently_at_any_repo
 
       git log --oneline
 
@@ -1057,10 +1071,7 @@ elif [ $1 == ".." ] || [ $1 == "!" ] || [ $1 == "log" ]; then
         f_rc; echo
 
 
-      # Test if we are actually at a git repository
-         git status &>/dev/null
-
-         [[ $? =~ "1" ]] && f_talk && echo -e "You are not currently at any repo \n" && exit 1
+      f_test_if_currently_at_any_repo
 
 
       # Save last commit message for text manipulation
@@ -1141,7 +1152,7 @@ elif [ $1 == "." ]; then
    #       Remove/delete last stashed item: git stash drop
    #       Drop/delete all stashed items: git stash clear
    
-   # uDev: Perform git fetch before git status, this way the user knows how much ahead or behind his branch is according to the origin
+   # uDev: Perform git fetch before git status
    
    # uDev: Tell the user if "encript before push" + "decript after pull" is "on" (detects a directory .git-encrypt/ in the tree
 
