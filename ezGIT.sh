@@ -262,7 +262,6 @@ function f_git_status {
      f_rc; 
 
    git status
-   echo
 }
 
 function f_git_fetch {
@@ -1225,6 +1224,7 @@ elif [ $1 == "." ]; then
                v_repo=$(pwd | sed "s/Repositories\// /" | cut -d ' ' -f 2 | sed "s/\// /" | cut -d ' ' -f 1)
 
             f_talk; echo "Repo Name: $v_repo"
+                    echo
 
             #f_find_basename
 
