@@ -275,6 +275,7 @@ function f_git_fetch {
 
    git fetch
    git status; s=$(git status)
+           echo
 }
 
 function f_git_push {
@@ -283,6 +284,7 @@ function f_git_push {
      f_rc; echo
 
    git push
+           echo
 }
 
 function f_git_add_all {
@@ -1604,6 +1606,7 @@ elif [ $1 == "++" ]; then
                  echo
          f_talk; echo "Creating an automatic commit"
                  git commit -m "$v_aut_message"
+                 echo
 
          f_git_status
 
