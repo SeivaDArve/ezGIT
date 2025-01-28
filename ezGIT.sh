@@ -1026,15 +1026,53 @@ elif [ $1 == "k" ] || [ $1 == "gkp" ] || [ $1 == "kp" ]; then
    # Create a file .gitkeep
       touch .gitkeep && f_talk; echo "file .gitkeep was created"
 
-elif [ $1 == "!" ] || [ $1 == "log" ]; then
-   # git log
-   f_talk; echo "`git log`"
-   git log
+elif [ $1 == ".." ] || [ $1 == "!" ] || [ $1 == "log" ]; then
+   # git log options
+   
+   if [ -z "$2" ]; then
+      # If no arg is given, show normal git log
 
-elif [ $1 == "1!" ] || [ $1 == "log1" ]; then
-   # git log in one line
-   f_talk; echo "git log --oneline"
-   git log --oneline
+      f_greet
+      f_talk; echo 'Show entire git log `git log`'
+              echo
+      git log
+
+   elif [ $2 == "1" ]; then
+      # git log (but in one line)
+
+      f_greet
+      f_talk; echo -n 'Show entire git log with single lines '
+        f_c3; echo    '`git log --oneline`'
+        f_rc; echo
+
+      git log --oneline
+
+   elif [ $2 == "l" ]; then
+      # git log (but only last commit message in one line)
+
+      f_greet
+      f_talk; echo    'Show only last line of git log with 1 single line '
+              echo -n ' > '
+        f_c3; echo       '`git log --oneline | head -n 1`'
+        f_rc; echo
+
+      # Save last commit message for text manipulation
+         v_last_commit=$(git log --oneline | head -n 1)
+
+         v_ID=$(echo "$v_last_commit" | cut -d " " -f 1)
+
+         f_talk; echo -n "Last commit Hash is: "
+           f_c3; echo "$v_ID"
+           f_rc; echo
+
+         v_commit=$(echo "$v_last_commit" | sed "s/$v_ID //g")
+
+         f_talk; echo "Last commit message was:"
+                 echo -n ' > '
+           f_c3; echo       "$v_commit"
+           f_rc; echo
+
+   fi
 
 elif [ $1 == "watch" ] || [ $1 == "8" ]; then
    # This function allows the user to open a second terminal to watch live what is changing in the git log tree.
@@ -1545,12 +1583,16 @@ elif [ $1 == "++" ]; then
          f_stroken
          f_git_push
          f_git_status
-         echo; f_done
+         
+         echo
+         f_done
  
       else
          # If invalid key was given
          echo
-         echo; f_done
+         
+         echo
+         f_done
 
       fi
 
@@ -1565,7 +1607,6 @@ elif [ $1 == "++" ]; then
 
       elif [ $3 == "A" ]; then
          # Recursively push ALL automatically
-
 
          cd ${v_REPOS_CENTER}
 
