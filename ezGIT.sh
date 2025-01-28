@@ -304,9 +304,10 @@ function f_setGlobalConfig_menu {
 function f_git_status {
    f_talk; echo -n 'Current State: '
      f_c3; echo    '`git status`'
-     f_rc; echo
+     f_rc; 
 
    git status
+   echo
 }
 
 function f_git_fetch {
@@ -365,8 +366,9 @@ function f_git_commit {
    f_talk; echo -n 'git commit -m "'
      f_c1; echo -n               "$v_ans"
      f_rc; echo                        '"'
+           echo
 
-   git commit -m "$v_ans"
+   git commit -m "$v_ans"  # uDev: Add f_sucess
 
 }
 
