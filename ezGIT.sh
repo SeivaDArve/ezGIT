@@ -1056,6 +1056,13 @@ elif [ $1 == ".." ] || [ $1 == "!" ] || [ $1 == "log" ]; then
         f_c3; echo       '`git log --oneline | head -n 1`'
         f_rc; echo
 
+
+      # Test if we are actually at a git repository
+         git status &>/dev/null
+
+         [[ $? =~ "1" ]] && f_talk && echo -e "You are not currently at any repo \n" && exit 1
+
+
       # Save last commit message for text manipulation
          v_last_commit=$(git log --oneline | head -n 1)
 
