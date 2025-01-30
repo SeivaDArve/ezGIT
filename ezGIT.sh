@@ -330,6 +330,13 @@ function f_git_commit {
 
 }
 
+function f_count_nr_branch_commits {
+   v_num=$(git rev-list --count HEAD)
+   f_talk; echo -n "Counting git commits (current branch): "
+     f_c3; echo    "$v_num"
+     f_rc; echo
+}
+
 function f_unstage_all {
    # Unstage all files
 
@@ -1237,6 +1244,8 @@ elif [ $1 == "." ]; then
          fi
       fi
 
+      f_count_nr_branch_commits
+
       f_done
 
    elif [ $2 == "all" ] || [ $2 == "A" ]; then
@@ -1298,9 +1307,7 @@ elif [ $1 == "count" ] || [[ $1 == "n" ]]; then
       f_curl_uploads_count
 
    elif [[ $2 == "." ]] || [[ $2 == "branch-total-commits" ]]; then
-      v_num=$(git rev-list --count HEAD)
-      f_talk; echo "Total number of git commits in this branch"
-              echo " > $v_num"
+      f_count_nr_branch_commits
 
    elif [[ $2 == "A" ]] || [[ $2 == "repo-total-commits" ]]; then
       v_num=$(git rev-list --count --all)
