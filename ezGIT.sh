@@ -1550,7 +1550,6 @@ elif [ $1 == "++" ]; then
 
       if [ -z $v_ans ]; then
          # If, after the prompt for "commit message" the time expires or the Field is left blank, then Uploading is aborted
-         echo
          echo; f_done
 
       elif [ $v_ans == "p" ] || [ $v_ans == "P" ]; then
