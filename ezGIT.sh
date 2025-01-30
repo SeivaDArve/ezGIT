@@ -331,6 +331,8 @@ function f_git_commit {
 }
 
 function f_count_nr_branch_commits {
+   # Counting total git commits for current branch
+   
    v_num=$(git rev-list --count HEAD)
    f_talk; echo -n "Counting git commits (current branch): "
      f_c3; echo    "$v_num"
@@ -1244,7 +1246,7 @@ elif [ $1 == "." ]; then
          fi
       fi
 
-      f_count_nr_branch_commits
+      f_count_nr_branch_commits  # This tracks changes better that tracking versions (specifically for Seiva's coding style that is done on-the-go using termux and smartphone. Changing the code ALL the time)
 
       f_done
 
@@ -1296,6 +1298,7 @@ elif [ $1 == "multi" ]; then
 elif [ $1 == "count" ] || [[ $1 == "n" ]]; then
 
    if [[ -z $2 ]]; then
+      # Instructions if no more args are given
       f_talk; echo "This fx is meant to count how many uploads to github.com happened in a specific day"
               echo ' > `G n ^`    Counts uploads made to github.com on a certain date'
               echo ' > `G n .`    Counts git commits made to current repo on current branch'
@@ -1307,9 +1310,11 @@ elif [ $1 == "count" ] || [[ $1 == "n" ]]; then
       f_curl_uploads_count
 
    elif [[ $2 == "." ]] || [[ $2 == "branch-total-commits" ]]; then
+      # Counting total git commits for current branch
       f_count_nr_branch_commits
 
    elif [[ $2 == "A" ]] || [[ $2 == "repo-total-commits" ]]; then
+      # Counting total git commits for all branches under current repo
       v_num=$(git rev-list --count --all)
       f_talk; echo "Total number of git commits in this entire reporitory including other branches"
               echo " > $v_num"
