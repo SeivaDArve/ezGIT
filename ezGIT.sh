@@ -1284,14 +1284,28 @@ elif [ $1 == "multi" ]; then
       ((n=n+1))
    done
 
-elif [ $1 == "count" ] || [[ $1 == "N" ]]; then
+elif [ $1 == "count" ] || [[ $1 == "n" ]]; then
 
    if [[ -z $2 ]]; then
       f_talk; echo "This fx is meant to count how many uploads to github.com happened in a specific day"
+              echo ' > `G n ^`    Counts uploads made to github.com on a certain date'
+              echo ' > `G n .`    Counts git commits made to current repo on current branch'
+              echo ' > `G n . A`  Counts git commits made to current repo on all branches'
 
    elif [[ $2 == "^" ]] || [[ $2 == "uploaded" ]]; then
+      # Counts uploads made to github.com on a certain date
       f_greet
       f_curl_uploads_count
+
+   elif [[ $2 == "." ]] || [[ $2 == "branch-total-commits" ]]; then
+      v_num=$(git rev-list --count HEAD)
+      f_talk; echo "Total number of git commits in this branch"
+              echo " > $v_num"
+
+   elif [[ $2 == "A" ]] || [[ $2 == "repo-total-commits" ]]; then
+      v_num=$(git rev-list --count --all)
+      f_talk; echo "Total number of git commits in this entire reporitory including other branches"
+              echo " > $v_num"
    fi
 
 
