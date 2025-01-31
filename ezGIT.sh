@@ -2263,6 +2263,10 @@ elif [ $1 == "rb" ]; then
       f_greet
 
       f_talk; echo '`G rb` (git rebase) requires an extra arg, either t of f (true or false respectively)'
+              echo " > G rb f: git config pull.rebase false"
+              echo " > G rb t: git config pull.rebase true"
+              echo " > G rb i: git rebase -i"
+
 
    elif [ $2 == "i" ]; then
       if [ -z $3 ]; then
@@ -2282,9 +2286,9 @@ elif [ $1 == "rb" ]; then
                  echo " > Save and exit the file to apply"
                  echo
          
-         f_talk; echo 'Press any key to attempt `git rebase -i` (interactive)'
+         v_txt='Attempt `git rebase -i` (interactive)'; f_prsK
 
-         read -sn1; git rebase -i
+         git rebase -i
 
       else 
          # Se foi dado um terceiro arg, usar isso para completar o comando
