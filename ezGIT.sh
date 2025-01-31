@@ -412,7 +412,7 @@ function f_underscore_creator {
 }
 
 function f_blind_brain {
-   # Antes do upload, verificar qual é o ramo atual, e implicar com o user cajo seja 'main'
+   # Antes do upload, verificar qual é o ramo atual, e implicar com o user caso seja 'main'
    # Porque blind updates terá a intençao de ser apenas para ramos 'dev' 
       f_save_current_branch   
       #echo $v_current_ramo 
@@ -2352,6 +2352,14 @@ elif [ $1 == "rb" ]; then
 
 elif [ $1 == "n" ] || [ $1 == "next" ]; then
    echo "uDev: recursively goes into all repos and stops at the first that is not normal yet (possibilities: commits to be made, updates to fetch, push to github is needed, etc... )"
+
+elif [ $1 == "grep" ]; then
+   # Uses command `git grep <pattern>` to search text at all files on current repo
+   f_greet
+   f_talk; echo "What text do you want to search? "
+   read -p " > " v_ans
+
+   git grep $v_ans
 
 elif [ $1 == "uDev" ]; then
    echo 'This function uses the find command to search "# uDev" comments on the code'
