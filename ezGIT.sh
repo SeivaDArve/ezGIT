@@ -2271,6 +2271,7 @@ elif [ $1 == "rb" ]; then
               echo " > G rb i <number> | Ao introduzir um numero, pode manupilar esses commits"
               echo " > G rb i abort    | Aborta a tentativa atual de rebase"
               echo " > G rb i force    | Envia alteracoes para o github apos concluido o rebase"
+              echo " > G rb i origin   | Elimina os commits locais e reverte para o mesmo estado que a origem no github"
 
 
    elif [ $2 == "i" ]; then
@@ -2298,17 +2299,24 @@ elif [ $1 == "rb" ]; then
 
          git rebase -i 
 
-      elif [ $3 == "abort" ]; then
+      elif [ $3 == "abort" ] || [ $3 == "a" ]; then
          # Abort current git rebase
-         v_txt="Aborting current git rebase?"; f_prsK
 
+         v_txt="Aborting current git rebase?"; f_prsK
          git rebase --abort && f_suc1 || f_suc2
 
       elif [ $3 == "force" ] || [ $3 == "f" ]; then
          # Send rebased changes to github.com
-         v_txt="Pushing changes to github?"; f_prsK
 
+         v_txt="Pushing changes to github?"; f_prsK
          git rebase --abort && f_suc1 || f_suc2
+
+      elif [ $3 == "origin" ] || [ $3 == "o" ]; then
+         # Discarta os commits atuais locais e volta ao estado em que se encontra a origem no github
+
+         v_txt="Revert to same state as github origin"; f_prsK
+         v_current_branch=$(git rev-parse --abbrev-ref HEAD)
+         git reset --hard origin/$v_current_branch && f_suc1 || f_suc2
 
       else 
          # If arg $3 exists, rebase interactively that amount of commits in the interactive file
