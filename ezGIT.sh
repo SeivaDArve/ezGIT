@@ -2262,15 +2262,20 @@ elif [ $1 == "rb" ]; then
 
       f_greet
 
-      f_talk; echo '`G rb` (git rebase) requires an extra arg, either t of f (true or false respectively)'
-              echo " > G rb f: git config pull.rebase false"
-              echo " > G rb t: git config pull.rebase true"
-              echo " > G rb i: git rebase -i"
+      f_talk; echo 'Intrucoes: Git Rebase'
+              echo ' > `G rb` requires an extra arg, either t of f (true or false respectively)'
+              echo
+              echo " > G rb f          | git config pull.rebase false"
+              echo " > G rb t          | git config pull.rebase true"
+              echo " > G rb i          | git rebase -i (opens interactivly ONLY WITH LAST COMMIT"
+              echo " > G rb i <number> | Ao introduzir um numero, pode manupilar esses commits"
 
 
    elif [ $2 == "i" ]; then
+      # Git rebase interactive
+
       if [ -z $3 ]; then
-         # uDev: Test is arg #3 is actually a number
+         # If no arg is given, rebase ONLY last commit
          
          f_greet 
 
@@ -2287,19 +2292,21 @@ elif [ $1 == "rb" ]; then
                  echo
          
          v_txt='Attempt `git rebase -i` (interactive)'; f_prsK
+         echo
 
-         git rebase -i
+         git rebase -i 
 
       else 
-         # Se foi dado um terceiro arg, usar isso para completar o comando
-         # `G rb i 3`
-         # Isso vai dizer ao 'git rebase -i' quantos commits colocar no ficheiro interativi
+         # If arg $3 exists, rebase interactively that amount of commits in the interactive file
+         # `G rb i 4`
+         # uDev: Test is arg #3 is actually a number
 
          f_greet 
 
-         f_talk; echo "Sure?? Rebasing $3 commits away form HEAD?"
-                 echo " > Press any key to: \`git rebase -i HEAD~$3\`"
-                 read -sn1; git rebase -i HEAD~$3
+         v_txt="Rebasing $3 commits away form HEAD?"; f_prsK
+                 
+         git rebase -i HEAD~$3
+         echo
       fi
 
    elif [ $2 == "f" ]; then
