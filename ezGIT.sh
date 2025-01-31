@@ -2269,6 +2269,8 @@ elif [ $1 == "rb" ]; then
               echo " > G rb t          | git config pull.rebase true"
               echo " > G rb i          | git rebase -i (opens interactivly ONLY WITH LAST COMMIT"
               echo " > G rb i <number> | Ao introduzir um numero, pode manupilar esses commits"
+              echo " > G rb i abort    | Aborta a tentativa atual de rebase"
+              echo " > G rb i force    | Envia alteracoes para o github apos concluido o rebase"
 
 
    elif [ $2 == "i" ]; then
@@ -2296,6 +2298,18 @@ elif [ $1 == "rb" ]; then
 
          git rebase -i 
 
+      elif [ $3 == "abort" ]; then
+         # Abort current git rebase
+         v_txt="Aborting current git rebase?"; f_prsK
+
+         git rebase --abort && f_suc1 || f_suc2
+
+      elif [ $3 == "force" ] || [ $3 == "f" ]; then
+         # Send rebased changes to github.com
+         v_txt="Pushing changes to github?"; f_prsK
+
+         git rebase --abort && f_suc1 || f_suc2
+
       else 
          # If arg $3 exists, rebase interactively that amount of commits in the interactive file
          # `G rb i 4`
@@ -2303,7 +2317,6 @@ elif [ $1 == "rb" ]; then
 
          f_greet 
 
-                 
          # Opening interactive file with hashes and commits
             v_txt="Rebasing $3 commits away form HEAD?"; f_prsK
             git rebase -i HEAD~$3 && f_suc1 || f_suc2 && exit 1
