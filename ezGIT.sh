@@ -2303,10 +2303,18 @@ elif [ $1 == "rb" ]; then
 
          f_greet 
 
-         v_txt="Rebasing $3 commits away form HEAD?"; f_prsK
                  
-         git rebase -i HEAD~$3
-         echo
+         # Opening interactive file with hashes and commits
+            v_txt="Rebasing $3 commits away form HEAD?"; f_prsK
+            git rebase -i HEAD~$3 && f_suc1 || f_suc2 && exit 1
+            echo
+            echo "Debug: $v_suc"
+            read
+
+         # Send changes to github despite the possibility that it may create problems for other useres of the same branch
+            v_txt="Forcefully push changes to github?"; f_prsK
+            git push --force && f_suc1 || f_suc2
+            echo
       fi
 
    elif [ $2 == "f" ]; then
