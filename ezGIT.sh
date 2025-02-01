@@ -1541,7 +1541,7 @@ elif [ $1 == "++" ]; then
       f_git_status
 
       # Asking for 5 seconds if the user wants to push the code to github.com
-			f_talk; echo -n "Do you want to send to github.com?"
+			f_talk; echo -n "Do you want to send to github.com? "
            f_c3; echo    '`git push`'
            f_rc; echo " > Press any key to abort (wait 5 seconds)"
                  echo -n " > To upload, press: "
