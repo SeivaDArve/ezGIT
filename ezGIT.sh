@@ -1551,7 +1551,8 @@ elif [ $1 == "++" ]; then
 
       if [ -z $v_ans ]; then
          # If, after the prompt for "commit message" the time expires or the Field is left blank, then Uploading is aborted
-         echo; f_done
+         echo
+         f_done
 
       elif [ $v_ans == "p" ] || [ $v_ans == "P" ]; then
          # If valid key "p" was given
@@ -1560,13 +1561,11 @@ elif [ $1 == "++" ]; then
          f_stroken
          f_git_push
          f_git_status
-         
          f_done
  
       else
          # If invalid key was given
          echo
-         
          echo
          f_done
 
