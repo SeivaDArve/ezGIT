@@ -1543,13 +1543,11 @@ elif [ $1 == "++" ]; then
       # Asking for 5 seconds if the user wants to push the code to github.com
 			f_talk; echo -n "Do you want to send to github.com?"
            f_c3; echo    '`git push`'
-                 echo " > Press any key to abort (wait 5 seconds)"
-           f_rc; echo -n " > To upload, press: "
+           f_rc; echo " > Press any key to abort (wait 5 seconds)"
+                 echo -n " > To upload, press: "
 
 			  f_c2; read -s -N 1 -t 5 -p "P " v_ans
-			  f_rc
-           echo
-         
+			  f_rc; echo
 
       if [ -z $v_ans ]; then
          # If, after the prompt for "commit message" the time expires or the Field is left blank, then Uploading is aborted
