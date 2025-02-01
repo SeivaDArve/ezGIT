@@ -1236,8 +1236,9 @@ elif [ $1 == "." ]; then
             # Extrair do `pwd` o nome da repo atual
                v_repo=$(pwd | sed "s/Repositories\// /" | cut -d ' ' -f 2 | sed "s/\// /" | cut -d ' ' -f 1)
 
-            f_talk; echo "Repo Name: $v_repo"
-                    echo
+            f_talk; echo -n "Repo Name: "
+              f_c3; echo "$v_repo"
+              f_rc; echo
 
 
             #f_find_basename
@@ -1527,8 +1528,9 @@ elif [ $1 == "++" ]; then
 
       f_greet
 
-		f_talk; echo 'Staging all and commiting `G ++`'
-              echo
+		f_talk; echo -n 'Staging all and commiting '
+        f_c3; echo    '`G ++`'
+        f_rc; echo
 
       f_git_add_all  # Git add --all
 
@@ -1744,8 +1746,12 @@ elif [ $1 == "--" ]; then
       # Restore work dir to previous commit (fully, to all files)
          f_greet
 
-         f_talk; echo 'Discarding all changes locally `git restore .`'
+         f_talk; echo -n 'Discarding all changes locally '
+           f_c3; echo    '`git restore .`'
+           f_rc
+
          git restore .
+         echo
 
       # Git status
          f_git_status
