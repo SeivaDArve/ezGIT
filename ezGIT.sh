@@ -291,7 +291,7 @@ function f_git_push {
 function f_git_add_all {
    f_talk; echo -n 'Staging all files: '
      f_c3; echo    '`git add --all`'
-     f_rc; echo
+     f_rc
 
    git add --all
 }
