@@ -1643,7 +1643,6 @@ elif [ $1 == "++" ]; then
 
          f_stroken
 
-         read
          f_git_push
 
          f_git_status
