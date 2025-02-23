@@ -1627,7 +1627,7 @@ elif [ $1 == "++" ]; then
                  echo -e " > Commits and pushes all contents of the repo fully automatic "
                  echo
 
-         f_talk; echo "default commit message:"
+         f_talk; echo "Default commit message:"
                  echo -n " > "
            f_c1; echo "$v_aut_message"
            f_rc; echo
