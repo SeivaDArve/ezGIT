@@ -1528,7 +1528,7 @@ elif [ $1 == "++" ]; then
 
       f_greet
 
-		f_talk; echo -n 'Staging all and commiting '
+		f_talk; echo -n 'Staging all and commiting: '
         f_c3; echo    '`G ++`'
         f_rc; echo
 
