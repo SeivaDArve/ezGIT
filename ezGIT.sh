@@ -1618,7 +1618,7 @@ elif [ $1 == "++" ]; then
          # Message to use as commit:
          v_aut_message="Improvements made only around uDev comments (added/modify/etc..)"
 
-         f_talk; echo -n "running "
+         f_talk; echo -n "Running "
            f_c3; echo -n "'uDev'"
            f_rc; echo -n " or "
            f_c3; echo -n "'u'"
@@ -1643,6 +1643,7 @@ elif [ $1 == "++" ]; then
 
          f_stroken
 
+         read
          f_git_push
 
          f_git_status
