@@ -1622,7 +1622,7 @@ elif [ $1 == "++" ]; then
            f_c3; echo -n "'uDev'"
            f_rc; echo -n " or "
            f_c3; echo -n "'u'"
-           f_rc; echo    ":"
+           f_rc
 
                  echo -e " > Commits and pushes all contents of the repo fully automatic "
                  echo
