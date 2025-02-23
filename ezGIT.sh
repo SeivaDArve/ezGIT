@@ -1618,7 +1618,12 @@ elif [ $1 == "++" ]; then
          # Message to use as commit:
          v_aut_message="Improvements made only around uDev comments (added/modify/etc..)"
 
-         f_talk; echo "running 'uDev' or 'u':"
+         f_talk; echo -n "running "
+           f_c3; echo -n "'uDev'"
+           f_rc; echo -n " or "
+           f_c3; echo -n "'u'"
+           f_rc; echo    ":"
+
                  echo -e " > Commits and pushes all contents of the repo fully automatic "
                  echo
 
@@ -1683,10 +1688,11 @@ elif [ $1 == "++" ]; then
 
    elif [ $2 == "!" ]; then
       f_greet 
-      f_talk; echo "uDev: Option to commit current state and automatically squash it with the previous commit"
-      echo
-      f_talk; echo "Previous commit was:"
-      echo -n " > "
+      f_talk; echo    "uDev: Option to commit current state and automatically squash it with the previous commit"
+              echo
+      f_talk; echo    "Previous commit was:"
+              echo -n " > "
+
       git log --oneline | head -n 1
 
    else
