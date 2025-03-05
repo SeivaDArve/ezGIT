@@ -1134,9 +1134,9 @@ elif [ $1 == "." ]; then
       # If no extra args are given, git status only to current repo
 
       # Note: 3 possibilities when calling: '$ G .'
-      #  1. We are inside a valid repository
-      #  2. We are at the root directory where all repos are found
-      #  3. We are outside a valid repository (somewhere else ijnthe file system)
+      #  1. fx runs if: inside a valid repository
+      #  2. fx runs if: root directory where all repos are found
+      #  3. fx runs if: outside a valid repository is found (somewhere else in the file system)
       #
       #  If used on the root of ${v_REPOS_CENTER} it will throw an error, therefore, we could fix this
 
@@ -1144,8 +1144,8 @@ elif [ $1 == "." ]; then
       f_greet 
 
       if [[ $(pwd) == ${v_REPOS_CENTER} ]]; then 
-         # 1. For sure we are not inside a repo, 
-         #    we are exactly at the Repos Center. 
+         # 1. if we are exactly at the Repos Center. 
+         #    For sure we are not inside a repo, 
          #    ... Listing all repos here
 
          f_talk; echo 'git status: `G .`'
