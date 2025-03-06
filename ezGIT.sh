@@ -1232,15 +1232,15 @@ elif [ $1 == "." ]; then
    if [[ -z $2 ]]; then
       # If only 1 arg is given: `git status` only to current repo
 
-      # uDev: Bug to fix: Error when used on repos root (fedora)
-      #       Bug to fix: Error when used on ~          (fedora)
-
       # Instructions: 3 possibilities when calling `G .`
       #  1. fx runs if: is root directory where all repos are found
       #  2. fx runs if: is not root directory where all repos are found
       #  3. fx runs if: outside a valid repository (somewhere else in the file system)
       #  4. fx runs if: inside a valid repository
       
+      # uDev: Bug to fix: Error when used on repos root (fedora)
+      #       Bug to fix: Error when used on ~          (fedora)
+
       f_greet 
 
       if [[ $(pwd) == ${v_REPOS_CENTER} ]]; then 
@@ -1265,10 +1265,10 @@ elif [ $1 == "." ]; then
 
       # After detecting job is done
          # This tracks changes better that tracking versions (specifically for Seiva's coding style that is done on-the-go using termux and smartphone. Changing the code ALL the time)
-            f_count_nr_branch_commits  
+         f_count_nr_branch_commits  
 
-         # Nice verbose finish
-            f_done
+      # Nice verbose finish
+         f_done
 
    elif [ $2 == "all" ] || [ $2 == "A" ]; then
       # Whenever code complexity is found, a function is created to enable better code reading
