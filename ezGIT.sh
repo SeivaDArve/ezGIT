@@ -1289,6 +1289,7 @@ elif [ $1 == "+!" ] || [ $1 == "squash" ]; then
    # Not only commits these staged files, but also squashes with the previous commit
    # This is usefull when our next commit should be past of our last commit and we forgot. Now we are adding stuff to our last commit
    # uDev: Tell ezGIT how many previous commits to squash into a single one
+
    echo "uDev: Squash options are not ready yet"
    echo ' > Tutorial: https://youtu.be/V5KrD7CmO4o?si=xL4OiMt6Avjuxnt7'
 
@@ -1297,24 +1298,25 @@ elif [ $1 == "multi" ]; then
 
    f_greet 
 
-   git status
-   f_c2
-   echo -e "\ngit commit multiple messages"
-   f_rc
-   echo 
+   f_git_status
+
+   f_c2; echo -e "\ngit commit multiple messages"
+   f_rc; echo 
+
    declare -a messages
    declare n=1
+
    while true; do
       read -p "Insert commit n.$n: " v_ans
 
-      if [[ $v_ans == "done" ]]; then
-         break
-      fi
+      [[ $v_ans == "done" ]] && break
+      
       messages+=$v_ans
 
       for i in ${messages[@]}; do
          echo -e "$i\n"
       done
+
       ((n=n+1))
    done
 
