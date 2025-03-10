@@ -981,16 +981,18 @@ if [ -z "$*" ]; then
    f_greet
 
    f_talk; echo "No arguments were given"
-           echo ' > To Open fzf Main Menu: `G m`'
-           echo ' > To print instructions: `G h`'
-           echo ' > To print all configs:  `G cf h`'
+           echo
+   f_talk; echo "Some help:"
+           echo ' > To Open  ezGIT fzf Main Menu: `G m`'
+           echo ' > To print ezGIT instructions:  `G h`'
+           echo ' > To print ezGIT all configs:   `G cf h`'
            echo
 
    #git config --list
 
    #f_horizontal_line
 
-   f_talk; echo "User Name @ at github.com"
+   f_talk; echo "User Name @ Host Machine (for github commits)"
            echo -n " > "
 
    git config --get user.name
@@ -1089,6 +1091,16 @@ elif [ $1 == "config" ] || [ $1 == "cf" ]; then
       # uDev: Add verbose: "Press Enter" when this fx gets developed
          
       f_talk; echo "uDev: Identifying this machine with traitsID for the same user is not ready"
+
+
+   elif [ $2 == "h" ]; then
+      f_talk; echo "Instructions:"
+              echo
+              echo "Para verificar o nome atual:"
+              echo ' > `git config --global user.name` '
+              echo
+              echo "Para alterar o nome atual:"
+              echo ' > `git config --global user.name "novo-nome"` '
 
    else
       f_talk; echo "Invalid function, or uDev"
@@ -1966,7 +1978,6 @@ elif [ $1 == "," ]; then
               echo
 
       f_tell_current_branch
-      echo
 
       f_talk; echo "Listing all branches:"
       f_list_all_branches
