@@ -1874,6 +1874,32 @@ elif [ $1 == "v" ] || [ $1 == "pull" ]; then
 
    fi
 
+
+elif [ $1 == "V" ] || [ $1 == "pull-without-asking" ]; then
+   # git pull (without asking the user if he is sure to download
+
+   if [[ -z $2 ]]; then
+
+      f_greet 
+   
+      f_stroken
+
+      f_talk; echo -n "You are about to: "
+        f_c2; echo                      "git pull"
+        f_rc
+
+      # uDev: Usar ANSI para apagar toda a linha, em vez de usar espacos em branco
+      echo -e "\r > Starting git pull...                          "
+      echo
+
+      git pull
+      echo
+
+   # Git status
+      f_git_status
+   fi
+
+
 elif [ $1 == "vv" ] || [ $1 == "fetch" ]; then
    # 'G vv' fetch changes
    # It may exec specific scripts inside the current repo (for example at DRYa to update the entire system includim other repos)
