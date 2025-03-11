@@ -992,16 +992,17 @@ if [ -z "$*" ]; then
 
    #f_horizontal_line
 
+   v_user=$(git config --get user.name)
+   v_mail=$(git config --get user.email)
+
    f_talk; echo "User Name @ Host Machine (for github commits)"
            echo -n " > "
-
-   git config --get user.name
-
-           echo 
+     f_c3; echo $v_user
+     f_rc; echo 
    f_talk; echo "User mail @ github.com"
            echo -n " > "
-
-   git config --get user.email
+     f_c3; echo $v_mail
+     f_rc; echo
 
 elif [ $1 == "h" ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ $1 == "?" ] || [ $1 == "-?" ]; then
    # Same as if no arg are given: Display help menu
