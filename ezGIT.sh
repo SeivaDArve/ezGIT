@@ -1051,6 +1051,7 @@ elif [ $1 == "config" ] || [ $1 == "cf" ]; then
               echo "Editing .gitconfig file"
               echo " > You need to specify: 'G config ^' (edit centrally (at DRYa's repo)i)"
               echo " >                  or: 'G config v' (edit locally only)"
+              echo " >                  or: 'G config i' (install .gitconfig file)"
               echo " >                  or: 'G config m' (edit extra stuff, machine specific)"
               echo " >                  or: 'G config h' (list all configs)"
               echo 
@@ -1086,6 +1087,13 @@ elif [ $1 == "config" ] || [ $1 == "cf" ]; then
       # Edit local file
          # uDev: Add verbose: "Press Enter"
          vim $v_users_file
+
+   elif [ $2 == "i" ]; then
+      # Installing .gitconfig using fx inside drya.sh
+
+      # uDev: if repo DRYa does not exist, ask user to clone it
+
+      bash ${v_REPOS_CENTER}/DRYa/drya.sh dot install gitconfig
 
    elif [ $2 == "m" ]; then
       # For the same user with diferent devices, lets identify this device on the configs, to be listed on '$ git log' and apretiate on git's history which machine/device did what job
@@ -2504,7 +2512,22 @@ elif [ $1 == "file-host" ]; then
 
 elif [ $1 == "m" ] || [ $1 == "menu" ]; then
    # Menu fzf
-   f_talk; echo "uDev: Menu fzf"
+
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Save '; Lz2='G menu'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L2='2. Install .gitconfig'                                      
+      L1='1. Cancel'
+
+      L0="SELECT 1: Menu ezGIT: "
+      
+      v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "2. " ]] && bash ${v_REPOS_CENTER}/DRYa/drya.sh dot install gitconfig
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      unset v_list
 
 else
    # If the arguments you input are neither empty nor listed, then run:
