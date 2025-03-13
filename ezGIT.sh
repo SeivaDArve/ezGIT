@@ -2489,8 +2489,8 @@ elif [ $1 == "origin-info" ]; then
 
    git remote show origin
 
-elif [ $1 == "SET" ] || [ $1 == "set-current-repo-to-sync-mode" ]; then
-   # Create a ".config.G" file inside the current repo to manage repo specific functions
+elif [ $1 == "set" ] || [ $1 == "set-current-repo-to-sync-mode" ]; then
+   # Create a ".ezGIT" file inside the current repo to manage repo specific functions
 
    # Possibilities: 
    #  > Encrypt data before uploading
@@ -2506,6 +2506,38 @@ elif [ $1 == "SET" ] || [ $1 == "set-current-repo-to-sync-mode" ]; then
 
    echo "uDev: set config file at each repo"
   
+elif [ $1 == "sync-pull" ]; then
+   # By giving a variable v_repo, this fx will `git pull` the corresponding repo
+
+   function f_sync_pull_repo {
+      # If user gives a valid name of a repo in the form of a variable v_sync, then, git pull such repo
+      
+      # uDev: Se a repo nao existir, informar que vai clonar
+
+      v_pwd=$(pwd)
+
+      cd ${v_REPOS_CENTER}/$v_sync
+ 
+      f_git_pull
+
+      cd $v_pwd
+
+   }
+
+   # Verbose output (colocado em variaveis para melhorar a aparecia do codigo)
+      v_vb1='Nenhuma repo foi especificada no arg 2'
+      v_vb2='> Nao sera feito `git pull`'
+
+   [[ -z $2 ]] && f_talk && echo -e "$v_vb1 \n $v_vb2" && exit 1
+   [[ -n $2 ]] && f_talk && echo -e "Git pulling: $2" && v_sync=$2 && f_sync_pull_repo
+   
+
+elif [ $1 == "sync-push" ]; then
+   # By giving a variable v_repo, this fx will `git push` the corresponding repo
+
+   echo "uDev: This fx will be ready after sync-pull is ready"
+
+
 elif [ $1 == "file-host" ]; then
    echo "If you want to use github to download single files just like any other cloud storage instead of cloning entire repos, you can. Github supports that. Here is a link to teach how to do that while this function is under development"
    echo " > https://www.howtogeek.com/devops/how-to-download-single-files-from-a-github-repository/"
