@@ -360,6 +360,13 @@ function f_test_if_currently_at_any_repo {
       [[ $? =~ "1" ]] && f_talk && echo -e "You are not currently at any repo \n" && exit 1
 }
 
+function f_test_if_any_unwanted_files_are_saved_at_repos_root {
+   # When calling `G . A` or `G .` at the correct root directory of all repos, then test if there are files there that should not be there
+   
+   # uDev: This fx does not exist across the script yet
+   echo "uDev: Mention unwanted files at \${v_REPO_CENTER}/"
+}
+
 function f_save_current_branch {
    # Guardar numa variavel qual o ramo atual
 
