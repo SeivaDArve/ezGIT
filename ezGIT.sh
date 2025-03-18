@@ -1876,14 +1876,16 @@ elif [ $1 == "v" ] || [ $1 == "pull" ]; then
    # Git status
       f_git_status
 
-   elif [[ $2 == "all" ]] || [[ $2 == "A" ]]; then
+   elif [[ $2 == "all" ]] || [[ $2 == "A" ]] || [[ $2 == "a" ]] ; then
 
       # For `G v A .` we need this next fx. It is meant to pull all repos and then see the status just to see which one is out of alignment
       if [[ -z $3 ]]; then
          f_git_pull_recursive
+
       elif [[ $3 == "." ]]; then
          f_git_pull_recursive
          f_git_status_recursive
+
       else
          f_heredoc
       fi
