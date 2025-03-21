@@ -2,11 +2,13 @@
 # Title: ezGIT to replace long git commands for one simple and short command
 
 #----------------------------------------------------------------------------
-# Instructions: 1. For instructions: Search this file for the:
-#                  > keywords: "function f_heredoc {"
-#                  > or Hashtag: #78654
-#                  > or prompt 'G h' in the terminal
-#                    It explains how to install and use.
+# Instructions: 1. For instructions: 
+#                  > run in the terminal: `bash ezGIT.sh h` (if not installed)
+#                  > run in the terminal: `G h`             (if installed)
+#
+#                  > Read into this file: "function f_instructions {"
+#                  >        with Hashtag: #78654
+#                           It explains how to install and use.
 #----------------------------------------------------------------------------
 
 # uDev: must create alias A as "all" (example: 'G . all' and 'G . A')
@@ -60,83 +62,94 @@
 #        f_rc 
 #     }
 
-function f_heredoc {
+function f_instructions {
    # dee-up: 'Instructions for ezGIT functions'  #78654
 
-   # uDev: the BEST documentation happens if you can open the source code and read it
-   #       Therefore: uDev: Create a grep function to grep all 'if [' and 'elif' in this document and along with that, search one more line below with the comment that tells what that function does
 
-
-   f_greet
-
-   # Create an horizontal line using DRYa's built-in scripts
-      echo $v_line
-
-   # Placing the title:
-      f_talk; echo "Instructions"
-
-   # Choose only on of these 2:
-      #less << heredooc
-      cat << heredooc
-
-   Intro:
-    > To do something, specify an argument after the letter: G
-
-   Table of possible Arguments that go along G:
-
-   G        |     | Displays this menu
-   G ?      |     | Displays this menu
-   G F      |     | Favourites
-   G .      |     | git status
-   G ,      |     | Show info and options of branches
-   G v      |     | git pull
-   G ^      |     | git push
-   G +      | gad | git add <file-name-here>    (stages a file)
-   G + .    |     | git add .
-   G + all  |     | git add --all
-   G + ^    | gcm | (uDev) git commit -m "<your-commit-message>" (used for staged files)
-   G -      |     | git reset <file-name-here>  (unStages a file)
-   G @      | gcf | git config (menu)
-   G !      | glg | git log
-
-   G ++     |     | Stages ALL files and promps the user for a commit message
-   G ++ b   |     | automatic git commit with message with code/variable: b (for blind update)
-   G +-     |     | Ammends/Edits last commit message
-
-   G []     |     | git stash
-   G [      |     | git stash apply
-
-   G +1     |     | Move 1 commit up
-   G -1     |     | Move 1 commit down
-   G =      |     | Come back to HEAD
-   G %      |     | See diference between current commit and HEAD
-
-   G rb f   |     | git pull.rebase false
-   G rb t   |     | git pull.rebase true
-
-   G new    |     | Menu to create new GIT repositories
-
-   G repo ^ |     | uDev: automatic sync + open + close + sync to given "repo"
-
-   G c      |     | uDev: List all configs
-   G config |     | uDev: Automatic configuration for fast start (DRY)
-   -------------------------------------------------------------------
-
-   Instalation possibilities
-    > Install ezGIT on "~/.bashrc" with an 'alias G=".../ezGIT.sh" '
-    > Use: 'G byte-compile' (uDev)
-
-   Using without instalation (ezGIT is a simple Bash app)
-    1. One way to use this app without installing it at "/bin" is to navigate to this directory where G.sh is located and execute "source G.sh" to load all functions inside itself into the Terminal's environment variables
-
-    2. You can also navigate to G.sh and run "bash G.sh" along with some argument like "?". If would be "bash G.sh ?"
-
-   (Quit this page with the hoykey: Q)
    
-heredooc
+   #   Instrunctions: Instalation process
+   #    > Install ezGIT on "~/.bashrc" with an 'alias G=".../ezGIT.sh" '
+   #    > Use: 'G byte-compile' (uDev)
+   #
+   #   Using without instalation (ezGIT is a simple Bash app)
+   #    1. One way to use this app without installing it at "/bin" is to navigate to this directory where G.sh is located and execute "source G.sh" to load all functions inside itself into the Terminal's environment variables
+   #
+   #    2. You can also navigate to G.sh and run "bash G.sh" along with some argument like "?". If would be "bash G.sh ?"
+   #
+   #   (Quit this page with the hoykey: Q)
+   
 
-   # Create an horizontal line using DRYa's built-in scripts
-      echo $v_line
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Save '; Lz2='G h'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L30='30. | G        |     | Displays this menu'
+      L29='29. | G ?      |     | Displays this menu'
+      L28='28. | G F      |     | Favourites'
+      L27='27. | G .      |     | git status'
+      L26='26. | G ,      |     | Show info and options of branches'
+      L25='25. | G v      |     | git pull'
+      L24='24. | G ^      |     | git push'
+      L23='23. | G +      | gad | git add <file-name-here>    (stages a file)'
+      L22='22. | G + .    |     | git add .'
+      L21='21. | G + all  |     | git add --all'
+      L20='20. | G + ^    | gcm | git commit -m "<your-commit-message>" (used for staged files)'
+      L19='19. | G -      |     | git reset <file-name-here>  (unStages a file)'
+      L18='18. | G @      | gcf | git config (menu)'
+      L17='17. | G !      | glg | git log'
+      L16='16. | G ++     |     | Stages ALL files and promps the user for a commit message'
+      L15='15. | G ++ b   |     | automatic git commit with message with code/variable: b (for blind update)'
+      L14='14. | G +-     |     | Ammends/Edits last commit message'
+      L13='13. | G []     |     | git stash'
+      L12='12. | G [      |     | git stash apply'
+      L11='11. | G +1     |     | Move 1 commit up'
+      L10='10. | G -1     |     | Move 1 commit down'
+       L9='9.  | G =      |     | Come back to HEAD'
+       L8='8.  | G %      |     | See diference between current commit and HEAD'
+       L7='7.  | G rb f   |     | git pull.rebase false'
+       L6='6.  | G rb t   |     | git pull.rebase true'
+       L5='5.  | G new    |     | Menu to create new GIT repositories'
+       L4='4.  | G repo ^ |     | uDev: automatic sync + open + close + sync to given "repo"'
+       L3='3.  | G c      |     | uDev: List all configs'
+       L2='2.  | G config |     | uDev: Automatic configuration for fast start (DRY)'
+       L1='1. Cancel'
+
+      L0="ezGIT: Verbose instructions + exec after: "
+      
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n$L20 \n$L21 \n$L22 \n$L23 \n$L24 \n$L25 \n$L26 \n$L27 \n$L28 \n$L29 \n$L30 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "30. " ]] && echo "uDev"
+      [[ $v_list =~ "29. " ]] && echo "uDev"
+      [[ $v_list =~ "28. " ]] && echo "uDev"
+      [[ $v_list =~ "27. " ]] && echo "uDev"
+      [[ $v_list =~ "26. " ]] && echo "uDev"
+      [[ $v_list =~ "25. " ]] && echo "uDev"
+      [[ $v_list =~ "24. " ]] && echo "uDev"
+      [[ $v_list =~ "23. " ]] && echo "uDev"
+      [[ $v_list =~ "22. " ]] && echo "uDev"
+      [[ $v_list =~ "21. " ]] && echo "uDev"
+      [[ $v_list =~ "20. " ]] && echo "uDev"
+      [[ $v_list =~ "19. " ]] && echo "uDev"
+      [[ $v_list =~ "18. " ]] && echo "uDev"
+      [[ $v_list =~ "17. " ]] && echo "uDev"
+      [[ $v_list =~ "16. " ]] && echo "uDev"
+      [[ $v_list =~ "15. " ]] && echo "uDev"
+      [[ $v_list =~ "14. " ]] && echo "uDev"
+      [[ $v_list =~ "13. " ]] && echo "uDev"
+      [[ $v_list =~ "12. " ]] && echo "uDev"
+      [[ $v_list =~ "11. " ]] && echo "uDev"
+      [[ $v_list =~ "10. " ]] && echo "uDev"
+      [[ $v_list =~ "9.  " ]] && echo "uDev"
+      [[ $v_list =~ "8.  " ]] && echo "uDev"
+      [[ $v_list =~ "7.  " ]] && echo "uDev"
+      [[ $v_list =~ "6.  " ]] && echo "uDev"
+      [[ $v_list =~ "5.  " ]] && echo "uDev"
+      [[ $v_list =~ "4.  " ]] && echo "uDev"
+      [[ $v_list =~ "3.  " ]] && echo "uDev"
+      [[ $v_list =~ "2.  " ]] && echo "uDev"
+      [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      unset v_list
 }
 
 function f_stroken {
@@ -1013,7 +1026,7 @@ if [ -z "$*" ]; then
 
 elif [ $1 == "h" ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ $1 == "?" ] || [ $1 == "-?" ]; then
    # Same as if no arg are given: Display help menu
-      f_heredoc
+      f_instructions
 
 elif [ $1 == "eg" ]; then
    # Do something if arg 1 is equal to "eg" (a test):
@@ -1887,7 +1900,7 @@ elif [ $1 == "v" ] || [ $1 == "pull" ]; then
          f_git_status_recursive
 
       else
-         f_heredoc
+         f_instructions
       fi
 
    fi
