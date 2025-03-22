@@ -2311,6 +2311,7 @@ elif [ $1 == "1" ] || [ $1 == "reset-head" ]; then
    f_talk; echo 'Comming to most Updated branch: `git checkout main`'
 
    git checkout main
+   echo
    
    f_git_status
 
