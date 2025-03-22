@@ -1311,7 +1311,7 @@ elif [ $1 == "." ]; then
       # Nice verbose finish
          f_done
 
-   elif [ $2 == "all" ] || [ $2 == "A" ]; then
+   elif [ $2 == "all" ] || [ $2 == "A" ] || [ $2 == "a" ]; then
       # Whenever code complexity is found, a function is created to enable better code reading
          f_git_status_recursive
       
