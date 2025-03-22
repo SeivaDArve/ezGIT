@@ -30,7 +30,7 @@
 
 # uDev: Instead of creating repos at github.com, then clone, then use: instead, create a function with git init and then push to the remote
 
-
+# uDev: Create option to print: either public repo or privare repo
 
 # If this script runs, a variable is set to tell which one repo was the last one to run
    v_repo="ezGIT"
