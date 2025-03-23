@@ -1020,6 +1020,13 @@ elif [ $1 == "eg" ]; then
       echo "you don\'t need to source G.sh at the file \"source-all-drya-files\""
       echo "Start using if conditions instead"
 
+elif [ $1 == "github" ]; then
+   # Open web bowser and navigate to githbu.com
+
+   # uDev: Use traitsID
+
+   xdg-open http://www.github.com
+
 elif [ $1 == "pwd" ]; then
    f_stroken
 
