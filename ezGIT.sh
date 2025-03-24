@@ -2299,14 +2299,18 @@ elif [ $1 == "upk" ]; then
 elif [ $1 == "-1" ]; then
 
    f_talk; echo "Moving HEAD 1 commit below (previous one)"
-           echo " > Attach HEAD with: G ="
+           echo -n ' > Attach HEAD back with: '
+     f_c3; echo    '`G 1`'
+     f_rc; echo
 
    git checkout HEAD^1
 
 elif [ $1 == "+1" ]; then
 
    f_talk; echo "Moving HEAD 1 commit above (next one)"
-           echo " > Attach HEAD with: G ="
+           echo -n ' > Attach HEAD back with: '
+     f_c3; echo    '`G 1`'
+     f_rc; echo
 
    git log --reverse --pretty=%H main | grep -A 1 $(git rev-parse HEAD) | tail -n1 | xargs git checkout 
 
@@ -2315,7 +2319,9 @@ elif [ $1 == "1" ] || [ $1 == "reset-head" ]; then
 
    f_greet
 
-   f_talk; echo 'Comming to most Updated branch: `git checkout main`'
+   f_talk; echo -n 'Comming to most Updated branch: '
+     f_c3; echo    '`git checkout main`'
+     f_rc
 
    git checkout main
    echo
@@ -2344,7 +2350,9 @@ elif [ $1 == "=" ] || [ $1 == "diff" ]; then
    if [ -z $2 ]; then
       f_greet
 
-      f_talk; echo '`Difference on staged files `git diff --staged`'
+      f_talk; echo -n 'Difference on staged files '
+        f_c3; echo    '`git diff --staged`'
+        f_rc
 
       # uDev: test if ready there are staged files
       git diff --staged
