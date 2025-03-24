@@ -2465,11 +2465,28 @@ elif [ $1 == "n" ] || [ $1 == "next" ]; then
 
 elif [ $1 == "grep" ]; then
    # Uses command `git grep <pattern>` to search text at all files on current repo
-   f_greet
-   f_talk; echo "What text do you want to search? "
-   read -p " > " v_ans
 
-   git grep $v_ans
+   f_greet
+
+   if [ -z $2 ]; then
+      # If no more args are given, ask interactively
+      f_talk; echo "What text do you want to search? "
+      read -p " > " v_ans
+
+      git grep $v_ans
+
+   else
+      # If any arg is detected, search all of them
+
+      # from the arg list, remive the 1st one (arg $1 == grep)
+         shift
+
+      # Looping each arg and searching for it
+         for i in $*
+         do
+            git grep $i
+         done
+   fi
 
 elif [ $1 == "uDev" ]; then
    echo 'This function uses the find command to search "# uDev" comments on the code'
