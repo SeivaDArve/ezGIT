@@ -1924,7 +1924,7 @@ elif [ $1 == "V" ] || [ $1 == "pull-without-asking" ]; then
 
       f_talk; echo -n "You are about to: "
         f_c2; echo                      "git pull"
-        f_rc
+        f_rc; echo    " > Without asking confirmation"
 
       # uDev: Usar ANSI para apagar toda a linha, em vez de usar espacos em branco
       echo -e "\r > Starting git pull...                          "
