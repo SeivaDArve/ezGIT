@@ -103,7 +103,7 @@ function f_instructions {
       L12='12. | G [      |     | git stash apply'
       L11='11. | G +1     |     | Move 1 commit up'
       L10='10. | G -1     |     | Move 1 commit down'
-       L9='9.  | G =      |     | Come back to HEAD'
+       L9='9.  | G 1      |     | Come back to HEAD'
        L8='8.  | G %      |     | See diference between current commit and HEAD'
        L7='7.  | G rb f   |     | git pull.rebase false'
        L6='6.  | G rb t   |     | git pull.rebase true'
@@ -1076,7 +1076,7 @@ elif [ $1 == "config" ] || [ $1 == "cf" ]; then
       f_talk; echo "G config"
               echo 
               echo "Editing .gitconfig file"
-              echo " > You need to specify: 'G config ^' (edit centrally (at DRYa's repo)i)"
+              echo " > You need to specify: 'G config ^' (edit centrally (at DRYa's repo))"
               echo " >                  or: 'G config v' (edit locally only)"
               echo " >                  or: 'G config i' (install .gitconfig file)"
               echo " >                  or: 'G config m' (edit extra stuff, machine specific)"
