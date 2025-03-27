@@ -19,7 +19,7 @@
 #       If ezGIT gets byte compiled, there should be a file to configure it's color numbers
 #       For example at: ~/.config/h.h/ezGIT
 
-# uDev: criar fx para terstar se a repo atual é publica ou privada (ou entao fazer logo a lista de todas)
+# uDev: criar fx para testar se a repo atual é publica ou privada (ou entao fazer logo a lista de todas)
 
 # uDev: 1x por cada mes, fazer git pull para o HD externo no contexto de backup (pode ate ser usado git --bare)
 
@@ -47,24 +47,8 @@
    # function f_rc  # Reset cor
 
 
-#     function f_talk {
-#        # After colors are defined, create a "Face" for each `echo` with "ezGIT" descriptor  (example: `f_talk; echo "A dog is running"` )
-#        f_c2; echo -n "ezGIT: "
-#        f_rc
-#     }
-#     
-#     function f_greet {
-#        # Clearing the screen and introducing the app
-#        # After colors are defined, create a "Face" for each one of our verbose outputs "page"
-#        clear
-#        f_c2
-#        figlet "ezGIT" 2>/dev/null || echo -e "( ezGIT )\n"
-#        f_rc 
-#     }
-
 function f_instructions {
    # dee-up: 'Instructions for ezGIT functions'  #78654
-
 
    
    #   Instrunctions: Instalation process
@@ -171,7 +155,7 @@ function f_stroken {
 }
 
 function f_find_basename {
-   #uDev" Needs to search for our .git directory
+   # uDev" Needs to search for our .git directory
    # uDev: Search for .git dir, because it would maen that it's paralent dir is our repo name
 
    ls .git 1>/dev/null; 
@@ -193,80 +177,21 @@ function f_find_basename {
    # uDev: can be changed by the command 'basename'
 }
 
-function f_test_existent_configs {
-   # Confirm everytime if .gitconfig is configured
-   if ! [ -f ~/.gitconfig ]; then
-      # Testing if file is absent
-      f_greet
-      f_talk; echo " > File ~/.gitconfig does not exist (not found)."
-              echo " > The uploads graph on github.com does not update without a .gitconfig file at \$HOME dir"
-              echo
-              echo "uDev: Press C to edit the config file"
-              echo "uDev: Press I to install from DRYa"
-              echo "uDev: Press e to edit DRYa's version of the config"
-              echo "uDev: Press E to edit the config at \$HOME"
-   fi
+function f_git_config_missing {
+   # If .gitconfig does not exist, ask for configuration
 
-   # uDev: if config is unexistent: f_setGlobalConfig_menu
-}
-
-function f_setGlobalConfig_menu {
-   # Helping the user configuring git
-      # Can be called by either other function or by terminal command
-
-   # Display thr intention of this function
-      f_talk; echo "Function meant to configure git file"
-              echo " > uDev: if file does not exist, display this message"
-
-#
-#		# Inform that this menu is under construction:
-#		echo -e "$(f_c2)\n  menu under construction;)\n${RESTORE}"; read; G
-#
-#      v_whoami=$(whoami)
-#		# Entry to adjust Seiva D'Arve:
-#		#git config --global user.email "flowreshe.seiva.d.arve@gmail.com"
-#		#git config --global user.name "SeivaDArve"	
-#
-#
-#
-# C) # Configure git manually with vim
-#	 f_c2
-#	 echo -e "\nIf your email is not configured properly, your commits won't show in your github.com's contribution graph"
-#	 echo " > Type any key to continue... "
-#	 f_rc
-#	 read
-#
-#	 if [ -f ./users/set-SeivaDArve.sh ]
-#	 	then
-#	 		f_c2
-#	 		echo -e "there is a file set-seivadarve.sh"
-#	 		echo -e "To configure this profile, type \"seiva\""
-#	 		echo -e "To configure ~/.gitconfig manually type \"manl\""
-#			echo ""
-#			echo -e "To display ~/.gitconfig type \"list\""
-#	 		f_rc
-#	 		read _ans
-#
-#				if [ $_ans == "seiva" ]
-#				then
-#					bash ./users/set-SeivaDArve.sh
-#					echo " > done"
-#				elif [ $_ans == "manl" ]
-#				then
-#	 				vim ~/.gitconfig
-#					echo " > done"
-#				elif [ $_ans == "list" ]
-#				then
-#					cat ~/.gitconfig
-#				else
-#					echo " > You did not type any specific option therefore, not doing anything"
-#				fi
-#
-#		else
-#	 		vim ~/.gitconfig
-#	 fi
-#	 ;;
-
+   f_greet
+   f_talk; echo "File .gitconfig does not exist"
+           echo " > Without it, chart at github.com will be benefit with updates"
+           echo
+           echo 'You Configure it with:'
+           echo ' > Menu `D dot install gitconfig` (uDev)'
+           echo ' > ... or proceed this instalation'
+           echo 
+   
+   # To install .gitconfig: 
+      v_txt="Install and configure .gitconfig file" && f_prsK
+      f_dot_file_install_gitconfig
 }
 
 function f_git_status {
@@ -347,6 +272,8 @@ function f_git_commit {
 function f_count_nr_branch_commits {
    # Counting total git commits for current branch
    
+   # uDev: Bug happens if last command was `git init` and there is no commits yet (therefore, no HEAD to search)
+
    v_num=$(git rev-list --count HEAD)
    f_talk; echo -n "Counting git commits (current branch): "
      f_c3; echo    "$v_num"
@@ -801,9 +728,6 @@ function f_git_status_nr_1_all_repos_root {
       [[ ! -z $v_files    ]] && v_verbose=1
       
       [[ $v_verbose == "1" ]] && f_print_invalid_items
-
-
-
 }
 
 function f_git_status_nr_2_not_all_repos_root {
@@ -967,9 +891,63 @@ function f_print_invalid_items {
 }
 
 
+function f_new_repo_step_1 {
+   # Asking repo name and `git init` repo
+
+   f_talk; echo "What will be the repository name?"
+   read -p " > " v_name
+   echo
+
+   v_path=${v_REPOS_CENTER}/$v_name
+
+   mkdir -p $v_path
+   cd $v_path
+   git init
+   echo
+}
+
+function f_new_repo_step_2 {
+   # Criar e editar README file
+
+   # Lista de opcoes para o menu `fzf`
+
+      L5='5. Nao Criar | README.txt'
+      L4='4. Criar     | README.txt'                                      
+
+      L3='3. Nao Criar | README.org'
+      L2='2. Criar     | README.org'                                      
+
+      L1='1. Cancel'
+
+      L0="SELECT 1: Menu X: "
+      
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n\n$L4 \n$L5" | fzf --cycle --prompt="$L0")
+
+      #echo "comando" >> ~/.bash_history && history -n
+      #history -s "echo 'Olá, mundo!'"
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "5. " ]] && echo "$L5"
+      [[ $v_list =~ "4. " ]] && echo "$L4" && vim $v_path/README.txt
+      [[ $v_list =~ "3. " ]] && echo "$L3"
+      [[ $v_list =~ "2. " ]] && echo "$L2" && emacs $v_path/README.org
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      unset v_list
+}
+
+function f_new_repo_step_3 {
+   v_mail=$(git config --get user.email)
+   v_ramo=$(git branch | grep "*" | sed "s/\* //g")
+   git remote add origin git@github.com:$v_mail/$v_name.git
+   git push -u origin $v_ramo
+}
 
 
 
+function f_dot_file_install_gitconfig {
+   bash ${v_REPOS_CENTER}/DRYa/drya.sh dot install gitconfig
+}
 
 
 
@@ -980,21 +958,20 @@ function f_print_invalid_items {
 
 
 
-# uDev: apply dp_title: bully-pages (change to: deep "pages") title here
-#       dp_title_a: before 
-#       dp_title_z: after
-
-
 
 
 
 # Before evaluating ezGIT arguments:
-   # Check if git is configured properly
-      f_test_existent_configs #uDev
+   # uDev: Improve txt by creating fx for each line
+   
+   # Check if git and .gitconfig exists. If not, configure it
+      [[ ! -f ~/.gitconfig ]] && f_git_config_missing
 
-   # Check if variable ${v_REPOS_CENTER} is configured properly
-      # uDev: If not configured, tell the user what to do
+   # Check if variable ${v_REPOS_CENTER} is configured. Othewise, inform
+      [[ -z ${v_REPOS_CENTER} ]] && f_greet && f_talk && echo 'Variables missing (this may be a problem)' && echo ' > $v_REPOS_CENTER ' && echo '   (It defines a centrar directory where repos are stored)' && read -sn1
 
+
+         
 if [ -z "$*" ]; then
    # Do something else if there are no arguments
 
@@ -1040,7 +1017,7 @@ elif [ $1 == "github" ]; then
 
    xdg-open http://www.github.com
 
-elif [ $1 == "pwd" ]; then
+elif [ $1 == "psswd" ]; then
    f_stroken
 
 elif [ $1 == "byte-compile" ]; then
@@ -1057,7 +1034,6 @@ elif [ $1 == "config" ] || [ $1 == "cf" ]; then
    # Presenting ezGIT
       f_greet
 
-   # uDev: todo: merge f_setGlobalConfig_menu here
    # uDev: 'G config ^' edits .gitconfig on DRYa repo
    # uDev: 'G config v' edits .gitconfig on the machine at $HOME
    # uDev: 'G config m' edits .confif/h.h/.gitconfig+machine to identify traitsID for this machine of the same user
@@ -1087,7 +1063,7 @@ elif [ $1 == "config" ] || [ $1 == "cf" ]; then
       # Edit DRY's file
 
       # Verbose small explanation
-         f_talk; echo "Opening configurations file of git"
+         f_talk; echo "Opening git configurations file"
                  echo " > using with vim editor"
                  echo " > changes will be made inside DRYa repo and copied to HOME afterwards"
                  echo 
@@ -1120,7 +1096,7 @@ elif [ $1 == "config" ] || [ $1 == "cf" ]; then
 
       # uDev: if repo DRYa does not exist, ask user to clone it
 
-      bash ${v_REPOS_CENTER}/DRYa/drya.sh dot install gitconfig
+      f_dot_file_install_gitconfig
 
    elif [ $2 == "m" ]; then
       # For the same user with diferent devices, lets identify this device on the configs, to be listed on '$ git log' and apretiate on git's history which machine/device did what job
@@ -1409,44 +1385,34 @@ elif [ $1 == "export-git-log" ]; then
 
 elif [ $1 == "new" ]; then
 
+
    if [ -z $2 ]; then
 
       f_greet
       f_talk; echo "What new thing do you want?"
               echo " > G new repo"
+              echo " > G push existing repo (uDev)"
               echo " > G new ?"
 
    elif [ $2 == "repo" ]; then
       # Creates a new repository
 
       f_greet
-      f_talk; echo "Do you want to create a new repository? "
-              echo " > Tap (y/N) To Create a repository"
-              read -sn 1 v_ans
-              echo
-              echo "Your answer was: $v_ans"
 
-      if [ $v_ans == "y" ] || [ $v_ans == "Y" ]; then
-                 echo
-                 echo $v_line  ## Using horizontal line
-         f_talk; echo "Do you want a README file in it? "
-                 echo " > Tap (y/N) To Create a repository"
-                 read -sn 1 v_ans2
-                 echo
-                 echo "Your answer was: $v_ans2"
-      fi
+      v_txt="Create new Repository?" && f_prsK && echo
 
-      # Telling a summary of what is going to happen
-         f_greet
-         f_talk; echo "Summary:"
-         echo " > Create repo: $v_ans"
-         echo " > Create README: $v_ans2"
-         echo
+      # Asking repo name and `git init` repo
+         f_new_repo_step_1
 
-         read -sn 1 -p "Press ANY key to continue (use: CTRL-C to cancel)" 
-         echo
-         echo
-         echo "uDev: All this functionality is not ready yet to apply changes"
+      # If name was given in step 1, proceed to step 2: Edit README file
+         [[ -n $v_name ]] && f_new_repo_step_2 || echo "Aborted, name is required"
+
+         git add --all
+         git commit -m "Added README file"
+
+      # Creating a remote, and pushing to it
+         f_new_repo_step_3 
+
 
 
    elif [ $2 == "?" ]; then
@@ -2612,7 +2578,7 @@ elif [ $1 == "m" ] || [ $1 == "menu" ]; then
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "2. " ]] && bash ${v_REPOS_CENTER}/DRYa/drya.sh dot install gitconfig
+      [[ $v_list =~ "2. " ]] && f_dot_file_install_gitconfig
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
 
