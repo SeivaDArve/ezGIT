@@ -1358,15 +1358,21 @@ elif [ $1 == "count" ] || [[ $1 == "n" ]]; then
       f_greet
       f_curl_uploads_count
 
-   elif [[ $2 == "." ]] || [[ $2 == "branch-total-commits" ]]; then
-      # Counting total git commits for current branch
-      f_count_nr_branch_commits
+   elif [[ $2 == "." ]] || [[ $2 == "current-branch-total-commits" ]]; then
+      # Counting number of git commits (current repo)
 
-   elif [[ $2 == "A" ]] || [[ $2 == "repo-total-commits" ]]; then
-      # Counting total git commits for all branches under current repo
-      v_num=$(git rev-list --count --all)
-      f_talk; echo "Total number of git commits in this entire reporitory including other branches"
-              echo " > $v_num"
+      if [ -z $3 ]; then
+         # Counting total git commits for current branch (current repo)
+         f_count_nr_branch_commits
+
+
+      elif [[ $3 == "A" ]] || [[ $2 == "all-branches-total-commits" ]]; then
+         # Counting total git commits for all branches (current repo)
+         v_num=$(git rev-list --count --all)
+         f_talk; echo "Total number of git commits in this entire reporitory including other branches"
+                 echo " > $v_num"
+
+      fi
    fi
 
 
