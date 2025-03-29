@@ -2493,6 +2493,8 @@ elif [ $1 == "[" ] || [ $1 == "unstash" ] || [ $1 == "ust" ] || [ $1 == "apply" 
            echo " > Apllying saved/stashed/hidden commits now"
 
    git stash apply
+
+   echo
    
    f_git_status
 
