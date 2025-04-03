@@ -376,8 +376,7 @@ function f_blind_brain {
       fi
 
    # Sending automatically everything with an automated commit message
-      # Message to use as commit:
-         v_aut_message="Pushed to github.com automatically by ezGIT app"
+      # Message to use as commit: $v_aut_message
 
       f_talk; echo    "Running 'blind-upload' or 'b':"
               echo -e " > Commits and pushes all contents of the repo fully automatic "
@@ -1294,6 +1293,10 @@ elif [ $1 == "." ]; then
       # Nice verbose finish
          f_done
 
+   elif [ $2 == "2" ]; then
+      # Outputs a second option for git status, without f_greet
+      f_git_status
+
    elif [ $2 == "all" ] || [ $2 == "A" ] || [ $2 == "a" ]; then
       # Whenever code complexity is found, a function is created to enable better code reading
          f_git_status_recursive
@@ -1568,6 +1571,12 @@ elif [ $1 == "++" ]; then
    # If no $2 is found, enable the user to write a commit message.
    # If one $2 variable is found, commit message accordingly automatically
 
+   # Variables for the automatic messages
+      v_aut_message="Pushed to github.com automatically (by ezGIT app)"
+      v_aut_commit="Commiting automatically (by ezGIT app)"
+      v_aut_udev="Improvements (added/modified/etc.) made only around uDev comments (by ezGIT app)"
+      v_aut_same="Commiting automatically the same as last commit (by ezGIT app)"
+
    if [ -z $2 ]; then
 
       f_greet
@@ -1624,6 +1633,23 @@ elif [ $1 == "++" ]; then
       if [ -z $3 ]; then
          f_blind_brain
 
+      elif [ $3 == "2" ]; then
+         # Second version of blind, only commits (for the alias `gcmb`)
+         f_talk; echo "Only commit as: blind commit (automatic, no upload)"
+                 echo
+
+         f_git_status
+
+         f_talk; echo    "Commit Message:"
+                 echo -n " > "
+           f_c3; echo       "$v_aut_commit"
+           f_rc; echo
+
+         git commit -m "$v_aut_commit"
+                 echo
+
+         f_git_status
+
       elif [ $3 == "A" ]; then
          # Recursively push ALL automatically
 
@@ -1658,9 +1684,9 @@ elif [ $1 == "++" ]; then
 
       f_greet
 
-      # Sending automatically everything with an automated commit message
-         # Message to use as commit:
-         v_aut_message="Improvements made only around uDev comments (added/modify/etc..)"
+      if [ -z $3 ]; then
+         # Sending automatically everything with an automated commit message
+            # Message to use as commit: $v_aut_udev
 
          f_talk; echo -n "Running: "
            f_c3; echo -n "'uDev'"
@@ -1673,14 +1699,14 @@ elif [ $1 == "++" ]; then
 
          f_talk; echo "Default commit message:"
                  echo -n " > "
-           f_c1; echo "$v_aut_message"
+           f_c1; echo "$v_aut_udev"
            f_rc; echo
 
          f_git_add_all && echo " > Done!"
 
                  echo
          f_talk; echo "Creating an automatic commit"
-                 git commit -m "$v_aut_message"
+                 git commit -m "$v_aut_udev"
                  echo
 
          f_git_status
@@ -1693,6 +1719,25 @@ elif [ $1 == "++" ]; then
 
                  echo
          f_talk; echo "All Done!"
+
+      elif [ $3 == "2" ]; then
+         # Second version of uDev automatic commit, only commits (for the alias `gcmu`)
+         f_talk; echo "Only commit as: udev commit (automatic, no upload)"
+                 echo
+
+         f_git_status
+
+         f_talk; echo    "Commit Message:"
+                 echo -n " > "
+           f_c3; echo       "$v_aut_udev"
+           f_rc; echo
+
+         git commit -m "$v_aut_udev"
+                 echo
+
+         f_git_status
+      fi
+
 
    elif [ $2 == "s" ] || [ $2 == "same" ] || [ $2 == "same-as-last-commit" ]; then
       # Update adding only info that is about the same as last commit
@@ -1700,35 +1745,53 @@ elif [ $1 == "++" ]; then
 
       f_greet
 
-      # Sending automatically everything with an automated commit message
-         # Message to use as commit:
-         v_aut_message="This commit is the same as last commit (created automatically)"
+      if [ -z $3 ]; then
+         # Sending automatically everything with an automated commit message
+            # Message to use as commit: $v_aut_same
 
-         f_talk; echo "running 's' or 'same-as-last-commit':"
-                 echo -e " > Commits and pushes all contents of the repo fully automatic "
+            f_talk; echo "running 's' or 'same-as-last-commit':"
+                    echo -e " > Commits and pushes all contents of the repo fully automatic "
+                    echo
+
+            f_talk; echo "default commit message:"
+                    echo -n " > "
+              f_c1; echo "$v_aut_same"
+              f_rc; echo
+
+            f_git_add_all && echo " > Done!"
+
+                    echo
+            f_talk; echo "Creating an automatic commit"
+                    git commit -m "$v_aut_same"
+
+            f_git_status
+
+            f_stroken
+
+            f_git_push
+
+            f_git_status
+
+                    echo
+            f_talk; echo "All Done!"
+
+      elif [ $3 == "2" ]; then
+         # Second version of "same" automatic commit, only commits (for the alias `gcms`)
+         f_talk; echo "Only commit as: 'same as last commit' (automatic, no upload)"
                  echo
 
-         f_talk; echo "default commit message:"
+         f_git_status
+
+         f_talk; echo    "Commit Message:"
                  echo -n " > "
-           f_c1; echo "$v_aut_message"
+           f_c3; echo       "$v_aut_same"
            f_rc; echo
 
-         f_git_add_all && echo " > Done!"
-
+         git commit -m "$v_aut_same"
                  echo
-         f_talk; echo "Creating an automatic commit"
-                 git commit -m "$v_aut_message"
 
          f_git_status
-
-         f_stroken
-
-         f_git_push
-
-         f_git_status
-
-                 echo
-         f_talk; echo "All Done!"
+      fi
 
    elif [ $2 == "!" ]; then
       f_greet 
