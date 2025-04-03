@@ -27,4 +27,3 @@ List of what is lacking at this version to transcend to the next version:
 
 
 
-
