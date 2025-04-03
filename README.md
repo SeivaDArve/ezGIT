@@ -23,11 +23,7 @@ List of what is lacking at this version to transcend to the next version:
 6. Has to have an option to configure and display email
 7. Find the list of all Seiva's repository and git pull all of them (update them)
 8. Add git stash
-9. ezGIT logs changes for the true user. The true developer sees software updates through 'git log', therefore, for those who dont even know git, they need a file to read updates from "version-log.txt" (this file)
-
-
-
-
+9. ezGIT logs changes for the true user.
 
 
 
