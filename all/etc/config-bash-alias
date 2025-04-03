@@ -2,6 +2,7 @@
 
 # Alias to use directly as git alias
 
+alias gh="less ${v_REPOS_CENTER}/ezGIT/all/etc/config-bash-alias"  # Read this file itself, providing help
 alias g="git"
 alias gst="git status"
 alias gpom="git pull origin master"
