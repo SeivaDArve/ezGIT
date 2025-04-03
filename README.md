@@ -26,5 +26,3 @@ List of what is lacking at this version to transcend to the next version:
 9. ezGIT logs changes for the true user. The true developer sees software updates through 'git log', therefore, for those who dont even know git, they need a file to read updates from "version-log.txt" (this file)
 
 
-
-
