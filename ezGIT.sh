@@ -2553,6 +2553,8 @@ elif [ $1 == "[]" ] || [ $1 == "stash" ] || [ $1 == "st" ]; then
 
    git stash
 
+           echo
+
    f_git_status
 
 elif [ $1 == "[" ] || [ $1 == "unstash" ] || [ $1 == "ust" ] || [ $1 == "apply" ] || [ $1 == "ap" ]; then
