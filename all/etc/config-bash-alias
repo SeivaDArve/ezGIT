@@ -25,11 +25,24 @@ alias gbr="# uDev: Change branch"
 alias gfv="# uDev: List favoutite commands"
 alias gst="git stash" # When local has 1 commit and remote has 1 commit and now you cannot pull nor push. First you stash, than pull, then git stash apply, then push
 alias gsa="git stash apply" 
-alias gcm="git commit -m"
 alias gcmu="G ++ u 2" # Only commit with automatic commmit: uDev comments   
 alias gcmb="G ++ b 2" # Only commit with automatic commmit: blind commit
 alias gcms="G ++ s 2" # Only commit with automatic commmit: same as last commit
 alias gad="git add"
 alias ggo="clear; echo 'ezGIT: blindly pull changes'; git add --all; git commit -m 'bling update'; stroken; git push"
 
+alias gcm="git commit -m"
 
+function f_alias_gcm {
+   # Terminal command `gcm` means `git commit -m`
+   #
+   # In case it is presented with one argumente, commit it as one argument
+   #  > `git commit -m "text as only one commit"`
+   #
+   # In case multiple arguments were given, join them all as one commit
+   #  > `git commit text to join as only one argument`
+   #
+   
+   echo uDev
+}
+   
