@@ -2549,6 +2549,7 @@ elif [ $1 == "[]" ] || [ $1 == "stash" ] || [ $1 == "st" ]; then
    f_talk; echo "git stash"
            echo " > saving our current commits for later "
            echo "   (You may command 'git pull' now, if needed)"
+           echo
 
    git stash
 
