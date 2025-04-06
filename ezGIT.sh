@@ -35,8 +35,11 @@
 # If this script runs, a variable is set to tell which one repo was the last one to run
    v_repo="ezGIT"
 
-# Colors now were repladed as a test. They now come from the boilerplate/ dir
-   # uDev: test if drya repo exists, if not, an alternative should exist
+
+
+
+
+# uDev: test if drya repo exists, if not, an alternative should exist
    source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
 
    v_greet="ezGIT"
@@ -45,6 +48,21 @@
    # function f_c2  # Used at: f_talk
    # function f_c3  # Used at: f_talk
    # function f_rc  # Reset cor
+
+
+
+
+# Sourcing DRYa Lib 2
+   v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-2-tmp-n-config-files.sh
+   [[ -f $v_lib2 ]] && source $v_lib2 || read -s -n 1 -p "Error: drya-lib-2 does not exist"
+
+   #f_create_tmp_file  # will give a $v_tmp with a new file with abs path
+  
+
+
+
+
+
 
 
 function f_instructions {
@@ -949,6 +967,33 @@ function f_dot_file_install_gitconfig {
 }
 
 
+function f_git_add_regex {
+   # Fx for `G + *regex-file-to-add-for-commit*`
+
+   # Using drya-lib-2 to create a temporary file. We call `f_create_tmp_file` and it will return an absulute path to a new file at $v_tmp
+      f_create_tmp_file
+      #echo $v_tmp  # Debug
+
+   # Getting the list to files to be commited
+
+      rm $v_tmp
+
+      for i in $(git status --short | cut -f 3 -d " ")
+      do
+         echo $i >> $v_tmp
+      done
+
+
+      for i in $(grep "$v_arg2" $v_tmp)
+      do
+         echo " > $i"
+         git add $i
+      done
+
+      echo
+      f_git_status
+}
+
 
 # -----------------------------------------
 # -- Functions above --+-- Arguments Below 
@@ -1297,6 +1342,10 @@ elif [ $1 == "." ]; then
       # Outputs a second option for git status, without f_greet
       f_git_status
 
+   elif [ $2 == "short" ] || [ $2 == "s" ]; then
+      # Outputs the shortest list of modified/added/etc... files without the verbose output of the app `git`
+      git status -s 
+
    elif [ $2 == "all" ] || [ $2 == "A" ] || [ $2 == "a" ]; then
       # Whenever code complexity is found, a function is created to enable better code reading
          f_git_status_recursive
@@ -1515,8 +1564,18 @@ elif [ $1 == "+" ]; then
    # If arg $2 is not a known file: abort
       if [ $? == "128" ]; then 
          f_talk; echo "File name not found"
-         f_talk; echo "Please add a list of files names correctly"
-         exit 1
+                 echo "Please add a list of file names correctly"
+                 echo
+         f_talk; echo "Testing if pattern exists using regex:"
+                 echo " > Using \`grep *$2*\`"
+                 echo
+
+         # Adding an fx to allow adding with regex: *name-here-* or `grep "name-here-"`
+         # uDev: add similar fx to `G - *regex*`
+            v_arg2=$2        # Saving argument 2 to a var
+            f_git_add_regex  # Test if such abreviation exists
+
+         exit 
       fi
 
    # For each argument given starting at arg 2, list it colorfully
