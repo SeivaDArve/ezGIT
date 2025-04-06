@@ -1565,17 +1565,8 @@ elif [ $1 == "+" ]; then
       if [ $? == "128" ]; then 
          f_talk; echo "File name not found"
                  echo "Please add a list of file names correctly"
-                 echo
-         f_talk; echo "Testing if pattern exists using regex:"
-                 echo " > Using \`grep *$2*\`"
-                 echo
 
-         # Adding an fx to allow adding with regex: *name-here-* or `grep "name-here-"`
-         # uDev: add similar fx to `G - *regex*`
-            v_arg2=$2        # Saving argument 2 to a var
-            f_git_add_regex  # Test if such abreviation exists
-
-         exit 
+         exit 1
       fi
 
    # For each argument given starting at arg 2, list it colorfully
@@ -1868,6 +1859,24 @@ elif [ $1 == "++" ]; then
       # uDev: add a feature to add more git-commit-messages
    fi
 
+elif [ $1 == "+++" ]; then
+   # Using regex to `git add` files
+
+   f_greet
+   f_talk; echo "git add files with regex:"
+           echo " > Testing if pattern exists using regex (using \`grep *$2*\`)"
+           echo
+
+   # Adding an fx to allow adding with regex: *name-here-* or `grep "name-here-"`
+   # uDev: add similar fx to `G - *regex*`
+      v_arg2=$2        # Saving argument 2 to a var
+      f_git_add_regex  # Test if such abreviation exists
+
+
+   v_txt="See \`git diff\` to staged files"; f_prsK
+
+      git diff --staged
+    
 elif [ $1 == "-" ]; then 
    # unStages a file or all files
 
@@ -2446,7 +2455,7 @@ elif [ $1 == "=" ] || [ $1 == "diff" ]; then
 
       f_talk; echo -n 'Difference on staged files '
         f_c3; echo    '`git diff --staged`'
-        f_rc
+        f_rc; echo
 
       # uDev: test if ready there are staged files
       git diff --staged
