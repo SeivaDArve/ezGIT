@@ -1956,8 +1956,9 @@ elif [ $1 == "---" ]; then
    # Undo the last git commit when it is ready to upload to github. But keeps the changes in the staging area ready to commit again
 
    f_greet
-   f_talk; echo "Unduing last \`git commit\'"
-           echo 
+   f_talk; echo -n "Undoing last "
+     f_c3; echo    '`git commit\`'
+     f_rc; echo 
 
    f_git_status
 
