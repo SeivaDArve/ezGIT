@@ -1952,6 +1952,17 @@ elif [ $1 == "--" ]; then
          f_git_status
    fi
 
+elif [ $1 == "---" ]; then
+   # Undo the last git commit when it is ready to upload to github. But keeps the changes in the staging area ready to commit again
+
+   f_greet
+   f_talk; echo "Unduing last \`git commit\'"
+
+   git reset --soft HEAD~1
+   
+   f_git_status
+   f_done
+
 elif [ $1 == "+-" ]; then
    # git commit --ammend
       # Used in cases where you want to update your last commit (for example you forgot a line of code or you found a bug that you can easily fix. 
