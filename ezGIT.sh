@@ -1957,7 +1957,7 @@ elif [ $1 == "---" ]; then
 
    f_greet
    f_talk; echo -n "Undoing last "
-     f_c3; echo    '`git commit\`'
+     f_c3; echo    '`git commit`'
      f_rc; echo 
 
    f_git_status
