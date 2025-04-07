@@ -1957,6 +1957,9 @@ elif [ $1 == "---" ]; then
 
    f_greet
    f_talk; echo "Unduing last \`git commit\'"
+           echo 
+
+   f_git_status
 
    git reset --soft HEAD~1
    
