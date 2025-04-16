@@ -584,6 +584,7 @@ function f_git_status_recursive {
 
             # Search for git words that indicate work to be done
                # uDev: there must be more words (En and PT-PT) therefore this function must be tested
+               #       uDev: replace all these words for `git status --short` if it does not print anything, means git staus Ok, nothing to commit, working tree clean
                if [[ $s =~ "added" ]]           || [[ $s =~ "Changes"          ]] \
                || [[ $s =~ "Untracked" ]]       || [[ $s =~ "modificado"       ]] \
                || [[ $s =~ "branch is ahead" ]] || [[ $s =~ "está à frente"    ]] \
