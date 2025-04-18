@@ -1774,6 +1774,7 @@ elif [ $1 == "++" ]; then
 
       elif [ $3 == "2" ]; then
          # Second version of uDev automatic commit, only commits (for the alias `gcmu`)
+
          f_talk; echo "Only commit as: udev commit (automatic, no upload)"
                  echo
 
@@ -1799,36 +1800,37 @@ elif [ $1 == "++" ]; then
 
       if [ -z $3 ]; then
          # Sending automatically everything with an automated commit message
-            # Message to use as commit: $v_aut_same
+         # --- Message to use as commit: $v_aut_same
 
-            f_talk; echo "running 's' or 'same-as-last-commit':"
-                    echo -e " > Commits and pushes all contents of the repo fully automatic "
-                    echo
+         f_talk; echo "running 's' or 'same-as-last-commit':"
+                 echo -e " > Commits and pushes all contents of the repo fully automatic "
+                 echo
 
-            f_talk; echo "default commit message:"
-                    echo -n " > "
-              f_c1; echo "$v_aut_same"
-              f_rc; echo
+         f_talk; echo "default commit message:"
+                 echo -n " > "
+           f_c1; echo "$v_aut_same"
+           f_rc; echo
 
-            f_git_add_all && echo " > Done!"
+         f_git_add_all && echo " > Done!"
 
-                    echo
-            f_talk; echo "Creating an automatic commit"
-                    git commit -m "$v_aut_same"
+                 echo
+         f_talk; echo "Creating an automatic commit"
+                 git commit -m "$v_aut_same"
 
-            f_git_status
+         f_git_status
 
-            f_stroken
+         f_stroken
 
-            f_git_push
+         f_git_push
 
-            f_git_status
+         f_git_status
 
-                    echo
-            f_talk; echo "All Done!"
+                 echo
+         f_talk; echo "All Done!"
 
       elif [ $3 == "2" ]; then
          # Second version of "same" automatic commit, only commits (for the alias `gcms`)
+
          f_talk; echo "Only commit as: 'same as last commit' (automatic, no upload)"
                  echo
 
@@ -1848,33 +1850,36 @@ elif [ $1 == "++" ]; then
 
    elif [ $2 == "t" ] || [ $2 == "txt" ] || [ $2 == "improvements-on-text" ]; then
       # Sending automatically everything with an automated commit message
-         # Message to use as commit: $v_aut_txt
+      # --- Message to use as commit: $v_aut_txt
 
-         f_talk; echo "running 't' or 'improvements-on-text':"
-                 echo -e " > Commits and pushes all contents of the repo fully automatic "
-                 echo
+      f_greet
 
-         f_talk; echo "default commit message:"
-                 echo -n " > "
-           f_c1; echo "$v_aut_txt"
-           f_rc; echo
+      f_talk; echo "running 't' or 'improvements-on-text':"
+              echo -e " > Commits and pushes all contents of the repo fully automatic "
+              echo
 
-         f_git_add_all && echo " > Done!"
+      f_talk; echo "default commit message:"
+              echo -n " > "
+        f_c1; echo "$v_aut_txt"
+        f_rc; echo
 
-                 echo
-         f_talk; echo "Creating an automatic commit"
-                 git commit -m "$v_aut_txt"
+      f_git_add_all && echo " > Done!"
 
-         f_git_status
+              echo
+      f_talk; echo "Creating an automatic commit"
+              git commit -m "$v_aut_txt"
 
-         f_stroken
+      f_git_status
 
-         f_git_push
+      f_stroken
 
-         f_git_status
+      f_git_push
 
-                 echo
-         f_talk; echo "All Done!"
+      f_git_status
+
+              echo
+      f_talk; echo "All Done!"
+
 
    elif [ $2 == "!" ]; then
       f_greet 
