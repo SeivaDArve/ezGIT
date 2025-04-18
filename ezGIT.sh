@@ -250,7 +250,6 @@ function f_git_add_all {
      f_rc
 
    git add --all
-           echo
 }
 
 function f_git_pull {
