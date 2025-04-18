@@ -1627,6 +1627,7 @@ elif [ $1 == "++" ]; then
       v_aut_commit="Commiting automatically (by ezGIT app)"
       v_aut_udev="Improvements (added/modified/etc.) made only around uDev comments (by ezGIT app)"
       v_aut_same="Commiting automatically the same as last commit (by ezGIT app)"
+      v_aut_txt="Improvements on text, spelling, explanations, typos, etc. (by ezGIT app)"
 
    if [ -z $2 ]; then
 
@@ -1843,6 +1844,36 @@ elif [ $1 == "++" ]; then
 
          f_git_status
       fi
+
+   elif [ $2 == "t" ] || [ $2 == "txt" ] || [ $2 == "improvements-on-text" ]; then
+      # Sending automatically everything with an automated commit message
+         # Message to use as commit: $v_aut_txt
+
+         f_talk; echo "running 't' or 'improvements-on-text':"
+                 echo -e " > Commits and pushes all contents of the repo fully automatic "
+                 echo
+
+         f_talk; echo "default commit message:"
+                 echo -n " > "
+           f_c1; echo "$v_aut_txt"
+           f_rc; echo
+
+         f_git_add_all && echo " > Done!"
+
+                 echo
+         f_talk; echo "Creating an automatic commit"
+                 git commit -m "$v_aut_txt"
+
+         f_git_status
+
+         f_stroken
+
+         f_git_push
+
+         f_git_status
+
+                 echo
+         f_talk; echo "All Done!"
 
    elif [ $2 == "!" ]; then
       f_greet 
