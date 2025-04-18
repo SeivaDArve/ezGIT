@@ -1845,6 +1845,7 @@ elif [ $1 == "++" ]; then
          f_git_status
       fi
 
+
    elif [ $2 == "t" ] || [ $2 == "txt" ] || [ $2 == "improvements-on-text" ]; then
       # Sending automatically everything with an automated commit message
          # Message to use as commit: $v_aut_txt
