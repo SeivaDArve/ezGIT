@@ -1816,7 +1816,6 @@ elif [ $1 == "++" ]; then
                  echo
          f_talk; echo "Creating an automatic commit"
                  git commit -m "$v_aut_same"
-                 echo
 
          f_git_status
 
