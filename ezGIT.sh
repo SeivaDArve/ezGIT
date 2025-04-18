@@ -1816,6 +1816,7 @@ elif [ $1 == "++" ]; then
                  echo
          f_talk; echo "Creating an automatic commit"
                  git commit -m "$v_aut_same"
+                 echo
 
          f_git_status
 
@@ -1854,11 +1855,11 @@ elif [ $1 == "++" ]; then
 
       f_greet
 
-      f_talk; echo "running 't' or 'improvements-on-text':"
+      f_talk; echo "Running 't' or 'improvements-on-text':"
               echo -e " > Commits and pushes all contents of the repo fully automatic "
               echo
 
-      f_talk; echo "default commit message:"
+      f_talk; echo "Default commit message:"
               echo -n " > "
         f_c1; echo "$v_aut_txt"
         f_rc; echo
@@ -1868,6 +1869,7 @@ elif [ $1 == "++" ]; then
               echo
       f_talk; echo "Creating an automatic commit"
               git commit -m "$v_aut_txt"
+              echo
 
       f_git_status
 
