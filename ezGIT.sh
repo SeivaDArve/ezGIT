@@ -84,7 +84,7 @@ function f_instructions {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='G h'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L30='30. | G        |     | Displays this menu'
+      L30='30. | G h      |     | Displays this menu'
       L29='29. | G ?      |     | Displays this menu'
       L28='28. | G F      |     | Favourites'
       L27='27. | G .      |     | git status'
@@ -115,7 +115,7 @@ function f_instructions {
        L2='2.  | G config |     | uDev: Automatic configuration for fast start (DRY)'
        L1='1. Cancel'
 
-      L0="ezGIT: Verbose instructions + exec after: "
+      L0="ezGIT: Verbose instructions. Press [ENTER] to exec: "
       
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n$L20 \n$L21 \n$L22 \n$L23 \n$L24 \n$L25 \n$L26 \n$L27 \n$L28 \n$L29 \n$L30 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
@@ -1624,9 +1624,9 @@ elif [ $1 == "++" ]; then
    # Variables for the automatic messages
       v_aut_message="Pushed to github.com automatically (by ezGIT app)"
       v_aut_commit="Commiting automatically (by ezGIT app)"
-      v_aut_udev="Improvements (added/modified/etc.) made only around uDev comments (by ezGIT app)"
-      v_aut_same="Commiting automatically the same as last commit (by ezGIT app)"
-      v_aut_txt="Improvements on text, spelling, explanations, typos, etc. (by ezGIT app)"
+      v_aut_udev="Imp: (added/modified/etc.) made only around uDev comments (by ezGIT app)"
+      v_aut_same="Commiting (auto): Same as last commit (by ezGIT app)"
+      v_aut_txt="Imp on text: Spelling, Explanations, Typos... (by ezGIT app)"
 
    if [ -z $2 ]; then
 
@@ -2683,6 +2683,8 @@ elif [ $1 == "[" ] || [ $1 == "unstash" ] || [ $1 == "ust" ] || [ $1 == "apply" 
 
    f_greet
 
+   f_git_status
+
    f_talk; echo "git stash apply"
            echo " > Apllying saved/stashed/hidden commits now"
 
@@ -2690,7 +2692,6 @@ elif [ $1 == "[" ] || [ $1 == "unstash" ] || [ $1 == "ust" ] || [ $1 == "apply" 
 
    echo
    
-   f_git_status
 
 elif [ $1 == "[!] v" ] || [ $1 == "stash-clear" ] || [ $1 == "st-c" ]; then
    f_greet
