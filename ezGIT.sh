@@ -1547,7 +1547,6 @@ elif [ $1 == "+" ]; then
    # 5. git commim -m "i" 
 
    # uDev: if $2 is ^ then like 'G + ^' then, git commit staged files
-   # uDev: if $2 is > then like 'G + >' then, git diff --staged files
 
    function f_no_file_found {
       f_talk; echo "No file name given. "
