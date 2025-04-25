@@ -907,13 +907,31 @@ function f_print_invalid_items {
 
 }
 
+function f_new_repo_step_0 {
+   f_greet
+
+   v_txt="Create new Repository?" && f_prsK && echo
+
+   # Asking repo name and `git init` repo
+      f_new_repo_step_1
+
+   # If name was given in step 1, proceed to step 2: Edit README file
+      [[ -n $v_name ]] && f_new_repo_step_2 || echo "Aborted, name is required"
+
+      git add --all
+      git commit -m "Added README file"
+
+   # Creating a remote, and pushing to it
+      f_new_repo_step_3 
+}
 
 function f_new_repo_step_1 {
    # Asking repo name and `git init` repo
 
    f_talk; echo "What will be the repository name?"
-   read -p " > " v_name
-   echo
+           
+           read -p " > " v_name
+           echo
 
    v_path=${v_REPOS_CENTER}/$v_name
 
@@ -928,27 +946,24 @@ function f_new_repo_step_2 {
 
    # Lista de opcoes para o menu `fzf`
 
-      L5='5. Nao Criar | README.txt'
-      L4='4. Criar     | README.txt'                                      
-
-      L3='3. Nao Criar | README.org'
-      L2='2. Criar     | README.org'                                      
+      L4='4. Sim | .txt'                                      
+      L3='3. Sim | .org'                                      
+      L2='2. Nao | '
 
       L1='1. Cancel'
 
-      L0="SELECT 1: Menu X: "
+      L0="ezGIT: Pretende criar README file? "
       
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n\n$L4 \n$L5" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4" | fzf --cycle --prompt="$L0")
 
       #echo "comando" >> ~/.bash_history && history -n
       #history -s "echo 'Olá, mundo!'"
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "5. " ]] && echo "$L5"
-      [[ $v_list =~ "4. " ]] && echo "$L4" && vim $v_path/README.txt
-      [[ $v_list =~ "3. " ]] && echo "$L3"
-      [[ $v_list =~ "2. " ]] && echo "$L2" && emacs $v_path/README.org
+      [[ $v_list =~ "4. " ]] && echo "$L4" && vim   $v_path/README.txt
+      [[ $v_list =~ "3. " ]] && echo "$L3" && emacs $v_path/README.org
+      [[ $v_list =~ "2. " ]] && echo "Nao sera Criado README file"
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
 }
@@ -1443,35 +1458,32 @@ elif [ $1 == "export-git-log" ]; then
 
 elif [ $1 == "new" ]; then
 
-
    if [ -z $2 ]; then
 
-      f_greet
-      f_talk; echo "What new thing do you want?"
-              echo " > G new repo"
-              echo " > G push existing repo (uDev)"
-              echo " > G new ?"
+      Lz1='Save '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L4='4. New repo (from scratch)'
+      L3='3. Push existing repo (uDev)'
+      L2='2. Help'
+      L1='1. Cancel'
+
+      L0="ezGIT: What NEW thing do you want? "
+      
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "4. " ]] && f_new_repo_step_0
+      [[ $v_list =~ "3. " ]] && echo "uDev: $L3" 
+      [[ $v_list =~ "2. " ]] && echo "uDev: $L2" 
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      unset v_list
+    
+
 
    elif [ $2 == "repo" ]; then
-      # Creates a new repository
-
-      f_greet
-
-      v_txt="Create new Repository?" && f_prsK && echo
-
-      # Asking repo name and `git init` repo
-         f_new_repo_step_1
-
-      # If name was given in step 1, proceed to step 2: Edit README file
-         [[ -n $v_name ]] && f_new_repo_step_2 || echo "Aborted, name is required"
-
-         git add --all
-         git commit -m "Added README file"
-
-      # Creating a remote, and pushing to it
-         f_new_repo_step_3 
-
-
+      # Create new repository
+      f_new_repo_step_0
 
    elif [ $2 == "?" ]; then
 
