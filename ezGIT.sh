@@ -1460,11 +1460,11 @@ elif [ $1 == "new" ]; then
 
    if [ -z $2 ]; then
 
-      Lz1='Save '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      Lz1='Save '; Lz2='ezGIT new'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L4='4. New repo (from scratch)'
-      L3='3. Push existing repo (uDev)'
-      L2='2. Help'
+      L4='4. Help'
+      L3='3. New repo (from scratch)'
+      L2='2. Push existing repo (uDev)'
       L1='1. Cancel'
 
       L0="ezGIT: What NEW thing do you want? "
@@ -1473,9 +1473,9 @@ elif [ $1 == "new" ]; then
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "4. " ]] && f_new_repo_step_0
+      [[ $v_list =~ "4. " ]] && echo "uDev: $L4" 
       [[ $v_list =~ "3. " ]] && echo "uDev: $L3" 
-      [[ $v_list =~ "2. " ]] && echo "uDev: $L2" 
+      [[ $v_list =~ "2. " ]] && f_new_repo_step_0
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
     
@@ -1485,41 +1485,36 @@ elif [ $1 == "new" ]; then
       # Create new repository
       f_new_repo_step_0
 
-   elif [ $2 == "?" ]; then
+   elif [ $2 == "help" ] || [ $2 == "h" ] || [ $2 == "?" ] || [ $2 == "--help" ] || [ $2 == "-h" ] || [ $2 == "-?" ] || [ $2 == "rtfm" ]; then
+      # Instructions
 
       f_greet
-      echo "Right now the only options is: G new repo"
-      echo " > Will be listed how to manually make a repo:"
+
+      echo "How to manually make a repo:"
+
+      f_hzl  # Horizontal line:
       echo
 
-      # Horizontal line:
-         echo $v_line
-
-
-      echo '
-uDev: Create a script for this heredoc
-
-      source: https://gist.github.com/alexpchin/dc91e723d4db5018fef8
-
-# Setting up a new Git Repo
-   ## Create a new repository on the command line
-      $ mkdir <name-of-repo>
-      $ cd <name-of-repo>
-      $ touch README.md
-      $ echo "Hello World! This is a new repo!" > <name-of-repo>
-      $ git init
-      $ git add README.md
-      $ git commit -m "my first commit"
-      $ git remote add origin git@github.com:<user-github-name>/<reponame>.git
-      $ git push -u origin master
-
-   ## Push an existing repository from the command line
-      $ git remote add origin git@github.com:<user-github-name>/<reponame>.git
-      $ git push -u origin master
-      '
-      f_talk; echo "create new repo (uDev)"
+              echo 'Source: https://gist.github.com/alexpchin/dc91e723d4db5018fef8'
+              echo 
+              echo '# Setting up a new Git Repo'
+              echo '   ## Create a new repository on the command line'
+              echo '      $ mkdir <name-of-repo>'
+              echo '      $ cd <name-of-repo>'
+              echo '      $ touch README.md'
+              echo '      $ echo "Hello World! This is a new repo!" > <name-of-repo>'
+              echo '      $ git init'
+              echo '      $ git add README.md'
+              echo '      $ git commit -m "my first commit"'
+              echo '      $ git remote add origin git@github.com:<user-github-name>/<reponame>.git'
+              echo '      $ git push -u origin master'
+              echo 
+              echo '   ## Push an existing repository from the command line'
+              echo '      $ git remote add origin git@github.com:<user-github-name>/<reponame>.git'
+              echo '      $ git push -u origin master'
               echo
-              echo "Note: If DRYa exists in the system ezGIT can create all repos by default at:"
+      f_hzl  # Horizontal line:
+              echo "Note: If DRYa exists in the system, ezGIT can create all repos by default at:"
               echo " > ${v_REPOS_CENTER}"
 
    else
