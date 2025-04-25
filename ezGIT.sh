@@ -11,9 +11,6 @@
 #                           It explains how to install and use.
 #----------------------------------------------------------------------------
 
-# uDev: must create alias A as "all" (example: 'G . all' and 'G . A')
-
-# uDev: For new users, everytime this script runs, a function CAN be enabled to go on giving random instructions about how ezGIT works, no need to go and read the man pages
 
 # uDev: Functions for text colors
 #       If ezGIT gets byte compiled, there should be a file to configure it's color numbers
@@ -1060,6 +1057,8 @@ if [ -z "$*" ]; then
      f_c3; echo $v_mail
      f_rc; echo
 
+   # uDev: Give random instructions about how ezGIT works, no need to go and read the man pages
+   
 elif [ $1 == "h" ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ $1 == "?" ] || [ $1 == "-?" ]; then
    # Same as if no arg are given: Display help menu
       f_instructions
