@@ -1586,7 +1586,7 @@ elif [ $1 == "+" ]; then
 
 
 
-   # Asking for 3 seconds if the user wants 'git diff'
+   # Asking if the user wants 'git diff'
             echo
       f_c2; echo -e "Do you want to see the differences between the 2 files?"
             echo    "(the Last + Current version) "
@@ -1594,32 +1594,22 @@ elif [ $1 == "+" ]; then
             echo -n " > If so, press: "
       f_c2; echo                     "D"
             echo
-            echo -n "git diff? "
-      f_rc; echo -n           "(press D or ANY key): "
-
-      read -sn 1 v_ans
       
-      case $v_ans in
-         d | D)
-             # Display text based cresential while app is in beta
-                      echo "Starting..."
-                f_c1; echo $3
-                f_rc
+      v_txt='git diff (staged)' && f_prsD
+      echo
 
-                git diff --staged
-                read -s -n 1
-         ;;
-         *)
-            echo "You dind't choose anything..."
-            echo
-         ;;
-      esac
+      if [ -z $v_ans ]; then
+         f_talk; echo "User did not choose to see differences"
 
-   f_git_status
+      elif [ $v_ans == "d" ] || [ $v_ans == "D" ]; then
+         git diff --staged
 
-   f_git_commit
+      fi
 
-   f_git_status
+      echo
+      f_git_status
+      f_git_commit
+      f_git_status
 
 elif [ $1 == "++" ]; then
 	# 'git add --all' + 'git status' + 'git commim -m "" '
