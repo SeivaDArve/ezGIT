@@ -205,7 +205,7 @@ function f_git_config_missing {
            echo 
    
    # To install .gitconfig: 
-      v_txt="Install and configure .gitconfig file" && f_prsK
+      v_txt="Install and configure .gitconfig file" && f_anyK
       f_dot_file_install_gitconfig
 }
 
@@ -385,7 +385,7 @@ function f_blind_brain {
                  echo
 
          # Asking if the user is sure and wants to proceed
-            v_txt="G ++ b"; f_prsK
+            v_txt="G ++ b"; f_anyK
             echo
       fi
 
@@ -907,7 +907,7 @@ function f_print_invalid_items {
 function f_new_repo_step_0 {
    f_greet
 
-   v_txt="Create new Repository?" && f_prsK && echo
+   v_txt="Create new Repository?" && f_anyK && echo
 
    # Asking repo name and `git init` repo
       f_new_repo_step_1
@@ -1907,7 +1907,7 @@ elif [ $1 == "+++" ]; then
       f_git_add_regex  # Test if such abreviation exists
 
 
-   v_txt="See \`git diff\` to staged files"; f_prsK
+   v_txt="See \`git diff\` to staged files"; f_anyK
 
       git diff --staged
     
@@ -2564,7 +2564,7 @@ elif [ $1 == "rb" ]; then
                  echo " > Save and exit the file to apply"
                  echo
          
-         v_txt='Attempt `git rebase -i` (interactive)'; f_prsK
+         v_txt='Attempt `git rebase -i` (interactive)'; f_anyK
          echo
 
          git rebase -i 
@@ -2572,19 +2572,19 @@ elif [ $1 == "rb" ]; then
       elif [ $3 == "abort" ] || [ $3 == "a" ]; then
          # Abort current git rebase
 
-         v_txt="Aborting current git rebase?"; f_prsK
+         v_txt="Aborting current git rebase?"; f_anyK
          git rebase --abort && f_suc1 || f_suc2
 
       elif [ $3 == "force" ] || [ $3 == "f" ]; then
          # Send rebased changes to github.com
 
-         v_txt="Pushing changes to github?"; f_prsK
+         v_txt="Pushing changes to github?"; f_anyK
          git rebase --abort && f_suc1 || f_suc2
 
       elif [ $3 == "origin" ] || [ $3 == "o" ]; then
          # Discarta os commits atuais locais e volta ao estado em que se encontra a origem no github
 
-         v_txt="Revert to same state as github origin"; f_prsK
+         v_txt="Revert to same state as github origin"; f_anyK
          v_current_branch=$(git rev-parse --abbrev-ref HEAD)
          git reset --hard origin/$v_current_branch && f_suc1 || f_suc2
 
@@ -2596,14 +2596,14 @@ elif [ $1 == "rb" ]; then
          f_greet 
 
          # Opening interactive file with hashes and commits
-            v_txt="Rebasing $3 commits away form HEAD?"; f_prsK
+            v_txt="Rebasing $3 commits away form HEAD?"; f_anyK
             git rebase -i HEAD~$3 && f_suc1 || f_suc2 && exit 1
             echo
             echo "Debug: $v_suc"
             read
 
          # Send changes to github despite the possibility that it may create problems for other useres of the same branch
-            v_txt="Forcefully push changes to github?"; f_prsK
+            v_txt="Forcefully push changes to github?"; f_anyK
             git push --force && f_suc1 || f_suc2
             echo
       fi
