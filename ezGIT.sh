@@ -2537,9 +2537,12 @@ elif [ $1 == "rb" ]; then
               echo
               echo " > G rb f          | git config pull.rebase false"
               echo " > G rb t          | git config pull.rebase true"
-              echo " > G rb i          | git rebase -i (opens interactivly ONLY WITH LAST COMMIT"
+              echo " > G rb i          | git rebase -i (opens interactivly ONLY WITH LAST COMMIT)"
               echo " > G rb i <number> | Ao introduzir um numero, pode manupilar esses commits"
+              echo 
               echo " > G rb i abort    | Aborta a tentativa atual de rebase"
+              echo " > G rb i a        | Aborta a tentativa atual de rebase"
+              echo 
               echo " > G rb i force    | Envia alteracoes para o github apos concluido o rebase"
               echo " > G rb i origin   | Elimina os commits locais e reverte para o mesmo estado que a origem no github"
 
@@ -2554,9 +2557,17 @@ elif [ $1 == "rb" ]; then
 
          f_talk; echo 'Tutorial: `G rb i` (Git rebase interactive)'
                  echo
-                 echo "Rebasing is used for example to squash multiple commits into one"
-                 echo " > For an interactive rebase of last 6 commits: git rebase -i HEAD~6"
-                 echo " > THE MOST RECENT ONE: is the bottom one. The oldest: the top one"
+                 echo "Rebasing is used to:"
+                 echo ' > squash (combine multiple commits into one)'
+                 echo ' > reword (changes the commit message)'
+                 echo ' > edit   (edit the content of the commit)'
+                 echo ' > drop   (remove the commit)'
+                 echo
+                 echo "For an interactive rebase of last 6 commits:"
+                 echo " > git rebase -i HEAD~6"
+                 echo
+                 echo "Timeline: THE MOST RECENT COMMIT:"
+                 echo " > The bottom one. (The oldest: the top one)"
                  echo
                  echo "To merge all 5 most recent commits into the 6th (which is the oldest):"
                  echo " > Leave the 1st line (top line) saying 'pick'"
