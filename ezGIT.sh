@@ -1954,6 +1954,9 @@ elif [ $1 == "--" ]; then
 
    # uDev: Ask if user is sure before discarding chenged files
    # uDev: Ask if user wants to delete untracked files
+   
+   v_txt="Discard changes in one or + files?"; f_anyK
+   echo
 
    if [ -z $2 ]; then
       # Restore work dir to previous commit (fully, to all files)
@@ -1990,6 +1993,19 @@ elif [ $1 == "---" ]; then
    # Undo the last git commit when it is ready to upload to github. But keeps the changes in the staging area ready to commit again
 
    f_greet
+
+   f_talk; echo "Undoing last commit"
+           echo 
+           echo "Last commit:"
+   
+   v_last=$(git log --oneline | head -n 1)
+
+           echo " > $v_last"
+           echo
+
+   v_txt="Undo last commit?"; f_anyK
+   echo
+
    f_talk; echo -n "Undoing last "
      f_c3; echo    '`git commit`'
      f_rc; echo 
