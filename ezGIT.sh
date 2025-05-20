@@ -1182,6 +1182,80 @@ elif [ $1 == "config" ] || [ $1 == "cf" ]; then
 
    # uDev: Create a file at ~/.config/h.h/ezGIT/ with data from "uname -a"
 
+elif [ $1 == "." ]; then
+   # Git status (for current repo or for all)
+
+   # uDev: Remind the user if there are stashed content
+   #       List of stashed changes: git stash list
+   #       Remove/delete last stashed item: git stash drop
+   #       Drop/delete all stashed items: git stash clear
+   
+   # uDev: Perform git fetch before git status
+   
+   # uDev: Tell the user if "encript before push" + "decript after pull" is "on" (detects a directory .git-encrypt/ in the tree
+
+   # uDev: mention if there ar directories in repo center that are not repositories
+  
+   if [[ -z $2 ]]; then
+      # If only 1 arg is given: `git status` only to current repo
+
+      # Instructions: 3 possibilities when calling `G .`
+      #  1. fx runs if: is root directory where all repos are found
+      #  2. fx runs if: is not root directory where all repos are found
+      #  3. fx runs if: outside a valid repository (somewhere else in the file system)
+      #  4. fx runs if: inside a valid repository
+      
+      # uDev: Bug to fix: Error when used on repos root (fedora)
+      #       Bug to fix: Error when used on ~          (fedora)
+
+      f_greet 
+
+      if [[ $(pwd) == ${v_REPOS_CENTER} ]]; then 
+         # 1. if we are exactly at the Repos Center. 
+         #    For sure we are not inside a repo, 
+         #    ... Listing all repos here
+
+         f_git_status_nr_1_all_repos_root
+            
+
+
+      else  # Replaced: `elif [[ $(pwd) != ${v_REPOS_CENTER} ]]; then`
+         # 2. if we are not at repos Center
+         #    We may be either further into a repository 
+         #    or outside even the root of repos
+         #    We must detect which one it is now
+         #    ... Starting to filter
+
+         f_git_status_nr_2_not_all_repos_root
+
+      fi
+
+      # After detecting job is done
+         # This tracks changes better that tracking versions (specifically for Seiva's coding style that is done on-the-go using termux and smartphone. Changing the code ALL the time)
+         f_count_nr_branch_commits  
+
+      # Nice verbose finish
+         f_done
+
+   elif [ $2 == "2" ]; then
+      # Outputs a second option for git status, without f_greet
+      f_git_status
+
+   elif [ $2 == "short" ] || [ $2 == "s" ]; then
+      # Outputs the shortest list of modified/added/etc... files without the verbose output of the app `git`
+      git status -s 
+
+   elif [ $2 == "all" ] || [ $2 == "A" ] || [ $2 == "a" ]; then
+      # Whenever code complexity is found, a function is created to enable better code reading
+         f_git_status_recursive
+      
+      # uDev: At windows, if git does not have this config (see line below), then this function will not take effect:
+         # git config --global --add safe.directory /mnt/c/Repositories/upK
+   else 
+      f_talk; echo "command not known"
+              echo " > For help: G h"
+   fi
+
 elif [ $1 == "alias" ]; then
       vim ${v_REPOS_CENTER}/ezGIT/all/etc/config-bash-alias
 
@@ -1298,79 +1372,6 @@ elif [ $1 == "msg" ]; then
 
 elif [ $1 == "install" ]; then
    echo "uDev: If DRYa does not install this repo, it would install itself"
-
-elif [ $1 == "." ]; then
-   # Git status (for current repo or for all)
-
-   # uDev: Remind the user if there are stashed content
-   #       List of stashed changes: git stash list
-   #       Remove/delete last stashed item: git stash drop
-   #       Drop/delete all stashed items: git stash clear
-   
-   # uDev: Perform git fetch before git status
-   
-   # uDev: Tell the user if "encript before push" + "decript after pull" is "on" (detects a directory .git-encrypt/ in the tree
-
-   if [[ -z $2 ]]; then
-      # If only 1 arg is given: `git status` only to current repo
-
-      # Instructions: 3 possibilities when calling `G .`
-      #  1. fx runs if: is root directory where all repos are found
-      #  2. fx runs if: is not root directory where all repos are found
-      #  3. fx runs if: outside a valid repository (somewhere else in the file system)
-      #  4. fx runs if: inside a valid repository
-      
-      # uDev: Bug to fix: Error when used on repos root (fedora)
-      #       Bug to fix: Error when used on ~          (fedora)
-
-      f_greet 
-
-      if [[ $(pwd) == ${v_REPOS_CENTER} ]]; then 
-         # 1. if we are exactly at the Repos Center. 
-         #    For sure we are not inside a repo, 
-         #    ... Listing all repos here
-
-         f_git_status_nr_1_all_repos_root
-            
-
-
-      else  # Replaced: `elif [[ $(pwd) != ${v_REPOS_CENTER} ]]; then`
-         # 2. if we are not at repos Center
-         #    We may be either further into a repository 
-         #    or outside even the root of repos
-         #    We must detect which one it is now
-         #    ... Starting to filter
-
-         f_git_status_nr_2_not_all_repos_root
-
-      fi
-
-      # After detecting job is done
-         # This tracks changes better that tracking versions (specifically for Seiva's coding style that is done on-the-go using termux and smartphone. Changing the code ALL the time)
-         f_count_nr_branch_commits  
-
-      # Nice verbose finish
-         f_done
-
-   elif [ $2 == "2" ]; then
-      # Outputs a second option for git status, without f_greet
-      f_git_status
-
-   elif [ $2 == "short" ] || [ $2 == "s" ]; then
-      # Outputs the shortest list of modified/added/etc... files without the verbose output of the app `git`
-      git status -s 
-
-   elif [ $2 == "all" ] || [ $2 == "A" ] || [ $2 == "a" ]; then
-      # Whenever code complexity is found, a function is created to enable better code reading
-         f_git_status_recursive
-      
-      # uDev: At windows, if git does not have this config (see line below), then this function will not take effect:
-         # git config --global --add safe.directory /mnt/c/Repositories/upK
-   else 
-      f_talk; echo "command not known"
-              echo " > For help: G h"
-   fi
-
 
 elif [ $1 == "r" ]; then
    cd ${v_REPOS_CENTER}/
@@ -2781,6 +2782,43 @@ elif [ $1 == "sync-push" ]; then
 elif [ $1 == "file-host" ]; then
    echo "If you want to use github to download single files just like any other cloud storage instead of cloning entire repos, you can. Github supports that. Here is a link to teach how to do that while this function is under development"
    echo " > https://www.howtogeek.com/devops/how-to-download-single-files-from-a-github-repository/"
+
+
+elif [ $1 == "reset-repo-to-second-commit" ] || [ $1 == "rrtsc" ]; then
+   # Apaga todos os commits, menos o 'git init' e o commit atual
+   # Criado pelo chatGPT
+ 
+   set +e
+
+   echo "[1] A criar commit temporário com tudo no working directory..."
+
+   # Adiciona tudo, inclusive ficheiros não rastreados
+   git add -A
+   git commit -m "TEMP: snapshot completo do working directory"
+
+   # Guarda o hash do commit temporário
+   TEMP_COMMIT=$(git rev-parse HEAD)
+   echo "[2] Commit temporário criado: $TEMP_COMMIT"
+
+   # Encontra o primeiro commit
+   FIRST_COMMIT=$(git rev-list --max-parents=0 HEAD)
+   echo "[3] Primeiro commit: $FIRST_COMMIT"
+
+   # Reset ao primeiro commit
+   git reset --hard "$FIRST_COMMIT"
+   echo "[4] Reset completo"
+
+   # Cherry-pick do snapshot
+   git cherry-pick "$TEMP_COMMIT"
+   echo "[5] Snapshot reaplicado como segundo commit"
+
+   # Remove o commit temporário do histórico (opcional)
+   git reset --soft HEAD~1
+   git commit -C "$TEMP_COMMIT"
+   echo "[6] Commit final recriado com mesma mensagem"
+
+   # Limpa referências temporárias
+   echo "[7] Histórico reduzido: agora há apenas dois commits (inicial + atual)" 
 
 elif [ $1 == "m" ] || [ $1 == "menu" ]; then
    # Menu fzf
