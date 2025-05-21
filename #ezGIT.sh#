@@ -1196,8 +1196,6 @@ elif [ $1 == "." ]; then
 
    # uDev: mention if there ar directories in repo center that are not repositories
   
-   # uDev: After counting branch names, also tell Directory size in Mega Bytes
-
    if [[ -z $2 ]]; then
       # If only 1 arg is given: `git status` only to current repo
 
