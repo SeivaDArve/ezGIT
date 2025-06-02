@@ -907,8 +907,6 @@ function f_print_invalid_items {
 function f_new_repo_step_0 {
    f_greet
 
-   v_txt="Create new Repository?" && f_anyK && echo
-
    # Asking repo name and `git init` repo
       f_new_repo_step_1
 
@@ -917,6 +915,7 @@ function f_new_repo_step_0 {
 
       git add --all
       git commit -m "Added README file"
+      echo
 
    # Creating a remote, and pushing to it
       f_new_repo_step_3 
@@ -925,17 +924,31 @@ function f_new_repo_step_0 {
 function f_new_repo_step_1 {
    # Asking repo name and `git init` repo
 
-   f_talk; echo "What will be the repository name?"
-           
+   # uDev: Perguntar se é repo publico ou privado
+
+   f_talk; echo    "Creating new Repository (from scratch)"
+           echo -n " > "
+     f_c3; echo       '`mkdir -p .../new-name`'
+     f_rc; echo
+   f_talk; echo    "New repository name? (blank to cancel)"
+
            read -p " > " v_name
-           echo
+
+   # If no name is given, the whole process is aborted
+      [[ -z $v_name ]] && echo " > Canceled" && exit 1
 
    v_path=${v_REPOS_CENTER}/$v_name
 
-   mkdir -p $v_path
-   cd $v_path
-   git init
+   mkdir -p $v_path  &&  cd $v_path
    echo
+
+   f_talk; echo -n "Initializing repo "
+     f_c3; echo -n '`git init` '
+     f_rc; echo    "at:"
+           echo    " > $v_path"
+   f_c1;   echo
+           git init
+   f_rc;   echo
 }
 
 function f_new_repo_step_2 {
@@ -943,33 +956,34 @@ function f_new_repo_step_2 {
 
    # Lista de opcoes para o menu `fzf`
 
-      L4='4. Sim | .txt'                                      
-      L3='3. Sim | .org'                                      
-      L2='2. Nao | '
-
-      L1='1. Cancel'
+      L3='3. Sim | .txt'                                      
+      L2='2. Sim | .org'                                      
+      L1='1. Nao'
 
       L0="ezGIT: Pretende criar README file? "
       
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3" | fzf --cycle --prompt="$L0")
 
       #echo "comando" >> ~/.bash_history && history -n
       #history -s "echo 'Olá, mundo!'"
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "4. " ]] && echo "$L4" && vim   $v_path/README.txt
-      [[ $v_list =~ "3. " ]] && echo "$L3" && emacs $v_path/README.org
-      [[ $v_list =~ "2. " ]] && echo "Nao sera Criado README file"
-      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "3. " ]] && f_talk && echo -e "Create README file? \n > $L3 \n" && vim   $v_path/README.txt
+      [[ $v_list =~ "2. " ]] && f_talk && echo -e "Create README file? \n > $L2 \n" && emacs $v_path/README.org
+      [[ $v_list =~ "1. " ]] && f_talk && echo "Nao sera Criado README file"
       unset v_list
 }
 
 function f_new_repo_step_3 {
-   v_mail=$(git config --get user.email)
-   v_ramo=$(git branch | grep "*" | sed "s/\* //g")
-   git remote add origin git@github.com:$v_mail/$v_name.git
-   git push -u origin $v_ramo
+   f_talk; echo "Creating Remote-Origin"
+      v_mail=$(git config --get user.email)
+      v_ramo=$(git branch | grep "*" | sed "s/\* //g")
+      git remote add origin git@github.com:$v_mail/$v_name.git
+      echo
+
+   f_talk; echo "Pushing to Origin"
+      git push -u origin $v_ramo
 }
 
 
@@ -1465,13 +1479,14 @@ elif [ $1 == "new" ]; then
       Lz1='Save '; Lz2='ezGIT new'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
       L4='4. Help'
-      L3='3. New repo (from scratch)'
-      L2='2. Push existing repo (uDev)'
+      L3='3. Push existing new repo (uDev)'
+      L2='2. New repo (from scratch)'
+
       L1='1. Cancel'
 
       L0="ezGIT: What NEW thing do you want? "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
