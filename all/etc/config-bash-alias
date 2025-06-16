@@ -2,6 +2,12 @@
 
 # Alias to use directly as git alias
 
+# Vai ser tambem definido em .../DRYa/all/source-all-drya-files
+   alias ezGIT="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
+   alias ezgit="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
+   alias     G="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"        
+   alias  GvA.="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A ."  # This alias is meant to help drya-termux-omni-key to call this script
+
 alias gh="less ${v_REPOS_CENTER}/ezGIT/all/etc/config-bash-alias"  # Read this file itself, providing help
 alias g="git"
 alias gst="git status"
