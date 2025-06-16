@@ -2484,12 +2484,21 @@ elif [ $1 == "upk" ]; then
 
 elif [ $1 == "-1" ]; then
 
-   f_talk; echo "Moving HEAD 1 commit below (previous one)"
-           echo -n ' > Attach HEAD back with: '
-     f_c3; echo    '`G 1`'
-     f_rc; echo
+   if [ -z $2 ]; then
+      f_talk; echo "Moving HEAD 1 commit below (previous one)"
+              echo -n ' > Attach HEAD back with: '
+        f_c3; echo    '`G 1`'
+        f_rc; echo
 
-   git checkout HEAD^1
+      git checkout HEAD^1
+
+   elif [ $2 == "n" ]; then
+      # Voar para um commit anterior, alimentando o $3 com o hash curto
+      # Exemplo: `G -1 71a1975`
+
+      f_talk; echo "Moving HEAD then commit with the hash: $3"
+      git checkout $3
+   fi
 
 elif [ $1 == "+1" ]; then
 
