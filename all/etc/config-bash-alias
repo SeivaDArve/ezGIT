@@ -31,9 +31,9 @@ alias gbr="# uDev: Change branch"
 alias gfv="# uDev: List favoutite commands"
 alias gst="git stash" # When local has 1 commit and remote has 1 commit and now you cannot pull nor push. First you stash, than pull, then git stash apply, then push
 alias gsa="git stash apply" 
-alias gcmu="G ++ u 2" # Only commit with automatic commmit: uDev comments   
-alias gcmb="G ++ b 2" # Only commit with automatic commmit: blind commit
-alias gcms="G ++ s 2" # Only commit with automatic commmit: same as last commit
+alias gcmu="G ++ u 2; G p" # Only commit with automatic commmit: uDev comments   
+alias gcmb="G ++ b 2; G p" # Only commit with automatic commmit: blind commit
+alias gcms="G ++ s 2; G p" # Only commit with automatic commmit: same as last commit
 alias gad="git add"
 alias ggo="clear; echo 'ezGIT: blindly pull changes'; git add --all; git commit -m 'bling update'; stroken; git push"
 
