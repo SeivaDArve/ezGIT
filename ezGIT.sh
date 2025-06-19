@@ -1020,6 +1020,41 @@ function f_git_add_regex {
       f_git_status
 }
 
+function f_prsP_to_upload {
+   # Press P to upload commits
+
+   # Asking for 5 seconds if the user wants to push the code to github.com
+      f_talk; echo -n "Do you want to send to github.com? "
+        f_c3; echo    '`git push`'
+        f_rc; echo " > Press any key to abort (wait 5 seconds)"
+              echo -n " > To upload, press: "
+
+        f_c2; read -s -N 1 -t 5 -p "P " v_ans
+        f_rc; echo
+
+   if [ -z $v_ans ]; then
+      # If, after the prompt for "commit message" the time expires or the Field is left blank, then Uploading is aborted
+      echo
+      f_done
+
+   elif [ $v_ans == "p" ] || [ $v_ans == "P" ]; then
+      # If valid key "p" was given
+      
+      echo
+      f_stroken
+      f_git_push
+      f_git_status
+      f_done
+
+   else
+      # If invalid key was given
+      echo
+      echo
+      f_done
+
+   fi
+
+}
 
 # -----------------------------------------
 # -- Functions above --+-- Arguments Below 
@@ -1657,40 +1692,11 @@ elif [ $1 == "++" ]; then
 
       f_git_status
 
-      # Asking for 5 seconds if the user wants to push the code to github.com
-			f_talk; echo -n "Do you want to send to github.com? "
-           f_c3; echo    '`git push`'
-           f_rc; echo " > Press any key to abort (wait 5 seconds)"
-                 echo -n " > To upload, press: "
+      f_prsP_to_upload
 
-			  f_c2; read -s -N 1 -t 5 -p "P " v_ans
-			  f_rc; echo
-
-      if [ -z $v_ans ]; then
-         # If, after the prompt for "commit message" the time expires or the Field is left blank, then Uploading is aborted
-         echo
-         f_done
-
-      elif [ $v_ans == "p" ] || [ $v_ans == "P" ]; then
-         # If valid key "p" was given
-         
-         echo
-         f_stroken
-         f_git_push
-         f_git_status
-         f_done
- 
-      else
-         # If invalid key was given
-         echo
-         echo
-         f_done
-
-      fi
-
-   # udev: Create a v_aut_message just to update the git log (like a time stamp on git log)
    elif [ $2 == "b" ] || [ $2 == "blind-upload" ]; then
       # Blind update, variable "b"
+      # udev: Create a v_aut_message just to update the git log (like a time stamp on git log)
 
       f_greet
 
@@ -2676,6 +2682,10 @@ elif [ $1 == "rb" ]; then
 
 elif [ $1 == "n" ] || [ $1 == "next" ]; then
    echo "uDev: recursively goes into all repos and stops at the first that is not normal yet (possibilities: commits to be made, updates to fetch, push to github is needed, etc... )"
+
+
+elif [ $1 == "p" ] || [ $1 == "press-p-to-upload" ]; then
+      f_prsP_to_upload
 
 elif [ $1 == "grep" ]; then
    # Uses command `git grep <pattern>` to search text at all files on current repo
