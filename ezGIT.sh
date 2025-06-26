@@ -160,10 +160,13 @@ function f_stroken {
          #echo "~/.netrc exists"
          echo "it exists" 1>/dev/null
       else
-         f_talk; echo    "stroken"
-                 echo    " > Inside the ezGIT app I found this: "
-           f_c2; echo -n "seivadarve"
-           f_rc; echo              " and this:";
+         f_talk; echo -n "Presenting \""
+           f_c3; echo -n "stroken"
+           f_rc; echo    "\""
+                 echo    " > Automatic sync (config file) not configured"
+                 echo -n "   Use: "
+           f_c2; echo    "seivadarve"
+           f_rc; echo -n           "   And: ";
            f_c2; echo    "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
            f_rc; echo
       fi
