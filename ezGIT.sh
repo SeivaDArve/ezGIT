@@ -2758,9 +2758,11 @@ elif [ $1 == "[" ] || [ $1 == "unstash" ] || [ $1 == "ust" ] || [ $1 == "apply" 
 elif [ $1 == "[!] v" ] || [ $1 == "stash-clear" ] || [ $1 == "st-c" ]; then
    f_greet
 
-   f_talk; echo "Clear/erase all stashes:"
+   f_talk; echo "Clearing/erasing all stashes"
 
-   git stash clear
+   git stash clear && echo -e " > Done \n" 
+
+   f_git_status
 
 elif [ $1 == "origin-info" ]; then
          echo 
