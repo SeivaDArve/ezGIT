@@ -1998,6 +1998,13 @@ elif [ $1 == "--" ]; then
 
       # Git status
          f_git_status
+ 
+   elif [ $2 == "!" ]; then 
+      # Para quando temos modificacoes locais + remotas ("modified by both...") e queremos descartar essas alteracoes locais
+      git reset --hard origin/main
+      echo
+
+      f_git_status
 
    else 
       # Restore only the specified file to its original state
