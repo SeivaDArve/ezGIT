@@ -908,20 +908,22 @@ function f_print_invalid_items {
 }
 
 function f_new_repo_step_0 {
-   f_greet
+   # Criar novo repositorio (from scratch, do zero)
+
+   # Limpar ecra com welcome message
+      f_greet
 
    # Asking repo name and `git init` repo
       f_new_repo_step_1
 
-   # If name was given in step 1, proceed to step 2: Edit README file
-      [[ -n $v_name ]] && f_new_repo_step_2 || echo "Aborted, name is required"
-
-      git add --all
-      git commit -m "Added README file"
-      echo
+   # Criar e editar README file
+      f_new_repo_step_2
 
    # Creating a remote, and pushing to it
       f_new_repo_step_3 
+
+   # Verbose no fim
+      f_talk; echo "Criada a repo: $v_name"
 }
 
 function f_new_repo_step_1 {
@@ -938,63 +940,116 @@ function f_new_repo_step_1 {
            read -p " > " v_name
 
    # If no name is given, the whole process is aborted
-      [[ -z $v_name ]] && echo " > Canceled" && exit 1
+      [[ -z $v_name ]] && echo "Aborted, name is required" && exit 1  # Abortar se o passo anterior nao foi usado pelo utilizador
 
-   v_path=${v_REPOS_CENTER}/$v_name
+   # Nome da repo que se pretende criar
+      v_path=${v_REPOS_CENTER}/$v_name
 
-   mkdir -p $v_path  &&  cd $v_path
-   echo
+   # Se ja existir algum repo com esse nome: Abortar
+      [[ -d $v_path ]] && echo " > Abortado: Repo com esse nome ja existe" && exit 1
+   
+   # Se nao existir repo, criar do zero o diretorio e iniciar com git
+      mkdir -p $v_path  &&  cd $v_path
+      echo
 
-   f_talk; echo -n "Initializing repo "
-     f_c3; echo -n '`git init` '
-     f_rc; echo    "at:"
-           echo    " > $v_path"
-   f_c1;   echo
-           git init
-   f_rc;   echo
+      f_talk; echo -n "Initializing repo "
+        f_c3; echo -n '`git init` '
+        f_rc; echo               "at:"
+              echo    " > $v_path"
+              echo
+        f_c1; git init
+        f_rc; echo
 }
 
 function f_new_repo_step_2 {
    # Criar e editar README file
 
-   # Lista de opcoes para o menu `fzf`
 
+   function f_commit_readme {
+      # Esta fx vai ser executada apenas se for decidido criar um ficheiro README
+      f_c1; echo 
+            git add --all
+            git commit -m "Added README file"
+      f_rc; echo
+   }
+
+   function f_create_txt_readme {
+      f_talk; echo "Create README file?"
+              echo " > Yes: .txt" 
+              echo
+
+      v_txt='Editar/Abrir README.org com `vim`' && f_anyK
+
+      vim   $v_path/README.txt
+
+      f_commit_readme
+   }
+
+   function f_create_org_readme {
+      f_talk; echo "Create README file?"
+              echo " > Yes: .org" 
+              echo
+
+      v_txt='Editar/Abrir README.org com `emacs`' && f_anyK
+
+      emacs $v_path/README.org
+
+      f_commit_readme
+   }
+
+   function f_do_not_create_readme {
+      f_talk; echo "Nao sera Criado README file"
+              echo 
+   }
+
+
+   # Lista de opcoes para o menu `fzf`
       L3='3. Sim | .txt'                                      
       L2='2. Sim | .org'                                      
       L1='1. Nao'
 
+      Lh="Repo name: $v_name"
       L0="ezGIT: Pretende criar README file? "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3" | fzf --cycle --prompt="$L0")
-
-      #echo "comando" >> ~/.bash_history && history -n
-      #history -s "echo 'Olá, mundo!'"
+      v_list=$(echo -e "$L1 \n$L2 \n$L3" | fzf --cycle --no-info --header="$Lh" --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "3. " ]] && f_talk && echo -e "Create README file? \n > $L3 \n" && vim   $v_path/README.txt
-      [[ $v_list =~ "2. " ]] && f_talk && echo -e "Create README file? \n > $L2 \n" && emacs $v_path/README.org
-      [[ $v_list =~ "1. " ]] && f_talk && echo "Nao sera Criado README file"
-      unset v_list
+      [[    $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[    $v_list =~ "3. " ]] && f_create_txt_readme
+      [[    $v_list =~ "2. " ]] && f_create_org_readme
+      [[    $v_list =~ "1. " ]] && f_do_not_create_readme
+      [[ -z $v_list          ]] && f_do_not_create_readme
+      unset  v_list
 }
 
 function f_new_repo_step_3 {
-   f_talk; echo "Creating Remote-Origin"
-      v_mail=$(git config --get user.email)
-      v_ramo=$(git branch | grep "*" | sed "s/\* //g")
-      git remote add origin git@github.com:$v_mail/$v_name.git
-      echo
+   # Creating a remote, and pushing to it
 
-   f_talk; echo "Pushing to Origin"
-      git push -u origin $v_ramo
+   v_mail=$(git config --get user.email)
+   v_ramo=$(git branch | grep "*" | sed "s/\* //g")
+   v_origin="git@github.com:$v_mail/$v_name.git"
+   v_pwd=$(pwd)
+
+   f_talk; echo "Variables for Remote and Origin:"
+           echo " > branch: $v_origin"
+           echo " > origin: $v_ramo"
+           echo " > pwd:    $v_pwd"
+           echo
+
+   v_txt="Pushing and Setting Remote and Origin" && f_anyK
+  
+   # uDev: Set ...
+      #git push --set-upstream origin main # Se apagarmos esta linha, o git vai dar uma msg de erro a informar como se automatiza isto no .gitconfig
+
+   f_c1; echo
+         git remote add origin $v_origin
+         git push -u origin    $v_ramo
+   f_rc
 }
-
-
 
 function f_dot_file_install_gitconfig {
    bash ${v_REPOS_CENTER}/DRYa/drya.sh dot install git
 }
-
 
 function f_git_add_regex {
    # Fx for `G + *regex-file-to-add-for-commit*`
@@ -1427,9 +1482,6 @@ elif [ $1 == "msg" ]; then
 elif [ $1 == "install" ]; then
    echo "uDev: If DRYa does not install this repo, it would install itself"
 
-elif [ $1 == "r" ]; then
-   cd ${v_REPOS_CENTER}/
-
 elif [ $1 == "+!" ] || [ $1 == "squash" ]; then
    # Not only commits these staged files, but also squashes with the previous commit
    # This is usefull when our next commit should be past of our last commit and we forgot. Now we are adding stuff to our last commit
@@ -1510,13 +1562,14 @@ elif [ $1 == "export-git-log" ]; then
    echo "      by exporting this log, you might commit just the text in the"
    echo "      new repo"
 
-elif [ $1 == "new" ]; then
+elif [ $1 == "repo" ]; then
 
    if [ -z $2 ]; then
 
       Lz1='Save '; Lz2='ezGIT new'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L4='4. Help'
+      L5='5. Help'
+      L4='4. echo | Repos Center (variable)'
       L3='3. Push existing new repo (uDev)'
       L2='2. New repo (from scratch)'
 
@@ -1524,11 +1577,12 @@ elif [ $1 == "new" ]; then
 
       L0="ezGIT: What NEW thing do you want? "
       
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n\n$Lz3" | fzf --no-info --pointer=">" --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "4. " ]] && echo "uDev: $L4" 
+      [[ $v_list =~ "5. " ]] && echo "uDev: $L5" 
+      [[ $v_list =~ "4. " ]] && echo "${v_REPOS_CENTER}/" 
       [[ $v_list =~ "3. " ]] && echo "uDev: $L3" 
       [[ $v_list =~ "2. " ]] && f_new_repo_step_0
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
@@ -1536,9 +1590,13 @@ elif [ $1 == "new" ]; then
     
 
 
-   elif [ $2 == "repo" ]; then
+   elif [ $2 == "new" ]; then
       # Create new repository
       f_new_repo_step_0
+
+   elif [ $2 == "rc" ]; then
+      # Repo's center
+      cd ${v_REPOS_CENTER}/
 
    elif [ $2 == "help" ] || [ $2 == "h" ] || [ $2 == "?" ] || [ $2 == "--help" ] || [ $2 == "-h" ] || [ $2 == "-?" ] || [ $2 == "rtfm" ]; then
       # Instructions
