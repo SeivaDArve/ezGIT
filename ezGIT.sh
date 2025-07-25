@@ -998,10 +998,15 @@ function f_new_repo_step_2 {
    }
 
    function f_do_not_create_readme {
-      f_talk; echo "Nao sera Criado README file"
+      f_talk; echo "[Nao] Nao sera Criado README file"
               echo 
    }
 
+   function f_esc_do_not_create_readme {
+      # If user escaped fzf menu with Esc Key, use this message instead
+      f_talk; echo "[Esc] Nao sera Criado README file"
+              echo 
+   }
 
    # Lista de opcoes para o menu `fzf`
       L3='3. Sim | .txt'                                      
@@ -1018,7 +1023,7 @@ function f_new_repo_step_2 {
       [[    $v_list =~ "3. " ]] && f_create_txt_readme
       [[    $v_list =~ "2. " ]] && f_create_org_readme
       [[    $v_list =~ "1. " ]] && f_do_not_create_readme
-      [[ -z $v_list          ]] && f_do_not_create_readme
+      [[ -z $v_list          ]] && f_esc_do_not_create_readme
       unset  v_list
 }
 
@@ -1036,7 +1041,7 @@ function f_new_repo_step_3 {
            echo " > pwd:    $v_pwd"
            echo
 
-   v_txt="Pushing and Setting Remote and Origin" && f_anyK
+   v_txt="Setting and Pushing Remote and Origin" && f_anyK
   
    # uDev: Set ...
       #git push --set-upstream origin main # Se apagarmos esta linha, o git vai dar uma msg de erro a informar como se automatiza isto no .gitconfig
@@ -1052,7 +1057,7 @@ function f_dot_file_install_gitconfig {
 }
 
 function f_git_add_regex {
-   # Fx for `G + *regex-file-to-add-for-commit*`
+   # Fx for `G + *regex-file-to-add-for-commit*`  # Adding file without they full name
 
    # Using drya-lib-2 to create a temporary file. We call `f_create_tmp_file` and it will return an absulute path to a new file at $v_tmp
       f_create_tmp_file
