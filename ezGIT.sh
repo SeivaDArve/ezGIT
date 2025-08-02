@@ -35,30 +35,62 @@
 
 
 
+# Calling DRYa libraries
+   # uDev: failsafe: If drya repo does not exist, create alternatives
 
-# uDev: test if drya repo exists, if not, an alternative should exist
-   source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+   # Sourcing DRYa Lib 1
+      v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+      [[ -f $v_lib1 ]] && source $v_lib1 || (read -s -n 1 -p "DRYa: error: drya-lib-1 does not exist " && echo)
 
-   v_greet="ezGIT"
-   v_talk="ezGIT: "
-   # function f_c1  # Used at user inputs: git commits; ...
-   # function f_c2  # Used at: f_talk
-   # function f_c3  # Used at: f_talk
-   # function f_rc  # Reset cor
-
-
-
-
-# Sourcing DRYa Lib 2
-   v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-2-tmp-n-config-files.sh
-   [[ -f $v_lib2 ]] && source $v_lib2 || read -s -n 1 -p "Error: drya-lib-2 does not exist"
-
-   #f_create_tmp_file  # will give a $v_tmp with a new file with abs path
-  
+      v_greet="ezGIT"
+      v_talk="ezGIT: "
+      
+      # Examples: f_c1; f_c2; f_c3; f_rc; f_talk
 
 
+   # Sourcing DRYa Lib 2
+      v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-2-tmp-n-config-files.sh
+      [[ -f $v_lib2 ]] && source $v_lib2 || (read -s -n 1 -p "DRYa: error: drya-lib-2 does not exist " && echo)
+
+      # Examples: `f_create_tmp_file` will give a $v_tmp with a new file with abs path
+     
+
+   # Sourcing DRYa Lib 4: Color schemes
+      v_lib4=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
+      [[ -f $v_lib4 ]] && source $v_lib4 || (read -s -n 1 -p "DRYa: error: drya-lib-4 does not exist " && echo)
+
+      # Examples: f_stroken
 
 
+function f_stroken_copy {
+   # When automatic github.com authentication is not set, an alternative (as taxt based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
+   # While the app is in beta, this is usefull
+
+   # If ~/.netrc exists, no need to print the rest
+      if [ -f ~/.netrc ]; then
+         #echo "~/.netrc exists"
+         echo "it exists" 1>/dev/null
+      else
+         f_talk; echo -n "Presenting \""
+           f_c3; echo -n "stroken"
+           f_rc; echo    "\""
+                 echo    " > Automatic sync (config file) not configured"
+                 echo -n "   Use: "
+           f_c2; echo    "seivadarve"
+           f_rc; echo -n           "   And: ";
+           f_c2; echo    "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+           f_rc; echo
+      fi
+}
+
+function f_stroken_centralized {
+   # In order for DRYa to keep the MOST up-to-date info and acess to credentials, allowing safety, then ezGIT `f_stroken` is now a copy of drya-lib-4 `f_stroken`
+   # The fx f_stroken in this file has now the possibility to be outdated
+   # So, f_stroken_centralized tests if drya-lib-4 exists. If it does, it uses f_stroken from DRYa, if it does not exist, maybe ezGIT f_stroken may still work and will try to run
+
+   # If DRYa repo does not exist creating the possibility of using the original f_stroken, the use the copy
+      [[ -f $v_lib4 ]] && f_stroken || f_stroken_copy
+}
 
 
 
@@ -151,26 +183,6 @@ function f_instructions {
       unset v_list
 }
 
-function f_stroken {
-   # When automatic github.com authentication is not set, an alternative (as taxt based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
-   # While the app is in beta, this is usefull
-
-   # If ~/.netrc exists, no need to print the rest
-      if [ -f ~/.netrc ]; then
-         #echo "~/.netrc exists"
-         echo "it exists" 1>/dev/null
-      else
-         f_talk; echo -n "Presenting \""
-           f_c3; echo -n "stroken"
-           f_rc; echo    "\""
-                 echo    " > Automatic sync (config file) not configured"
-                 echo -n "   Use: "
-           f_c2; echo    "seivadarve"
-           f_rc; echo -n           "   And: ";
-           f_c2; echo    "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
-           f_rc; echo
-      fi
-}
 
 function f_find_basename {
    # uDev" Needs to search for our .git directory
@@ -413,7 +425,7 @@ function f_blind_brain {
 
       f_git_status
 
-      f_stroken
+      f_stroken_centralized
 
       f_git_push
 
@@ -447,7 +459,7 @@ function f_git_pull_recursive {
               echo    "Starting:"
 
    # Mention one possible password
-      f_stroken
+      f_stroken_centralized
 
    # function f_output must be loaded here (or previously)
 
@@ -506,7 +518,7 @@ function f_git_push_recursive {
               echo    "Starting:"
 
    # Mention one possible password
-      f_stroken
+      f_stroken_centralized
 
    # function f_output must be loaded here (or previously)
 
@@ -1104,7 +1116,7 @@ function f_prsP_to_upload {
       # If valid key "p" was given
       
       echo
-      f_stroken
+      f_stroken_centralized
       f_git_push
       f_git_status
       f_done
@@ -1188,7 +1200,7 @@ elif [ $1 == "github" ]; then
    xdg-open http://www.github.com
 
 elif [ $1 == "psswd" ]; then
-   f_stroken
+   f_stroken_centralized
 
 elif [ $1 == "byte-compile" ]; then
    # Convert bash to binary
@@ -1465,7 +1477,7 @@ elif [ $1 == "msg" ]; then
 
       git commit -m "$v_date"
 
-      f_stroken
+      f_stroken_centralized
 
       f_git_push
 
@@ -1847,7 +1859,7 @@ elif [ $1 == "++" ]; then
 
          f_git_status
 
-         f_stroken
+         f_stroken_centralized
 
          f_git_push
 
@@ -1904,7 +1916,7 @@ elif [ $1 == "++" ]; then
 
          f_git_status
 
-         f_stroken
+         f_stroken_centralized
 
          f_git_push
 
@@ -1957,7 +1969,7 @@ elif [ $1 == "++" ]; then
 
       f_git_status
 
-      f_stroken
+      f_stroken_centralized
 
       f_git_push
 
@@ -2144,7 +2156,7 @@ elif [ $1 == "v" ] || [ $1 == "pull" ]; then
 
       f_greet 
    
-      f_stroken
+      f_stroken_centralized
 
       f_talk; echo -n "You are about to: "
         f_c2; echo                      "git pull"
@@ -2185,7 +2197,7 @@ elif [ $1 == "V" ] || [ $1 == "pull-without-asking" ]; then
 
       f_greet 
    
-      f_stroken
+      f_stroken_centralized
 
       f_talk; echo -n "You are about to: "
         f_c2; echo                      "git pull"
@@ -2254,7 +2266,7 @@ elif [ $1 == "^" ] || [ $1 == "push" ]; then
       clear 
       f_greet
 
-      f_stroken
+      f_stroken_centralized
 
       f_git_push
 
@@ -2476,8 +2488,10 @@ elif [ $1 == "upk" ]; then
 
          f_talk; echo "Pulling requirements for upk stuff"
                  echo
-         # If there is no file ~/.netrc configured for automatic git pull and git push, you might uncomment f_stroken:
-            # f_stroken; echo
+         
+         f_stroken_centralized
+
+                 echo
          f_talk; echo "You are about to \"git pull\" all these repos:"
                  echo -n " > DRYa; upk; ezGIT; upK-diario-Dv ... "
          f_c2;   read -s -n 1 -p "Press any key to continue"
@@ -2533,7 +2547,7 @@ elif [ $1 == "upk" ]; then
       vv)
          clear
          f_talk; echo "Fetching requirements for upk stuff"
-         f_stroken 
+         f_stroken_centralized
          f_horizontal_line
          echo "ezGIT: fetching: DRYa; upk; ezGIT; upK-diario-Dv"
          echo 
