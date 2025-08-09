@@ -8,7 +8,7 @@
    alias     G="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"        
    alias  GvA.="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A ."  # This alias is meant to help drya-termux-omni-key to call this script
 
-alias gh="less ${v_REPOS_CENTER}/ezGIT/all/etc/config-bash-alias"  # Read this file itself, providing help
+alias galias="less ${v_REPOS_CENTER}/ezGIT/all/etc/config-bash-alias"  # Read this file itself, providing help
 alias g="git"
 alias gst="git status"
 alias gpom="git pull origin master"
