@@ -1009,6 +1009,18 @@ function f_new_repo_step_2 {
       f_commit_readme
    }
 
+   function f_create_md_readme {
+      f_talk; echo "Create README file?"
+              echo " > Yes: .md" 
+              echo
+
+      v_txt='Editar/Abrir README.md com `vim`' && f_anyK
+
+      vim   $v_path/README.md
+
+      f_commit_readme
+   }
+
    function f_do_not_create_readme {
       f_talk; echo "[Nao] Nao sera Criado README file"
               echo 
@@ -1021,6 +1033,7 @@ function f_new_repo_step_2 {
    }
 
    # Lista de opcoes para o menu `fzf`
+      L4='4. Sim | .md'                                      
       L3='3. Sim | .txt'                                      
       L2='2. Sim | .org'                                      
       L1='1. Nao'
@@ -1028,10 +1041,11 @@ function f_new_repo_step_2 {
       Lh="Repo name: $v_name"
       L0="ezGIT: Pretende criar README file? "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3" | fzf --cycle --no-info --header="$Lh" --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4" | fzf --cycle --no-info --header="$Lh" --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[    $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[    $v_list =~ "4. " ]] && f_create_md_readme
       [[    $v_list =~ "3. " ]] && f_create_txt_readme
       [[    $v_list =~ "2. " ]] && f_create_org_readme
       [[    $v_list =~ "1. " ]] && f_do_not_create_readme
@@ -1060,7 +1074,7 @@ function f_new_repo_step_3 {
 
    f_c1; echo
          git remote add origin $v_origin
-         git push -u origin    $v_ramo
+         git push   -u  origin $v_ramo
    f_rc
 }
 
@@ -1191,6 +1205,10 @@ elif [ $1 == "eg" ]; then
    # Do something if arg 1 is equal to "eg" (a test):
       echo "you don\'t need to source G.sh at the file \"source-all-drya-files\""
       echo "Start using if conditions instead"
+
+elif [ $1 == "stroken" ]; then
+   # Print stroken even if .netrc exists (requires drya-lib-4)
+   f_stroken_print
 
 elif [ $1 == "github" ]; then
    # Open web bowser and navigate to githbu.com
@@ -1607,7 +1625,7 @@ elif [ $1 == "repo" ]; then
     
 
 
-   elif [ $2 == "new" ]; then
+   elif [ $2 == "new" ] || [ $2 == "+" ]; then
       # Create new repository
       f_new_repo_step_0
 
