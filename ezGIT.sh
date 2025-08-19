@@ -40,6 +40,7 @@
 
    # Sourcing DRYa Lib 1
       v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+      unset v_greet v_talk
       [[ -f $v_lib1 ]] && source $v_lib1 || (read -s -n 1 -p "DRYa: error: drya-lib-1 does not exist " && echo)
 
       v_greet="ezGIT"
@@ -59,7 +60,7 @@
       v_lib4=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
       [[ -f $v_lib4 ]] && source $v_lib4 || (read -s -n 1 -p "DRYa: error: drya-lib-4 does not exist " && echo)
 
-      # Examples: f_stroken
+      # Examples: f_lib4_stroken
 
 
 function f_stroken_copy {
@@ -84,12 +85,12 @@ function f_stroken_copy {
 }
 
 function f_stroken_centralized {
-   # In order for DRYa to keep the MOST up-to-date info and acess to credentials, allowing safety, then ezGIT `f_stroken` is now a copy of drya-lib-4 `f_stroken`
+   # In order for DRYa to keep the MOST up-to-date info and acess to credentials, allowing safety, then ezGIT `f_stroken` is now a copy of drya-lib-4 `f_lib4_stroken`
    # The fx f_stroken in this file has now the possibility to be outdated
-   # So, f_stroken_centralized tests if drya-lib-4 exists. If it does, it uses f_stroken from DRYa, if it does not exist, maybe ezGIT f_stroken may still work and will try to run
+   # So, f_stroken_centralized tests if drya-lib-4 exists. If it does, it uses f_lib4_stroken from DRYa, if it does not exist, maybe ezGIT f_stroken_copy may still work and will try to run
 
-   # If DRYa repo does not exist creating the possibility of using the original f_stroken, the use the copy
-      [[ -f $v_lib4 ]] && f_stroken || f_stroken_copy
+   # Attempting to use the original f_lib4_stroken from DRYa (if installed)... In case of falure, use f_stroken_copy instead
+      [[ -f $v_lib4 ]] && f_lib4_stroken || f_stroken_copy
 }
 
 
