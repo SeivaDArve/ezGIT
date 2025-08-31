@@ -2341,9 +2341,15 @@ elif [ $1 == "," ]; then
 
       f_tell_current_branch
 
-      f_talk; echo "Listing all branches:"
+      f_talk
+      echo "Listing all branches:"
       f_list_all_branches
+      echo
 
+      f_talk; echo "Listing all 'Remotes'"
+      f_c1
+      git remote -v  # This info is stored at .../.git/config
+      f_rc
 
 
    elif [ $2 == "." ]; then
