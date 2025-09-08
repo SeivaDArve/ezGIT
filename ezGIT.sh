@@ -1607,7 +1607,7 @@ elif [ $1 == "repo" ]; then
       L5='5. Help'
       L4='4. echo | Repos Center (variable)'
       L3='3. Push existing new repo (uDev)'
-      L2='2. New repo (from scratch)'
+      L2='2. New repo (from scratch) (uDev: usar `gh` para remote)'
 
       L1='1. Cancel'
 
