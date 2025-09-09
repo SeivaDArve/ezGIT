@@ -1766,6 +1766,8 @@ elif [ $1 == "++" ]; then
    # If no $2 is found, enable the user to write a commit message.
    # If one $2 variable is found, commit message accordingly automatically
 
+   # uDev: Esta fx (e outras semelhantes) tem de testar primeiro se estao atualmente dentro de um repo
+
    # Variables for the automatic messages
       v_aut_message="Pushed to github.com automatically (by ezGIT app)"
       v_aut_commit="Commiting automatically (by ezGIT app)"
