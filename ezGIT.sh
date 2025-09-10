@@ -710,13 +710,12 @@ function f_list_all_valid_and_invalid_repositories {
    #     2. Pastas-nao-repo
    #     3. Ficheiros.
 
-   f_talk; echo "Listing all valid repositories: "
-
    cd ${v_REPOS_CENTER}/ 
 
    # Limpar variaveis (para fazer um teste novo do zero)
-      unset v_files     # Ficheiro que menciona ficheiros que convem mover para fora de Repos-Center
-      unset v_non_repo  # Ficheiro que menciona diretorios que convem mover para fora de Repos-Center
+      unset v_files       # Variavel que guarda nomes de ficheiros que convem mover para fora de Repos-Center
+      unset v_non_repo    # Variavel que guarda nomes de diretorios que convem mover para fora de Repos-Center
+      unset v_valid_repo  # Variavel que guarda nomes de diretorios validos em Repos-Center
 
       for i in $(ls -A)
       do
@@ -736,8 +735,9 @@ function f_list_all_valid_and_invalid_repositories {
 
 
             # Apos o teste feito, filtra para cada variavel, as pastas que sao repo e as que nao sao repo
-               [[ $v_last_cmd == 0 ]] && echo " > $i/"               # Se o teste correu bem, listar com verbose
-               [[ $v_last_cmd == 2 ]] && v_non_repo="$v_non_repo $i" # Se o teste correu mal, guardar essa info
+              #[[ $v_last_cmd == 0 ]] && echo " > $i/"                   # Se o teste correu bem, listar com verbose
+               [[ $v_last_cmd == 0 ]] && v_valid_repo="$v_valid_repo $i" # Se o teste correu bem, listar com verbose
+               [[ $v_last_cmd == 2 ]] && v_non_repo="$v_non_repo $i"     # Se o teste correu mal, guardar essa info
 
             # Voltar a pasta inicial
                cd ..
@@ -749,11 +749,16 @@ function f_list_all_valid_and_invalid_repositories {
 
       done
 
-   # Print a last echo (to distance text from `for` loop)
-      echo
-
    # If any variables were set, run the fx that prints them
-      ( [[ -n $v_non_repo ]] || [[ -n $v_files ]] ) && f_print_invalid_items
+
+      # For valid, when found
+         [[ -n $v_valid_repo ]] && f_print_valid_items
+
+      # Print a last echo (to distance text from `for` loop)
+         echo
+
+      # For invalid, when found
+         ( [[ -n $v_non_repo ]] || [[ -n $v_files ]] ) && f_print_invalid_items
 }
 
 function f_git_status_nr_1_all_repos_root {
@@ -922,6 +927,16 @@ function f_curl_uploads_count {
    echo "uDev: Bugs: Some days may not give any output, but may have uploads" 
    echo "uDev: While bug is not fixed: Check the source graph at: "
    echo " > https://github.com/SeivaDArve"
+}
+
+function f_print_valid_items {
+   f_talk; echo "Listing all valid repositories at (DRYa-REPOS-CENTER): "
+
+   # Print all repos
+      for i in $v_valid_repo
+      do
+         echo " > $i/"
+      done
 }
 
 function f_print_invalid_items {
@@ -1420,7 +1435,8 @@ elif [ $1 == "." ]; then
          # git config --global --add safe.directory /mnt/c/Repositories/upK
 
    elif [ $2 == "detect-invalid-objects" ] || [ $2 == "d" ]; then
-      echo "uDev: Detect and mention if there are invalid directories and files at (DRYa-REPOS-CENTER) that are not repositories"
+      f_greet
+      f_list_all_valid_and_invalid_repositories 
 
    else 
       f_talk; echo "command not known"
