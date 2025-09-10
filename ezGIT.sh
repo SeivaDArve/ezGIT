@@ -706,21 +706,38 @@ function f_tell_repo_name {
 }
 
 function f_git_status_nr_1_all_repos_root {
-   f_talk; echo 'git status: `G .`'
-           echo ' > This command does not work outside a git repository'
-           echo 
-           echo ' We are where DRYa saves all repositories we can go into'
-           echo '  > variable: ${v_REPOS_CENTER}'
-           echo "  > path: ${v_REPOS_CENTER}/"
+   # Git Status (step 1): Runs when inside (DRYa-REPOS-CENTER)
+   
+   f_talk; echo -n 'Current State: '
+     f_c3; echo                   '`git status`'
+     f_rc; echo " > Not at any repository (command only for repos)"
            echo
+
+   f_talk; echo 'Current location:'
+           echo ' > Name     : (DRYa-REPOS-CENTER)'
+           echo ' > Variable : ${v_REPOS_CENTER}'
+           echo " > Path     : ${v_REPOS_CENTER}/"
+           echo
+
+   f_talk; echo 'Use fluNav command `. G` to jump to:'
+           echo ' > Central, Root directory of repos (DRYa-REPOS-CENTER)'
+           echo
+
+
+
+   # Vai ser filtrado na pasta (DRYa-REPOS-CENTER) a existencia de:
+   #     1. Pastas-repo
+   #     2. Pastas-nao-repo
+   #     3. Ficheiros.
+
    f_talk; echo "Listing all valid repositories: "
 
-
-   # Vai ser filtrado pastas-repo, pastas-nao-repo, ficheiros. Para os dois ultimos, limpamos as suas variaveis
+   # Limpar variaveis (para fazer um teste novo do zero)
       unset v_files     # Ficheiro que menciona ficheiros que convem mover para fora de Repos-Center
       unset v_non_repo  # Ficheiro que menciona diretorios que convem mover para fora de Repos-Center
 
-      for i in $(ls); do
+      for i in $(ls -A)
+      do
          # Listar recursivamente as pastas que sao repo (e enfiar em 2 variaveis todos os ficheiros e pastas que nao sao repo)
 
          # Verificar o tipo de TODOS os ficheiros
@@ -737,7 +754,7 @@ function f_git_status_nr_1_all_repos_root {
 
 
             # Apos o teste feito, filtra para cada variavel, as pastas que sao repo e as que nao sao repo
-               [[ $v_last_cmd == 0 ]] && echo " > $i/"               # Se o teste correu bem, listar
+               [[ $v_last_cmd == 0 ]] && echo " > $i/"               # Se o teste correu bem, listar com verbose
                [[ $v_last_cmd == 2 ]] && v_non_repo="$v_non_repo $i" # Se o teste correu mal, guardar essa info
 
             # Voltar a pasta inicial
@@ -750,29 +767,23 @@ function f_git_status_nr_1_all_repos_root {
 
       done
 
-      echo # Print a last echo (to distance from f_done)
+   # Print a last echo (to distance text from `for` loop)
+      echo
 
-   # See if any of the variables are set. If so, run the fx that prints them
-      unset v_verbose
-      [[ ! -z $v_non_repo ]] && v_verbose=1
-      [[ ! -z $v_files    ]] && v_verbose=1
-      
-      [[ $v_verbose == "1" ]] && f_print_invalid_items
+   # If any variables were set, run the fx that prints them
+      ( [[ -n $v_non_repo ]] || [[ -n $v_files ]] ) && f_print_invalid_items
 }
 
 function f_git_status_nr_2_not_all_repos_root {
-   # Not step nr 1, so, must be 2
+   # Git Status (step 2): Runs when outside (DRYa-REPOS-CENTER). Now current location/directory will be filtered: Either valid or invalid repo
 
-   # To Devs: 
-   #     If variable $? is equal to 1 or is equal to 2, then the last command issued in bash was a failure, an error occured. If $? is 0, it means last function ran ok.
-
-   #Two steps to find if current path is valid
+   # Two steps to find if current path is valid
       # 3. Found invalid repo: Throw a beautifull error message
       # 4. Found valid repo:   Must be inside some repo BUT not at the root of all repos   
 
    # Possibility 1 and 2, (testing if valid or invalid):
-      git status &>/dev/null  ## Try a normal git status but with no output. MUST BE ONE COMMAND ONLY, becaus $? stores the status of the sucess only of the last command. If we run 'git status' inside .git we get the status code 128 instead of 0. so both numbers must be checked
-      v_status_code=$?
+      git status &>/dev/null  # Try a normal git status but with no output. MUST BE ONE COMMAND ONLY, becaus $? stores the status of the sucess only of the last command. If we run 'git status' inside .git we get the status code 128 instead of 0. so both numbers must be checked
+      v_status_code=$?        # If variable $? is equal to 1 or is equal to 2, then the last command issued in bash was a failure, an error occured. If $? is 0, it means last function ran ok.
 
    if [[ $v_status_code != "0" ]] && [ $v_status_code == "128" ]; then  ## Test if last command was a failure (not equal to 0)
       # 3. Invalid: Not on a git repo
@@ -780,10 +791,11 @@ function f_git_status_nr_2_not_all_repos_root {
       v_pwd=$(pwd)
 
       f_talk; echo -n 'Current State: '
-        f_c3; echo    '`git status`'
-        f_rc; echo
+        f_c3; echo                   '`git status`'
+        f_rc; echo " > Not at any repository (command only for repos)"
+              echo
 
-      f_talk; echo "We are currently:"
+      f_talk; echo 'Current location:'
               echo " > 1. At: $v_pwd"
               echo " > 2. Neither at any repository"
               echo " > 3. Neither at the central dir of repositories"
@@ -795,25 +807,20 @@ function f_git_status_nr_2_not_all_repos_root {
    elif [[ $v_status_code == "0" ]] || [ $v_status_code != "128" ]; then
       # 4. Valid: It is a git repo, but further down the directory tree
 
-      # uDev: Insert dir-basename here when such function is ready 
-
-      # Extrair do `pwd` o nome da repo atual
+      # Extrair do `pwd` o nome da repo atual (semelhante ao comando `basename`)
          v_repo=$(pwd | sed "s/Repositories\// /" | cut -d ' ' -f 2 | sed "s/\// /" | cut -d ' ' -f 1)
 
-      f_talk; echo -n "Repo Name: "
-        f_c3; echo "$v_repo"
-        f_rc; echo
+      # Verbose: name
+         f_talk; echo -n "Repo Name: "
+           f_c3; echo "$v_repo"
+           f_rc; echo
 
+      # Git commands (escolher apenas um deles. Comenear os que nao sao necessarios)
+         f_git_fetch  # Ja inclui `git status` 
+        #f_git_status
 
-      #f_find_basename
-    
-      f_git_status
-
-      # After detecting job is done
-         # This tracks changes better that tracking versions (specifically for Seiva's coding style that is done on-the-go using termux and smartphone. Changing the code ALL the time)
+      # Tracking number of commits in `git` is better that tracking version numbers (specifically for Seiva's coding style (W.I.P.) that is done on-the-go using termux and smartphone. Changing the code ALL the time)
          f_count_nr_branch_commits  
-
-     
    fi
 }
 
@@ -912,23 +919,23 @@ function f_curl_uploads_count {
 function f_print_invalid_items {
    # Fx that prints both non-repos and files
 
-   f_talk; echo "Invalid repos and files (should be moved out): "
+   f_talk; echo "Invalid directories and files at (DRYa-REPOS-CENTER): "
 
    # Print non-repos
       for i in $v_non_repo
       do
-         echo " > $i/"
+         echo " > [dir] $i/"
       done
 
 
    # Print `echo` only if both variables exist (to make space between them)
-      [[ ! -z $v_files    ]] && [[ ! -z $v_non_repo ]] && echo
+      [[ -n $v_files ]] && [[ -n $v_non_repo ]] && echo
 
 
    # Print files
       for i in $v_files
       do
-         echo " > $i"
+         echo " > [file] $i"
       done
 
    # Print a last echo (to distance from f_done)
@@ -1352,13 +1359,11 @@ elif [ $1 == "." ]; then
    # uDev: Perform git fetch before git status
    
    # uDev: Tell the user if "encript before push" + "decript after pull" is "on" (detects a directory .git-encrypt/ in the tree
-
-   # uDev: mention if there ar directories in repo center that are not repositories
-  
+ 
    # uDev: After counting branch names, also tell Directory size in Mega Bytes
 
    if [[ -z $2 ]]; then
-      # If only 1 arg is given: `git status` only to current repo
+      # If only 1 arg is given: `G .` then `git status` only to current repo
 
       # Instructions: 3 possibilities when calling `G .`
       #  1. fx runs if: is root directory where all repos are found
@@ -1366,9 +1371,6 @@ elif [ $1 == "." ]; then
       #  3. fx runs if: outside a valid repository (somewhere else in the file system)
       #  4. fx runs if: inside a valid repository
       
-      # uDev: Bug to fix: Error when used on repos root (fedora)
-      #       Bug to fix: Error when used on ~          (fedora)
-
       f_greet 
 
       if [[ $(pwd) == ${v_REPOS_CENTER} ]]; then 
@@ -1380,9 +1382,9 @@ elif [ $1 == "." ]; then
             
 
 
-      else  # Replaced: `elif [[ $(pwd) != ${v_REPOS_CENTER} ]]; then`
-         # 2. if we are not at repos Center
-         #    We may be either further into a repository 
+      else  
+         # 2. If we are not at Repos Center
+         #    we may be either further into repositories sub-folders
          #    or outside even the root of repos
          #    We must detect which one it is now
          #    ... Starting to filter
@@ -1408,6 +1410,10 @@ elif [ $1 == "." ]; then
       
       # uDev: At windows, if git does not have this config (see line below), then this function will not take effect:
          # git config --global --add safe.directory /mnt/c/Repositories/upK
+
+   elif [ $2 == "detect-invalid-objects" ] || [ $2 == "d" ]; then
+      echo "uDev: Detect and mention if there are invalid directories and files at (DRYa-REPOS-CENTER) that are not repositories"
+
    else 
       f_talk; echo "command not known"
               echo " > For help: G h"
