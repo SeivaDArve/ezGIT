@@ -710,17 +710,18 @@ function f_git_status_nr_1_all_repos_root {
    
    f_talk; echo -n 'Current State: '
      f_c3; echo                   '`git status`'
-     f_rc; echo " > Not at any repository (command only for repos)"
+     f_rc; echo    " > Not at any repository (command only for repos)"
            echo
 
-   f_talk; echo 'Current location:'
-           echo ' > Name     : (DRYa-REPOS-CENTER)'
-           echo ' > Variable : ${v_REPOS_CENTER}'
-           echo " > Path     : ${v_REPOS_CENTER}/"
+   f_talk; echo    'Current location:'
+           echo -n ' > Name     : '
+     f_c3; echo                  '(DRYa-REPOS-CENTER)'
+     f_rc; echo    ' > Variable : ${v_REPOS_CENTER}'
+           echo    " > Path     : ${v_REPOS_CENTER}/"
            echo
 
-   f_talk; echo 'Use fluNav command `. G` to jump to:'
-           echo ' > Central, Root directory of repos (DRYa-REPOS-CENTER)'
+   f_talk; echo 'Use fluNav command `V <name>` to jump to:'
+           echo ' > Full name or abreviated name of <name> repository'
            echo
 
 
@@ -792,16 +793,17 @@ function f_git_status_nr_2_not_all_repos_root {
 
       f_talk; echo -n 'Current State: '
         f_c3; echo                   '`git status`'
-        f_rc; echo " > Not at any repository (command only for repos)"
+        f_rc; echo    " > Not at any repository (command only for repos)"
               echo
 
-      f_talk; echo 'Current location:'
-              echo " > 1. At: $v_pwd"
-              echo " > 2. Neither at any repository"
-              echo " > 3. Neither at the central dir of repositories"
+      f_talk; echo    'Current location:'
+              echo -n ' > 1. At: '
+        f_c3; echo              "$v_pwd"
+        f_rc; echo    " > 2. Neither at any repository"
+              echo    " > 3. Neither at the central dir of repositories"
               echo
-      f_talk; echo 'Use fluNav command `. G` to jump to:'
-              echo ' > Central, Root directory of repos (DRYa-REPOS-CENTER)'
+      f_talk; echo    'Use fluNav command `. G` to jump to:'
+              echo    ' > Central, Root directory of repos (DRYa-REPOS-CENTER)'
               echo
 
    elif [[ $v_status_code == "0" ]] || [ $v_status_code != "128" ]; then
