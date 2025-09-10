@@ -704,34 +704,15 @@ function f_tell_repo_name {
          f_rc; echo "a repository"
       fi 
 }
-
-function f_git_status_nr_1_all_repos_root {
-   # Git Status (step 1): Runs when inside (DRYa-REPOS-CENTER)
-   
-   f_talk; echo -n 'Current State: '
-     f_c3; echo                   '`git status`'
-     f_rc; echo    " > Not at any repository (command only for repos)"
-           echo
-
-   f_talk; echo    'Current location:'
-           echo -n ' > Name     : '
-     f_c3; echo                  '(DRYa-REPOS-CENTER)'
-     f_rc; echo    ' > Variable : ${v_REPOS_CENTER}'
-           echo    " > Path     : ${v_REPOS_CENTER}/"
-           echo
-
-   f_talk; echo 'Use fluNav command `V <name>` to jump to:'
-           echo ' > Full name or abreviated name of <name> repository'
-           echo
-
-
-
+function f_list_all_valid_and_invalid_repositories {
    # Vai ser filtrado na pasta (DRYa-REPOS-CENTER) a existencia de:
    #     1. Pastas-repo
    #     2. Pastas-nao-repo
    #     3. Ficheiros.
 
    f_talk; echo "Listing all valid repositories: "
+
+   cd ${v_REPOS_CENTER}/ 
 
    # Limpar variaveis (para fazer um teste novo do zero)
       unset v_files     # Ficheiro que menciona ficheiros que convem mover para fora de Repos-Center
@@ -775,6 +756,29 @@ function f_git_status_nr_1_all_repos_root {
       ( [[ -n $v_non_repo ]] || [[ -n $v_files ]] ) && f_print_invalid_items
 }
 
+function f_git_status_nr_1_all_repos_root {
+   # Git Status (step 1): Runs when inside (DRYa-REPOS-CENTER)
+   # 1. Invalid: we are exactly at the Repos Center. 
+   
+   f_talk; echo -n 'Current State: '
+     f_c3; echo                   '`git status`'
+     f_rc; echo    " > Not at any repository (command only for repos)"
+           echo
+
+   f_talk; echo    'Current location:'
+           echo -n ' > Name     : '
+     f_c3; echo                  '(DRYa-REPOS-CENTER)'
+     f_rc; echo    ' > Variable : ${v_REPOS_CENTER}'
+           echo    " > Path     : ${v_REPOS_CENTER}/"
+           echo
+
+   f_talk; echo 'Use fluNav command `V <name>` to jump to:'
+           echo ' > Full name or abreviated name of <name> repository'
+           echo
+
+   f_list_all_valid_and_invalid_repositories 
+}
+
 function f_git_status_nr_2_not_all_repos_root {
    # Git Status (step 2): Runs when outside (DRYa-REPOS-CENTER). Now current location/directory will be filtered: Either valid or invalid repo
 
@@ -805,6 +809,8 @@ function f_git_status_nr_2_not_all_repos_root {
       f_talk; echo    'Use fluNav command `. G` to jump to:'
               echo    ' > Central, Root directory of repos (DRYa-REPOS-CENTER)'
               echo
+
+      f_list_all_valid_and_invalid_repositories 
 
    elif [[ $v_status_code == "0" ]] || [ $v_status_code != "128" ]; then
       # 4. Valid: It is a git repo, but further down the directory tree
