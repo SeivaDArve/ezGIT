@@ -774,15 +774,25 @@ function f_git_status_nr_2_not_all_repos_root {
       git status &>/dev/null  ## Try a normal git status but with no output. MUST BE ONE COMMAND ONLY, becaus $? stores the status of the sucess only of the last command. If we run 'git status' inside .git we get the status code 128 instead of 0. so both numbers must be checked
       v_status_code=$?
 
-   if [[ $v_status_code != "0" ]] && [ $v_status_code != "128" ]; then  ## Test if last command was a failure (not equal to 0)
+   if [[ $v_status_code != "0" ]] && [ $v_status_code == "128" ]; then  ## Test if last command was a failure (not equal to 0)
       # 3. Invalid: Not on a git repo
 
-      echo "ezGIT: git status: 'G .'"
-      echo " > We are currently neither on any repository"
-      echo "   Neither we are at the central dir of repositories"
-      echo '   > Jump to the central/root dir with `G .` or `G r` '
+      v_pwd=$(pwd)
 
-   elif [ $v_status_code == "0" ] || [ $v_status_code == "128" ]; then
+      f_talk; echo -n 'Current State: '
+        f_c3; echo    '`git status`'
+        f_rc; echo
+
+      f_talk; echo "We are currently:"
+              echo " > 1. At: $v_pwd"
+              echo " > 2. Neither at any repository"
+              echo " > 3. Neither at the central dir of repositories"
+              echo
+      f_talk; echo 'Use fluNav command `. G` to jump to:'
+              echo ' > Central, Root directory of repos (DRYa-REPOS-CENTER)'
+              echo
+
+   elif [[ $v_status_code == "0" ]] || [ $v_status_code != "128" ]; then
       # 4. Valid: It is a git repo, but further down the directory tree
 
       # uDev: Insert dir-basename here when such function is ready 
@@ -796,8 +806,14 @@ function f_git_status_nr_2_not_all_repos_root {
 
 
       #f_find_basename
-
+    
       f_git_status
+
+      # After detecting job is done
+         # This tracks changes better that tracking versions (specifically for Seiva's coding style that is done on-the-go using termux and smartphone. Changing the code ALL the time)
+         f_count_nr_branch_commits  
+
+     
    fi
 }
 
@@ -1374,10 +1390,6 @@ elif [ $1 == "." ]; then
          f_git_status_nr_2_not_all_repos_root
 
       fi
-
-      # After detecting job is done
-         # This tracks changes better that tracking versions (specifically for Seiva's coding style that is done on-the-go using termux and smartphone. Changing the code ALL the time)
-         f_count_nr_branch_commits  
 
       # Nice verbose finish
          f_done
