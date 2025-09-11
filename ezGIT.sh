@@ -763,6 +763,9 @@ function f_list_all_valid_and_invalid_repositories {
       unset v_verbose      # Let this line be last to give instructions
       v_verbose="mute"     # Let this line be last to SET as "mute'
 
+      [[ -n $v_verb ]] && v_verbose=$v_verb  # Allows external functions to overwrite local variables.
+
+
    # If any variables were set, run the fx that prints them
       if [ -z $v_verbose ]; then
          f_talk; echo "Instructions: Verbose variable '\$v_verbose' not set"
@@ -797,7 +800,7 @@ function f_list_all_valid_and_invalid_repositories {
          echo 1>/dev/null
       fi
 
-      # Print a last echo (to distance text from `for` loop)
+      unset v_verb
 
 }
 
