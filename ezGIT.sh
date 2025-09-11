@@ -704,11 +704,8 @@ function f_tell_repo_name {
          f_rc; echo "a repository"
       fi 
 }
-function f_list_all_valid_and_invalid_repositories {
-   # Vai ser filtrado na pasta (DRYa-REPOS-CENTER) a existencia de:
-   #     1. Pastas-repo
-   #     2. Pastas-nao-repo
-   #     3. Ficheiros.
+
+function f_test_if_files_and_dirs_at_repos_center_are_valid_or_invalid_repos {
 
    cd ${v_REPOS_CENTER}/ 
 
@@ -748,17 +745,60 @@ function f_list_all_valid_and_invalid_repositories {
          fi
 
       done
+}
+
+
+function f_list_all_valid_and_invalid_repositories {
+   # Vai ser filtrado na pasta (DRYa-REPOS-CENTER) a existencia de:
+   #     1. Pastas-repo
+   #     2. Pastas-nao-repo
+   #     3. Ficheiros.
+
+   f_test_if_files_and_dirs_at_repos_center_are_valid_or_invalid_repos
+
+   # [Fast-Toggle system for variables]: Listing all possibilities. Toggle the sequence of lines below. The last line is always the one that SETS the Variable Value... Variable $v_verbose has to be set for these fx to run. Valid options: 'unset, default value', "valid", "invalid", "both", "mute"
+      v_verbose="valid"    # Let this line be last to SET as "valid'
+      v_verbose="invalid"  # Let this line be last to SET as "invalid'
+      v_verbose="both"     # Let this line be last to SET as "both'
+      unset v_verbose      # Let this line be last to give instructions
+      v_verbose="mute"     # Let this line be last to SET as "mute'
 
    # If any variables were set, run the fx that prints them
+      if [ -z $v_verbose ]; then
+         f_talk; echo "Instructions: Verbose variable '\$v_verbose' not set"
+                 echo " > Not listing valid and invalid repos at (DRYa-REPOS-CENTER)"
+                 echo
 
-      # For valid, when found
+      elif [[ $v_verbose == "valid" ]]; then
+         # For valid, when found
+         # echo "Valid runs"  # Debug
+
          [[ -n $v_valid_repo ]] && f_print_valid_items
 
-      # Print a last echo (to distance text from `for` loop)
-         echo
 
-      # For invalid, when found
+      elif [[ $v_verbose == "invalid" ]]; then
+         # For invalid, when found
+         # echo "Invalid runs"  # Debug
+
+           #[[ -n $v_non_repo ]] && [[ -n $v_files ]] && echo  # Dar apenas um espaco no texto quando exiatem ficheiros dos dois tipos (ficheiros e pastas)
          ( [[ -n $v_non_repo ]] || [[ -n $v_files ]] ) && f_print_invalid_items
+
+
+      elif [[ $v_verbose == "both" ]]; then
+         # For valid and invalid, when found
+         # echo "Valid and Invalid runs"  # Debug
+
+           [[ -n $v_valid_repo ]] && f_print_valid_items
+           [[ -n $v_non_repo   ]] && [[ -n $v_files ]] && echo  # Dar apenas um espaco no texto quando exiatem ficheiros dos dois tipos (ficheiros e pastas)
+         ( [[ -n $v_non_repo   ]] || [[ -n $v_files ]] ) && f_print_invalid_items
+
+      elif [[ $v_verbose == "mute" ]]; then
+         # Do not print any output
+         echo 1>/dev/null
+      fi
+
+      # Print a last echo (to distance text from `for` loop)
+
 }
 
 function f_git_status_nr_1_all_repos_root {
@@ -937,6 +977,7 @@ function f_print_valid_items {
       do
          echo " > $i/"
       done
+      echo
 }
 
 function f_print_invalid_items {
@@ -1389,15 +1430,15 @@ elif [ $1 == "." ]; then
       # If only 1 arg is given: `G .` then `git status` only to current repo
 
       # Instructions: 3 possibilities when calling `G .`
-      #  1. fx runs if: is root directory where all repos are found
-      #  2. fx runs if: is not root directory where all repos are found
-      #  3. fx runs if: outside a valid repository (somewhere else in the file system)
-      #  4. fx runs if: inside a valid repository
+      #  1. fx runs if [Invalid]:          is root directory where all repos are found
+      #  2. fx runs if [Unknown if Valid]: is not root directory where all repos are found
+      #  3. fx runs if [Invalid]:          is outside a valid repository (somewhere else in the file system)
+      #  4. fx runs if [Valid]:            is inside a valid repository
       
       f_greet 
 
       if [[ $(pwd) == ${v_REPOS_CENTER} ]]; then 
-         # 1. if we are exactly at the Repos Center. 
+         # 1. [Invalid]: If we are exactly at the Repos Center (invalid). 
          #    For sure we are not inside a repo, 
          #    ... Listing all repos here
 
@@ -1406,7 +1447,7 @@ elif [ $1 == "." ]; then
 
 
       else  
-         # 2. If we are not at Repos Center
+         # 2. [Unknown if Valid]: If we are not at Repos Center 
          #    we may be either further into repositories sub-folders
          #    or outside even the root of repos
          #    We must detect which one it is now
