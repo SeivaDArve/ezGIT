@@ -1860,6 +1860,7 @@ elif [ $1 == "++" ]; then
    # If one $2 variable is found, commit message accordingly automatically
 
    # uDev: Esta fx (e outras semelhantes) tem de testar primeiro se estao atualmente dentro de um repo
+   # uDev: Bug para corrigir: quando tudo esta sincronizado e ok, ha a possibilidade de executar `G ++` e escrever uma mensagem, mas no existe nada no staging area
 
    # Variables for the automatic messages
       v_aut_message="Pushed to github.com automatically (by ezGIT app)"
