@@ -323,18 +323,29 @@ function f_unstage_all {
    echo
 }
 
-function f_test_if_currently_at_any_repo {
-   # Test if we are actually at a git repository
-      git status &>/dev/null
+function f_function_git_log_in_one_line {
+   f_greet
+   f_talk; echo -n 'Show entire git log with single lines '
+     f_c3; echo    '`git log --oneline`'
+     f_rc; echo
 
-      [[ $? =~ "1" ]] && f_talk && echo -e "You are not currently at any repo \n" && exit 1
+   f_test_if_currently_at_any_repo
+
+   git log --oneline
+}
+
+function f_test_if_currently_at_any_repo {
+# Test if we are actually at a git repository
+git status &>/dev/null
+
+[[ $? =~ "1" ]] && f_talk && echo -e "You are not currently at any repo \n" && exit 1
 }
 
 function f_test_if_any_unwanted_files_are_saved_at_repos_root {
-   # When calling `G . A` or `G .` at the correct root directory of all repos, then test if there are files there that should not be there
-   
-   # uDev: This fx does not exist across the script yet
-   echo "uDev: Mention unwanted files at \${v_REPO_CENTER}/"
+# When calling `G . A` or `G .` at the correct root directory of all repos, then test if there are files there that should not be there
+
+# uDev: This fx does not exist across the script yet
+echo "uDev: Mention unwanted files at \${v_REPO_CENTER}/"
 }
 
 function f_save_current_branch {
@@ -1511,17 +1522,9 @@ elif [ $1 == ".." ] || [ $1 == "!" ] || [ $1 == "log" ]; then
 
    elif [ $2 == "1" ]; then
       # git log (but in one line)
+      f_function_git_log_in_one_line 
 
-      f_greet
-      f_talk; echo -n 'Show entire git log with single lines '
-        f_c3; echo    '`git log --oneline`'
-        f_rc; echo
-
-      f_test_if_currently_at_any_repo
-
-      git log --oneline
-
-   elif [ $2 == "l" ]; then
+   elif [ $2 == ".." ]; then
       # git log (but only last commit message in one line)
 
       f_greet
@@ -1551,6 +1554,10 @@ elif [ $1 == ".." ] || [ $1 == "!" ] || [ $1 == "log" ]; then
            f_rc; echo
 
    fi
+
+elif [ $1 == "..." ]; then
+      # git log (but in one line)
+      f_function_git_log_in_one_line
 
 elif [ $1 == "watch" ] || [ $1 == "8" ]; then
    # This function allows the user to open a second terminal to watch live what is changing in the git log tree.
