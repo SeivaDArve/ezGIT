@@ -770,9 +770,9 @@ function f_list_all_valid_and_invalid_repositories {
    # [Fast-Toggle system for variables]: Listing all possibilities. Toggle the sequence of lines below. The last line is always the one that SETS the Variable Value... Variable $v_verbose has to be set for these fx to run. Valid options: 'unset, default value', "valid", "invalid", "both", "mute"
       v_verbose="valid"    # Let this line be last to SET as "valid'
       v_verbose="invalid"  # Let this line be last to SET as "invalid'
-      v_verbose="both"     # Let this line be last to SET as "both'
       unset v_verbose      # Let this line be last to give instructions
       v_verbose="mute"     # Let this line be last to SET as "mute'
+      v_verbose="both"     # Let this line be last to SET as "both'
 
       [[ -n $v_verb ]] && v_verbose=$v_verb  # Allows external functions to overwrite local variables.
 
@@ -840,6 +840,7 @@ function f_git_status_nr_1_all_repos_root {
 
 function f_git_status_nr_2_not_all_repos_root {
    # Git Status (step 2): Runs when outside (DRYa-REPOS-CENTER). Now current location/directory will be filtered: Either valid or invalid repo
+   # Filter. If we are not at Repos Center 
 
    # Two steps to find if current path is valid
       # 3. Found invalid repo: Throw a beautifull error message
@@ -858,7 +859,6 @@ function f_git_status_nr_2_not_all_repos_root {
         f_c3; echo                   '`git status`'
         f_rc; echo    " > Not at any repository (command only for repos)"
               echo
-
       f_talk; echo    'Current location:'
               echo -n ' > 1. At: '
         f_c3; echo              "$v_pwd"
@@ -1461,7 +1461,7 @@ elif [ $1 == "." ]; then
 
 
       else  
-         # 2. [Unknown if Valid]: If we are not at Repos Center 
+         # 2. [Unknown if Valid]: Filter. If we are not at Repos Center 
          #    we may be either further into repositories sub-folders
          #    or outside even the root of repos
          #    We must detect which one it is now
