@@ -2908,6 +2908,11 @@ elif [ $1 == "grep" ]; then
       f_talk; echo "What text do you want to search? "
       read -p " > " v_ans
 
+              echo
+      f_talk; echo 'Searching $* with `grep`:'
+              echo " > $v_ans"
+              echo
+
       git grep $v_ans
 
    else
@@ -2915,6 +2920,11 @@ elif [ $1 == "grep" ]; then
 
       # from the arg list, remive the 1st one (arg $1 == grep)
          shift
+
+              echo
+      f_talk; echo 'Searching $* with `grep`:'
+              echo " > $*"
+              echo
 
       # Looping each arg and searching for it
          for i in $*
