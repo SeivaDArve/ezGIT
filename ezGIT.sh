@@ -29,6 +29,7 @@
 
 # uDev: Create option to print: either public repo or privare repo
 
+# uDev: Detetar se a dependencia `less` se encontra instalada para usar em `git diff --staged` ou entao informar qual é o comando para configurar outro leitor de texto como 'pager' (na falta do `less` o erro informa que nao foibencontrado o pager 'pager')
 # If this script runs, a variable is set to tell which one repo was the last one to run
    v_repo="ezGIT"
 
@@ -39,9 +40,9 @@
    # uDev: failsafe: If drya repo does not exist, create alternatives
 
    # Sourcing DRYa Lib 1
-      v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+      v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
       unset v_greet v_talk
-      [[ -f $v_lib1 ]] && source $v_lib1 || (read -s -n 1 -p "DRYa: error: drya-lib-1 does not exist " && echo)
+      [[ -f $v_lib1 ]] && source $v_lib1 || (read -s -n 1 -p "ezGIT: error: drya-lib-1 does not exist " && echo)
 
       v_greet="ezGIT"
       v_talk="ezGIT: "
@@ -50,15 +51,15 @@
 
 
    # Sourcing DRYa Lib 2
-      v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-2-tmp-n-config-files.sh
-      [[ -f $v_lib2 ]] && source $v_lib2 || (read -s -n 1 -p "DRYa: error: drya-lib-2 does not exist " && echo)
+      v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-2-tmp-n-config-files.sh
+      [[ -f $v_lib2 ]] && source $v_lib2 || (read -s -n 1 -p "ezGIT: error: drya-lib-2 does not exist " && echo)
 
       # Examples: `f_create_tmp_file` will give a $v_tmp with a new file with abs path
      
 
    # Sourcing DRYa Lib 4: Color schemes
-      v_lib4=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
-      [[ -f $v_lib4 ]] && source $v_lib4 || (read -s -n 1 -p "DRYa: error: drya-lib-4 does not exist " && echo)
+      v_lib4=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-4-dependencies-packages-git.sh
+      [[ -f $v_lib4 ]] && source $v_lib4 || (read -s -n 1 -p "ezGIT: error: drya-lib-4 does not exist " && echo)
 
       # Examples: f_lib4_stroken
 
