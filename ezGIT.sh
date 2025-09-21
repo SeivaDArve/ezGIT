@@ -1331,7 +1331,7 @@ elif [ $1 == "byte-compile" ]; then
 
    f_talk; echo "byte compile current version of ezGIT for speed reasons (uDev)"
 
-elif [ $1 == "config" ] || [ $1 == "cf" ]; then
+elif [ $1 == "config" ] || [ $1 == "cf" ] || [ $1 == "cfg" ]; then
    # Confirming that configurations exist
     
    # Presenting ezGIT
@@ -1339,8 +1339,6 @@ elif [ $1 == "config" ] || [ $1 == "cf" ]; then
 
    # uDev: 'G config ^' edits .gitconfig on DRYa repo
    # uDev: 'G config v' edits .gitconfig on the machine at $HOME
-   # uDev: 'G config m' edits .confif/h.h/.gitconfig+machine to identify traitsID for this machine of the same user
-   # uDev: 'G config h' listas all configs
 
    # To read better, put our spetial files into variable
       # At DRYa's repo
@@ -1352,14 +1350,13 @@ elif [ $1 == "config" ] || [ $1 == "cf" ]; then
    if [ -z $2 ]; then
       # Help, verbose instructions
 
-      f_talk; echo "G config"
-              echo 
-              echo "Editing .gitconfig file"
-              echo " > You need to specify: 'G config ^' (edit centrally (at DRYa's repo))"
-              echo " >                  or: 'G config v' (edit locally only)"
-              echo " >                  or: 'G config i' (install .gitconfig file)"
-              echo " >                  or: 'G config m' (edit extra stuff, machine specific)"
-              echo " >                  or: 'G config h' (list all configs)"
+      f_talk; echo "Configuring 'ezGIT' and 'git'"
+              echo " 'G cfg ^'   | edit .gitconfig centrally @DRYa"
+              echo " 'G cfg v'   | edit .gitconfig locally   @Host"
+              echo " 'G cfg i'   | install .gitconfig file"
+              echo " 'G cfg m'   | edit extra stuff, machine specific"
+              echo " 'G cfg ssh' | config fingerprint for ssh"
+              echo " 'G cfg h'   | list instructions"
               echo 
 
    elif [ $2 == "^" ]; then
@@ -1404,9 +1401,37 @@ elif [ $1 == "config" ] || [ $1 == "cf" ]; then
    elif [ $2 == "m" ]; then
       # For the same user with diferent devices, lets identify this device on the configs, to be listed on '$ git log' and apretiate on git's history which machine/device did what job
       # uDev: Add verbose: "Press Enter" when this fx gets developed
-         
+      #       edits .confif/h.h/.gitconfig+machine to identify traitsID for this machine of the same user
+
       f_talk; echo "uDev: Identifying this machine with traitsID for the same user is not ready"
 
+
+   elif [ $2 == "ssh" ] || [ $2 == "fingerprint" ]; then
+      # This fx was added to absorve one solution to one bug. Git was asking for a fingerprint
+
+      f_talk; echo "This option was added after learning how to fix a 'fingerprint' issue with git'"
+              echo " > Message given by git (before configuring properly):"
+
+      # Message given by the bug (line by line to avoid an 'heredoc' without indentation)
+         v_1="The authenticity of host 'github.com (140.82.121.4)' can't be established."
+         v_2="ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU."
+         v_3="This key is not known by any other names."
+         v_4="Are you sure you want to continue connecting (yes/no/[fingerprint])? "
+
+      # Verbose
+         f_hzl
+         echo $v_1
+         echo $v_2
+         echo $v_3
+         echo $v_4
+         f_hzl
+         echo
+         echo
+
+      # Taking action to fix the bug
+         f_talk; read -p "Press any key to solve, by scanning keys and storing "
+         mkdir -p ~/.ssh
+         ssh-keyscan github.com >> ~/.ssh/known_hosts
 
    elif [ $2 == "h" ]; then
       f_talk; echo "Instructions:"
