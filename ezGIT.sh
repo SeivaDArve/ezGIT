@@ -2987,16 +2987,23 @@ elif [ $1 == "[]" ] || [ $1 == "stash" ] || [ $1 == "st" ]; then
 elif [ $1 == "[" ] || [ $1 == "unstash" ] || [ $1 == "ust" ] || [ $1 == "apply" ] || [ $1 == "ap" ]; then
 
    f_greet
-
    f_git_status
-
    f_talk; echo "git stash apply"
            echo " > Apllying saved/stashed/hidden commits now"
 
-   git stash apply
-
+   git stash apply 
    echo
    
+   # uDev: Some machines when they apply the stash, the stash does not get clean, it keeps a copy, messing up if we repeat the comand to apply. So, to bug fix, if we apply stashes correctly, then we must also clear the stash to prevent the bug
+   #       1. test if STASH is empty before
+   #       2. apply
+   #       3. test if STASH is empty after
+   #       4. save on a variable
+   #       5. if actually some stash was recovered, clean stash and keep only the working dir
+ 
+   v_txt="Also clear the git stash?"; f_anyK
+   git stash clear 
+   echo
 
 elif [ $1 == "[rm]" ] || [ $1 == "stash-clear" ] || [ $1 == "st-c" ]; then
    f_greet
