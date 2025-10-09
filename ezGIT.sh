@@ -3014,6 +3014,12 @@ elif [ $1 == "[rm]" ] || [ $1 == "stash-clear" ] || [ $1 == "st-c" ]; then
 
    f_git_status
 
+elif [ $1 == "rm" ] || [ $1 == "remove-trash" ]; then
+   f_talk; echo "What do you want to remove?"
+           echo ' > `G rm 0` | All options below'
+           echo ' > `G rm 1` | Delete tmp files like "file.txt~" "#file#" "file.txt.swp"'
+           echo ' > `G rm 2` | Delete invalid files and dirs from drya-repos-center'
+
 elif [ $1 == "origin-info" ]; then
          echo 
    f_c2; echo "git remote show origin:"
