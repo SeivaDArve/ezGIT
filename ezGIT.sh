@@ -1359,6 +1359,7 @@ elif [ $1 == "config" ] || [ $1 == "cf" ] || [ $1 == "cfg" ]; then
               echo " 'G cfg m'   | edit extra stuff, machine specific"
               echo " 'G cfg ssh' | config fingerprint for ssh"
               echo " 'G cfg h'   | list instructions"
+              echo " 'G cfg rmt' | config git remote URL"
               echo 
 
    elif [ $2 == "^" ]; then
@@ -1443,6 +1444,15 @@ elif [ $1 == "config" ] || [ $1 == "cf" ] || [ $1 == "cfg" ]; then
               echo
               echo "Para alterar o nome atual:"
               echo ' > `git config --global user.name "novo-nome"` '
+
+   elif [ $2 == "rmt" ] || [ $2 == "remote-url" ]; then
+      f_talk; echo "Config 'remote' URL (uDev)."
+              echo
+      f_talk; echo "To check/list remotes:"
+              echo ' > `git remote -v`'
+              echo
+      f_talk; echo "To change URL:"
+              echo ' > `git remote set-url origin https://github.com/SeivaDArve/ezGIT.git`'
 
    else
       f_talk; echo "Invalid function, or uDev"
