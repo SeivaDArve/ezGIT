@@ -33,6 +33,8 @@
 # If this script runs, a variable is set to tell which one repo was the last one to run
    v_repo="ezGIT"
 
+# uDev: criar fx `G set-remote-url` para redefinir a info proveniente de `git remote -v` para que possa configurar algo como: 'git remote set-url origin https://github.com/SeivaDArve/DRYa.git/'
+
 
 
 
@@ -1345,7 +1347,7 @@ elif [ $1 == "config" ] || [ $1 == "cf" ] || [ $1 == "cfg" ]; then
          v_drya_file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig"
 
       # Locally at ~/
-         v_users_file=~/.gitconfig
+         v_gitconfig=~/.gitconfig
 
    if [ -z $2 ]; then
       # Help, verbose instructions
@@ -1389,7 +1391,7 @@ elif [ $1 == "config" ] || [ $1 == "cf" ] || [ $1 == "cfg" ]; then
    elif [ $2 == "v" ]; then
       # Edit local file
          # uDev: Add verbose: "Press Enter"
-         vim $v_users_file
+         vim $v_gitconfig
 
    elif [ $2 == "i" ]; then
       # Installing .gitconfig using fx inside drya.sh
@@ -3015,6 +3017,9 @@ elif [ $1 == "[rm]" ] || [ $1 == "stash-clear" ] || [ $1 == "st-c" ]; then
    f_git_status
 
 elif [ $1 == "rm" ] || [ $1 == "remove-trash" ]; then
+
+   # uDev: Antes de remover seja o que for, primeiro faz a lista daquilo que é para ser removido e pede confirmacao
+   
    f_talk; echo "What do you want to remove?"
            echo ' > `G rm 0` | All options below'
            echo ' > `G rm 1` | Delete tmp files like "file.txt~" "#file#" "file.txt.swp"'
@@ -3123,15 +3128,18 @@ elif [ $1 == "m" ] || [ $1 == "menu" ]; then
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='G menu'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L2='2. Install .gitconfig'                                      
+      L3='3. | G h | Menu "Intrucoes" + "Exec"'                                      
+      L2='2. |     | Install .gitconfig'                                      
+
       L1='1. Cancel'
 
       L0="SELECT 1: Menu ezGIT: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "3. " ]] && f_instructions 
       [[ $v_list =~ "2. " ]] && f_dot_file_install_gitconfig
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
