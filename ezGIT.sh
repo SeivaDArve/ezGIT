@@ -1315,24 +1315,6 @@ elif [ $1 == "stroken" ]; then
    # Print stroken even if .netrc exists (requires drya-lib-4)
    f_stroken_print
 
-elif [ $1 == "github" ]; then
-   # Open web bowser and navigate to githbu.com
-
-   # uDev: Use traitsID
-
-   xdg-open http://www.github.com
-
-elif [ $1 == "psswd" ]; then
-   f_stroken_centralized
-
-elif [ $1 == "byte-compile" ]; then
-   # Convert bash to binary
-   # Send to /usr/bin
-   # (for speed purposes)
-   # One tutorial: https://www.baeldung.com/linux/convert-script-into-binary
-
-   f_talk; echo "byte compile current version of ezGIT for speed reasons (uDev)"
-
 elif [ $1 == "config" ] || [ $1 == "cf" ] || [ $1 == "cfg" ]; then
    # Confirming that configurations exist
     
@@ -1458,11 +1440,9 @@ elif [ $1 == "config" ] || [ $1 == "cf" ] || [ $1 == "cfg" ]; then
       f_talk; echo "Invalid function, or uDev"
 
    fi
-   
-
-
 
    # uDev: Create a file at ~/.config/h.h/ezGIT/ with data from "uname -a"
+
 
 elif [ $1 == "." ]; then
    # Git status (for current repo or for all)
@@ -1535,6 +1515,24 @@ elif [ $1 == "." ]; then
       f_talk; echo "command not known"
               echo " > For help: G h"
    fi
+
+elif [ $1 == "github" ]; then
+   # Open web bowser and navigate to github.com
+
+   # uDev: Use traitsID
+
+   xdg-open http://www.github.com
+
+elif [ $1 == "psswd" ]; then
+   f_stroken_centralized
+
+elif [ $1 == "byte-compile" ]; then
+   # Convert bash to binary
+   # Send to /usr/bin
+   # (for speed purposes)
+   # One tutorial: https://www.baeldung.com/linux/convert-script-into-binary
+
+   f_talk; echo "byte compile current version of ezGIT for speed reasons (uDev)"
 
 elif [ $1 == "alias" ]; then
       vim ${v_REPOS_CENTER}/ezGIT/all/etc/config-bash-alias
@@ -3043,7 +3041,7 @@ elif [ $1 == "origin-info" ]; then
    git remote show origin
 
 elif [ $1 == "set" ] || [ $1 == "set-current-repo-to-sync-mode" ]; then
-   # Create a ".ezGIT" file inside the current repo to manage repo specific functions
+   # Creates an ".config/.ezGIT" file at the root Working Directory of each specifyied repo to manage repo specific functions
 
    # Possibilities: 
    #  > Encrypt data before uploading
