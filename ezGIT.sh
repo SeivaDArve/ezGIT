@@ -237,7 +237,7 @@ function f_git_status {
            echo
 }
 
-function f_git_fetch {
+function f_git_fetch_and_status {
   # May use a while loop and waiting for upstream changes without downloading
 
    f_talk; echo -n 'Current State: '
@@ -886,8 +886,8 @@ function f_git_status_nr_2_not_all_repos_root {
            f_rc; echo
 
       # Git commands (escolher apenas um deles. Comenear os que nao sao necessarios)
-         f_git_fetch  # Ja inclui `git status` 
-        #f_git_status
+        #f_git_fetch_and_status  # Ja inclui `git status` 
+         f_git_status
 
       # Tracking number of commits in `git` is better that tracking version numbers (specifically for Seiva's coding style (W.I.P.) that is done on-the-go using termux and smartphone. Changing the code ALL the time)
          f_count_nr_branch_commits  
@@ -2375,7 +2375,7 @@ elif [ $1 == "vv" ] || [ $1 == "fetch" ]; then
    if [[ -z $2 ]]; then
 
       f_greet
-      f_git_fetch
+      f_git_fetch_and_status
 
    elif [ $2 == "loop" ] || [ $2 == "l" ]; then
       
@@ -2388,7 +2388,7 @@ elif [ $1 == "vv" ] || [ $1 == "fetch" ]; then
       while true
       do
          f_greet
-         f_git_fetch
+         f_git_fetch_and_status
 
          # Download changes, if any
             [[ $v_state =~ "ON" ]] && [[ $s =~ "is behind" ]] && f_git_pull && f_git_status
