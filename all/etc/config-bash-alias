@@ -2,7 +2,7 @@
 
 # Alias to use directly as git alias
 
-# Vai ser tambem definido em .../DRYa/all/source-all-drya-files
+# Vai ser tambem definido em .../DRYa/all/dryaSRC
    alias ezGIT="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
    alias ezgit="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
    alias     G="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"        

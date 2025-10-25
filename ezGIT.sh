@@ -1308,7 +1308,7 @@ elif [ $1 == "h" ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ $1 == "?" ] || [
 
 elif [ $1 == "eg" ]; then
    # Do something if arg 1 is equal to "eg" (a test):
-      echo "you don\'t need to source G.sh at the file \"source-all-drya-files\""
+      echo "you don\'t need to source G.sh at the file \"dryaSRC\""
       echo "Start using if conditions instead"
 
 elif [ $1 == "stroken" ]; then
@@ -2303,7 +2303,7 @@ elif [ $1 == "+-" ]; then
 elif [ $1 == "v" ] || [ $1 == "pull" ]; then
    # git pull (Download updates from github)
 
-   # uDev: Se forem detetadas alteracoes em source-all-drya-files ou qualquer script em .../DRYa/all/init-bin/ que carrege alias para o env atua, e que apos `git pull` precise de `source ~/.bashrc` entao ezGIT convem informar
+   # uDev: Se forem detetadas alteracoes em dryaSRC ou qualquer script em .../DRYa/all/init-bin/ que carrege alias para o env atua, e que apos `git pull` precise de `source ~/.bashrc` entao ezGIT convem informar
 
    if [[ -z $2 ]]; then
 
