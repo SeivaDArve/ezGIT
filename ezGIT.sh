@@ -1890,7 +1890,7 @@ elif [ $1 == "+" ]; then
       f_git_status
 
 elif [ $1 == "++" ]; then
-	# 'git add --all' + 'git status' + 'git commim -m "" '
+	# `git add --all` + `git status` + `git commim -m "" `
 
    # If no $2 is found, enable the user to write a commit message.
    # If one $2 variable is found, commit message accordingly automatically
@@ -1907,13 +1907,15 @@ elif [ $1 == "++" ]; then
 
    if [ -z $2 ]; then
 
+      # uDev: Detect if current redo does even need to commit anything (if there are changes in the working directory)
+
       f_greet
 
 		f_talk; echo -n 'Staging all and commiting: '
         f_c3; echo    '`G ++`'
         f_rc; echo
 
-      f_git_add_all  # Git add --all
+      f_git_add_all  
 
       f_git_status
 
