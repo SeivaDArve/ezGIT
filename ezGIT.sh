@@ -3027,14 +3027,52 @@ elif [ $1 == "[rm]" ] || [ $1 == "stash-clear" ] || [ $1 == "st-c" ]; then
 
    f_git_status
 
-elif [ $1 == "rm" ] || [ $1 == "remove-trash" ]; then
+elif [ $1 == "clean" ] || [ $1 == "clean-trash-files" ]; then
 
    # uDev: Antes de remover seja o que for, primeiro faz a lista daquilo que é para ser removido e pede confirmacao
    
+   #
+   #  O comando `find` consegue buscar todos os regex, e confimar para cada um se quer apagar
+   #     > find . -type f \( -name '*~' -o -name '#*#' -o -name '*.swp' \) -ok rm {} \;
+   # 
+   #  Explicação:
+   #     find .         |  começa na pasta atual.
+   #     -type f        | só ficheiros.
+   #     \( ... \)      | agrupa as condições.
+   #     -name 'padrão' | procura nomes correspondentes.
+   #     -o             | “OU” lógico entre condições.
+   #     -ok rm {} \;   | pede confirmação para apagar (find pergunta “< rm ... > ?”). Se disseres y, apaga; n, salta.
+   #
+
+   f_greet
    f_talk; echo "What do you want to remove?"
-           echo ' > `G rm 0` | All options below'
-           echo ' > `G rm 1` | Delete tmp files like "file.txt~" "#file#" "file.txt.swp"'
-           echo ' > `G rm 2` | Delete invalid files and dirs from drya-repos-center'
+           echo ' > `G clean 0` | All options below'
+           echo ' > `G clean 1` | Delete tmp files like #*$ *~ *.swp"'
+           echo ' > `G clean 2` | Delete invalid files and dirs from drya-repos-center'
+           echo ' > `G clean 3` | Adicionar .gitignore nos repos, para parar de acumular'
+           echo
+           echo ' > Examples "file.txt~" "#file#" "file.txt.swp"'
+           echo
+
+   # Buscar todos os tipos de ficheiros temporarios
+      f_talk; echo "Lista de ficheiros temporarios encontrados (inclui fora de drya-repos-center)"
+      find . -type f \( -name '*~' -o -name '#*#' -o -name '*.swp' \)
+      echo
+
+   # Buscar pastas que nao sejam repositorior (em drya-repos-center)
+      cd ${v_REPOS_CENTER}/ 
+
+      f_talk; echo "Lista de pastas que nao sao repositorios"
+      for d in */; do
+         [ -d "$d/.git" ] || echo " > $d"
+      done
+      echo
+   
+   # Pesquisar os repositorios que ainda nao tem .gitignore
+      v_ign=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitignore
+      f_talk; echo "Localiacao do .gitignore standard"   
+              echo " > $v_ign"
+   
 
 elif [ $1 == "origin-info" ]; then
          echo 
