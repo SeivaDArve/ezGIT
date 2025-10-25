@@ -2305,7 +2305,8 @@ elif [ $1 == "+-" ]; then
 elif [ $1 == "v" ] || [ $1 == "pull" ]; then
    # git pull (Download updates from github)
 
-   # uDev: Se forem detetadas alteracoes em dryaSRC ou qualquer script em .../DRYa/all/init-bin/ que carrege alias para o env atua, e que apos `git pull` precise de `source ~/.bashrc` entao ezGIT convem informar
+   # uDev: Se forem detetadas alteracoes em dryaSRC ou qualquer script em .../DRYa/all/boot/ que carrege alias para o env atual, e que apos `git pull` precise de `source ~/.bashrc` entao ezGIT convem informar
+   #       precisa `source` na subshell
 
    if [[ -z $2 ]]; then
 
