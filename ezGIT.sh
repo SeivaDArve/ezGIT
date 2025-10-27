@@ -187,6 +187,17 @@ function f_instructions {
       unset v_list
 }
 
+function f_warning_about_username {
+   # Maybe the user wants the username to be machine specific (most likely). Therefore, tell the user if it is still the default
+   v_user=$(git config --get user.name)
+   if [[ $v_user == "seivaDArve" ]]; then
+      f_talk && echo "Warning: Default username is set: $v_user"
+                echo " > Change with \`D iu d i git\`"
+
+      read -sn1
+      echo
+   fi
+}
 
 function f_find_basename {
    # uDev" Needs to search for our .git directory
@@ -1269,6 +1280,8 @@ function f_prsP_to_upload {
    # Check if variable ${v_REPOS_CENTER} is configured. Othewise, inform
       [[ -z ${v_REPOS_CENTER} ]] && f_greet && f_talk && echo 'Variables missing (this may be a problem)' && echo ' > $v_REPOS_CENTER ' && echo '   (It defines a centrar directory where repos are stored)' && read -sn1
 
+   # Warning about Username if Default
+      f_warning_about_username
 
          
 if [ -z "$*" ]; then
