@@ -65,6 +65,9 @@
 
       # Examples: f_lib4_stroken
 
+# drya-fast-toggle
+   unset v_hooks
+         v_hooks=on
 
 function f_stroken_copy {
    # When automatic github.com authentication is not set, an alternative (as taxt based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
@@ -189,12 +192,25 @@ function f_instructions {
 
 function f_warning_about_username {
    # Maybe the user wants the username to be machine specific (most likely). Therefore, tell the user if it is still the default
+
+   # Variable not loanding in sub-shell (it is also set at dryaSRC)
+      DRYa=${v_REPOS_CENTER}/DRYa
+
    v_user=$(git config --get user.name)
    if [[ $v_user == "seivaDArve" ]]; then
-      f_talk && echo "Warning: Default username is set: $v_user"
-                echo " > Change with \`D iu d i git\`"
+      f_talk; echo -n "Warning: The current default username '"
+        f_c3; echo -n "$v_user"
+        f_rc; echo -n "' does not match any device name. It is recommended to do so for debugging purpouses. Change it with \`"
+        f_c3; echo -n "D iu d i git"
+        f_rc; echo    "\`"
+              echo
 
-      read -sn1
+      read -sn1 -p " > Press 'Y' to change. (Any other key to ignore): " v_ans
+      echo
+
+   # Send to DRYa installer
+      [[ $v_ans == "y" ]] && bash $DRYa/drya.sh iu d i git
+      [[ $v_ans == "Y" ]] && bash $DRYa/drya.sh iu d i git
       echo
    fi
 }
@@ -1261,6 +1277,10 @@ function f_prsP_to_upload {
 
 }
 
+function f_run_hooks {
+   bash ${v_REPOS_CENTER}/DRYa/.config/.ezGIT $1
+}
+
 # -----------------------------------------
 # -- Functions above --+-- Arguments Below 
 # -----------------------------------------
@@ -1516,9 +1536,13 @@ elif [ $1 == "." ]; then
    elif [ $2 == "all" ] || [ $2 == "A" ] || [ $2 == "a" ]; then
       # Whenever code complexity is found, a function is created to enable better code reading
          f_git_status_recursive
+         echo
       
       # uDev: At windows, if git does not have this config (see line below), then this function will not take effect:
          # git config --global --add safe.directory /mnt/c/Repositories/upK
+
+      # Hooks
+         [[ -n $v_hooks ]] && f_run_hooks "hook-git-status-recursive"
 
    elif [ $2 == "detect-invalid-objects" ] || [ $2 == "d" ]; then
       f_greet
