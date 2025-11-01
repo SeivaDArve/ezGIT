@@ -3092,8 +3092,13 @@ elif [ $1 == "clean" ] || [ $1 == "clean-trash-files" ]; then
            echo
 
    # Buscar todos os tipos de ficheiros temporarios
-      f_talk; echo "Lista de ficheiros temporarios encontrados (inclui fora de drya-repos-center)"
-      find . -type f \( -name '*~' -o -name '#*#' -o -name '*.swp' \)
+      f_talk; echo "Lista de ficheiros temporarios encontrados"
+              echo "       (inclui ./ fora de drya-repos-center)"
+      for i in $(find . -type f \( -name '*~' -o -name '#*#' -o -name '*.swp' \))
+      do
+         a=" > $i"
+         echo " > $a"
+      done
       echo
 
    # Buscar pastas que nao sejam repositorior (em drya-repos-center)
