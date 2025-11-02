@@ -1068,6 +1068,9 @@ function f_new_repo_step_0 {
 
    # Verbose no fim
       f_talk; echo "Criada a repo: $v_name"
+
+   # Add .gitignore file
+      # uDev   
 }
 
 function f_new_repo_step_1 {
@@ -3064,7 +3067,7 @@ elif [ $1 == "[rm]" ] || [ $1 == "stash-clear" ] || [ $1 == "st-c" ]; then
 
    f_git_status
 
-elif [ $1 == "clean" ] || [ $1 == "clean-trash-files" ]; then
+elif [ $1 == "clean" ] || [ $1 == "clear" ] && [ $1 == "clean-trash-files" ]; then
 
    # uDev: Antes de remover seja o que for, primeiro faz a lista daquilo que é para ser removido e pede confirmacao
    
