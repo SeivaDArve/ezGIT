@@ -1214,7 +1214,7 @@ function f_new_repo_step_3 {
 }
 
 function f_dot_file_install_gitconfig {
-   bash ${v_REPOS_CENTER}/DRYa/drya.sh dot install git
+   bash ${v_REPOS_CENTER}/DRYa/drya.sh iu dot install git
 }
 
 function f_git_add_regex {
