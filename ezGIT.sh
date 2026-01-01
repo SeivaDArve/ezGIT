@@ -1312,12 +1312,12 @@ if [ -z "$*" ]; then
 
    f_greet
 
-   f_talk; echo "No arguments were given"
+   f_talk; echo "No arguments given ..."
            echo
-   f_talk; echo "Some help:"
-           echo ' > To Open  ezGIT fzf Main Menu: `G m`'
-           echo ' > To print ezGIT instructions:  `G h`'
-           echo ' > To print ezGIT all configs:   `G cf h`'
+   f_talk; echo "Little info about ezGIT:"
+           echo ' > Open fzf Main Menu: `G m`'
+           echo ' > Print instructions: `G h`'
+           echo ' > Print all configs:  `G cf h`'
            echo
 
    #git config --list
