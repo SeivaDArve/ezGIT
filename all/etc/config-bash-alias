@@ -24,7 +24,6 @@ alias gmr="git merge"
 alias gfc="git fetch"
 alias gbr="git branch"
 alias glg="git log"
-alias gkp='touch .gitkeep; echo " > file .gitkeep created"'
 alias gdf="git diff"
 alias ggb="# uDev: git global"
 alias gbr="# uDev: Change branch"
@@ -36,6 +35,8 @@ alias gcmb="G ++ b 2; G p" # Only commit with automatic commmit: blind commit
 alias gcms="G ++ s 2; G p" # Only commit with automatic commmit: same as last commit
 alias gad="git add"
 alias ggo="clear; echo 'ezGIT: blindly pull changes'; git add --all; git commit -m 'bling update'; stroken; git push"
+alias gkp='touch .gitkeep; echo " > file .gitkeep created"'
+alias gign='G ign'  # uDev: aducionar fx para criar .gitignore na repo atual 
 
 alias gcm="git commit -m"
 

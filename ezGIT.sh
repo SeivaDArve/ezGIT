@@ -39,7 +39,7 @@
 
 
 # Calling DRYa libraries
-   # uDev: failsafe: If drya repo does not exist, create alternatives
+   # uDev: failsafe: If DRYa repo does not exist, create alternatives
 
    # Sourcing DRYa Lib 1
       v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
@@ -65,13 +65,24 @@
 
       # Examples: f_lib4_stroken
 
-# drya-fast-toggle
-   unset v_hooks
-         v_hooks=on
 
-function f_stroken_copy {
+function f_default_variables {
+   # Default variables for predictable file names and their locations
+
+   # Location for DRYa .gitignore file
+      v_ign=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitignore
+
+   # drya-fast-toggle-for-variables (example)
+      unset v_hooks
+            v_hooks=on
+}
+
+
+function f_stroken_failsafe {
    # When automatic github.com authentication is not set, an alternative (as taxt based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
    # While the app is in beta, this is usefull
+   #
+   # Note: legacy name: f_stroken_copy
 
    # If ~/.netrc exists, no need to print the rest
       if [ -f ~/.netrc ]; then
@@ -93,10 +104,10 @@ function f_stroken_copy {
 function f_stroken_centralized {
    # In order for DRYa to keep the MOST up-to-date info and acess to credentials, allowing safety, then ezGIT `f_stroken` is now a copy of drya-lib-4 `f_lib4_stroken`
    # The fx f_stroken in this file has now the possibility to be outdated
-   # So, f_stroken_centralized tests if drya-lib-4 exists. If it does, it uses f_lib4_stroken from DRYa, if it does not exist, maybe ezGIT f_stroken_copy may still work and will try to run
+   # So, f_stroken_centralized tests if drya-lib-4 exists. If it does, it uses f_lib4_stroken from DRYa, if it does not exist, maybe ezGIT f_stroken_failsafe may still work and will try to run
 
-   # Attempting to use the original f_lib4_stroken from DRYa (if installed)... In case of falure, use f_stroken_copy instead
-      [[ -f $v_lib4 ]] && f_lib4_stroken || f_stroken_copy
+   # Attempting to use the original f_lib4_stroken from DRYa (if installed)... In case of falure, use f_stroken_failsafe instead
+      [[ -f $v_lib4 ]] && f_lib4_stroken || f_stroken_failsafe
 }
 
 
@@ -365,17 +376,17 @@ function f_function_git_log_in_one_line {
 }
 
 function f_test_if_currently_at_any_repo {
-# Test if we are actually at a git repository
-git status &>/dev/null
+   # Test if we are actually at a git repository
+   git status &>/dev/null
 
-[[ $? =~ "1" ]] && f_talk && echo -e "You are not currently at any repo \n" && exit 1
+   [[ $? =~ "1" ]] && f_talk && echo -e "You are not currently at any repo \n" && exit 1
 }
 
 function f_test_if_any_unwanted_files_are_saved_at_repos_root {
-# When calling `G . A` or `G .` at the correct root directory of all repos, then test if there are files there that should not be there
+   # When calling `G . A` or `G .` at the correct root directory of all repos, then test if there are files there that should not be there
 
-# uDev: This fx does not exist across the script yet
-echo "uDev: Mention unwanted files at \${v_REPO_CENTER}/"
+   # uDev: This fx does not exist across the script yet
+   echo "uDev: Mention unwanted files at \${v_REPO_CENTER}/"
 }
 
 function f_save_current_branch {
@@ -842,7 +853,6 @@ function f_list_all_valid_and_invalid_repositories {
       fi
 
       unset v_verb
-
 }
 
 function f_git_status_nr_1_all_repos_root {
@@ -922,8 +932,7 @@ function f_git_status_nr_2_not_all_repos_root {
 }
 
 function f_curl_uploads_count {
-
-   # Description: Counts how many uploads were made to GitHub.com
+   # Counting how many uploads were made to GitHub.com
 
    f_talk; echo "uploads counter"
 
@@ -1277,12 +1286,66 @@ function f_prsP_to_upload {
       f_done
 
    fi
-
 }
 
 function f_run_hooks {
    bash ${v_REPOS_CENTER}/DRYa/.config/.ezGIT $1
 }
+
+function f_git_ignore__test_boilerplate_existence {
+   # Test if DRYa's .gitignore boilerplate exists. If so, show location. Mention in case it does not exist
+
+   # To print on terminal: Testing existence of file $v_ign and creating a status variable $v_ign_file either with its 'path' or 'error message' to tell it does not exist
+      [[ -f $v_ign ]] && v_ign_file=$v_ign || v_ign_file="[File inexistent (or has been moved). Error]"
+
+   # To use internally: Testing again, to create a status variable to allow other fx to run or to break
+      [[ -f $v_ign ]] && v_ign_status="existent" || v_ign_status="inexistent"
+
+}
+
+function f_git_ignore__show_boilerplate_location {
+   # Print location of .gitignore boilerplate that is used to paste on repositories
+
+   f_git_ignore__test_boilerplate_existence 
+
+   f_talk; echo "Localiacao do .gitignore standard"   
+           echo " > $v_ign_file"
+}
+
+function f_git_ignore__search_repo_needs {
+   # Pesquisar os repositorios que ainda nao tem .gitignore
+   f_talk; echo "uDev: Recursive search on all repos to test if they already have .gitignore file"
+}
+
+function f_git_ignore__create_for_current_repo {
+   # Copy .gitignore boilerplate from DRYa repo to current repository if .gitignore does not already exist
+
+   f_git_ignore__test_boilerplate_existence
+
+   f_talk; echo "uDev: Search root of current repo (if any) then copy DRYa .gitignore boilerplate"
+
+   if [[ $v_ign_status == "existent" ]]; then
+      echo "uDev: Copy .gitignore to root of repo"
+
+   elif [[ $v_ign_status == "inexistent" ]]; then
+      echo "$v_ign_file"
+   fi
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # -----------------------------------------
 # -- Functions above --+-- Arguments Below 
@@ -1294,9 +1357,20 @@ function f_run_hooks {
 
 
 
+
+
+
+
+
+
+
+
+
+
 # Before evaluating ezGIT arguments:
-   # uDev: Improve txt by creating fx for each line
-   
+   # Loading variables for each file name
+      f_default_variables  
+
    # Check if git and .gitconfig exists. If not, configure it
       [[ ! -f ~/.gitconfig ]] && f_git_config_missing
 
@@ -1580,6 +1654,11 @@ elif [ $1 == "alias" ]; then
 elif [ $1 == "k" ] || [ $1 == "gkp" ] || [ $1 == "kp" ]; then
    # Create a file .gitkeep
       touch .gitkeep && f_talk; echo "file .gitkeep was created"
+
+elif [ $1 == "ign" ] || [ $1 == "ignore" ] || [ $1 == ".ignore" ]; then
+   # Adds a file .gitignore to current repo
+
+   f_git_ignore__show_boilerplate_location
 
 elif [ $1 == ".." ] || [ $1 == "!" ] || [ $1 == "log" ]; then
    # git log options
@@ -3113,10 +3192,10 @@ elif [ $1 == "clean" ] || [ $1 == "clear" ] && [ $1 == "clean-trash-files" ]; th
       done
       echo
    
-   # Pesquisar os repositorios que ainda nao tem .gitignore
-      v_ign=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitignore
-      f_talk; echo "Localiacao do .gitignore standard"   
-              echo " > $v_ign"
+   # Acoes sobre .gitignore
+     #f_git_ignore__search_repo_needs  
+      f_git_ignore__show_boilerplate_location 
+     #f_git_ignore__create_for_current_repo
    
 
 elif [ $1 == "origin-info" ]; then
