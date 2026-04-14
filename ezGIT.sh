@@ -3146,7 +3146,7 @@ elif [ $1 == "[rm]" ] || [ $1 == "stash-clear" ] || [ $1 == "st-c" ]; then
 
    f_git_status
 
-elif [ $1 == "clean" ] || [ $1 == "clear" ] && [ $1 == "clean-trash-files" ]; then
+elif [ $1 == "clean" ] || [ $1 == "clear" ] || [ $1 == "clean-trash-files" ]; then
 
    # uDev: Antes de remover seja o que for, primeiro faz a lista daquilo que é para ser removido e pede confirmacao
    
@@ -3163,39 +3163,93 @@ elif [ $1 == "clean" ] || [ $1 == "clear" ] && [ $1 == "clean-trash-files" ]; th
    #     -ok rm {} \;   | pede confirmação para apagar (find pergunta “< rm ... > ?”). Se disseres y, apaga; n, salta.
    #
 
+   function f_clear_tmp_files_with_confirmation {
+      # Busca todos os ficheiros temporarios e backup e pergunta 1 a 1 se realmente quer apagar. Mas so pergunta caso nao encontre o original
+
+      f_talk; echo 'Comando `find`, responde y/n para apagar ou nao apagar ficheiros:' 
+
+      find . -type f \( -name '*~' -o -name '#*#' -o -name '*.swp' \) -exec bash -c '
+      for f; do
+        case "$f" in
+          *~)
+            orig="${f%~}"
+            ;;
+          \#*\#)
+            orig="${f#\#}"
+            orig="${orig%\#}"
+            ;;
+          *.swp)
+            orig="${f%.swp}"
+            ;;
+        esac
+
+        if [ -e "$orig" ]; then
+          rm -i "$f"
+        else
+          echo "A manter (sem original): $f"
+        fi
+      done
+      ' bash {} +
+   }
+
    f_greet
-   f_talk; echo "What do you want to remove?"
-           echo ' > `G clean 0` | All options below'
-           echo ' > `G clean 1` | Delete tmp files like #*$ *~ *.swp"'
-           echo ' > `G clean 2` | Delete invalid files and dirs from drya-repos-center'
-           echo ' > `G clean 3` | Adicionar .gitignore nos repos, para parar de acumular'
-           echo
-           echo ' > Examples "file.txt~" "#file#" "file.txt.swp"'
+   f_talk; echo 'Sub-menu: `G clear` to clear temporary files'
+           echo ' > Examples: "file.txt~" "#file#" "file.txt.swp"'
            echo
 
-   # Buscar todos os tipos de ficheiros temporarios
-      f_talk; echo "Lista de ficheiros temporarios encontrados"
-              echo "       (inclui ./ fora de drya-repos-center)"
-      for i in $(find . -type f \( -name '*~' -o -name '#*#' -o -name '*.swp' \))
-      do
-         a=" > $i"
-         echo " > $a"
-      done
-      echo
 
-   # Buscar pastas que nao sejam repositorior (em drya-repos-center)
-      cd ${v_REPOS_CENTER}/ 
-
-      f_talk; echo "Lista de pastas que nao sao repositorios"
-      for d in */; do
-         [ -d "$d/.git" ] || echo " > $d"
-      done
-      echo
-   
    # Acoes sobre .gitignore
      #f_git_ignore__search_repo_needs  
       f_git_ignore__show_boilerplate_location 
      #f_git_ignore__create_for_current_repo
+      echo
+
+   # Buscar todos os tipos de ficheiros temporarios
+      f_talk; echo "Lista de ficheiros temporarios encontrados:"
+              echo "       (neste repositorio: <uDev>):"
+              echo
+
+      # uDev: Primeiro precisa de conformar que o prompt se encontra na working dir juntamente com .git e so depois é que usa `find` recursivamente
+      for i in $(find . -type f \( -name '*~' -o -name '#*#' -o -name '*.swp' \))
+      do
+         a=" > $i"
+         echo "$a"
+      done
+      echo
+
+   # Buscar pastas que nao sejam repositorio (em drya-repos-center)
+      cd ${v_REPOS_CENTER}/ 
+
+      f_talk; echo "Lista de pastas que nao sao repositorios:"
+              echo "       (em ./ fora de drya-repos-center):"
+              echo
+
+      D=0  # Variavel que menciona se houve alguma alteracao. Caso 'D' nao seja alterado no loop seguint, entao vai continuar '0' e sera mencionado 'nada encontrado'
+
+      for d in */; do
+         [[   -d "$d/.git" ]] || echo " > $d"
+         [[ ! -d  $d/.git  ]] && D=1
+      done
+
+      [[ $D == 0 ]] && echo " > Nada encontrado"
+      echo
+
+      cd - 1>/dev/null
+   
+   f_talk; echo "What do you want to remove?"
+           echo ' > | `G clean 0` | All options below'
+           echo ' > | `G clean 1` | Delete tmp files (like #*$ *~ *.swp")'
+           echo ' > | `G clean 2` | Delete tmp files (like #*$ *~ *.swp") BUT 1 BY ONE (with confirmation)'
+           echo ' > | `G clean 3` | Delete invalid files and dirs from drya-repos-center'
+           echo ' > | `G clean 4` | Adicionar .gitignore nos repos, para parar de acumular'
+           echo
+
+           # uDev: `read` para que este menu tenho logo efeito 
+           v_txt='Prosseguir `G clean 2`' && f_anyK 
+           echo
+
+           f_clear_tmp_files_with_confirmation 
+
    
 
 elif [ $1 == "origin-info" ]; then
