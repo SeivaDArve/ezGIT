@@ -216,7 +216,7 @@ function f_warning_about_username {
         f_rc; echo    "\`"
               echo
 
-      read -sn1 -p " > Press 'Y' to change. (Any other key to ignore): " v_ans
+      read -sn1 -p " > Press 'Y' to change. (or 'ANY KEY' to ignore): " v_ans
       echo
 
    # Send to DRYa installer
