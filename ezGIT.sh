@@ -1568,6 +1568,8 @@ elif [ $1 == "." ]; then
  
    # uDev: After counting branch names, also tell Directory size in Mega Bytes
 
+   # uDev: when using this command, tell if origin of the repo is giving "warning: redirecting to https://github.com/<user>/<repo>.git/" and fix it (usually the origin is http and needs to be https). If possible, WE have to detect which software is changing it back from https to http
+
    if [[ -z $2 ]]; then
       # If only 1 arg is given: `G .` then `git status` only to current repo
 
