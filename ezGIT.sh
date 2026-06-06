@@ -1655,7 +1655,7 @@ elif [ $1 == "alias" ]; then
 
 elif [ $1 == "k" ] || [ $1 == "gkp" ] || [ $1 == "kp" ]; then
    # Create a file .gitkeep
-      touch .gitkeep && f_talk; echo "file .gitkeep was created"
+      touch .gitkeep && f_talk; echo "a file .gitkeep was created"
 
 elif [ $1 == "ign" ] || [ $1 == "ignore" ] || [ $1 == ".ignore" ]; then
    # Adds a file .gitignore to current repo
