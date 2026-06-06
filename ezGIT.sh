@@ -3304,6 +3304,9 @@ elif [ $1 == "sync-pull" ]; then
    [[ -n $2 ]] && f_talk && echo -e "Git pulling: $2" && v_sync=$2 && f_sync_pull_repo
    
 
+elif [ $1 == "root" ]; then
+   echo "uDev: Move to the root repository's working diretory where .git is"
+
 elif [ $1 == "sync-push" ]; then
    # By giving a variable v_repo, this fx will `git push` the corresponding repo
 
