@@ -1656,7 +1656,7 @@ elif [ $1 == "alias" ]; then
 
 elif [ $1 == "k" ] || [ $1 == "gkp" ] || [ $1 == "kp" ]; then
    # Create a file .gitkeep
-      touch .gitkeep && f_talk; echo "file .gitkeep was created"
+      touch .gitkeep && f_talk; echo "a file .gitkeep was created"
 
 elif [ $1 == "ign" ] || [ $1 == "ignore" ] || [ $1 == ".ignore" ]; then
    # Adds a file .gitignore to current repo
@@ -3304,6 +3304,9 @@ elif [ $1 == "sync-pull" ]; then
    [[ -z $2 ]] && f_talk && echo -e "$v_vb1 \n $v_vb2" && exit 1
    [[ -n $2 ]] && f_talk && echo -e "Git pulling: $2" && v_sync=$2 && f_sync_pull_repo
    
+
+elif [ $1 == "root" ]; then
+   echo "uDev: Move to the root repository's working diretory where .git is"
 
 elif [ $1 == "sync-push" ]; then
    # By giving a variable v_repo, this fx will `git push` the corresponding repo
