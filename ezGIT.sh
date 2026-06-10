@@ -685,7 +685,7 @@ function f_git_status_recursive {
 }
 
 function f_horizontal_line {
-   # This function calculates the amount of line present in the terminal window for the current zoom and creates an horizontal line across the screen
+   # This function calculates the amount of columns present in the terminal window for the current zoom and creates an horizontal line across the screen
 
          v_count="$COLUMNS"
             #echo -e "There are currently $v_cols columns in the screen \n and from that number, $v_count is the\n number of dashes '-' that the menu will have "
@@ -2865,7 +2865,9 @@ elif [ $1 == "-1" ]; then
       f_talk; echo "Moving HEAD 1 commit below (previous one)"
               echo -n ' > Attach HEAD back with: '
         f_c3; echo    '`G 1`'
-        f_rc; echo
+        f_rc; echo -n ' same as: '
+        f_c3; echo    '    `git checkout HEAD^1`'
+        f_rc; echo    
 
       git checkout HEAD^1
 
@@ -3171,26 +3173,33 @@ elif [ $1 == "clean" ] || [ $1 == "clear" ] || [ $1 == "clean-trash-files" ]; th
 
       f_talk; echo 'Comando `find`, responde y/n para apagar ou nao apagar ficheiros:' 
 
+      echo ".........." # debug
       find . -type f \( -name '*~' -o -name '#*#' -o -name '*.swp' \) -exec bash -c '
       for f; do
         case "$f" in
           *~)
             orig="${f%~}"
+            echo " > Detetado $f"  # Debug
             ;;
           \#*\#)
             orig="${f#\#}"
             orig="${orig%\#}"
+            echo " > Detetado $f"  # Debug
             ;;
           *.swp)
             orig="${f%.swp}"
+            echo " > Detetado $f"  # Debug
             ;;
         esac
+
+         echo ".........." # debug
 
         if [ -e "$orig" ]; then
           rm -i "$f"
         else
           echo "A manter (sem original): $f"
         fi
+
       done
       ' bash {} +
    }
