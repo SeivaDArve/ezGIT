@@ -1307,7 +1307,7 @@ function f_git_ignore__show_boilerplate_location {
    # Print location of .gitignore boilerplate that is used to paste on repositories
 
    f_talk; echo "Opcoes para .gitignore"   
-           echo ' > `G ign +` para adicionar um ao pwd atual'
+           echo ' > `G ign +` para adicionar um .gitignore ao pwd atual'
            echo
 
    f_git_ignore__test_boilerplate_existence 
