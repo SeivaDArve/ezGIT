@@ -1306,6 +1306,10 @@ function f_git_ignore__test_boilerplate_existence {
 function f_git_ignore__show_boilerplate_location {
    # Print location of .gitignore boilerplate that is used to paste on repositories
 
+   f_talk; echo "Opcoes para .gitignore"   
+           echo ' > `G ign +` para adicionar um ao pwd atual'
+           echo
+
    f_git_ignore__test_boilerplate_existence 
 
    f_talk; echo "Localiacao do .gitignore standard"   
@@ -1661,7 +1665,24 @@ elif [ $1 == "k" ] || [ $1 == "gkp" ] || [ $1 == "kp" ]; then
 elif [ $1 == "ign" ] || [ $1 == "ignore" ] || [ $1 == ".ignore" ]; then
    # Adds a file .gitignore to current repo
 
-   f_git_ignore__show_boilerplate_location
+   if [ -z $2 ]; then 
+      # Givig instructiongs
+      f_git_ignore__show_boilerplate_location
+
+   elif [ $2 == "+" ] || [ $2 == "add" ]; then
+      f_talk; echo "Adding .gitignore file into current prompt location"
+              echo
+
+      f_git_ignore__test_boilerplate_existence 
+
+      f_talk; echo "Centralized location:"
+              echo " > $v_ign_file"
+              echo 
+
+      cp $v_ign . && f_talk; echo "Copied (or replaced) at current location"
+      ls .giTignore
+      
+   fi
 
 elif [ $1 == ".." ] || [ $1 == "!" ] || [ $1 == "log" ]; then
    # git log options
