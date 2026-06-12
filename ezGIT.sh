@@ -1669,6 +1669,10 @@ elif [ $1 == "ign" ] || [ $1 == "ignore" ] || [ $1 == ".ignore" ]; then
       # Givig instructiongs
       f_git_ignore__show_boilerplate_location
 
+   elif [ $2 == "." ] || [ $2 == "edit-centralized" ]; then
+      # Edita o ficheiro .gitignore presente em DRYa (centralized)
+      bash e $v_ign
+
    elif [ $2 == "+" ] || [ $2 == "add" ]; then
       f_talk; echo "Adding .gitignore file into current prompt location"
               echo
@@ -1682,6 +1686,16 @@ elif [ $1 == "ign" ] || [ $1 == "ignore" ] || [ $1 == ".ignore" ]; then
       cp $v_ign . && f_talk; echo "Copied (or replaced) at current location"
       ls .gitignore
       
+   elif [ $2 == "rm" ]; then
+      f_tk "Do you want these \"ignoree\" files to be deleted?"
+      
+      git clean -nX  # `-n` significa "Dry Run" nao apaga nada, apenas faz lista com `-X` daquilo que seria apagado. sem `-d` nao vai listar diretorios que seriam apagados
+
+      echo
+
+      v_txt="Delete list of files"; f_anyK
+      git clean -fX  # `-X` Apaga os ficheiros ignorados. sem `-f` de "force" nao vai executar
+
    fi
 
 elif [ $1 == ".." ] || [ $1 == "!" ] || [ $1 == "log" ]; then
