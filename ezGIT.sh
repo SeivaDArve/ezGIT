@@ -1306,7 +1306,7 @@ function f_git_ignore__test_boilerplate_existence {
 function f_git_ignore__show_boilerplate_location {
    # Print location of .gitignore boilerplate that is used to paste on repositories
 
-   f_talk; echo "Opcoes para .gitignore"   
+   f_talk; echo "'.gitignore' List of options:"   
            echo ' > `G ign +` para adicionar um .gitignore ao pwd atual'
            echo
 
@@ -1665,6 +1665,12 @@ elif [ $1 == "k" ] || [ $1 == "gkp" ] || [ $1 == "kp" ]; then
 elif [ $1 == "ign" ] || [ $1 == "ignore" ] || [ $1 == ".ignore" ]; then
    # Adds a file .gitignore to current repo
 
+   f_greet
+
+   v_root_of_git_repo=$(git rev-parse --git-dir)
+   v_root_of_git_repo=$(dirname $v_root_of_git_repo)
+   #echo "Root: $v_root_of_git_repo"  # Debug
+
    if [ -z $2 ]; then 
       # Givig instructiongs
       f_git_ignore__show_boilerplate_location
@@ -1674,8 +1680,9 @@ elif [ $1 == "ign" ] || [ $1 == "ignore" ] || [ $1 == ".ignore" ]; then
       bash e $v_ign
 
    elif [ $2 == "+" ] || [ $2 == "add" ]; then
-      f_talk; echo "Adding .gitignore file into current prompt location"
-              echo
+      f_tk "'gitignore': Adding .gitignore file into current prompt location"
+      # uDev: must add to source of .git instead
+      echo
 
       f_git_ignore__test_boilerplate_existence 
 
@@ -1683,19 +1690,33 @@ elif [ $1 == "ign" ] || [ $1 == "ignore" ] || [ $1 == ".ignore" ]; then
               echo " > $v_ign_file"
               echo 
 
-      cp $v_ign . && f_talk; echo "Copied (or replaced) at current location"
-      ls .gitignore
+      cp $v_ign $v_root_of_git_repo && f_talk; echo "Copied (or replaced) at current location:"
+      ls $v_root_of_git_repo/.gitignore
       
    elif [ $2 == "rm" ]; then
-      f_tk "Do you want these \"ignoree\" files to be deleted?"
-      
-      git clean -nX  # `-n` significa "Dry Run" nao apaga nada, apenas faz lista com `-X` daquilo que seria apagado. sem `-d` nao vai listar diretorios que seriam apagados
 
+      f_GR
+      f_tk "'gitignore': Listing files to be deleted"
       echo
+      
+      v_list=$(git clean -nX)  # `-n` significa "Dry Run" nao apaga nada, apenas faz lista com `-X` daquilo que seria apagado. sem `-d` nao vai listar diretorios que seriam apagados
 
-      v_txt="Delete list of files"; f_anyK
-      git clean -fX  # `-X` Apaga os ficheiros ignorados. sem `-f` de "force" nao vai executar
+      if [[ -z $v_list ]]; then
+         f_tk "Do you want these \"ignored\" files to be deleted?"
+         echo " > Nothing to delete"
 
+      else
+         echo "$v_list"
+         echo
+
+         v_txt="Delete list of files"; f_anyK; echo
+         git clean -fX  # `-X` Apaga os ficheiros ignorados. sem `-f` de "force" nao vai executar
+      fi
+   else
+      f_GR
+      f_tk "'.gitignore' "
+      echo " > Option unknown"
+      echo
    fi
 
 elif [ $1 == ".." ] || [ $1 == "!" ] || [ $1 == "log" ]; then
