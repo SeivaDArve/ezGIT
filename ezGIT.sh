@@ -271,7 +271,7 @@ function f_git_status {
      f_c3; echo    '`git status`'
      f_rc 
 
-   git status
+   git status --ignored  # Acrescenta info
            echo
 }
 
@@ -1680,7 +1680,7 @@ elif [ $1 == "ign" ] || [ $1 == "ignore" ] || [ $1 == ".ignore" ]; then
               echo 
 
       cp $v_ign . && f_talk; echo "Copied (or replaced) at current location"
-      ls .giTignore
+      ls .gitignore
       
    fi
 
