@@ -1663,13 +1663,14 @@ elif [ $1 == "k" ] || [ $1 == "gkp" ] || [ $1 == "kp" ]; then
       touch .gitkeep && f_talk; echo "a file .gitkeep was created"
 
 elif [ $1 == "ign" ] || [ $1 == "ignore" ] || [ $1 == ".ignore" ]; then
-   # Adds a file .gitignore to current repo
+   # Options about .gitignore file
 
    f_greet
 
-   v_root_of_git_repo=$(git rev-parse --git-dir)
-   v_root_of_git_repo=$(dirname $v_root_of_git_repo)
-   #echo "Root: $v_root_of_git_repo"  # Debug
+   # Detect Root dir of the current repository, where .git is located
+      v_root_of_git_repo=$(git rev-parse --git-dir)
+      v_root_of_git_repo=$(dirname $v_root_of_git_repo)
+      #echo "Root: $v_root_of_git_repo"  # Debug
 
    if [ -z $2 ]; then 
       # Givig instructiongs
@@ -1680,15 +1681,15 @@ elif [ $1 == "ign" ] || [ $1 == "ignore" ] || [ $1 == ".ignore" ]; then
       bash e $v_ign
 
    elif [ $2 == "+" ] || [ $2 == "add" ]; then
+
       f_tk "'gitignore': Adding .gitignore file into current prompt location"
-      # uDev: must add to source of .git instead
       echo
 
       f_git_ignore__test_boilerplate_existence 
 
-      f_talk; echo "Centralized location:"
-              echo " > $v_ign_file"
-              echo 
+      f_tk "Centralized location:"
+      echo " > $v_ign_file"
+      echo 
 
       cp $v_ign $v_root_of_git_repo && f_talk; echo "Copied (or replaced) at current location:"
       ls $v_root_of_git_repo/.gitignore
@@ -1702,16 +1703,22 @@ elif [ $1 == "ign" ] || [ $1 == "ignore" ] || [ $1 == ".ignore" ]; then
       v_list=$(git clean -nX)  # `-n` significa "Dry Run" nao apaga nada, apenas faz lista com `-X` daquilo que seria apagado. sem `-d` nao vai listar diretorios que seriam apagados
 
       if [[ -z $v_list ]]; then
+         # If no file was found to be suggested for deletion
+
          f_tk "Do you want these \"ignored\" files to be deleted?"
-         echo " > Nothing to delete"
+         echo " > Nothing suggested to delete..."
+         echo
 
       else
+         # If files were found to be suggested for deletion, list them.
+        
          echo "$v_list"
          echo
 
          v_txt="Delete list of files"; f_anyK; echo
          git clean -fX  # `-X` Apaga os ficheiros ignorados. sem `-f` de "force" nao vai executar
       fi
+
    else
       f_GR
       f_tk "'.gitignore' "
@@ -3208,6 +3215,7 @@ elif [ $1 == "[rm]" ] || [ $1 == "stash-clear" ] || [ $1 == "st-c" ]; then
    f_git_status
 
 elif [ $1 == "clean" ] || [ $1 == "clear" ] || [ $1 == "clean-trash-files" ]; then
+   # Note: `G ign` has functions like these about .gitignore but `G clean` could have extra functions to clean, not about ignored files
 
    # uDev: Antes de remover seja o que for, primeiro faz a lista daquilo que é para ser removido e pede confirmacao
    
