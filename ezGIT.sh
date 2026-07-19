@@ -1,6 +1,9 @@
 #!/bin/bash
 # Title: ezGIT to replace long git commands for one simple and short command
 
+__name__=ezGIT.sh
+v_fzf_talk=ezGIT
+
 #----------------------------------------------------------------------------
 # Instructions: 1. For instructions: 
 #                  > run in the terminal: `bash ezGIT.sh h` (if not installed)
@@ -1337,6 +1340,198 @@ function f_git_ignore__create_for_current_repo {
 
 }
 
+function f_recreate_main_branch_to_possess_ONLY_the_latest_commit_and_squash_everything_previous {
+   # ============================================================
+   # RESET COMPLETO DA BRANCH MAIN
+   #
+   # Objetivo:
+   #   Apagar TODO o histórico Git da branch main e substituí-lo
+   #   por um único commit contendo apenas o estado atual dos ficheiros.
+   #
+   # Uso típico:
+   #   - Remover passwords/tokens/chaves que foram commitados por erro.
+   #   - Recomeçar o histórico público de um projeto.
+   #
+   # Atenção:
+   #   - Esta operação reescreve o histórico da main.
+   #   - Outros branches NÃO são alterados.
+   #   - Será necessário force push para atualizar o GitHub.
+   # ============================================================
+
+   set -euo pipefail
+
+   echo "=== RESET COMPLETO DA BRANCH MAIN ==="
+
+   # ------------------------------------------------------------
+   # 1. Confirmar que estamos dentro de um repositório Git
+   # ------------------------------------------------------------
+
+   if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+       echo "ERRO: Este diretório não é um repositório Git."
+       exit 1
+   fi
+
+
+   # ------------------------------------------------------------
+   # 2. Confirmar que estamos na branch main
+   #
+   # Evita executar isto por acidente numa branch errada.
+   # ------------------------------------------------------------
+
+   CURRENT_BRANCH=$(git branch --show-current)
+
+   if [ "$CURRENT_BRANCH" != "main" ]; then
+       echo "ERRO: A branch atual é '$CURRENT_BRANCH'."
+       echo "Este script só funciona na branch main."
+       exit 1
+   fi
+
+
+   # ------------------------------------------------------------
+   # 3. Confirmar que não existem operações Git pendentes
+   #
+   # Não podemos estar no meio de:
+   #   - merge
+   #   - rebase
+   #   - cherry-pick
+   #   - revert
+   # ------------------------------------------------------------
+
+   if [ -d ".git/rebase-merge" ] || \
+      [ -d ".git/rebase-apply" ] || \
+      [ -f ".git/MERGE_HEAD" ] || \
+      [ -f ".git/CHERRY_PICK_HEAD" ]; then
+
+       echo "ERRO: Existe uma operação Git pendente."
+       echo "Resolve primeiro o merge/rebase/cherry-pick."
+       exit 1
+   fi
+
+
+   # ------------------------------------------------------------
+   # 4. Criar uma cópia de segurança da branch atual
+   #
+   # Isto não altera nada no GitHub.
+   # É apenas uma referência local para recuperação.
+   # ------------------------------------------------------------
+
+   BACKUP_BRANCH="backup-before-main-reset-$(date +%Y%m%d-%H%M%S)"
+
+   echo "Criando backup local:"
+   echo "  $BACKUP_BRANCH"
+
+   git branch "$BACKUP_BRANCH"
+
+
+   # ------------------------------------------------------------
+   # 5. Confirmação manual
+   #
+   # Evita executar um reset destrutivo por engano.
+   # ------------------------------------------------------------
+
+   echo
+   echo "ATENÇÃO:"
+   echo "Esta operação vai APAGAR todo o histórico da main."
+   echo "A main ficará apenas com um único commit."
+   echo
+
+   read -r -p "Continuar? escrever RESET para confirmar: " CONFIRM
+
+   if [ "$CONFIRM" != "RESET" ]; then
+       echo "Operação cancelada."
+       exit 0
+   fi
+
+
+   # ------------------------------------------------------------
+   # 6. Criar uma branch órfã
+   #
+   # Uma branch órfã começa sem qualquer histórico.
+   # É equivalente a criar um repositório novo, mas mantendo
+   # a configuração atual do remoto Git.
+   # ------------------------------------------------------------
+
+   echo "Criando novo histórico vazio..."
+
+   git checkout --orphan new-main-reset
+
+
+   # ------------------------------------------------------------
+   # 7. Limpar ficheiros versionados antigos do índice
+   #
+   # Remove referências antigas do Git.
+   # Os ficheiros físicos permanecem no disco.
+   # ------------------------------------------------------------
+
+   git rm -rf --cached . >/dev/null 2>&1 || true
+
+
+   # ------------------------------------------------------------
+   # 8. Adicionar apenas o estado atual do projeto
+   #
+   # Este será o conteúdo do novo primeiro commit.
+   # ------------------------------------------------------------
+
+   echo "Adicionando estado atual..."
+
+   git add -A
+
+
+   # ------------------------------------------------------------
+   # 9. Criar o novo primeiro commit
+   # ------------------------------------------------------------
+
+   echo "Criando novo commit inicial..."
+
+   git commit -m "Initial snapshot after history reset"
+
+
+   # ------------------------------------------------------------
+   # 10. Substituir a branch main antiga
+   #
+   # A antiga main continua temporariamente no backup.
+   # A nova main passa a ser este histórico limpo.
+   # ------------------------------------------------------------
+
+   git branch -D main
+
+   git branch -m main
+
+
+   # ------------------------------------------------------------
+   # 11. Confirmar resultado
+   # ------------------------------------------------------------
+
+   echo
+   echo "Novo histórico da main:"
+   git --no-pager log --oneline --decorate -5
+
+
+   # ------------------------------------------------------------
+   # 12. Atualizar o GitHub
+   #
+   # --force-with-lease é mais seguro que --force.
+   # Só substitui o remoto se ele não tiver mudado entretanto.
+   # ------------------------------------------------------------
+
+   echo
+   echo "Enviar nova main para o remoto..."
+
+   git push --force-with-lease origin main
+
+
+   echo
+   echo "======================================="
+   echo "RESET TERMINADO COM SUCESSO"
+   echo
+   echo "Backup local criado:"
+   echo "  $BACKUP_BRANCH"
+   echo
+   echo "A branch main agora contém apenas:"
+   echo "  - 1 commit"
+   echo "  - estado atual dos ficheiros"
+   echo "======================================="
+}
 
 
 
@@ -2673,12 +2868,23 @@ elif [ $1 == "," ]; then
 
 
    elif [ $2 == "." ]; then
-      echo "Qual é o ramo para o qual quer mudar?"
-      read -p " > " v_ramo
-      echo
-      git checkout $v_ramo
-      echo
-      echo "uDev: alterar 'G , . v_ramo' apenas para 'G , ramo'"
+      f_talk; echo "Qual é o ramo para o qual quer mudar?"
+
+      #  Usando 'read'
+      #     read -p " > " v_ramo
+      #     echo
+      #     git checkout $v_ramo
+      #     echo
+      #     echo "uDev: alterar 'G , . v_ramo' apenas para 'G , ramo'"
+
+      # Usando 'fzf'
+         Lh=$(git branch --show-current)
+         Lh=$(echo -e "\nCurrent active branch:\n > $Lh \n ")
+         L0="$v_fzf_talk: Navigate to another branch: "
+         v_ramo=$(git branch --format="%(refname:short)" | fzf --no-info --pointer=">" --cycle --header="$Lh" --prompt="$L0")
+         echo " > $v_ramo"
+         git checkout $v_ramo
+      
 
    elif [ $2 == "v" ]; then
       # Dizer qual o ramo atual
@@ -2784,6 +2990,18 @@ elif [ $1 == "," ]; then
       echo "Para mudar para o ramo <v_ramo>:"
       echo " > G , . v_ramo"
 
+   elif [ $2 == "send-current-branch-to-another-branch" ] || [ $2 == "send-to-another" ]; then
+      # Estamos na main já limpa
+         f_talk; echo "A ir para o ramo 'main'"
+         git checkout main
+
+      # Garantir que stable aponta para o mesmo commit da main
+         f_talk; echo "Garantir que 'stable' aponta para o mesmo commit da main"
+         git branch -f stable main
+
+      # Enviar stable para o GitHub
+         f_talk; echo "Enviar 'stable' para o GitHub"
+         #git push --force-with-lease origin stable
    else 
       f_talk; echo "Option not recognized"
    fi
@@ -3392,41 +3610,12 @@ elif [ $1 == "file-host" ]; then
    echo " > https://www.howtogeek.com/devops/how-to-download-single-files-from-a-github-repository/"
 
 
-elif [ $1 == "reset-repo-to-second-commit" ] || [ $1 == "rrtsc" ]; then
+elif [ $1 == "reset-repo-to-second-commit" ] || [ $1 == "rr2c" ]; then
    # Apaga todos os commits, menos o 'git init' e o commit atual
    # Criado pelo chatGPT
  
-   set +e
 
-   echo "[1] A criar commit temporário com tudo no working directory..."
-
-   # Adiciona tudo, inclusive ficheiros não rastreados
-   git add -A
-   git commit -m "TEMP: snapshot completo do working directory"
-
-   # Guarda o hash do commit temporário
-   TEMP_COMMIT=$(git rev-parse HEAD)
-   echo "[2] Commit temporário criado: $TEMP_COMMIT"
-
-   # Encontra o primeiro commit
-   FIRST_COMMIT=$(git rev-list --max-parents=0 HEAD)
-   echo "[3] Primeiro commit: $FIRST_COMMIT"
-
-   # Reset ao primeiro commit
-   git reset --hard "$FIRST_COMMIT"
-   echo "[4] Reset completo"
-
-   # Cherry-pick do snapshot
-   git cherry-pick "$TEMP_COMMIT"
-   echo "[5] Snapshot reaplicado como segundo commit"
-
-   # Remove o commit temporário do histórico (opcional)
-   git reset --soft HEAD~1
-   git commit -C "$TEMP_COMMIT"
-   echo "[6] Commit final recriado com mesma mensagem"
-
-   # Limpa referências temporárias
-   echo "[7] Histórico reduzido: agora há apenas dois commits (inicial + atual)" 
+   f_recreate_main_branch_to_possess_ONLY_the_latest_commit_and_squash_everything_previous 
 
 elif [ $1 == "m" ] || [ $1 == "menu" ]; then
    # Menu fzf
