@@ -1516,8 +1516,8 @@ function f_recreate_main_branch_to_possess_ONLY_the_latest_commit_and_squash_eve
 
    echo
    echo "Enviar nova main para o remoto..."
-
-   git push --force-with-lease origin main
+   echo " > Desativado"
+   #git push --force-with-lease origin main
 
 
    echo
