@@ -1533,6 +1533,38 @@ function f_recreate_main_branch_to_possess_ONLY_the_latest_commit_and_squash_eve
    echo "======================================="
 }
 
+function f_correct_remote_branches_URL_from_http_to_https {
+      # Option to correct Remote branches from http:// to https://
+
+      f_talk; echo "Config remote branches URL 'remotes' from http to https"
+              echo
+      f_talk; echo "Checking list of remotes:"
+              echo ' > `git remote -v`'
+              echo
+              git remote -v
+              echo
+      f_talk; echo "Example to change URL to HTTPS:"
+              echo ' > `git remote set-url origin https://github.com/<user-name>/<repo-name>.git`'
+              echo
+      f_talk; echo "Attempt to convert all http into https now..."
+              echo
+      
+      v_txt="Convert all remotes from http to https"; f_anyK
+
+      # Attempting to detect if there are SPECIFICALLY http:// in the remores
+         for v_remote in $(git remote); do
+             v_url=$(git remote get-url "$v_remote")
+             if [[ $v_url =~ ^http:// ]]; then
+                 git remote set-url "$v_remote" "${v_url/http:\/\//https://}"
+             fi
+         done
+         echo
+
+      f_talk; echo "Checking list of remotes:"
+              echo ' > `git remote -v`'
+              echo
+              git remote -v
+}
 
 
 
@@ -1737,13 +1769,10 @@ elif [ $1 == "config" ] || [ $1 == "cf" ] || [ $1 == "cfg" ]; then
               echo ' > `git config --global user.name "novo-nome"` '
 
    elif [ $2 == "rmt" ] || [ $2 == "remote-url" ]; then
-      f_talk; echo "Config 'remote' URL (uDev)."
-              echo
-      f_talk; echo "To check/list remotes:"
-              echo ' > `git remote -v`'
-              echo
-      f_talk; echo "To change URL:"
-              echo ' > `git remote set-url origin https://github.com/SeivaDArve/ezGIT.git`'
+      # Option to correct Remote branches from http:// to https://
+      f_correct_remote_branches_URL_from_http_to_https
+      
+              
 
    else
       f_talk; echo "Invalid function, or uDev"
@@ -3623,17 +3652,19 @@ elif [ $1 == "m" ] || [ $1 == "menu" ]; then
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='G menu'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L3='3. | G h | Menu "Intrucoes" + "Exec"'                                      
-      L2='2. |     | Install .gitconfig'                                      
+      L4='4. | G cfg rmt | Convert URL of remote branches from http to https'
+      L3='3. | G h       | Menu "Intrucoes" + "Exec"'                                      
+      L2='2. |           | Install .gitconfig'                                      
 
       L1='1. Cancel'
 
-      L0="SELECT 1: Menu ezGIT: "
+      L0="ezGIT: Main Menu: "
       
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "4. " ]] && f_correct_remote_branches_URL_from_http_to_https 
       [[ $v_list =~ "3. " ]] && f_instructions 
       [[ $v_list =~ "2. " ]] && f_dot_file_install_gitconfig
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
