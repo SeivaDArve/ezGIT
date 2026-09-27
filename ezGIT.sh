@@ -626,7 +626,7 @@ function f_git_status_recursive {
    f_greet
 
    f_talk; echo '`git status` (to all repositories) at:'
-           echo " > $v_REPOS_CENTER"
+           echo " > $__REPOS_CENTER__"
 
    # function f_output must be loaded here (or previously)
 
@@ -1292,7 +1292,7 @@ function f_prsP_to_upload {
 }
 
 function f_run_hooks {
-   bash ${v_REPOS_CENTER}/DRYa/.config/.ezGIT $1
+   bash ${v_REPOS_CENTER}/DRYa/all/opt/.config/.ezGIT $1
 }
 
 function f_git_ignore__test_boilerplate_existence {
