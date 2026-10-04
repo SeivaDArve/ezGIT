@@ -223,8 +223,8 @@ function f_warning_about_username {
       echo
 
    # Send to DRYa installer
-      [[ $v_ans == "y" ]] && bash $DRYa/drya.sh iu d i git
-      [[ $v_ans == "Y" ]] && bash $DRYa/drya.sh iu d i git
+      [[ $v_ans == "y" ]] && bash $DRYa/DRYa.sh iu d i git
+      [[ $v_ans == "Y" ]] && bash $DRYa/DRYa.sh iu d i git
       echo
    fi
 }
@@ -1226,7 +1226,7 @@ function f_new_repo_step_3 {
 }
 
 function f_dot_file_install_gitconfig {
-   bash ${__REPOS_CENTER__}/DRYa/drya.sh iu dot install git
+   bash ${__REPOS_CENTER__}/DRYa/DRYa.sh iu dot install git
 }
 
 function f_git_add_regex {
@@ -1718,7 +1718,7 @@ elif [ $1 == "config" ] || [ $1 == "cf" ] || [ $1 == "cfg" ]; then
          vim $v_gitconfig
 
    elif [ $2 == "i" ]; then
-      # Installing .gitconfig using fx inside drya.sh
+      # Installing .gitconfig using fx inside DRYa.sh
 
       # uDev: if repo DRYa does not exist, ask user to clone it
 
