@@ -49,7 +49,7 @@ function f_help {
    echo " > a separate repository will open (if installed)"
    echo " > That has a daily log of actvities (user specific)"
    echo " > If you want to use your \"account\" here"
-   echo ' > Install your text file as: ${v_REPOS_CENTER}/your-repository-name-here'
+   echo ' > Install your text file as: ${__REPOS_CENTER__}/your-repository-name-here'
    echo " > The standard repo is: upK-diario-Dv"
    echo " > You can download it by: drya clone upK-diario-Dv"
    echo " > or: https://github.com/SeivaDArve/upK-diario-Dv.git"
@@ -119,20 +119,20 @@ function f_start_running {
    echo " > $v_date_now"
    echo
    f_c1; echo "User Repository exists with the name:"; f_rc
-   echo " > ${v_REPOS_CENTER}/$v_choosen_repo/"
+   echo " > ${__REPOS_CENTER__}/$v_choosen_repo/"
    echo
    f_c1; echo "For the user:"; f_rc
    echo " > $v_nickname"
    echo 
    f_c1; echo "File choosen for edition:"; f_rc
-   echo " > ${v_REPOS_CENTER}/$v_choosen_repo/$v_choosen_file"
+   echo " > ${__REPOS_CENTER__}/$v_choosen_repo/$v_choosen_file"
    echo
    f_c1; echo "You are asking to edit the main file at: $v_choosen_repo"; f_rc
    echo " > And to edit the latest version, we will check for updates on github.com"
    echo
    f_c1; echo "Starting download sequence (updating):"; f_rc
    echo " > git pull: "
-      cd ${v_REPOS_CENTER}/$v_choosen_repo/
+      cd ${__REPOS_CENTER__}/$v_choosen_repo/
       f_c3; git pull && f_rc && echo " > Success!"
       echo
       echo " >> uDev: If git pull is rejected (downloading updates)"
@@ -169,9 +169,9 @@ function f_start_running {
             f_warning_for_trigger
             echo
 
-            emacs ${v_REPOS_CENTER}/$v_choosen_repo/$v_choosen_file && f_c2 && echo -e "... File closed\n" && f_rc && f_file_closed #\
-            #|| vim ${v_REPOS_CENTER}/$v_choosen_repo/$v_choosen_file && f_file_closed \
-            #|| nano ${v_REPOS_CENTER}/$v_choosen_repo/$v_choosen_file && f_file_closed
+            emacs ${__REPOS_CENTER__}/$v_choosen_repo/$v_choosen_file && f_c2 && echo -e "... File closed\n" && f_rc && f_file_closed #\
+            #|| vim ${__REPOS_CENTER__}/$v_choosen_repo/$v_choosen_file && f_file_closed \
+            #|| nano ${__REPOS_CENTER__}/$v_choosen_repo/$v_choosen_file && f_file_closed
       fi
 }
 
@@ -184,7 +184,7 @@ if [ -z "$*" ]; then
    # Run this function only BEFORE editing the file that has the need to be in sync with multiple devices
 
 
-   if [ -f ${v_REPOS_CENTER}/$v_choosen_repo/$v_choosen_file ]; then
+   if [ -f ${__REPOS_CENTER__}/$v_choosen_repo/$v_choosen_file ]; then
       # If file $v_choosen_repo exists, then:
          f_start_running
    else

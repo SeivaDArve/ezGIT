@@ -45,7 +45,7 @@ v_fzf_talk=ezGIT
    # uDev: failsafe: If DRYa repo does not exist, create alternatives
 
    # Sourcing DRYa Lib 1
-      v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+      v_lib1=${__REPOS_CENTER__}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
       unset v_greet v_talk
       [[ -f $v_lib1 ]] && source $v_lib1 || (read -s -n 1 -p "ezGIT: error: drya-lib-1 does not exist " && echo)
 
@@ -56,14 +56,14 @@ v_fzf_talk=ezGIT
 
 
    # Sourcing DRYa Lib 2
-      v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-2-tmp-n-config-files.sh
+      v_lib2=${__REPOS_CENTER__}/DRYa/all/lib/libs/drya-lib-2-tmp-n-config-files.sh
       [[ -f $v_lib2 ]] && source $v_lib2 || (read -s -n 1 -p "ezGIT: error: drya-lib-2 does not exist " && echo)
 
       # Examples: `f_create_tmp_file` will give a $v_tmp with a new file with abs path
      
 
    # Sourcing DRYa Lib 4: Color schemes
-      v_lib4=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-4-dependencies-packages-git.sh
+      v_lib4=${__REPOS_CENTER__}/DRYa/all/lib/libs/drya-lib-4-dependencies-packages-git.sh
       [[ -f $v_lib4 ]] && source $v_lib4 || (read -s -n 1 -p "ezGIT: error: drya-lib-4 does not exist " && echo)
 
       # Examples: f_lib4_stroken
@@ -73,7 +73,7 @@ function f_default_variables {
    # Default variables for predictable file names and their locations
 
    # Location for DRYa .gitignore file
-      v_ign=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitignore
+      v_ign=${__REPOS_CENTER__}/DRYa/all/etc/dot-files/git-github/.gitignore
 
    # drya-fast-toggle-for-variables (example)
       unset v_hooks
@@ -208,7 +208,7 @@ function f_warning_about_username {
    # Maybe the user wants the username to be machine specific (most likely). Therefore, tell the user if it is still the default
 
    # Variable not loanding in sub-shell (it is also set at dryaSRC)
-      DRYa=${v_REPOS_CENTER}/DRYa
+      DRYa=${__REPOS_CENTER__}/DRYa
 
    v_user=$(git config --get user.name)
    if [[ $v_user == "seivaDArve" ]]; then
@@ -245,7 +245,7 @@ function f_find_basename {
                   #echo "$v_repo "
                      
    #echo $v_relPWD
-   #v_relRepo=$(echo $v_relPWD | sed 's/"$v_REPOS_CENTER"//g')
+   #v_relRepo=$(echo $v_relPWD | sed 's/"$__REPOS_CENTER__"//g')
    #echo $v_relRepo
    #cut -d '/' -f 1 $v_relRepo
       
@@ -510,7 +510,7 @@ function f_git_pull_recursive {
    # Describing to the user
       f_talk; echo    "git pull (to all repositories) at:"
               echo -n " > "
-        f_c1; echo       "$v_REPOS_CENTER"
+        f_c1; echo       "$__REPOS_CENTER__"
         f_rc; echo
               echo    "Starting:"
 
@@ -519,7 +519,7 @@ function f_git_pull_recursive {
 
    # function f_output must be loaded here (or previously)
 
-      cd ${v_REPOS_CENTER}
+      cd ${__REPOS_CENTER__}
       for i in $(ls); do 
          # Filter directories from files
             v_object_type=$(file $i)
@@ -554,7 +554,7 @@ function f_git_pull_recursive {
 
       f_talk; echo    "git pull recursive (to all repositories) at:"
               echo -n " > "
-        f_c1; echo       "$v_REPOS_CENTER"
+        f_c1; echo       "$__REPOS_CENTER__"
         f_rc; echo
               echo    "Finished!"
 
@@ -569,7 +569,7 @@ function f_git_push_recursive {
    # Describing to the user
       f_talk; echo    "git push (to all repositories) at:"
               echo -n " > "
-        f_c1; echo       "$v_REPOS_CENTER"
+        f_c1; echo       "$__REPOS_CENTER__"
         f_rc; echo
               echo    "Starting:"
 
@@ -578,7 +578,7 @@ function f_git_push_recursive {
 
    # function f_output must be loaded here (or previously)
 
-      cd ${v_REPOS_CENTER}
+      cd ${__REPOS_CENTER__}
       for i in $(ls); do 
          # Filter directories from files
             v_object_type=$(file $i)
@@ -613,7 +613,7 @@ function f_git_push_recursive {
 
       f_talk; echo    "git push recursive (to all repositories) at:"
               echo -n " > "
-        f_c1; echo       "$v_REPOS_CENTER"
+        f_c1; echo       "$__REPOS_CENTER__"
         f_rc; echo
               echo    "Finished!"
 
@@ -630,7 +630,7 @@ function f_git_status_recursive {
 
    # function f_output must be loaded here (or previously)
 
-   cd ${v_REPOS_CENTER}
+   cd ${__REPOS_CENTER__}
 
    # Contador de instancias nao regularizadas com o github.com
       v_contador=0
@@ -676,7 +676,7 @@ function f_git_status_recursive {
       f_horizontal_line
 
       f_talk; echo "git status (to all repositories) at:"
-              echo " > $v_REPOS_CENTER"
+              echo " > $__REPOS_CENTER__"
               echo "Finished!"
 
       f_horizontal_line
@@ -762,7 +762,7 @@ function f_tell_repo_name {
 
 function f_test_if_files_and_dirs_at_repos_center_are_valid_or_invalid_repos {
 
-   cd ${v_REPOS_CENTER}/ 
+   cd ${__REPOS_CENTER__}/ 
 
    # Limpar variaveis (para fazer um teste novo do zero)
       unset v_files       # Variavel que guarda nomes de ficheiros que convem mover para fora de Repos-Center
@@ -870,8 +870,8 @@ function f_git_status_nr_1_all_repos_root {
    f_talk; echo    'Current location:'
            echo -n ' > Name     : '
      f_c3; echo                  '(DRYa-REPOS-CENTER)'
-     f_rc; echo    ' > Variable : ${v_REPOS_CENTER}'
-           echo    " > Path     : ${v_REPOS_CENTER}/"
+     f_rc; echo    ' > Variable : ${__REPOS_CENTER__}'
+           echo    " > Path     : ${__REPOS_CENTER__}/"
            echo
 
    f_talk; echo 'Use fluNav command `V <name>` to jump to:'
@@ -1102,7 +1102,7 @@ function f_new_repo_step_1 {
       [[ -z $v_name ]] && echo "Aborted, name is required" && exit 1  # Abortar se o passo anterior nao foi usado pelo utilizador
 
    # Nome da repo que se pretende criar
-      v_path=${v_REPOS_CENTER}/$v_name
+      v_path=${__REPOS_CENTER__}/$v_name
 
    # Se ja existir algum repo com esse nome: Abortar
       [[ -d $v_path ]] && echo " > Abortado: Repo com esse nome ja existe" && exit 1
@@ -1226,7 +1226,7 @@ function f_new_repo_step_3 {
 }
 
 function f_dot_file_install_gitconfig {
-   bash ${v_REPOS_CENTER}/DRYa/drya.sh iu dot install git
+   bash ${__REPOS_CENTER__}/DRYa/drya.sh iu dot install git
 }
 
 function f_git_add_regex {
@@ -1292,7 +1292,7 @@ function f_prsP_to_upload {
 }
 
 function f_run_hooks {
-   bash ${v_REPOS_CENTER}/DRYa/all/opt/.config/.ezGIT $1
+   bash ${__REPOS_CENTER__}/DRYa/all/opt/.config/.ezGIT $1
 }
 
 function f_git_ignore__test_boilerplate_existence {
@@ -1605,8 +1605,8 @@ function f_correct_remote_branches_URL_from_http_to_https {
    # Check if git and .gitconfig exists. If not, configure it
       [[ ! -f ~/.gitconfig ]] && f_git_config_missing
 
-   # Check if variable ${v_REPOS_CENTER} is configured. Othewise, inform
-      [[ -z ${v_REPOS_CENTER} ]] && f_greet && f_talk && echo 'Variables missing (this may be a problem)' && echo ' > $v_REPOS_CENTER ' && echo '   (It defines a centrar directory where repos are stored)' && read -sn1
+   # Check if variable ${__REPOS_CENTER__} is configured. Othewise, inform
+      [[ -z ${__REPOS_CENTER__} ]] && f_greet && f_talk && echo 'Variables missing (this may be a problem)' && echo ' > $__REPOS_CENTER__ ' && echo '   (It defines a centrar directory where repos are stored)' && read -sn1
 
    # Warning about Username if Default
       f_warning_about_username
@@ -1667,7 +1667,7 @@ elif [ $1 == "config" ] || [ $1 == "cf" ] || [ $1 == "cfg" ]; then
 
    # To read better, put our spetial files into variable
       # At DRYa's repo
-         v_drya_file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig"
+         v_drya_file="${__REPOS_CENTER__}/DRYa/all/etc/dot-files/git-github/.gitconfig"
 
       # Locally at ~/
          v_gitconfig=~/.gitconfig
@@ -1810,7 +1810,7 @@ elif [ $1 == "." ]; then
       
       f_greet 
 
-      if [[ $(pwd) == ${v_REPOS_CENTER} ]]; then 
+      if [[ $(pwd) == ${__REPOS_CENTER__} ]]; then 
          # 1. [Invalid]: If we are exactly at the Repos Center (invalid). 
          #    For sure we are not inside a repo, 
          #    ... Listing all repos here
@@ -1880,7 +1880,7 @@ elif [ $1 == "byte-compile" ]; then
    f_talk; echo "byte compile current version of ezGIT for speed reasons (uDev)"
 
 elif [ $1 == "alias" ]; then
-      vim ${v_REPOS_CENTER}/ezGIT/all/etc/config-bash-alias
+      vim ${__REPOS_CENTER__}/ezGIT/all/etc/config-bash-alias
 
 elif [ $1 == "k" ] || [ $1 == "gkp" ] || [ $1 == "kp" ]; then
    # Create a file .gitkeep
@@ -2026,7 +2026,7 @@ elif [ $1 == "msg" ]; then
       # uDev: it must read if "nothing to commit, working tree clean" exists at the git status, and if it is found: do nothing
 
       vv=$(pwd)
-      cd ${v_REPOS_CENTER}/scratch-paper
+      cd ${__REPOS_CENTER__}/scratch-paper
       
       f_git_add_all
 
@@ -2047,7 +2047,7 @@ elif [ $1 == "msg" ]; then
       echo "receiving is not ready yet (uDev)"
 
    elif [ $2 == "edit" ]; then
-     vim ${v_REPOS_CENTER}/scratch-paper/some-text.txt 
+     vim ${__REPOS_CENTER__}/scratch-paper/some-text.txt 
 
    else
       f_talk; echo "G msg: Choose 'send' or 'receive'"
@@ -2156,7 +2156,7 @@ elif [ $1 == "repo" ]; then
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
       [[ $v_list =~ "5. " ]] && echo "uDev: $L5" 
-      [[ $v_list =~ "4. " ]] && echo "${v_REPOS_CENTER}/" 
+      [[ $v_list =~ "4. " ]] && echo "${__REPOS_CENTER__}/" 
       [[ $v_list =~ "3. " ]] && echo "uDev: $L3" 
       [[ $v_list =~ "2. " ]] && f_new_repo_step_0
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
@@ -2170,7 +2170,7 @@ elif [ $1 == "repo" ]; then
 
    elif [ $2 == "rc" ]; then
       # Repo's center
-      cd ${v_REPOS_CENTER}/
+      cd ${__REPOS_CENTER__}/
 
    elif [ $2 == "help" ] || [ $2 == "h" ] || [ $2 == "?" ] || [ $2 == "--help" ] || [ $2 == "-h" ] || [ $2 == "-?" ] || [ $2 == "rtfm" ]; then
       # Instructions
@@ -2202,7 +2202,7 @@ elif [ $1 == "repo" ]; then
               echo
       f_hzl  # Horizontal line:
               echo "Note: If DRYa exists in the system, ezGIT can create all repos by default at:"
-              echo " > ${v_REPOS_CENTER}"
+              echo " > ${__REPOS_CENTER__}"
 
    else
 
@@ -2363,7 +2363,7 @@ elif [ $1 == "++" ]; then
       elif [ $3 == "A" ]; then
          # Recursively push ALL automatically
 
-         cd ${v_REPOS_CENTER}
+         cd ${__REPOS_CENTER__}
 
          for i in $(ls); do 
             # Filter directories from files
@@ -3094,10 +3094,10 @@ elif [ $1 == "upk" ]; then
 
          f_horizontal_line
 
-         cd ${v_REPOS_CENTER}/DRYa          && echo "GIT PULL: DRYa"          && echo -n " > " && git pull && echo
-         cd ${v_REPOS_CENTER}/ezGIT         && echo "GIT PULL: ezGIT"         && echo -n " > " && git pull && echo
-         cd ${v_REPOS_CENTER}/upK           && echo "GIT PULL: upK"           && echo -n " > " && git pull && echo
-         cd ${v_REPOS_CENTER}/upK-diario-Dv && echo "GIT PULL: upK-diario-Dv" && echo -n " > " && git pull && echo
+         cd ${__REPOS_CENTER__}/DRYa          && echo "GIT PULL: DRYa"          && echo -n " > " && git pull && echo
+         cd ${__REPOS_CENTER__}/ezGIT         && echo "GIT PULL: ezGIT"         && echo -n " > " && git pull && echo
+         cd ${__REPOS_CENTER__}/upK           && echo "GIT PULL: upK"           && echo -n " > " && git pull && echo
+         cd ${__REPOS_CENTER__}/upK-diario-Dv && echo "GIT PULL: upK-diario-Dv" && echo -n " > " && git pull && echo
          
 
          # ----------------------------------------------------------
@@ -3115,7 +3115,7 @@ elif [ $1 == "upk" ]; then
          # After updating repositories, lets move their updated dot-files across the system:
             # Emacs init.el file:
                echo "Management of init.el file (from inside DRYa repo)"
-               cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el ~/.emacs.d/init.el && \
+               cp ${__REPOS_CENTER__}/DRYa/all/dot-files/emacs/init.el ~/.emacs.d/init.el && \
                echo " > Was copied to ~/.emacs.d/init.el" || echo " > Not copyed!"
                echo 
 
@@ -3131,7 +3131,7 @@ elif [ $1 == "upk" ]; then
                   echo " > %AppData% exists: managing init.el files to their correct places:"
                      rm /mnt/c/Users/Dv-User/AppData/Roaming/.emacs 2>/dev/null && \
                      echo " > ...AppData/Roaming/.emacs was deleted " || echo " > ...AppData/Roaming/.emacs would be deleted on windows if it was existent "
-                     cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/init.el \
+                     cp ${__REPOS_CENTER__}/DRYa/all/dot-files/emacs/init.el /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/init.el \
                   && echo " > file copied from DRYa to .../AppData/Roaming/.emacs.d/init.el"
                   echo
                fi
@@ -3145,16 +3145,16 @@ elif [ $1 == "upk" ]; then
          f_horizontal_line
          echo "ezGIT: fetching: DRYa; upk; ezGIT; upK-diario-Dv"
          echo 
-         cd ${v_REPOS_CENTER}/DRYa && echo " > fetching DRYa" \
+         cd ${__REPOS_CENTER__}/DRYa && echo " > fetching DRYa" \
             && git fetch && echo " > git status" && git status && f_horizontal_line
          
-         cd ${v_REPOS_CENTER}/ezGIT && echo " > fetching ezGIT" \
+         cd ${__REPOS_CENTER__}/ezGIT && echo " > fetching ezGIT" \
             && git fetch && echo " > git status" && git status && f_horizontal_line
 
-         cd ${v_REPOS_CENTER}/upK && echo " > fetching upK" \
+         cd ${__REPOS_CENTER__}/upK && echo " > fetching upK" \
             && git fetch && echo " > git status" && git status && f_horizontal_line
 
-         cd ${v_REPOS_CENTER}/upK-diario-Dv && echo " > fetching upK-diario-Dv" \
+         cd ${__REPOS_CENTER__}/upK-diario-Dv && echo " > fetching upK-diario-Dv" \
             && git fetch && echo " > git status" && git status && f_horizontal_line
          echo 
          echo "uDev: should check diff between init.el files"
@@ -3353,12 +3353,12 @@ elif [ $1 == "rb" ]; then
 
    elif [ $2 == "f" ]; then
       echo "git config pull.rebase false"
-      sudo bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh rb f  ## uDev: sudo does not exist on termux and gives an error
+      sudo bash ${__REPOS_CENTER__}/ezGIT/ezGIT.sh rb f  ## uDev: sudo does not exist on termux and gives an error
       #git config pull.rebase false
    
    elif [ $2 == "t" ]; then
       echo "git config pull.rebase true"
-      sudo bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh rb t
+      sudo bash ${__REPOS_CENTER__}/ezGIT/ezGIT.sh rb t
       #git config pull.rebase true
 
    fi
@@ -3541,7 +3541,7 @@ elif [ $1 == "clean" ] || [ $1 == "clear" ] || [ $1 == "clean-trash-files" ]; th
       echo
 
    # Buscar pastas que nao sejam repositorio (em drya-repos-center)
-      cd ${v_REPOS_CENTER}/ 
+      cd ${__REPOS_CENTER__}/ 
 
       f_talk; echo "Lista de pastas que nao sao repositorios:"
               echo "       (em ./ fora de drya-repos-center):"
@@ -3609,7 +3609,7 @@ elif [ $1 == "sync-pull" ]; then
 
       v_pwd=$(pwd)
 
-      cd ${v_REPOS_CENTER}/$v_sync
+      cd ${__REPOS_CENTER__}/$v_sync
  
       f_git_pull
 
