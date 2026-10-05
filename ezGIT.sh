@@ -918,7 +918,7 @@ function f_git_status_nr_2_not_all_repos_root {
       # 4. Valid: It is a git repo, but further down the directory tree
 
       # Extrair do `pwd` o nome da repo atual (semelhante ao comando `basename`)
-         v_repo=$(pwd | sed "s/Repositories\// /" | cut -d ' ' -f 2 | sed "s/\// /" | cut -d ' ' -f 1)
+         v_repo=$(basename $(git rev-parse --show-toplevel))
 
       # Verbose: name
          f_talk; echo -n "Repo Name: "
