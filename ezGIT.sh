@@ -42,13 +42,13 @@ v_fzf_talk=ezGIT
 
 
 #__dryaROOT__=$__RC_OS__/DRYa
-#      v_lib1=$__RC_OS__/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+#      v_lib1=$__RC_OS__/DRYa/all/lib/libraries/drya-lib-1-colors-greets.sh
 
 # Calling DRYa libraries
    # uDev: failsafe: If DRYa repo does not exist, create alternatives
 
    # Sourcing DRYa Lib 1
-      v_lib1=$__RC_OS__/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+      v_lib1=$__RC_OS__/DRYa/all/lib/libraries/drya-lib-1-colors-greets.sh
       unset v_greet v_talk
       [[ -f $v_lib1 ]] && source $v_lib1 || (read -s -n 1 -p "ezGIT: error: drya-lib-1 does not exist " && echo)
 
@@ -59,14 +59,14 @@ v_fzf_talk=ezGIT
 
 
    # Sourcing DRYa Lib 2
-      v_lib2=$__RC_OS__/DRYa/all/lib/libs/drya-lib-2-tmp-n-config-files.sh
+      v_lib2=$__RC_OS__/DRYa/all/lib/libraries/drya-lib-2-tmp-n-config-files.sh
       [[ -f $v_lib2 ]] && source $v_lib2 || (read -s -n 1 -p "ezGIT: error: drya-lib-2 does not exist " && echo)
 
       # Examples: `f_create_tmp_file` will give a $v_tmp with a new file with abs path
      
 
    # Sourcing DRYa Lib 4: Color schemes
-      v_lib4=$__RC_OS__/DRYa/all/lib/libs/drya-lib-4-dependencies-packages-git.sh
+      v_lib4=$__RC_OS__/DRYa/all/lib/libraries/drya-lib-4-dependencies-packages-git.sh
       [[ -f $v_lib4 ]] && source $v_lib4 || (read -s -n 1 -p "ezGIT: error: drya-lib-4 does not exist " && echo)
 
       # Examples: f_lib4_stroken
