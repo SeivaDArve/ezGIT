@@ -877,8 +877,8 @@ function f_git_status_nr_1_all_repos_root {
            echo    " > Path     : ${__RC_OS__}/"
            echo
 
-   f_talk; echo 'Use fluNav command `V <name>` to jump to:'
-           echo ' > Full name or abreviated name of <name> repository'
+   f_talk; echo 'Use fluNav command `V <repo-name>` to jump to:'
+           echo ' > Repository called <repo-name> as configured at fluNav.sh'
            echo
 
    f_list_all_valid_and_invalid_repositories 
@@ -906,12 +906,13 @@ function f_git_status_nr_2_not_all_repos_root {
         f_rc; echo    " > Not at any repository (command only for repos)"
               echo
       f_talk; echo    'Current location:'
-              echo -n ' > 1. At: '
+              echo -n ' > '
         f_c3; echo              "$v_pwd"
-        f_rc; echo    " > 2. Neither at any repository"
-              echo    " > 3. Neither at the central dir of repositories"
               echo
-      f_talk; echo    'Use fluNav command `. G` to jump to:'
+        f_rc; echo    " > 1. Neither inside any repository"
+              echo    " > 2. Neither inside the central dir of repositories"
+              echo
+      f_talk; echo    'Input command `R` to jump to:'
               echo    ' > Central, Root directory of repos (DRYa-REPOS-CENTER)'
               echo
 
