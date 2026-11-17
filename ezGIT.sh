@@ -1556,10 +1556,10 @@ function f_correct_remote_branches_URL_from_http_to_https {
       v_txt="Convert all remotes from http to https"; f_anyK
 
       # Attempting to detect if there are SPECIFICALLY http:// in the remores
-         for v_remote in $(git remote); do
-             v_url=$(git remote get-url "$v_remote")
+         for i in $(git remote); do
+             v_url=$(git remote get-url "$i")
              if [[ $v_url =~ ^http:// ]]; then
-                 git remote set-url "$v_remote" "${v_url/http:\/\//https://}"
+                 git remote set-url origin "${v_url/http:\/\//https://}"
              fi
          done
          echo
