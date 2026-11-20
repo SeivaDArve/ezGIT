@@ -1296,7 +1296,7 @@ function f_prsP_to_upload {
 }
 
 function f_run_hooks {
-   bash ${__RC_OS__}/DRYa/all/opt/.config/.ezGIT $1
+   bash ${__RC_OS__}/DRYa/all/opt/hooks.config/.ezGIT $1
 }
 
 function f_git_ignore__test_boilerplate_existence {
