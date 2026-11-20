@@ -1,14 +1,17 @@
 #!/bin/bash
+# Title: Setting alias to use directly from the terminal prompt for ezGIT
+
+__name__="drya-ezGIT"
 
 # Alias to use directly as git alias
 
 # Vai ser tambem definido em .../DRYa/all/dryaSRC
-   alias ezGIT="bash $__RC_OS__/ezGIT/ezGIT.sh"
-   alias ezgit="bash $__RC_OS__/ezGIT/ezGIT.sh"
-   alias     G="bash $__RC_OS__/ezGIT/ezGIT.sh"        
-   alias  GvA.="bash $__RC_OS__/ezGIT/ezGIT.sh v A ."  # This alias is meant to help drya-termux-omni-key to call this script
+   alias ezGIT="bash $__RC_OS__/$__name__/ezGIT.sh"
+   alias ezgit="bash $__RC_OS__/$__name__/ezGIT.sh"
+   alias     G="bash $__RC_OS__/$__name__/ezGIT.sh"        
+   alias  GvA.="bash $__RC_OS__/$__name__/ezGIT.sh v A ."  # This alias is meant to help drya-termux-omni-key to call this script
 
-alias galias="less ${__RC_OS__}/ezGIT/all/etc/config_bash-alias"  # Read this file itself, providing help
+alias galias="less ${__RC_OS__}/$__name__/all/etc/config_bash-alias"  # Read this file itself, providing help
 alias g="git"
 alias gst="git status"
 alias gpom="git pull origin master"
