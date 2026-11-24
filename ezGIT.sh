@@ -373,7 +373,7 @@ function f_unstage_all {
 function f_function_git_log_in_one_line {
    f_greet
    f_talk; echo -n 'Show entire git log with single lines '
-     f_c3; echo    '`git log --oneline`'
+     f_c3; echo    '`git log --oneline --all --graph`'  # a flag --all mostra os commits de todos os branches e outras referências relevantes
      f_rc; echo
 
    f_test_if_currently_at_any_repo
