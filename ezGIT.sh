@@ -2966,7 +2966,8 @@ elif [ $1 == "," ]; then
       # Perguntar o nome
          f_talk; echo "Creating a branch from the current branch: uDev"
          echo
-         echo "What is the name of the new branch?"
+         echo    "What is the name of the new branch?"
+         echo    " > Note: valid syntax: 'new-branch', 'branches/new1'"
          read -p " > " v_new
          echo
          git branch $v_new
@@ -2974,6 +2975,21 @@ elif [ $1 == "," ]; then
       # Switch para o novo branch
          git checkout $v_new
          echo "Criou e mudou para o ramo: $v_new"
+         echo 
+
+      # Perguntar se quer adicionar Remote Origin (caso nao adicione esse remote, é possivel usar o branch apenas offline)
+         #  exemplo: git push -u origin <nome-do-branch-que/pode/conter/barras/na/sua/syntax/que-nao-influenciam-nenhuma-hierarquia-de-ficheiros-ou-pastas>
+         
+         unset v_ans
+         echo    "Want it also to be remote adding origin? (y/N) "
+         read -p " > " v_ans
+
+         # uDev: Bug: BOTH verbose outputs are showing at the same time: When Y and not Y
+         [[ $v_ans == "y" ]] && git push -u origin $v_new && echo " > Added remote origin"
+         [[ $v_ans == "Y" ]] && git push -u origin $v_new && echo " > Added remote origin"
+         [[ $v_ans != "y" ]] &&                              echo " > Git Remote not added"
+         [[ $v_ans != "Y" ]] &&                              echo " > Git Remote not added"
+
 
    elif [ $2 == "d" ]; then
       # Muda para o ramo 'dev'
